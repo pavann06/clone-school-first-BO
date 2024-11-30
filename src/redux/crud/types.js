@@ -1,0 +1,9 @@
+export const FORM_MODAL = 'FORM_MODAL';
+export const DELETE_MODAL = 'DELETE_MODAL';
+export const TABLE_REFRESH = 'TABLE_REFRESH';
+export const ROW_DATA = 'ROW_DATA';
+export const DELETE_ROW_DATA = 'DELETE_ROW_DATA';
+export const IS_REQUEST_LOADING = 'IS_REQUEST_LOADING';
+export const IS_REQUEST_SUCCESS = 'IS_REQUEST_SUCCESS';
+export const IS_REQUEST_ERROR = 'IS_REQUEST_ERROR';
+export const CRUD_API = 'CRUD_API';

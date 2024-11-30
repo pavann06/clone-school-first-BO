@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "devCommand": "vite build --mode development",
+        "outputDirectory": "dist",
+        "development": {
+          "buildCommand": "vite build --mode development"
+        },
+        "production": {
+          "buildCommand": "vite build --mode production"
+        }
+      }
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
