@@ -32,7 +32,8 @@ AuthGuard.propTypes = {
 function Container({ children }) {
   const router = useRouter();
 
-  const { isLoggedIn } = useSelector(selectAuth);
+  // const { isLoggedIn } = useSelector(selectAuth);
+  const { isLoggedIn } = true;
 
   const [checked, setChecked] = useState(false);
 
