@@ -6,7 +6,7 @@ export const login = async (email, password) => {
       email,
       password,
     };
-    const response = await fetch(`${API_BASE_URL}authentication/login`, {
+    const response = await fetch(`${API_BASE_URL}userservice/bo_login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
