@@ -152,7 +152,7 @@ export default function OnlineStoresNewEditForm({ currentOnlineStore }) {
   label="GST Amount"
   value={gstAmount}
   InputProps={{
-    readOnly: true, // Explicitly define `readOnly: true` here
+    readOnly: true, 
   }}
   variant="outlined"
 />

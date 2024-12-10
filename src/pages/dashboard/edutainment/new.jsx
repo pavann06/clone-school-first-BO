@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { OnlieStoresCreateView } from 'src/sections/onlinestores/view';
+import EdutainmentCreatePage from '../onlinestores/new';
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ export default function OnlineStoresCreatePage() {
         <title> New Speciality </title>
       </Helmet>
 
-       <OnlieStoresCreateView />
+       <EdutainmentCreatePage />
       
       
     </>
