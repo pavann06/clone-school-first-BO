@@ -74,57 +74,80 @@ export function useNavData() {
         subheader: 'management',
         items: [
 
-          {
-            title: 'specialities',
-            path: paths.dashboard.specialities.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.specialities.root, permissions: ['is_superuser'] },
-              { title: 'create', path: paths.dashboard.specialities.new, permissions: ['is_superuser'] },
-            ],
-          },
+          // {
+          //   title: 'specialities',
+          //   path: paths.dashboard.specialities.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.specialities.root, permissions: ['is_superuser'] },
+          //     { title: 'create', path: paths.dashboard.specialities.new, permissions: ['is_superuser'] },
+          //   ],
+          // },
      
-          {
-            title: 'features',
-            path: paths.dashboard.features.root,
+          // {
+          //   title: 'features',
+          //   path: paths.dashboard.features.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.features.root, permissions: ['is_superuser'] },
+          //     { title: 'create', path: paths.dashboard.features.new, permissions: ['is_superuser'] },
+          //   ],
+          // },
+
+          // {
+          //   title: 'banners',
+          //   path: paths.dashboard.banners.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.banners.root, permissions: ['is_superuser'] },
+          //     { title: 'create', path: paths.dashboard.banners.new, permissions: ['is_superuser'] },
+          //   ],
+          // },
+          // CITIES
+          // {
+          //   title: 'cities',
+          //   path: paths.dashboard.cities.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.cities.root, permissions: ['is_superuser'] },
+          //     { title: 'create', path: paths.dashboard.cities.new, permissions: ['is_superuser'] },
+          //   ],
+          // },
+        
+          // {
+          //   title: 'hospitals',
+          //   path: paths.dashboard.hospitals.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.hospitals.root, permissions: ['is_superuser'] },
+          //     { title: 'create', path: paths.dashboard.hospitals.new, permissions: ['is_superuser'] },
+          //     // {title:'view' , path: paths.dashboard.hospitals.view, permissions : ['is_superuser']},
+              
+          //   ],
+          // },
+
+
+             {
+            title: 'edutainment',
+            path: paths.dashboard.edutainment.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.features.root, permissions: ['is_superuser'] },
-              { title: 'create', path: paths.dashboard.features.new, permissions: ['is_superuser'] },
+              { title: 'list', path: paths.dashboard.edutainment.root, permissions: ['is_superuser'] },
+              { title: 'create', path: paths.dashboard.edutainment.new, permissions: ['is_superuser'] },
             ],
           },
 
           {
-            title: 'banners',
-            path: paths.dashboard.banners.root,
+            title: 'onlinestores',
+            path: paths.dashboard.onlinestores.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.banners.root, permissions: ['is_superuser'] },
-              { title: 'create', path: paths.dashboard.banners.new, permissions: ['is_superuser'] },
+              { title: 'list', path: paths.dashboard.onlinestores.root, permissions: ['is_superuser'] },
+              { title: 'create', path: paths.dashboard.onlinestores.new, permissions: ['is_superuser'] },
             ],
           },
-          // CITIES
-          {
-            title: 'cities',
-            path: paths.dashboard.cities.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.cities.root, permissions: ['is_superuser'] },
-              { title: 'create', path: paths.dashboard.cities.new, permissions: ['is_superuser'] },
-            ],
-          },
-        
-          {
-            title: 'hospitals',
-            path: paths.dashboard.hospitals.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.hospitals.root, permissions: ['is_superuser'] },
-              { title: 'create', path: paths.dashboard.hospitals.new, permissions: ['is_superuser'] },
-              // {title:'view' , path: paths.dashboard.hospitals.view, permissions : ['is_superuser']},
-              
-            ],
-          },
+
+
           // {
           //   title: 'appointments',
           //   path: paths.dashboard.appointments.root,

@@ -77,10 +77,16 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/hospitals/${id}/edit`,
       view :  (id) => `${ROOTS.DASHBOARD}/hospitals/${id}/view`,
     },
-    features: {
-      root: `${ROOTS.DASHBOARD}/features`,
-      new: `${ROOTS.DASHBOARD}/features/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/features/${id}/edit`,
+    edutainment: {
+      root: `${ROOTS.DASHBOARD}/edutainment`,
+      new: `${ROOTS.DASHBOARD}/edutainment/new`,
+      // edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
+    },
+
+    onlinestores: {
+      root: `${ROOTS.DASHBOARD}/onlinestores`,
+      new: `${ROOTS.DASHBOARD}/onlinestores/new`,
+      // edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
     },
 
     // appointments: {

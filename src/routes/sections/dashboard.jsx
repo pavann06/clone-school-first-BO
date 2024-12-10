@@ -5,6 +5,8 @@ import DashboardLayout from 'src/layouts/dashboard';
 import { AuthGuard, PermissionBasedGuard } from 'src/auth/guard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
+import OnlineStoresListPage from 'src/pages/dashboard/edutainment/list';
+import OnlineStoresCreatePage from 'src/pages/dashboard/edutainment/new';
 // import { Lazy } from 'yup';
 
 // ----------------------------------------------------------------------
@@ -44,6 +46,10 @@ const SalesAnalyticsPage = lazy(() => import('src/pages/dashboard/sales/analytic
 
 // BLANK PAGE
 const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
+
+
+const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'))
+const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'))
 
 // WELCOME PAGE
 
@@ -123,12 +129,12 @@ export const dashboardRoutes = [
         ],
       },
       {
-        path: 'features',
+        path: 'edutainment',
         children: [
           {
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <FeaturesListPage />
+                <EdutainmentListPage />
               </PermissionBasedGuard>
             ),
             index: true,
@@ -137,18 +143,48 @@ export const dashboardRoutes = [
             path: 'new',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <FeatureCreatePage />
+                <EdutainmentCreatePage />
               </PermissionBasedGuard>
             ),
           },
+          // {
+          //   path: ':id/edit',
+          //   element: (
+          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+          //       <FeaturesEditPage />
+          //     </PermissionBasedGuard>
+          //   ),
+          // },
+        ],
+      },
+
+      {
+        path: 'onlinestores',
+        children: [
           {
-            path: ':id/edit',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <FeaturesEditPage />
+                <OnlineStoresListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineStoresCreatePage />
               </PermissionBasedGuard>
             ),
           },
+          // {
+          //   path: ':id/edit',
+          //   element: (
+          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+          //       <FeaturesEditPage />
+          //     </PermissionBasedGuard>
+          //   ),
+          // },
         ],
       },
 
