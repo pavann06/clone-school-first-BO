@@ -44,12 +44,14 @@ export default function JwtLoginView() {
   const password = useBoolean();
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    mobile: Yup.string()
+      .required('Mobile number is required')
+      .matches(/^[0-9]{10}$/, 'Must be a valid 10-digit mobile number'),
     password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
-    email: '',
+    mobile: '',
     password: '',
   };
 
@@ -66,7 +68,7 @@ export default function JwtLoginView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const response = await login?.(data.email, data.password);
+      const response = await login?.(data.mobile, data.password);
       const { success } = response;
 
       if (success) {
@@ -93,7 +95,7 @@ export default function JwtLoginView() {
     <Stack spacing={2.5}>
       {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
-      <RHFTextField name="email" label="Email address" />
+      <RHFTextField name="mobile" label="mobile address" />
 
       <RHFTextField
         name="password"

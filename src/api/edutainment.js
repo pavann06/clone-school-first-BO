@@ -2,80 +2,40 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-export const CreateEdutainment = async (data, authToken) => {
-  console.info('CreateEdutainment Payload:', data);
 
+
+export const CreateEdutainment = async (data) => {
   try {
-    // Handle file uploads
+    console.info('FEATURE-CREATE-FORM-DATA', data);
+
+    // Check if there are images to upload
     if (data.image && data.image.length > 0) {
       const payload = {
-        files: data._image,
+        files: data.image,
         entity: 'edutain/feeds/',
       };
 
-      // Add Bearer token to the headers
-      const fileUploadResponse = await request.UploadFiles(payload, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-      console.info('File Upload Response:', fileUploadResponse);
+      // Uploading files
+      const response = await request.UploadFiles(payload);
+      const { success, info } = response;
 
-      if (fileUploadResponse.success) {
-        data.image = fileUploadResponse.info[0];
+      // If success then update data with uploaded image info
+      if (success) {
+        data.image = info[0];
       } else {
-        return fileUploadResponse;
+        // Files upload failed, return the response
+        return response;
       }
     }
-
-    // Make API request with Bearer token
-    const response = await request.post('edutain/feeds/', data, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
-    console.info('Post API Response:', response);
-
-    return response;
+    // Create product without uploading images
+    const resp = await request.post('edutain/feeds/', data);
+    return resp;
+    
   } catch (error) {
-    console.error('CreateEdutainment Error:', error);
-    return { success: false, description: error.message };
+    console.error(error);
+    return null;
   }
 };
-
-
-// export const CreateEdutainment = async (data) => {
-//   try {
-//     console.info('FEATURE-CREATE-FORM-DATA', data);
-
-//     // Check if there are images to upload
-//     if (data.logo && data.logo.length > 0) {
-//       const payload = {
-//         files: data.logo,
-//         entity: 'edutain/feeds/',
-//       };
-
-//       // Uploading files
-//       const response = await request.UploadFiles(payload);
-//       const { success, info } = response;
-
-//       // If success then update data with uploaded image info
-//       if (success) {
-//         data.logo = info[0];
-//       } else {
-//         // Files upload failed, return the response
-//         return response;
-//       }
-//     }
-//     // Create product without uploading images
-//     const resp = await request.post('edutain/feeds/', data);
-//     return resp;
-    
-//   } catch (error) {
-//     console.error(error);
-//     return null;
-//   }
-// };
 
   
 
@@ -83,7 +43,7 @@ export const CreateEdutainment = async (data, authToken) => {
 export const UpdateEdutainment = async (data) => {
   try {
 
-    const new_files = data.logo.filter((item) => typeof item === 'object');
+    const new_files = data.image.filter((item) => typeof item === 'object');
     const old_files = data.logo.filter((item) => typeof item === 'string');
 
     // uploading new files

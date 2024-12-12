@@ -48,7 +48,8 @@ const ICONS = {
 export function useNavData() {
 
   let userPermissions = useSelector(selectUser);
-  userPermissions = userPermissions.custom_permissions || [];
+  userPermissions = userPermissions?.custom_permissions || [];
+
 
   const data = useMemo(
     () => {
@@ -61,7 +62,7 @@ export function useNavData() {
           {
             title: 'Dashboard',
             path: paths.dashboard.root,
-            permissions:['is_superuser'],
+          
             icon: ICONS.dashboard,
           },
 
@@ -74,15 +75,7 @@ export function useNavData() {
         subheader: 'management',
         items: [
 
-          // {
-          //   title: 'specialities',
-          //   path: paths.dashboard.specialities.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.specialities.root, permissions: ['is_superuser'] },
-          //     { title: 'create', path: paths.dashboard.specialities.new, permissions: ['is_superuser'] },
-          //   ],
-          // },
+         
      
           // {
           //   title: 'features',
@@ -94,25 +87,8 @@ export function useNavData() {
           //   ],
           // },
 
-          // {
-          //   title: 'banners',
-          //   path: paths.dashboard.banners.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.banners.root, permissions: ['is_superuser'] },
-          //     { title: 'create', path: paths.dashboard.banners.new, permissions: ['is_superuser'] },
-          //   ],
-          // },
-          // CITIES
-          // {
-          //   title: 'cities',
-          //   path: paths.dashboard.cities.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.cities.root, permissions: ['is_superuser'] },
-          //     { title: 'create', path: paths.dashboard.cities.new, permissions: ['is_superuser'] },
-          //   ],
-          // },
+        
+      
         
           // {
           //   title: 'hospitals',
@@ -132,8 +108,8 @@ export function useNavData() {
             path: paths.dashboard.edutainment.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.edutainment.root, permissions: ['is_superuser'] },
-              { title: 'create', path: paths.dashboard.edutainment.new, permissions: ['is_superuser'] },
+              { title: 'list', path: paths.dashboard.edutainment.root, },
+              { title: 'create', path: paths.dashboard.edutainment.new,},
             ],
           },
 
@@ -142,8 +118,8 @@ export function useNavData() {
             path: paths.dashboard.onlinestores.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.onlinestores.root, permissions: ['is_superuser'] },
-              { title: 'create', path: paths.dashboard.onlinestores.new, permissions: ['is_superuser'] },
+              { title: 'list', path: paths.dashboard.onlinestores.root, },
+              { title: 'create', path: paths.dashboard.onlinestores.new,  },
             ],
           },
 

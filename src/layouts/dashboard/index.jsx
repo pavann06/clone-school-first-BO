@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
+import { useSelector } from 'react-redux';
 
 import { useSettingsContext } from 'src/components/settings';
 
@@ -16,6 +17,10 @@ import NavHorizontal from './nav-horizontal';
 // ----------------------------------------------------------------------
 
 export default function DashboardLayout({ children }) {
+
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+
   const settings = useSettingsContext();
 
   const lgUp = useResponsive('up', 'lg');

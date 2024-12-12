@@ -14,7 +14,9 @@ import { varBounce, MotionContainer } from 'src/components/animate';
 
 export default function PermissionBasedGuard({ hasContent, permissions, children, sx }) {
   // Logic here to get current user role
-  const { custom_permissions } =  useSelector(selectUser);
+  // const { custom_permissions } =  useSelector(selectUser);
+  const { custom_permissions } = useSelector((state) => state.someState || {});
+
 
   const existingPermissions = custom_permissions || [];
 

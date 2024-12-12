@@ -1,12 +1,12 @@
 import { API_BASE_URL } from '../config-global';
 
-export const login = async (email, password) => {
+export const login = async (mobile, password) => {
   try {
     const payload = {
-      email,
+      mobile,
       password,
     };
-    const response = await fetch(`${API_BASE_URL}userservice/bo_login`, {
+    const response = await fetch(`https://dev-api.familifirst.com/userservice/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export const login = async (email, password) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error(error);
+   
     return error;
 
   }
@@ -27,7 +27,7 @@ export const logout = async () => {
   try {
     window.localStorage.clear();
   } catch (error) {
-    console.error(error);
+   
     return error;
   }
   return null;

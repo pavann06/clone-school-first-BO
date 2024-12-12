@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import EdutainmentCreatePage from '../onlinestores/new';
+import { EdutainmentCreateView } from 'src/sections/edutainment/view';
 
 // ----------------------------------------------------------------------
 
-export default function OnlineStoresCreatePage() {
+export default function EdutainmentCreatePage() {
   return (
     <>
       <Helmet>
         <title> New Speciality </title>
       </Helmet>
 
-       <EdutainmentCreatePage />
+       <EdutainmentCreateView />
       
       
     </>
