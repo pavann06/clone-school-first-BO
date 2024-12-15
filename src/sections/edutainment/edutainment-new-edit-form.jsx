@@ -58,7 +58,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     () => ({
       heading: currentEdutainment?.heading || '',
       type: currentEdutainment?.type || 'text', // Assuming 'text' is the default
-      image: currentEdutainment?.image ? [currentEdutainment?.image] : [],
+      image: currentEdutainment?.image  || "",
       video: currentEdutainment?.video || '',
       duration: currentEdutainment?.duration || '',
       language: currentEdutainment?.language || '',
@@ -108,30 +108,77 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     }
   });
 
+
+
+
+  // const handleDrop = useCallback(
+  //   (acceptedFiles) => {
+  //     const files = values.image || " ";
+  //     const newFiles = acceptedFiles.map((file) =>
+  //       Object.assign(file, {
+  //         preview: URL.createObjectURL(file),
+  //       })
+  //     );
+  //     setValue('image', [...files, ...newFiles], { shouldValidate: true });
+  //   },
+  //   [setValue, values.image]
+  // );
+
+  // const handleRemoveFile = useCallback(
+  //   (inputFile) => {
+  //     const filtered = values.image && values.image?.filter((file) => file !== inputFile);
+  //     setValue('image', filtered);
+  //   },
+  //   [setValue, values.image]
+  // );
+
+  // const handleRemoveAllFiles = useCallback(() => {
+  //   setValue('image', []);
+  // }, [setValue]);
+
   const handleDrop = useCallback(
     (acceptedFiles) => {
-      const files = values.image || [];
-      const newFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
-      setValue('edutainment_image', [...files, ...newFiles], { shouldValidate: true });
+      const newFile = acceptedFiles[0]; // Allow only the first file
+      if (newFile) {
+        const fileWithPreview = Object.assign(newFile, {
+          preview: URL.createObjectURL(newFile),
+        });
+        setValue('image', fileWithPreview, { shouldValidate: true }); // Set the single file
+      }
     },
-    [setValue, values.image]
+    [setValue]
   );
-
-  const handleRemoveFile = useCallback(
-    (inputFile) => {
-      const filtered = values.image && values.image?.filter((file) => file !== inputFile);
-      setValue('image', filtered);
-    },
-    [setValue, values.image]
-  );
-
-  const handleRemoveAllFiles = useCallback(() => {
-    setValue('image', []);
+  
+  const handleRemoveFile = useCallback(() => {
+    setValue('image', null); // Remove the image
   }, [setValue]);
+  
+  const handleRemoveAllFiles = useCallback(() => {
+    setValue('image', null); // Reset to no image
+  }, [setValue]);
+
+  const handleVideoDrop = useCallback(
+    (acceptedFiles) => {
+      const newFile = acceptedFiles[0]; // Accept only the first video file
+      if (newFile) {
+        const fileWithPreview = Object.assign(newFile, {
+          preview: URL.createObjectURL(newFile), // Generate a preview URL
+        });
+        setValue('video', fileWithPreview, { shouldValidate: true }); // Set the single video
+      }
+    },
+    [setValue]
+  );
+  
+  const handleRemoveVideo = useCallback(() => {
+    setValue('video', null); // Remove the video
+  }, [setValue]);
+  
+  const handleRemoveAllVideos = useCallback(() => {
+    setValue('video', null); // Reset to no video
+  }, [setValue]);
+  
+  
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -187,44 +234,75 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 {(values.field_type === 'image' ||
                   values.field_type === 'video' ||
                   values.field_type === 'youtube') && (
+                  // <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+                  //   {/* Image Field */}
+                  //   <Stack spacing={1.5}>
+                  //     <Typography variant="subtitle2">Image</Typography>
+                  //     <RHFUpload
+                    
+                       
+                  //       thumbnail
+                  //       name="image"
+                  //       maxSize={3145728}
+                  //       onDrop={handleDrop}
+                  //       onRemove={handleRemoveFile}
+                  //       onRemoveAll={handleRemoveAllFiles}
+                  //     />
+                  //   </Stack>
+                  // </Box>
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                    {/* Image Field */}
-                    <Stack spacing={1.5}>
-                      <Typography variant="subtitle2">Image</Typography>
-                      <RHFUpload
-                        multiple
-                        thumbnail
-                        name="image"
-                        maxSize={3145728}
-                        onDrop={handleDrop}
-                        onRemove={handleRemoveFile}
-                        onRemoveAll={handleRemoveAllFiles}
-                      />
-                    </Stack>
-                  </Box>
+  {/* Image Field */}
+  <Stack spacing={1.5}>
+    <Typography variant="subtitle2">Image</Typography>
+    <RHFUpload
+      thumbnail
+      name="image"
+      maxSize={3145728}
+      onDrop={handleDrop}
+      onRemove={handleRemoveFile}
+      onRemoveAll={handleRemoveAllFiles}
+    />
+  </Stack>
+</Box>
+
                 )}
 
                 {/* Conditionally Render Video Fields */}
-                {(values.field_type === 'video' || values.field_type === 'youtube') && (
-                  <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                    <Stack spacing={2}>
-                      {' '}
-                      {/* Adjust spacing as needed */}
-                      <RHFTextField name="video" label="Video" />
-                      <RHFTextField
-                        name="duration"
-                        label="Duration"
-                        type="number"
-                        InputProps={{ inputProps: { min: 0 } }} // Optional: Restrict to non-negative integers
-                        rules={{
-                          required: 'Duration is required',
-                          validate: (value) =>
-                            Number.isInteger(Number(value)) || 'Value must be an integer',
-                        }}
-                      />
-                    </Stack>
-                  </Box>
-                )}
+                {/* Conditionally Render Video Fields */}
+{(values.field_type === 'video' || values.field_type === 'youtube') && (
+  <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+  {/* Image Field */}
+  <Stack spacing={1.5}>
+    
+    <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+  {/* Video Field */}
+  <Stack spacing={1.5}>
+    <Typography variant="subtitle2">Video</Typography>
+    <RHFUpload
+      thumbnail // Optional: Add a thumbnail for preview if applicable
+      name="video"
+      maxSize={10485760} // Set max size for the video, e.g., 10MB
+      onDrop={handleVideoDrop}
+      onRemove={handleRemoveVideo}
+      onRemoveAll={handleRemoveAllVideos}
+      accept="video/*" // Accept only video files
+    />
+  </Stack>
+</Box>
+
+  </Stack>
+
+  <Box>  <RHFTextField
+        name="duration"
+        label="Duration (in seconds)"
+        type="number"
+        InputProps={{ inputProps: { min: 0 } }} // Restrict to non-negative values
+      /></Box>
+</Box>
+)}
+
+
+
               </Box>
 
               <LoadingButton

@@ -4,38 +4,47 @@ import request from 'src/api/request';
 
 
 
+// API Implementation
 export const CreateEdutainment = async (data) => {
   try {
     console.info('FEATURE-CREATE-FORM-DATA', data);
 
-    // Check if there are images to upload
-    if (data.image && data.image.length > 0) {
-      const payload = {
-        files: data.image,
+    if (data.image) {
+      const imagePayload = {
+        files: [data.image],
         entity: 'edutain/feeds/',
       };
+      const imageResponse = await request.UploadFiles(imagePayload);
 
-      // Uploading files
-      const response = await request.UploadFiles(payload);
-      const { success, info } = response;
-
-      // If success then update data with uploaded image info
-      if (success) {
-        data.image = info[0];
+      if (imageResponse.success) {
+        data.image = imageResponse.info[0];
       } else {
-        // Files upload failed, return the response
-        return response;
+        return imageResponse;
       }
     }
-    // Create product without uploading images
-    const resp = await request.post('edutain/feeds/', data);
-    return resp;
-    
+
+    if (data.video) {
+      const videoPayload = {
+        files: [data.video],
+        entity: 'edutain/feeds/',
+      };
+      const videoResponse = await request.UploadFiles(videoPayload);
+
+      if (videoResponse.success) {
+        data.video = videoResponse.info[0];
+      } else {
+        return videoResponse;
+      }
+    }
+
+    const response = await request.post('edutain/feeds/', data);
+    return response;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
+
 
   
 
@@ -44,7 +53,7 @@ export const UpdateEdutainment = async (data) => {
   try {
 
     const new_files = data.image.filter((item) => typeof item === 'object');
-    const old_files = data.logo.filter((item) => typeof item === 'string');
+    const old_files = data.image.filter((item) => typeof item === 'string');
 
     // uploading new files
     let response;
