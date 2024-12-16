@@ -4,47 +4,66 @@ import request from 'src/api/request';
 
 
 
-// API Implementation
+// // API Implementation
+// export const CreateEdutainment = async (data) => {
+//   try {
+//     console.info('FEATURE-CREATE-FORM-DATA', data);
+
+//     if (data.image) {
+//       const imagePayload = {
+//         files: data.image,
+//         entity: 'edutain/feeds/',
+//       };
+//       const imageResponse = await request.UploadFiles(imagePayload);
+
+//       if (imageResponse.success) {
+//         data.image = imageResponse.info[0];
+//       } else {
+//         return imageResponse;
+//       }
+//     }
+
+
+
+//     const response = await request.post('edutain/feeds/', data);
+//     return response;
+//   } catch (error) {
+//     console.error(error);
+//     return null;
+//   }
+// };
+
 export const CreateEdutainment = async (data) => {
   try {
     console.info('FEATURE-CREATE-FORM-DATA', data);
 
     if (data.image) {
-      const imagePayload = {
-        files: [data.image],
-        entity: 'edutain/feeds/',
-      };
-      const imageResponse = await request.UploadFiles(imagePayload);
+      const formData = new FormData();
+      formData.append('files', data.image);
+      // formData.append('entity', 'edutain/feeds/');
+
+      const imageResponse = await request.UploadFiles(formData);
+
+      console.log('UPLOAD RESPONSE:', imageResponse);
 
       if (imageResponse.success) {
         data.image = imageResponse.info[0];
       } else {
+        console.error('IMAGE UPLOAD FAILED:', imageResponse);
         return imageResponse;
       }
     }
 
-    if (data.video) {
-      const videoPayload = {
-        files: [data.video],
-        entity: 'edutain/feeds/',
-      };
-      const videoResponse = await request.UploadFiles(videoPayload);
-
-      if (videoResponse.success) {
-        data.video = videoResponse.info[0];
-      } else {
-        return videoResponse;
-      }
-    }
+    console.log('FINAL PAYLOAD:', data);
 
     const response = await request.post('edutain/feeds/', data);
+    console.info('FEATURE-CREATE-FORM-DATA', data);
     return response;
   } catch (error) {
-    console.error(error);
+    console.error('API ERROR:', error);
     return null;
   }
 };
-
 
   
 
@@ -84,3 +103,20 @@ export const UpdateEdutainment = async (data) => {
   }
   return null;
 };
+
+
+
+
+    // if (data.video) {
+    //   const videoPayload = {
+    //     files: data.video,
+    //     entity: 'edutain/feeds/',
+    //   };
+    //   const videoResponse = await request.UploadFiles(videoPayload);
+
+    //   if (videoResponse.success) {
+    //     data.video = videoResponse.info[0];
+    //   } else {
+    //     return videoResponse;
+    //   }
+    // }

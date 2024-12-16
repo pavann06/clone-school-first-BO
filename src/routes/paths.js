@@ -89,6 +89,8 @@ export const paths = {
       // edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
     },
 
+    
+
     // appointments: {
     //   root: `${ROOTS.DASHBOARD}/appointments`,
     //   new: `${ROOTS.DASHBOARD}/appointments/new`,

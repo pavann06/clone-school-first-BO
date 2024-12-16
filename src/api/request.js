@@ -123,7 +123,7 @@ const request = {
       if (token) {
         axios.defaults.headers.common.Authorization = token;
       }
-      const response = await axios.post('store/files', jsonData, config);
+      const response = await axios.post('backoffice/saveFile', jsonData, config);
 
       return response.data;
     } catch (error) {

@@ -19,6 +19,8 @@ import { useQuery } from '@tanstack/react-query';
 import Scrollbar from 'src/components/scrollbar';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 import request from 'src/api/request';
+import PropTypes from 'prop-types';
+
 
 const TABLE_HEAD = [
   { id: 'language', label: 'Language' },
@@ -42,7 +44,7 @@ export default function EdutainmentListView({ id }) {
       if (!id) {
         throw new Error('ID is required to fetch data');
       }
-      return request.get(`https://dev-api.familifirst.com/edutain/feeds/${id}/`);
+      return request.get(`https://dev-api.familifirst.com/edutain/feeds/`);
     },
     enabled: !!id, // Only fetch data when ID is provided
   });
@@ -69,7 +71,7 @@ export default function EdutainmentListView({ id }) {
 
   // Handle rows per page change
   const handleRowsPerPageChange = (event) => {
-    setPagination({ offset: 0, limit: parseInt(event.target.value, 10) });
+    setPagination({ offset: 1, limit: parseInt(event.target.value, 10) });
   };
 
   return (
@@ -115,3 +117,6 @@ export default function EdutainmentListView({ id }) {
     </Container>
   );
 }
+EdutainmentListView.propTypes = {
+  id: PropTypes.string.isRequired, // or PropTypes.number if it's a number
+};

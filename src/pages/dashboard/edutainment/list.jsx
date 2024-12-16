@@ -12,6 +12,7 @@ export default function OnlineStoresListPage() {
       </Helmet>
 
       <EdutainmentListView />
+
     </>
   );
 }
