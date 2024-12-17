@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 // ----------------------------------------------------------------------
 
-export default function OnlineStoresListPage({id}) {
+export default function EdutainmentListPage({id}) {
   return (
     <>
       <Helmet>
@@ -18,6 +18,6 @@ export default function OnlineStoresListPage({id}) {
   );
 }
 
-OnlineStoresListPage.propTypes = {
+EdutainmentListPage.propTypes = {
   id: PropTypes.string, // `id` is optional
 };
