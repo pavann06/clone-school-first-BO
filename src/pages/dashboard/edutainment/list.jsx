@@ -12,7 +12,7 @@ export default function EdutainmentListPage({id}) {
         <title>Speciality List</title>
       </Helmet>
 
-      <EdutainmentListView id={id} />
+      <EdutainmentListView />
 
     </>
   );
