@@ -117,22 +117,23 @@
 // }
 
 
-
-import React, { useState, useEffect } from 'react';
+import React, { useState , useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
-  Box,
+ 
   Card,
-  Container,
   Table,
+  Container,
   TableBody,
   TableContainer,
   TablePagination,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+
 import Scrollbar from 'src/components/scrollbar';
-import { TableNoData, TableHeadCustom } from 'src/components/table';
 import request from 'src/api/request';
-import PropTypes from 'prop-types';
+import { TableNoData, TableHeadCustom } from 'src/components/table';
+
+
 
 const TABLE_HEAD = [
   { id: 'language', label: 'Language' },
@@ -155,9 +156,8 @@ export default function EdutainmentListView() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['edutainment'],
-    queryFn: () => {
-      return request.get('https://dev-api.familifirst.com/edutain/feeds/');
-    },
+    queryFn: () => request.get('https://dev-api.familifirst.com/edutain/feeds/'),
+
   });
 
   useEffect(() => {

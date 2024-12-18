@@ -1,23 +1,23 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
-import { useParams } from 'src/routes/hooks';
+// import { useParams } from 'src/routes/hooks';
 
-import { AppointmentsListView } from 'src/sections/hospitals/view';
+// import { AppointmentsListView } from 'src/sections/hospitals/view';
 
-// ----------------------------------------------------------------------
+// // ----------------------------------------------------------------------
 
-export default function AppointmentsViewPage() {
-  const params = useParams();
+// export default function AppointmentsViewPage() {
+//   const params = useParams();
 
-  const { id } = params;
+//   const { id } = params;
 
-  return (
-    <>
-      <Helmet>
-        <title> Hospitals Edit</title>
-      </Helmet>
+//   return (
+//     <>
+//       <Helmet>
+//         <title> Hospitals Edit</title>
+//       </Helmet>
 
-      <AppointmentsListView id={`${id}`} />
-    </>
-  );
-}
+//       <AppointmentsListView id={`${id}`} />
+//     </>
+//   );
+// }

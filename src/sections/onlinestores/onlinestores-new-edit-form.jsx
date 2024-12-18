@@ -1,25 +1,27 @@
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { useMemo } from 'react';
+// import { useMemo } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useCallback , useMemo} from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import React, { useCallback } from 'react';
+
 
 // UI Components (Material-UI)
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { MenuItem } from '@mui/material';
+// import { MenuItem } from '@mui/material';
 // Add this to your Material-UI imports at the top
-import TextField from '@mui/material/TextField';
+
 
 // Form Components
-import FormProvider, { RHFUpload, RHFTextField, RHFSelect } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -167,10 +169,10 @@ export default function OnlineStoresNewEditForm({ currentOnlineStore }) {
               {/* Priority and Trending */}
               <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={2}>
                 <RHFTextField name="priority" label="Priority" type="number" />
-                <RHFSelect name="trending" label="Trending">
+                {/* <RHFSelect name="trending" label="Trending">
                   <MenuItem value={true}>Yes</MenuItem>
                   <MenuItem value={false}>No</MenuItem>
-                </RHFSelect>
+                </RHFSelect> */}
               </Box>
 
               <LoadingButton

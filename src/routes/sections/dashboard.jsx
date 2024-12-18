@@ -22,9 +22,9 @@ const SpecialitiesListPage = lazy(() => import('src/pages/dashboard/specialities
 const SpecialitiesCreatePage = lazy(() => import('src/pages/dashboard/specialities/new'));
 const SpecialitiesEditPage = lazy(() => import('src/pages/dashboard/specialities/edit'));
 
-const FeaturesListPage = lazy(() => import('src/pages/dashboard/features/list'));
-const FeatureCreatePage = lazy(() => import('src/pages/dashboard/features/new'));
-const FeaturesEditPage = lazy(() => import('src/pages/dashboard/features/edit'));
+// const FeaturesListPage = lazy(() => import('src/pages/dashboard/features/list'));
+// const FeatureCreatePage = lazy(() => import('src/pages/dashboard/features/new'));
+// const FeaturesEditPage = lazy(() => import('src/pages/dashboard/features/edit'));
 
 const BannersListPage = lazy(() => import('src/pages/dashboard/banners/list'));
 const BannersCreatePage = lazy(() => import('src/pages/dashboard/banners/new'));
