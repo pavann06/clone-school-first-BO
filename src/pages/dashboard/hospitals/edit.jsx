@@ -1,23 +1,23 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
-import { useParams } from 'src/routes/hooks';
+// import { useParams } from 'src/routes/hooks';
 
-import { HospitalsEditView } from 'src/sections/hospitals/view';
+// import { HospitalsEditView } from 'src/sections/hospitals/view';
 
-// ----------------------------------------------------------------------
+// // ----------------------------------------------------------------------
 
-export default function HospitalsEditPage() {
-  const params = useParams();
+// export default function HospitalsEditPage() {
+//   const params = useParams();
 
-  const { id } = params;
+//   const { id } = params;
 
-  return (
-    <>
-      <Helmet>
-        <title> Hospitals Edit</title>
-      </Helmet>
+//   return (
+//     <>
+//       <Helmet>
+//         <title> Hospitals Edit</title>
+//       </Helmet>
 
-      <HospitalsEditView id={`${id}`} />
-    </>
-  );
-}
+//       <HospitalsEditView id={`${id}`} />
+//     </>
+//   );
+// }

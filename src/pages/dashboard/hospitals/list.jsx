@@ -1,17 +1,17 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
-import {HospitalsListView} from 'src/sections/hospitals/view';
+// import {HospitalsListView} from 'src/sections/hospitals/view';
 
-// ----------------------------------------------------------------------
+// // ----------------------------------------------------------------------
 
-export default function HospitalListPage() {
-  return (
-    <>
-      <Helmet>
-        <title>Hospitals List</title>
-      </Helmet>
+// export default function HospitalListPage() {
+//   return (
+//     <>
+//       <Helmet>
+//         <title>Hospitals List</title>
+//       </Helmet>
 
-      <HospitalsListView />
-    </>
-  );
-}
+//       <HospitalsListView />
+//     </>
+//   );
+// }

@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 
 import EdutainmentListView from 'src/sections/edutainment/view/edutainment-list-view';
-import PropTypes from 'prop-types';
+
 
 // ----------------------------------------------------------------------
 
-export default function EdutainmentListPage({id}) {
+export default function EdutainmentListPage() {
   return (
     <>
       <Helmet>
@@ -18,6 +18,3 @@ export default function EdutainmentListPage({id}) {
   );
 }
 
-EdutainmentListPage.propTypes = {
-  id: PropTypes.string, // `id` is optional
-};

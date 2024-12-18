@@ -1,84 +1,84 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-import Link from '@mui/material/Link';
-import Avatar from '@mui/material/Avatar';
-import MenuItem from '@mui/material/MenuItem';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
+// import Link from '@mui/material/Link';
+// import Avatar from '@mui/material/Avatar';
+// import MenuItem from '@mui/material/MenuItem';
+// import TableRow from '@mui/material/TableRow';
+// import TableCell from '@mui/material/TableCell';
+// import IconButton from '@mui/material/IconButton';
+// import ListItemText from '@mui/material/ListItemText';
 
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
+// import Label from 'src/components/label';
+// import Iconify from 'src/components/iconify';
+// import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-// ----------------------------------------------------------------------
+// // ----------------------------------------------------------------------
 
-export default function BannersTableRow({ row, onEditRow, onDeleteRow }) {
-  const { serial_no, banner_name,  banner_image } = row;
+// export default function BannersTableRow({ row, onEditRow, onDeleteRow }) {
+//   const { serial_no, banner_name,  banner_image } = row;
 
-  const popover = usePopover();
+//   const popover = usePopover();
 
-  return (
-    <>
-      <TableRow hover>
-        <TableCell>{serial_no}</TableCell>
+//   return (
+//     <>
+//       <TableRow hover>
+//         <TableCell>{serial_no}</TableCell>
 
-        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar
-            alt={banner_name}
-            src={banner_image}
-            variant="rounded"
-            sx={{ width: 84, height: 64, mr: 2 }}
-          />
-          <ListItemText
-            disableTypography
-            primary={
-              <Link noWrap color="inherit" variant="subtitle2" sx={{ cursor: 'pointer' }}>
-                {banner_name}
-              </Link>
-            }
-          />
-        </TableCell>
+//         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+//           <Avatar
+//             alt={banner_name}
+//             src={banner_image}
+//             variant="rounded"
+//             sx={{ width: 84, height: 64, mr: 2 }}
+//           />
+//           <ListItemText
+//             disableTypography
+//             primary={
+//               <Link noWrap color="inherit" variant="subtitle2" sx={{ cursor: 'pointer' }}>
+//                 {banner_name}
+//               </Link>
+//             }
+//           />
+//         </TableCell>
 
-        <TableCell>
-          <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell>
-      </TableRow>
+//         <TableCell>
+//           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
+//             <Iconify icon="eva:more-vertical-fill" />
+//           </IconButton>
+//         </TableCell>
+//       </TableRow>
 
-      <CustomPopover
-        open={popover.open}
-        onClose={popover.onClose}
-        arrow="right-top"
-        sx={{ width: 140 }}
-      >
-        <MenuItem
-          onClick={() => {
-            onEditRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="solar:pen-bold" />
-          Edit
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            onDeleteRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="material-symbols:delete" />
-          Delete
-        </MenuItem>
-      </CustomPopover>
-    </>
-  );
-}
+//       <CustomPopover
+//         open={popover.open}
+//         onClose={popover.onClose}
+//         arrow="right-top"
+//         sx={{ width: 140 }}
+//       >
+//         <MenuItem
+//           onClick={() => {
+//             onEditRow();
+//             popover.onClose();
+//           }}
+//         >
+//           <Iconify icon="solar:pen-bold" />
+//           Edit
+//         </MenuItem>
+//         <MenuItem
+//           onClick={() => {
+//             onDeleteRow();
+//             popover.onClose();
+//           }}
+//         >
+//           <Iconify icon="material-symbols:delete" />
+//           Delete
+//         </MenuItem>
+//       </CustomPopover>
+//     </>
+//   );
+// }
 
-BannersTableRow.propTypes = {
-  onEditRow: PropTypes.func,
-  onDeleteRow: PropTypes.func,
-  row: PropTypes.object,
-};
+// BannersTableRow.propTypes = {
+//   onEditRow: PropTypes.func,
+//   onDeleteRow: PropTypes.func,
+//   row: PropTypes.object,
+// };

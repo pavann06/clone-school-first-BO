@@ -34,7 +34,7 @@
 // };
 
 
-import { API_BASE_URL } from '../config-global';
+// import { API_BASE_URL } from '../config-global';
 
 export const login = async (mobile, password) => {
   try {
