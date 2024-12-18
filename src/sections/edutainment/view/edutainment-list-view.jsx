@@ -140,7 +140,7 @@ const TABLE_HEAD = [
   { id: 'description', label: 'Description' },
   { id: 'interaction', label: 'Interaction' },
   { id: 'created_date', label: 'Created Date' },
-  { id: 'approved_date', label: 'Approved Date' },
+  // { id: 'approved_date', label: 'Approved Date' },
 
   {id: 'image' , label: 'Image'},
   { id: 'post_date', label: 'Post Date' },
@@ -150,7 +150,8 @@ const TABLE_HEAD = [
 export default function EdutainmentListView() {
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
-  const [pagination, setPagination] = useState({ offset: 1, limit: 10 });
+  const [pagination, setPagination] = useState({ offset: 1, limit: 40 }); // Default limit set to 40
+
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['edutainment'],
@@ -190,41 +191,90 @@ export default function EdutainmentListView() {
             <Table>
               <TableHeadCustom headLabel={TABLE_HEAD} />
               <TableBody>
-                {isLoading
-                  ? // Show loading skeleton
-                    [...Array(10)].map((_, index) => (
-                      <tr key={index}>
-                        <td>Loading...</td>
-                      </tr>
-                    ))
-                  : tableData.map((row) => (
-                      <tr key={row.id}>
-                        <td>{row.language}</td>
-                        <td>{row.heading}</td>
-                        <td>{row.description}</td>
-                        <td>{row.likes_count}</td>
-                        <td>{row.created_at}</td>
-                        <td>{row.approved_time}</td>
-                        <td>{row.image}</td>
-                        <td>{row.posting_date}</td>
-                        {/* <td>Actions</td> */}
-                      </tr>
-                    ))}
-                {!isLoading && tableData.length === 0 && <TableNoData />}
-              </TableBody>
+  {isLoading
+    ? // Show loading skeleton
+      [...Array(10)].map((_, index) => (
+        <tr
+          key={index}
+          style={{
+            backgroundColor: "#f9f9f9",
+            textAlign: "center",
+            height: "50px",
+          }}
+        >
+          <td colSpan="7" style={{ padding: "10px", fontStyle: "italic" }}>
+            Loading...
+          </td>
+        </tr>
+      ))
+    : tableData.map((row, index) => (
+        <tr
+          key={row.id}
+          style={{
+            backgroundColor: index % 2 === 0 ? "#ffffff" : "#f8f8f8",
+            textAlign: "left",
+            height: "50px",
+            transition: "background-color 0.3s",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.backgroundColor = "#e6f7ff")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.backgroundColor =
+              index % 2 === 0 ? "#ffffff" : "#f8f8f8")
+          }
+        >
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            {row.language}
+          </td>
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            {row.heading}
+          </td>
+          <td style={{ padding: "5px", borderBottom: "1px solid #ddd" }}>
+            {row.description}
+          </td>
+          <td style={{ padding: "30px", borderBottom: "1px solid #ddd" }}>
+            {row.likes_count}
+          </td>
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            {row.created_at}
+          </td>
+          {/* <td>{row.approved_time}</td> */}
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            <img
+              src={row.image}
+              alt="Thumbnail"
+              style={{
+                height: "40px",
+                width: "auto",
+                borderRadius: "4px",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              }}
+            />
+          </td>
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            {row.posting_date}
+          </td>
+          {/* <td>Actions</td> */}
+        </tr>
+      ))}
+  {!isLoading && tableData.length === 0 && <TableNoData />}
+</TableBody>
+
             </Table>
           </Scrollbar>
         </TableContainer>
 
         {/* Pagination */}
         <TablePagination
-          component="div"
-          count={totalCount}
-          page={pagination.offset - 1} // Adjusting for zero-based page index
-          rowsPerPage={pagination.limit}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleRowsPerPageChange}
-        />
+  component="div"
+  count={totalCount}
+  page={pagination.offset - 1} // Adjusting for zero-based page index
+  rowsPerPage={pagination.limit}
+  rowsPerPageOptions={[10, 20, 40, 50]} // Added 40 and 50 as options
+  onPageChange={handlePageChange}
+  onRowsPerPageChange={handleRowsPerPageChange}
+/>
       </Card>
     </Container>
   );
