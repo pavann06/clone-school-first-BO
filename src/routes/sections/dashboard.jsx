@@ -7,6 +7,9 @@ import { AuthGuard, PermissionBasedGuard } from 'src/auth/guard';
 import { LoadingScreen } from 'src/components/loading-screen';
 import OnlineStoresListPage from 'src/pages/dashboard/edutainment/list';
 import OnlineStoresCreatePage from 'src/pages/dashboard/edutainment/new';
+import CalenderListPage from 'src/pages/dashboard/calender/list';
+import CalenderCreatePage from 'src/pages/dashboard/calender/new';
+import CalenderEditPage from 'src/pages/dashboard/calender/edit';
 // import { Lazy } from 'yup';
 
 // ----------------------------------------------------------------------
@@ -185,6 +188,36 @@ export const dashboardRoutes = [
           //     </PermissionBasedGuard>
           //   ),
           // },
+        ],
+      },
+
+      {
+        path: 'calender',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CalenderListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CalenderCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CalenderEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
         ],
       },
 

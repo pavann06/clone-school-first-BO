@@ -409,31 +409,75 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const values = watch();
 
+  
+
+  // const onSubmit = handleSubmit(async (data) => {
+  //   console.info('Submitting Form Data:', data);
+
+  //   const formData = new FormData();
+  //   if (data.image) {
+  //     formData.append('image', data.image); // Add the image as 'image' field in FormData
+  //   }
+
+  //   // Append other form fields to FormData
+  //   Object.keys(data).forEach((key) => {
+  //     if (key !== 'image') {
+  //       formData.append(key, data[key]);
+  //     }
+  //   });
+
+  //   let response = {};
+  //   if (currentEdutainment) {
+  //     formData.append('id', currentEdutainment.id); // Append 'id' if updating an existing record
+  //     response = await UpdateEdutainment(formData); // Send FormData for update
+  //   } else {
+  //     response = await CreateEdutainment(formData); // Send FormData for new creation
+  //   }
+
+  //   console.info('API Response:', response);
+
+  //   const { success, description } = response || {};
+  //   if (success) {
+  //     enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
+  //     queryClient.invalidateQueries(['edutainments']);
+  //     router.push(paths.dashboard.edutainments.root);
+  //   } else {
+  //     enqueueSnackbar(description || 'Something went wrong');
+  //     reset();
+  //   }
+  // });
   const onSubmit = handleSubmit(async (data) => {
     console.info('Submitting Form Data:', data);
-
+  
+    // FormData setup to append the image and other form fields
     const formData = new FormData();
-    if (data.image) {
-      formData.append('image', data.image); // Add the image as 'image' field in FormData
+  
+    // Check if the image is set and properly processed
+    if (data.image && data.image.preview) {
+      // If it's a file, you might want to upload the image and get the URL
+      formData.append('image', data.image); // Keep the image file itself for upload
+    } else if (data.image) {
+      // If image is already a URL or base64 string, send it directly
+      formData.append('image', data.image);
     }
-
-    // Append other form fields to FormData
+  
+    // Append the other form fields
     Object.keys(data).forEach((key) => {
       if (key !== 'image') {
         formData.append(key, data[key]);
       }
     });
-
+  
     let response = {};
     if (currentEdutainment) {
-      formData.append('id', currentEdutainment.id); // Append 'id' if updating an existing record
-      response = await UpdateEdutainment(formData); // Send FormData for update
+      formData.append('id', currentEdutainment.id); // For updating existing record
+      response = await UpdateEdutainment(formData);
     } else {
-      response = await CreateEdutainment(formData); // Send FormData for new creation
+      response = await CreateEdutainment(formData); // For creating new entry
     }
-
+  
     console.info('API Response:', response);
-
+  
     const { success, description } = response || {};
     if (success) {
       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
@@ -444,6 +488,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       reset();
     }
   });
+  
 
   const handleDrop = useCallback(
     (acceptedFiles) => {

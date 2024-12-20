@@ -123,6 +123,16 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'calender',
+            path: paths.dashboard.calender.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.calender.root, },
+              { title: 'create', path: paths.dashboard.calender.new,  },
+            ],
+          },
+
 
           // {
           //   title: 'appointments',

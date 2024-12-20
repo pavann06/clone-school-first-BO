@@ -4,41 +4,10 @@ import request from 'src/api/request';
 
 
 
-// // API Implementation
-// export const CreateEdutainment = async (data) => {
-//   try {
-//     console.info('FEATURE-CREATE-FORM-DATA', data);
-
-//     if (data.image) {
-//       const imagePayload = {
-//         files: data.image,
-//         entity: 'edutain/feeds/',
-//       };
-//       const imageResponse = await request.UploadFiles(imagePayload);
-
-//       if (imageResponse.success) {
-//         data.image = imageResponse.info[0];
-//       } else {
-//         return imageResponse;
-//       }
-//     }
 
 
 
-//     const response = await request.post('edutain/feeds/', data);
-//     return response;
-//   } catch (error) {
-//     console.error(error);
-//     return null;
-//   }
-// };
-
-
-
-
-
-
-export const CreateEdutainment = async (data) => {
+export const CreateCalender = async (data) => {
   try {
     console.info('FEATURE-CREATE-FORM-DATA', data);
 
@@ -61,7 +30,7 @@ export const CreateEdutainment = async (data) => {
 
     console.log('FINAL PAYLOAD:', data);
 
-    const response = await request.post('edutain/feeds/', data);
+    const response = await request.post('broadcast/calendars/', data);
     console.info('FEATURE-CREATE-FORM-DATA', data);
     return response;
   } catch (error) {
@@ -73,7 +42,7 @@ export const CreateEdutainment = async (data) => {
   
 
 
-export const UpdateEdutainment = async (data) => {
+export const UpdateCalender = async (data) => {
   try {
 
     const new_files = data.image.filter((item) => typeof item === 'object');
