@@ -89,6 +89,12 @@ export const paths = {
       // edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
     },
 
+    calender : {
+      root: `${ROOTS.DASHBOARD}/calender`,
+      new: `${ROOTS.DASHBOARD}/calender/new`,
+       edit: (id) => `${ROOTS.DASHBOARD}/calender/${id}/edit`,
+    },
+
     
 
     // appointments: {
