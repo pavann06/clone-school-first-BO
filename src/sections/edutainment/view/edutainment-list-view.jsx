@@ -111,6 +111,171 @@
 
 // imp-----------------------------
 
+
+import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { 
+  Card, 
+  Table, 
+  Container, 
+  TableBody, 
+  TableContainer, 
+  TablePagination, 
+  Skeleton, 
+  TableRow, 
+  TableCell 
+} from '@mui/material';
+
+import Scrollbar from 'src/components/scrollbar';
+import request from 'src/api/request';
+import { TableNoData, TableHeadCustom } from 'src/components/table';
+
+const TABLE_HEAD = [
+  { id: 'language', label: 'Language' },
+  { id: 'heading', label: 'Heading' },
+  { id: 'description', label: 'Description' },
+  { id: 'interaction', label: 'Interaction' },
+  { id: 'created_date', label: 'Created Date' },
+  { id: 'approved_date', label: 'Approved Date' },
+  { id: 'image', label: 'Image' },
+];
+
+export default function EdutainmentListView() {
+  const [tableData, setTableData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['edutainment', pagination.page, pagination.page_size],
+    queryFn: () =>
+      request.get(
+        `https://dev-api.familifirst.com/edutain/feeds?page=${pagination.page}&page_size=${pagination.page_size}`
+      ),
+    
+    keepPreviousData: true,
+  });
+
+  useEffect(() => {
+    console.log('Pagination State:', pagination); // Debugging
+    if (data) {
+      console.log('API Response:', data); // Debugging
+      if (data?.data?.length > 0) {
+        setTableData(data.data);
+        setTotalCount(data.total);
+      } else {
+        setTableData([]);
+        setTotalCount(0);
+      }
+    }
+  }, [data, pagination]);
+
+  const handlePageChange = (event, newPage) => {
+    console.log('Page Change:', newPage); // Debugging
+    setPagination((prev) => ({ ...prev, page: newPage + 1 })); // Convert zero-based index to one-based index
+  };
+
+  const handleRowsPerPageChange = (event) => {
+    const newPageSize = parseInt(event.target.value, 10);
+    console.log('Rows Per Page Change:', newPageSize); // Debugging
+    setPagination({ page: 1, page_size: newPageSize });
+  };
+
+  return (
+    <Container maxWidth="lg">
+      <Card>
+        <TableContainer>
+          <Scrollbar>
+            <Table>
+              <TableHeadCustom headLabel={TABLE_HEAD} />
+              <TableBody>
+                {isLoading
+                  ? [...Array(pagination.page_size)].map((_, index) => (
+                      <TableRow key={index}>
+                        {TABLE_HEAD.map((head) => (
+                          <TableCell key={head.id} align="center">
+                            <Skeleton variant="text" width={80} height={30} />
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  : tableData.map((row, index) => (
+                      <TableRow
+                        key={row.id}
+                        style={{
+                          backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <TableCell align="center">{row.language}</TableCell>
+                        <TableCell align="center">{row.heading}</TableCell>
+                        <TableCell align="center">{row.description}</TableCell>
+                        <TableCell align="center">{row.likes_count}</TableCell>
+                        <TableCell align="center">{new Date(row.created_at).toLocaleDateString('en-GB')}</TableCell>
+                        <TableCell align="center">{new Date(row.approved_time).toLocaleDateString('en-GB')}</TableCell>
+                        <TableCell align="center">
+                          {row.image ? (
+                            <img
+                              src={row.image}
+                              alt={`Thumbnail for ${row.heading}`}
+                              style={{ maxWidth: 100, maxHeight: 50 }}
+                            />
+                          ) : (
+                            'No Image'
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                {!isLoading && tableData.length === 0 && <TableNoData />}
+              </TableBody>
+            </Table>
+          </Scrollbar>
+        </TableContainer>
+
+        <TablePagination
+          component="div"
+          count={totalCount}
+          page={pagination.page - 1} // Adjusted for zero-based indexing
+          rowsPerPage={pagination.page_size}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
+      </Card>
+    </Container>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// imp end---------------------
+
+
 // import React, { useState, useEffect } from 'react';
 // import { useQuery } from '@tanstack/react-query';
 // import { Card, Table, Container, TableBody, TableContainer, TablePagination, Skeleton, TableRow, TableCell } from '@mui/material';
@@ -135,22 +300,18 @@
 //   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
 //   const { data, isLoading, isError } = useQuery({
-//     queryKey: ['edutainment',  pagination.page, pagination.page_size], 
-//     queryFn: () =>
+//     queryKey: ['edutainment', pagination.page, pagination.page_size],
+//     queryFn: async () =>
 //       request.get('https://dev-api.familifirst.com/edutain/feeds/', {
-//         params: {
-//           page: pagination.page,
-//           page_size: pagination.page_size,
-//         },
+//         params: { page: pagination.page, page_size: pagination.page_size }, // Ensure params are passed correctly
 //       }),
-//     keepPreviousData: true, 
+//     keepPreviousData: true,
 //   });
 
 //   useEffect(() => {
 //     if (data) {
-//       console.log('API Response:', data); 
 //       if (data?.data?.length > 0) {
-//         setTableData(data.data); 
+//         setTableData(data.data);
 //         setTotalCount(data.total);
 //       } else {
 //         setTableData([]);
@@ -159,13 +320,23 @@
 //     }
 //   }, [data]);
 
+//   useEffect(() => {
+//     if (isLoading) {
+//       setTableData([]);
+//     }
+//   }, [isLoading]);
+
 //   const handlePageChange = (event, newPage) => {
-//     setPagination((prev) => ({ ...prev, page: newPage + 1 })); 
+//     setPagination((prev) => ({ ...prev, page: newPage + 1 })); // Adjust for zero-based index
 //   };
 
 //   const handleRowsPerPageChange = (event) => {
 //     setPagination({ page: 1, page_size: parseInt(event.target.value, 10) });
 //   };
+
+//   if (isError) {
+//     return <div>Error loading data. Please try again later.</div>;
+//   }
 
 //   return (
 //     <Container maxWidth="lg">
@@ -176,7 +347,7 @@
 //               <TableHeadCustom headLabel={TABLE_HEAD} />
 //               <TableBody>
 //                 {isLoading
-//                   ? [...Array(pagination.limit)].map((_, index) => (
+//                   ? [...Array(pagination.page_size)].map((_, index) => (
 //                       <TableRow key={index}>
 //                         {TABLE_HEAD.map((head) => (
 //                           <TableCell key={head.id} align="center">
@@ -185,45 +356,42 @@
 //                         ))}
 //                       </TableRow>
 //                     ))
-//                   : tableData.map((row, index) => {
-//                       const handleMouseEnter = (e) => {
-//                         e.target.style.backgroundColor = '#f1f1f1';
-//                       };
-
-//                       const handleMouseLeave = (e) => {
-//                         e.target.style.backgroundColor = index % 2 === 0 ? '#f9f9f9' : '#ffffff';
-//                       };
-
-//                       return (
-//                         <TableRow
-//                           key={row.id}
-//                           style={{
-//                             backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
-//                             cursor: 'pointer',
-//                           }}
-//                           onMouseEnter={handleMouseEnter}
-//                           onMouseLeave={handleMouseLeave}
-//                         >
-//                           <TableCell align="center">{row.language}</TableCell>
-//                           <TableCell align="center">{row.heading}</TableCell>
-//                           <TableCell align="center">{row.description}</TableCell>
-//                           <TableCell align="center">{row.likes_count}</TableCell>
-//                           <TableCell align="center">{new Date(row.created_at).toLocaleDateString('en-GB')}</TableCell>
-//                           <TableCell align="center">{new Date(row.approved_time).toLocaleDateString('en-GB')}</TableCell>
-//                           <TableCell align="center">
-//                             {row.image ? (
-//                               <img
-//                                 src={row.image}
-//                                 alt={`Thumbnail for ${row.heading}`}
-//                                 style={{ maxWidth: 100, maxHeight: 50 }}
-//                               />
-//                             ) : (
-//                               'No Image'
-//                             )}
-//                           </TableCell>
-//                         </TableRow>
-//                       );
-//                     })}
+//                   : tableData.map((row, index) => (
+//                       <TableRow
+//                         key={row.id}
+//                         hover
+//                         style={{
+//                           backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
+//                           cursor: 'pointer',
+//                         }}
+//                       >
+//                         <TableCell align="center">{row.language}</TableCell>
+//                         <TableCell align="center">{row.heading}</TableCell>
+//                         <TableCell align="center">{row.description}</TableCell>
+//                         <TableCell align="center">{row.likes_count}</TableCell>
+//                         <TableCell align="center">
+//                           {row.created_at
+//                             ? new Date(row.created_at).toLocaleDateString('en-GB')
+//                             : 'N/A'}
+//                         </TableCell>
+//                         <TableCell align="center">
+//                           {row.approved_time
+//                             ? new Date(row.approved_time).toLocaleDateString('en-GB')
+//                             : 'N/A'}
+//                         </TableCell>
+//                         <TableCell align="center">
+//                           {row.image ? (
+//                             <img
+//                               src={row.image}
+//                               alt={`Thumbnail for ${row.heading}`}
+//                               style={{ maxWidth: 100, maxHeight: 50 }}
+//                             />
+//                           ) : (
+//                             'No Image'
+//                           )}
+//                         </TableCell>
+//                       </TableRow>
+//                     ))}
 //                 {!isLoading && tableData.length === 0 && <TableNoData />}
 //               </TableBody>
 //             </Table>
@@ -233,7 +401,7 @@
 //         <TablePagination
 //           component="div"
 //           count={totalCount}
-//           page={pagination.page - 1} // Adjusted for zero-based indexing
+//           page={pagination.page - 1} // Adjust for zero-based indexing
 //           rowsPerPage={pagination.page_size}
 //           onPageChange={handlePageChange}
 //           onRowsPerPageChange={handleRowsPerPageChange}
@@ -242,144 +410,6 @@
 //     </Container>
 //   );
 // }
-
-// imp end---------------------
-
-
-import React, { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Card, Table, Container, TableBody, TableContainer, TablePagination, Skeleton, TableRow, TableCell } from '@mui/material';
-
-import Scrollbar from 'src/components/scrollbar';
-import request from 'src/api/request';
-import { TableNoData, TableHeadCustom } from 'src/components/table';
-
-const TABLE_HEAD = [
-  { id: 'language', label: 'Language' },
-  { id: 'heading', label: 'Heading' },
-  { id: 'description', label: 'Description' },
-  { id: 'interaction', label: 'Interaction' },
-  { id: 'created_date', label: 'Created Date' },
-  { id: 'approved_date', label: 'Approved Date' },
-  { id: 'image', label: 'Image' },
-];
-
-export default function EdutainmentListView() {
-  const [tableData, setTableData] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['edutainment', pagination.page, pagination.page_size],
-    queryFn: async () =>
-      request.get('https://dev-api.familifirst.com/edutain/feeds/', {
-        params: { page: pagination.page, page_size: pagination.page_size }, // Ensure params are passed correctly
-      }),
-    keepPreviousData: true,
-  });
-
-  useEffect(() => {
-    if (data) {
-      if (data?.data?.length > 0) {
-        setTableData(data.data);
-        setTotalCount(data.total);
-      } else {
-        setTableData([]);
-        setTotalCount(0);
-      }
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (isLoading) {
-      setTableData([]);
-    }
-  }, [isLoading]);
-
-  const handlePageChange = (event, newPage) => {
-    setPagination((prev) => ({ ...prev, page: newPage + 1 })); // Adjust for zero-based index
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setPagination({ page: 1, page_size: parseInt(event.target.value, 10) });
-  };
-
-  if (isError) {
-    return <div>Error loading data. Please try again later.</div>;
-  }
-
-  return (
-    <Container maxWidth="lg">
-      <Card>
-        <TableContainer>
-          <Scrollbar>
-            <Table>
-              <TableHeadCustom headLabel={TABLE_HEAD} />
-              <TableBody>
-                {isLoading
-                  ? [...Array(pagination.page_size)].map((_, index) => (
-                      <TableRow key={index}>
-                        {TABLE_HEAD.map((head) => (
-                          <TableCell key={head.id} align="center">
-                            <Skeleton variant="text" width={80} height={30} />
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
-                  : tableData.map((row, index) => (
-                      <TableRow
-                        key={row.id}
-                        hover
-                        style={{
-                          backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <TableCell align="center">{row.language}</TableCell>
-                        <TableCell align="center">{row.heading}</TableCell>
-                        <TableCell align="center">{row.description}</TableCell>
-                        <TableCell align="center">{row.likes_count}</TableCell>
-                        <TableCell align="center">
-                          {row.created_at
-                            ? new Date(row.created_at).toLocaleDateString('en-GB')
-                            : 'N/A'}
-                        </TableCell>
-                        <TableCell align="center">
-                          {row.approved_time
-                            ? new Date(row.approved_time).toLocaleDateString('en-GB')
-                            : 'N/A'}
-                        </TableCell>
-                        <TableCell align="center">
-                          {row.image ? (
-                            <img
-                              src={row.image}
-                              alt={`Thumbnail for ${row.heading}`}
-                              style={{ maxWidth: 100, maxHeight: 50 }}
-                            />
-                          ) : (
-                            'No Image'
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                {!isLoading && tableData.length === 0 && <TableNoData />}
-              </TableBody>
-            </Table>
-          </Scrollbar>
-        </TableContainer>
-
-        <TablePagination
-          component="div"
-          count={totalCount}
-          page={pagination.page - 1} // Adjust for zero-based indexing
-          rowsPerPage={pagination.page_size}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleRowsPerPageChange}
-        />
-      </Card>
-    </Container>
-  );
-}
 
 
 

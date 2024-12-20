@@ -61,7 +61,7 @@ export const CreateEdutainment = async (data) => {
 
     console.log('FINAL PAYLOAD:', data);
 
-    const response = await request.post('edutain/feeds/', data);
+    const response = await request.post('backoffice/edutain/feeds', data);
     console.info('FEATURE-CREATE-FORM-DATA', data);
     return response;
   } catch (error) {
