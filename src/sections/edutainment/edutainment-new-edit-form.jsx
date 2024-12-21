@@ -87,48 +87,39 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
-    console.info('Submitting Form Data:', data);
-  
-    // FormData setup to append the image and other form fields
-    const formData = new FormData();
-  
-    // Check if the image is set and properly processed
-    if (data.image && data.image.preview) {
-      // If it's a file, you might want to upload the image and get the URL
-      formData.append('image', data.image); // Keep the image file itself for upload
-    } else if (data.image) {
-      // If image is already a URL or base64 string, send it directly
-      formData.append('image', data.image);
-    }
-  
-    // Append the other form fields
-    Object.keys(data).forEach((key) => {
-      if (key !== 'image') {
-        formData.append(key, data[key]);
+    try {
+      // if update product
+      let response = {};
+      if (currentEdutainment) {
+        data.id = currentEdutainment.id;
+        response = await UpdateEdutainment(data);
       }
-    });
-  
-    let response = {};
-    if (currentEdutainment) {
-      formData.append('id', currentEdutainment.id); // For updating existing record
-      response = await UpdateEdutainment(formData);
-    } else {
-      response = await CreateEdutainment(formData); // For creating new entry
+      // if create product
+      else {
+        response = await CreateEdutainment(data);
+      }
+
+      // product creation success
+      if (response && response.success) {
+        enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
+        reset();
+        // invalidate cache
+        queryClient.invalidateQueries(['edutainment']);
+
+        // redirect to product list
+        router.push(paths.dashboard.edutainment.root);
+        return response;
+      }
+      enqueueSnackbar('Feeds Create failed!');
+
+      return response;
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      enqueueSnackbar('Feeds Create failed from user!');
     }
-  
-    console.info('API Response:', response);
-  
-    const { success, description } = response || {};
-    if (success) {
-      enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
-      queryClient.invalidateQueries(['edutainments']);
-      router.push(paths.dashboard.edutainments.root);
-    } else {
-      enqueueSnackbar(description || 'Something went wrong');
-      reset();
-    }
+    return null;
   });
-  
+
 
   const handleDrop = useCallback(
     (acceptedFiles) => {
