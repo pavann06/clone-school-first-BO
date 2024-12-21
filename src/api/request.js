@@ -123,11 +123,11 @@ const request = {
       if (token) {
         axios.defaults.headers.common.Authorization = token;
       }
-      const response = await axios.post('backoffice/saveFile', jsonData, config);
+      const response = await axios.post('userservice/storage/upload', jsonData, config);
 
       return response.data;
     } catch (error) {
-      console.error('error in delete api', error);
+      console.error('error in file upload api', error);
       return error;
     }
   },
