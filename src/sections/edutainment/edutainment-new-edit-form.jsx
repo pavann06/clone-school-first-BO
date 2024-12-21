@@ -94,7 +94,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   
     // Check if the image is set and properly processed
     if (data.image && data.image.preview) {
-      // If it's a file, you might want to upload the image and get the URL
+    
       formData.append('image', data.image); // Keep the image file itself for upload
     } else if (data.image) {
       // If image is already a URL or base64 string, send it directly
@@ -110,7 +110,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   
     let response = {};
     if (currentEdutainment) {
-      formData.append('id', currentEdutainment.id); // For updating existing record
+      formData.append('id', currentEdutainment.id); 
       response = await UpdateEdutainment(formData);
     } else {
       response = await CreateEdutainment(formData); // For creating new entry
