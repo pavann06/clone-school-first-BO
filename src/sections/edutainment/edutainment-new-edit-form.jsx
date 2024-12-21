@@ -39,31 +39,34 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
-
   const EdutainmentSchema = Yup.object().shape({
-    field_type : Yup.string().required('Type is required'),
+    field_type: Yup.string().required('Type is required'),
     heading: Yup.string().required('Heading is required'),
-    image: Yup.mixed(),
-    video: Yup.mixed().when('field_type', {
-      is: 'video',
-      then: Yup.mixed().required('Video is required for video type'),
-    }),
-    duration: Yup.string().when('field_type', {
-      is: 'video',
-      then: Yup.string().required('Duration is required for video type'),
-    }),
+    image: Yup.mixed().nullable(), 
+    video: Yup.mixed()
+      .nullable() 
+      .when('field_type', {
+        is: 'video',
+        then: Yup.mixed().required('Video is required for video type'),
+      }),
+    duration: Yup.string()
+      .when('field_type', {
+        is: 'video',
+        then: Yup.string().required('Duration is required for video type'),
+      }),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
-    posting_date: Yup.string().required('posting_date is required'),
+    posting_date: Yup.string().required('Posting date is required'),
   });
+  
 
   const defaultValues = useMemo(
     () => ({
       heading: currentEdutainment?.heading || '',
-      field_type: currentEdutainment?.field_type || '',
-      image: currentEdutainment?.image || '',
-      video: currentEdutainment?.video || '',
-      duration: currentEdutainment?.duration || '',
+      feed_type: currentEdutainment?.feed_type || '',
+      image: currentEdutainment?.image || null,
+      video: currentEdutainment?.video || null,
+      duration: currentEdutainment?.duration || null,
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
       posting_date: currentEdutainment?.posting_date || '',
@@ -169,11 +172,11 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     md: 'repeat(2, 1fr)', // Three columns on medium and up
                   }}
                 >
-                  <RHFSelect name="field_type" label="Type">
-                    <MenuItem value="text">Text</MenuItem>
-                    <MenuItem value="image">Image</MenuItem>
-                    <MenuItem value="video">Video</MenuItem>
-                    <MenuItem value="youtube">YouTube</MenuItem>
+                  <RHFSelect name="feed_type" label="Type">
+                    <MenuItem value="Text">Text</MenuItem>
+                    <MenuItem value="Image">Image</MenuItem>
+                    <MenuItem value="Video">Video</MenuItem>
+                    <MenuItem value="Youtube">YouTube</MenuItem>
                   </RHFSelect>
                 </Box>
 
@@ -191,9 +194,9 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 </Box>
 
                 {/* Conditionally Render Image Field */}
-                {(values.field_type === 'image' ||
-                  values.field_type === 'video' ||
-                  values.field_type === 'youtube') && (
+                {(values.feed_type === 'Image' ||
+                  values.feed_type === 'Video' ||
+                  values.feed_type === 'Youtube') && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     {/* Image Field */}
                     <Stack spacing={1.5}>
@@ -210,7 +213,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </Box>
                 )}
 
-                {(values.field_type === 'video' || values.field_type === 'youtube') && (
+                {(values.feed_type === 'Video' || values.feed_type === 'Youtube') && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Video</Typography>
@@ -219,7 +222,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </Box>
                 )}
 
-                {values.field_type === 'video' && (
+                {values.feed_type === 'video' && (
                   <Box>
                     <RHFTextField
                       name="duration"
