@@ -427,13 +427,18 @@ export default function CalenderListView() {
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['edutainment', pagination.page, pagination.page_size],
-    queryFn: async () =>
-      request.get('https://dev-api.familifirst.com/broadcast/calendars/', {
-        params: { page: pagination.page, page_size: pagination.page_size },
-      }),
+    queryKey: ['calendar', pagination.page, pagination.page_size],
+    queryFn: async () => {
+      const { page, page_size } = pagination;
+      const response = await request.get(
+        `https://dev-api.familifirst.com/broadcast/calendar?page=${page}&page_size=${page_size}`
+      );
+      return response;
+    },
     keepPreviousData: true,
   });
+  
+  
 
   useEffect(() => {
     if (data) {

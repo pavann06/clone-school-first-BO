@@ -5,11 +5,10 @@ import DashboardLayout from 'src/layouts/dashboard';
 import { AuthGuard, PermissionBasedGuard } from 'src/auth/guard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
-import OnlineStoresListPage from 'src/pages/dashboard/edutainment/list';
-import OnlineStoresCreatePage from 'src/pages/dashboard/edutainment/new';
-import CalenderListPage from 'src/pages/dashboard/calender/list';
-import CalenderCreatePage from 'src/pages/dashboard/calender/new';
-import CalenderEditPage from 'src/pages/dashboard/calender/edit';
+
+
+
+
 // import { Lazy } from 'yup';
 
 // ----------------------------------------------------------------------
@@ -51,8 +50,17 @@ const SalesAnalyticsPage = lazy(() => import('src/pages/dashboard/sales/analytic
 const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
 
 
-const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'))
-const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'))
+const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
+const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
+const EdutainmentEditPage = lazy(() => import('src/pages/dashboard/edutainment/edit'));
+
+
+
+const OnlineStoresListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
+const OnlineStoresCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
+const CalenderListPage = lazy(() => import('src/pages/dashboard/calender/list'));
+const CalenderCreatePage = lazy(() => import('src/pages/dashboard/calender/new'));
+const CalenderEditPage = lazy(() => import('src/pages/dashboard/calender/edit'));
 
 // WELCOME PAGE
 
@@ -150,14 +158,14 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-          // {
-          //   path: ':id/edit',
-          //   element: (
-          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-          //       <FeaturesEditPage />
-          //     </PermissionBasedGuard>
-          //   ),
-          // },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EdutainmentEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
         ],
       },
 

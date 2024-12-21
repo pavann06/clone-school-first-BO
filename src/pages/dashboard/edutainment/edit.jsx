@@ -1,23 +1,23 @@
-// import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 
-// import { useParams } from 'src/routes/hooks';
+import { useParams } from 'src/routes/hooks';
 
-// import { FeaturesEditView } from 'src/sections/features/view';
+import { EdutainmentEditView } from 'src/sections/edutainment/view';
 
-// // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 
-// export default function SpecialitiesEditPage() {
-//   const params = useParams();
+export default function EdutainmentEditPage() {
+  const params = useParams();
 
-//   const { id } = params;
+  const { id } = params;
 
-//   return (
-//     <>
-//       <Helmet>
-//         <title> Specialities Edit</title>
-//       </Helmet>
+  return (
+    <>
+      <Helmet>
+        <title> Edutainment Edit</title>
+      </Helmet>
 
-//       <FeaturesEditView id={`${id}`} />
-//     </>
-//   );
-// }
+      <EdutainmentEditView id={`${id}`} />
+    </>
+  );
+}

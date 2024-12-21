@@ -80,7 +80,7 @@ export const paths = {
     edutainment: {
       root: `${ROOTS.DASHBOARD}/edutainment`,
       new: `${ROOTS.DASHBOARD}/edutainment/new`,
-      // edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
+      edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
     },
 
     onlinestores: {

@@ -30,7 +30,7 @@ export const CreateCalender = async (data) => {
 
     console.log('FINAL PAYLOAD:', data);
 
-    const response = await request.post('broadcast/calendars/', data);
+    const response = await request.post('backoffice/broadcast/calendar', data);
     console.info('FEATURE-CREATE-FORM-DATA', data);
     return response;
   } catch (error) {

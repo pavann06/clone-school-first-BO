@@ -111,8 +111,7 @@
 
 // imp-----------------------------
 
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { 
   Card, 
@@ -121,44 +120,49 @@ import {
   TableBody, 
   TableContainer, 
   TablePagination, 
-  Skeleton, 
-  TableRow, 
-  TableCell 
+  Skeleton 
 } from '@mui/material';
 
 import Scrollbar from 'src/components/scrollbar';
+import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
+import { RouterLink } from 'src/routes/components';
 import request from 'src/api/request';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
+
+import EdutainmentTableRow from '../edutainment-table-row';
+
+
+
 const TABLE_HEAD = [
-  { id: 'language', label: 'Language' },
+  { id: "index", label: "Serial No" }, // Added Serial No column
   { id: 'heading', label: 'Heading' },
   { id: 'description', label: 'Description' },
-  { id: 'interaction', label: 'Interaction' },
-  { id: 'created_date', label: 'Created Date' },
-  { id: 'approved_date', label: 'Approved Date' },
+  { id: 'approved_date', label: 'Approved ' },
   { id: 'image', label: 'Image' },
+  { id: 'likes_count' , label : "Likes "},
+  { id: 'language' , label : 'language'},
+  {id: 'actions ', label :"Actions"},
 ];
 
 export default function EdutainmentListView() {
+  const router = useRouter();
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading,  } = useQuery({
     queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `https://dev-api.familifirst.com/edutain/feeds?page=${pagination.page}&page_size=${pagination.page_size}`
+        `https://dev-api.familifirst.com/backoffice/edutain/feeds?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
-    
     keepPreviousData: true,
   });
 
   useEffect(() => {
-    console.log('Pagination State:', pagination); // Debugging
     if (data) {
-      console.log('API Response:', data); // Debugging
       if (data?.data?.length > 0) {
         setTableData(data.data);
         setTotalCount(data.total);
@@ -167,17 +171,27 @@ export default function EdutainmentListView() {
         setTotalCount(0);
       }
     }
-  }, [data, pagination]);
+  }, [data]);
 
   const handlePageChange = (event, newPage) => {
-    console.log('Page Change:', newPage); // Debugging
-    setPagination((prev) => ({ ...prev, page: newPage + 1 })); // Convert zero-based index to one-based index
+    setPagination((prev) => ({ ...prev, page: newPage + 1 }));
   };
 
   const handleRowsPerPageChange = (event) => {
     const newPageSize = parseInt(event.target.value, 10);
-    console.log('Rows Per Page Change:', newPageSize); // Debugging
     setPagination({ page: 1, page_size: newPageSize });
+  };
+
+   const handleEditRow = useCallback(
+    (id) => {
+      router.push(paths.dashboard.edutainment.edit(id));
+    },
+    [router]
+  
+  );
+
+  const handleDeleteRow = (id) => {
+    console.log('Delete row with ID:', id); 
   };
 
   return (
@@ -190,40 +204,16 @@ export default function EdutainmentListView() {
               <TableBody>
                 {isLoading
                   ? [...Array(pagination.page_size)].map((_, index) => (
-                      <TableRow key={index}>
-                        {TABLE_HEAD.map((head) => (
-                          <TableCell key={head.id} align="center">
-                            <Skeleton variant="text" width={80} height={30} />
-                          </TableCell>
-                        ))}
-                      </TableRow>
+                      <Skeleton key={index} variant="rectangular" height={40} />
                     ))
-                  : tableData.map((row, index) => (
-                      <TableRow
+                  : tableData.map((row) => (
+                      <EdutainmentTableRow
                         key={row.id}
-                        style={{
-                          backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#ffffff',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <TableCell align="center">{row.language}</TableCell>
-                        <TableCell align="center">{row.heading}</TableCell>
-                        <TableCell align="center">{row.description}</TableCell>
-                        <TableCell align="center">{row.likes_count}</TableCell>
-                        <TableCell align="center">{new Date(row.created_at).toLocaleDateString('en-GB')}</TableCell>
-                        <TableCell align="center">{new Date(row.approved_time).toLocaleDateString('en-GB')}</TableCell>
-                        <TableCell align="center">
-                          {row.image ? (
-                            <img
-                              src={row.image}
-                              alt={`Thumbnail for ${row.heading}`}
-                              style={{ maxWidth: 100, maxHeight: 50 }}
-                            />
-                          ) : (
-                            'No Image'
-                          )}
-                        </TableCell>
-                      </TableRow>
+
+                         row={{ ...row, id: Number(row.id) }} 
+                        onEditRow={() => handleEditRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
+                      />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}
               </TableBody>
@@ -234,7 +224,7 @@ export default function EdutainmentListView() {
         <TablePagination
           component="div"
           count={totalCount}
-          page={pagination.page - 1} // Adjusted for zero-based indexing
+          page={pagination.page - 1}
           rowsPerPage={pagination.page_size}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
@@ -243,6 +233,7 @@ export default function EdutainmentListView() {
     </Container>
   );
 }
+
 
 
 
