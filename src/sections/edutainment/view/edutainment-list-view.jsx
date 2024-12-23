@@ -91,7 +91,8 @@ export default function EdutainmentListView() {
     if (success) {
       enqueueSnackbar('Deleted successfully');
 
-      router.push(paths.dashboard.edutainment.root);
+      // refetch the data
+      setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
 
