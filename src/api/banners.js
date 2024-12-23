@@ -2,7 +2,6 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-
 export const CreateBanner = async (data) => {
   try {
     console.info('BANNER-CREATE-FORM-DATA', data);
@@ -35,10 +34,8 @@ export const CreateBanner = async (data) => {
   }
 };
 
-
 export const UpdateBanner = async (data) => {
   try {
-
     const new_files = data.banner_image.filter((item) => typeof item === 'object');
     const old_files = data.banner_image.filter((item) => typeof item === 'string');
 
@@ -59,7 +56,7 @@ export const UpdateBanner = async (data) => {
     const { success, info } = response;
     // if success then call create product api
     if (success) {
-        data.banner_image = info[0];
+      data.banner_image = info[0];
 
       const resp = await request.put('banners', data);
       return resp;

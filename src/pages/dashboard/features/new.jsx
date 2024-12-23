@@ -11,9 +11,7 @@ export default function FeatureCreatePage() {
         <title> New Speciality </title>
       </Helmet>
 
-       <FeaturesCreateView />
-      
-      
+      <FeaturesCreateView />
     </>
   );
 }

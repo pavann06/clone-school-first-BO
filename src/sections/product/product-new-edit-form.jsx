@@ -21,11 +21,10 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { CreateProduct, UpdateProduct } from 'src/api/product';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFUpload, RHFTextField,RHFAutocomplete } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function ProductNewEditForm({ currentProduct }) {
-
   const queryClient = useQueryClient();
 
   const router = useRouter();
@@ -33,7 +32,6 @@ export default function ProductNewEditForm({ currentProduct }) {
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
-
 
   const NewProductSchema = Yup.object().shape({
     product_name: Yup.string().required('Product name is required'),
@@ -52,7 +50,6 @@ export default function ProductNewEditForm({ currentProduct }) {
       sku: currentProduct?.sku || '',
       quantity_type: currentProduct?.quantity_type || 'KG',
       default_price: currentProduct?.default_price || 0,
-
     }),
     [currentProduct]
   );
@@ -78,24 +75,22 @@ export default function ProductNewEditForm({ currentProduct }) {
     }
   }, [currentProduct, defaultValues, reset]);
 
-
   const onSubmit = handleSubmit(async (data) => {
-
     // if update product
-    let response = {}
-    if(currentProduct){
-      data.product_id = currentProduct.id
+    let response = {};
+    if (currentProduct) {
+      data.product_id = currentProduct.id;
       response = await UpdateProduct(data);
     }
     // if create product
-    else{
-      response = await CreateProduct(data)
+    else {
+      response = await CreateProduct(data);
     }
 
-    const {success, description } = response
+    const { success, description } = response;
 
     // product creation success
-    if (success){
+    if (success) {
       enqueueSnackbar(currentProduct ? 'Update success!' : 'Create success!');
       // invalidate cache
       queryClient.invalidateQueries(['products']);
@@ -108,7 +103,6 @@ export default function ProductNewEditForm({ currentProduct }) {
     // product creation failed
     enqueueSnackbar(description);
     reset();
-
   });
 
   const handleDrop = useCallback(
@@ -157,23 +151,23 @@ export default function ProductNewEditForm({ currentProduct }) {
               >
                 <RHFTextField name="product_name" label="Product Name" />
 
-
                 <RHFTextField name="sku" label="Product SKU" />
 
                 <RHFAutocomplete
                   name="quantity_type"
                   label="Quantity Type"
-                  options={['KG', 'TON','BAG','LITRE','UNIT','NA']}
+                  options={['KG', 'TON', 'BAG', 'LITRE', 'UNIT', 'NA']}
                   getOptionLabel={(option) => option}
                   isOptionEqualToValue={(option, value) => option === value}
-                  onChange={(event, value) => setValue('quantity_type', value, { shouldValidate: true })}
+                  onChange={(event, value) =>
+                    setValue('quantity_type', value, { shouldValidate: true })
+                  }
                   renderOption={(props, option) => (
                     <li {...props} key={option}>
                       {option}
                     </li>
                   )}
                 />
-
 
                 <RHFTextField name="default_price" label="Deafult Price" />
 

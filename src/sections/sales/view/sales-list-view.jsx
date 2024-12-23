@@ -64,7 +64,6 @@ export default function SalesListView() {
 
   const [salesCount, setSalesCount] = useState(0);
 
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ['sales', filters],
     queryFn: () => request.get('/sales', filters),
@@ -235,7 +234,7 @@ export default function SalesListView() {
                         key={row.id}
                         row={{ ...row, serial_no: index + 1 }}
                         selected={false}
-                        onSelectRow={() => { }}
+                        onSelectRow={() => {}}
                         onViewRow={() => handleViewRow(row.id)}
                         onEditRow={() => handleEditRow(row.id)}
                       />

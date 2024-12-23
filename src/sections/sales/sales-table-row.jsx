@@ -19,8 +19,8 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 // ----------------------------------------------------------------------
 
 export default function SalesTableRow({ row, selected, onViewRow, onEditRow }) {
-  const { customer_name, distributor_name, order_date, final_amount, order_no, status, serial_no } = row;
-
+  const { customer_name, distributor_name, order_date, final_amount, order_no, status, serial_no } =
+    row;
 
   const popover = usePopover();
 
@@ -30,7 +30,6 @@ export default function SalesTableRow({ row, selected, onViewRow, onEditRow }) {
         <TableCell>{serial_no}</TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-      
           <Avatar alt={customer_name} sx={{ mr: 2 }}>
             {customer_name.charAt(0).toUpperCase()}
           </Avatar>
@@ -79,7 +78,7 @@ export default function SalesTableRow({ row, selected, onViewRow, onEditRow }) {
           </Label>
         </TableCell>
 
-        <TableCell  sx={{ px: 1 }}>
+        <TableCell sx={{ px: 1 }}>
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
@@ -101,7 +100,7 @@ export default function SalesTableRow({ row, selected, onViewRow, onEditRow }) {
           <Iconify icon="solar:eye-bold" />
           View
         </MenuItem>
-        
+
         {status !== 'INVOICE' && (
           <MenuItem
             onClick={() => {

@@ -14,9 +14,9 @@ import { varBounce, MotionContainer } from 'src/components/animate';
 
 export default function RoleBasedGuard({ hasContent, roles, children, sx }) {
   // Logic here to get current user role
-  const { user } =  useSelector(selectAuth);;
+  const { user } = useSelector(selectAuth);
 
-  const currentRole = user?.role; 
+  const currentRole = user?.role;
 
   if (typeof roles !== 'undefined' && !roles.includes(currentRole)) {
     return hasContent ? (

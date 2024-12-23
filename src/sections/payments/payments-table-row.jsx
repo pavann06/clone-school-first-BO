@@ -11,7 +11,7 @@ import Iconify from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export default function PaymentsTableRow({ row, selected }) {
-  const { contact_name, payment_date, amount, payment_type,serial_no,remarks } = row;
+  const { contact_name, payment_date, amount, payment_type, serial_no, remarks } = row;
 
   return (
     <TableRow hover selected={selected}>
@@ -37,7 +37,7 @@ export default function PaymentsTableRow({ row, selected }) {
 
       <TableCell>{remarks}</TableCell>
 
-      <TableCell  sx={{ px: 1, whiteSpace: 'nowrap' }}>
+      <TableCell sx={{ px: 1, whiteSpace: 'nowrap' }}>
         <IconButton color="default">
           <Iconify icon="eva:more-vertical-fill" />
         </IconButton>

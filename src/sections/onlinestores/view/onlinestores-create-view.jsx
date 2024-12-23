@@ -36,15 +36,3 @@ export default function OnlieStoresCreateView() {
     </Container>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-

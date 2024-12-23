@@ -11,7 +11,7 @@ export default function PurchaseAnalyticsPage() {
         <title>Purchase Analytics</title>
       </Helmet>
 
-      <PurchaseAnalyticsView/>
+      <PurchaseAnalyticsView />
     </>
   );
 }

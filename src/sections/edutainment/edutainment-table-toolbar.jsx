@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
 
 // ----------------------------------------------------------------------
 
-export default function EdutainmentTableToolbar({ filters, setFilters }) {
+export default function EdutainmentTableToolbar() {
   return (
     <Stack
       spacing={2}
@@ -22,6 +22,6 @@ export default function EdutainmentTableToolbar({ filters, setFilters }) {
 }
 
 EdutainmentTableToolbar.propTypes = {
-  filters: PropTypes.object,
-  setFilters: PropTypes.any,
+  // filters: PropTypes.object,
+  // setFilters: PropTypes.any,
 };

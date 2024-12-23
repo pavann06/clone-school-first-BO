@@ -31,15 +31,15 @@ export default function AccountChangePassword() {
     email: Yup.string(),
     old_password: Yup.string().required('Old Password is required'),
     new_password: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .required('Confirm password is required')
-    .oneOf([Yup.ref('new_password')], 'Passwords must match'),
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
+    confirmPassword: Yup.string()
+      .required('Confirm password is required')
+      .oneOf([Yup.ref('new_password')], 'Passwords must match'),
   });
 
   const defaultValues = {
-    email:user?.email,
+    email: user?.email,
     old_password: '',
     new_password: '',
     confirmPassword: '',

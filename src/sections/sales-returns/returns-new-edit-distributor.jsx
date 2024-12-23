@@ -17,7 +17,7 @@ export default function ReturnsNewEditDistributor() {
   const [selectedDistributor, setSelectedDistributor] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
-  const { watch, setValue,control } = useFormContext();
+  const { watch, setValue, control } = useFormContext();
   const values = watch();
   const { distributor } = values;
 

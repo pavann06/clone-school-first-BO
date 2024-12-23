@@ -19,7 +19,7 @@ export default function SalesDetailsView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['sales', 'details','invoice', id],
+    queryKey: ['sales', 'details', 'invoice', id],
     queryFn: () => request.get('/sales/details/invoice', { sale_id: id }),
     staleTime: 24 * 60 * 60 * 1000,
   });

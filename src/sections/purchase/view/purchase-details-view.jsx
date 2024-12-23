@@ -19,7 +19,7 @@ export default function PurchaseDetailsView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['purchases', 'details','receipt', id],
+    queryKey: ['purchases', 'details', 'receipt', id],
     queryFn: () => request.get('/purchases/details/receipt', { purchase_id: id }),
     staleTime: 0,
     refetchOnWindowFocus: false,

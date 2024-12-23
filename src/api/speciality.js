@@ -2,7 +2,6 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-
 export const CreateSpeciality = async (data) => {
   try {
     console.info('SPECIALITY-CREATE-FORM-DATA', data);
@@ -35,10 +34,8 @@ export const CreateSpeciality = async (data) => {
   }
 };
 
-
 export const UpdateSpeciality = async (data) => {
   try {
-
     const new_files = data.logo.filter((item) => typeof item === 'object');
     const old_files = data.logo.filter((item) => typeof item === 'string');
 
@@ -59,7 +56,7 @@ export const UpdateSpeciality = async (data) => {
     const { success, info } = response;
     // if success then call create product api
     if (success) {
-        data.logo = info[0];
+      data.logo = info[0];
 
       const resp = await request.put('specialities', data);
       return resp;

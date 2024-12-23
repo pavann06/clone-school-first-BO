@@ -41,7 +41,6 @@ export default function PurchaseDetails({ purchase }) {
   const subTotal = sum(totalOnRow);
   const round_off = Math.round(subTotal) - subTotal;
 
-
   const renderTotal = (
     <>
       <StyledTableRow>
@@ -71,7 +70,7 @@ export default function PurchaseDetails({ purchase }) {
         <TableCell colSpan={4} />
         <TableCell sx={{ typography: 'subtitle1' }}>Total</TableCell>
         <TableCell width={140} sx={{ typography: 'subtitle1' }}>
-           {fCurrency(purchase.final_amount)}
+          {fCurrency(purchase.final_amount)}
         </TableCell>
       </StyledTableRow>
     </>
@@ -116,7 +115,6 @@ export default function PurchaseDetails({ purchase }) {
           <TableBody>
             {purchase.items.map((row, index) => (
               <TableRow key={index}>
-
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>
                   <Box sx={{ maxWidth: 560 }}>
@@ -127,7 +125,6 @@ export default function PurchaseDetails({ purchase }) {
                 <TableCell>{row.net_weight} KG</TableCell>
                 <TableCell align="right"> {fCurrency(row.price)}</TableCell>
                 <TableCell align="right"> {fCurrency(row.total)}</TableCell>
-
               </TableRow>
             ))}
 
@@ -137,7 +134,7 @@ export default function PurchaseDetails({ purchase }) {
       </Scrollbar>
     </TableContainer>
   );
-  console.log(purchase.organizer.id)
+  console.log(purchase.organizer.id);
 
   return (
     <>
@@ -165,18 +162,17 @@ export default function PurchaseDetails({ purchase }) {
               {fDate(purchase.order_date)}
             </Typography>
           </Stack>
-            <Stack sx={{ typography: 'body2' }}>
-              <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                Supplier
-              </Typography>
-              {purchase.supplier.full_name}
-              <br />
-              {purchase.supplier.address1}
-              <br />
-              Phone: {purchase.supplier.mobile}
-              <br />
-            </Stack>
-
+          <Stack sx={{ typography: 'body2' }}>
+            <Typography variant="subtitle2" sx={{ mb: 1 }}>
+              Supplier
+            </Typography>
+            {purchase.supplier.full_name}
+            <br />
+            {purchase.supplier.address1}
+            <br />
+            Phone: {purchase.supplier.mobile}
+            <br />
+          </Stack>
 
           {purchase.organizer ? (
             <Stack sx={{ typography: 'body2' }}>

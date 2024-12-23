@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import merge from 'lodash/merge';
 import PropTypes from 'prop-types';
-import {enUS as enUSAdapter} from 'date-fns/locale';
+import { enUS as enUSAdapter } from 'date-fns/locale';
 
 import CssBaseline from '@mui/material/CssBaseline';
-import {enUS as enUSCore} from '@mui/material/locale';
-import {enUS as enUSDataGrid} from '@mui/x-data-grid';
-import {enUS as enUSDate} from '@mui/x-date-pickers/locales';
+import { enUS as enUSCore } from '@mui/material/locale';
+import { enUS as enUSDataGrid } from '@mui/x-data-grid';
+import { enUS as enUSDate } from '@mui/x-date-pickers/locales';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 
 import { useSettingsContext } from 'src/components/settings';
@@ -31,7 +31,7 @@ export default function ThemeProvider({ children }) {
     systemValue: merge(enUSDate, enUSDataGrid, enUSCore),
     adapterLocale: enUSAdapter,
     icon: 'flagpack:gb-nir',
-  }
+  };
 
   const settings = useSettingsContext();
 

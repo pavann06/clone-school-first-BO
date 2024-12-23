@@ -11,7 +11,7 @@ export default function ReturnsAnalyticsPage() {
         <title>Returns Analytics</title>
       </Helmet>
 
-      <ReturnsAnalyticsView/>
+      <ReturnsAnalyticsView />
     </>
   );
 }

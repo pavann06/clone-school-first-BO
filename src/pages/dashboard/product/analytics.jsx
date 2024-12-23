@@ -11,7 +11,7 @@ export default function ProductAnalyticsPage() {
         <title>Product Analytics</title>
       </Helmet>
 
-      <ProductAnalyticsView/>
+      <ProductAnalyticsView />
     </>
   );
 }

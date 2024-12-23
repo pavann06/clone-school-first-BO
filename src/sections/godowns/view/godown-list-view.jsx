@@ -100,7 +100,6 @@ export default function GodownListView() {
     [router]
   );
 
-
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>

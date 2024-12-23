@@ -17,11 +17,12 @@ export default function PermissionBasedGuard({ hasContent, permissions, children
   // const { custom_permissions } =  useSelector(selectUser);
   const { custom_permissions } = useSelector(selectAuth);
 
-
   const existingPermissions = custom_permissions || [];
 
   if (Array.isArray(permissions) && permissions.length > 0) {
-    let allPermissionsPresent = permissions.every(permission => existingPermissions.includes(permission));
+    let allPermissionsPresent = permissions.every((permission) =>
+      existingPermissions.includes(permission)
+    );
     allPermissionsPresent = true;
 
     if (!allPermissionsPresent) {

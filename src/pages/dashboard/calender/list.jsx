@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 
 import { CalenderListView } from 'src/sections/calenders/view';
 
-
 // ----------------------------------------------------------------------
 
 export default function CalenderListPage() {
@@ -13,8 +12,6 @@ export default function CalenderListPage() {
       </Helmet>
 
       <CalenderListView />
-
     </>
   );
 }
-

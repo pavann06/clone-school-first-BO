@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/en-gb';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Stack from '@mui/material/Stack';
@@ -18,11 +18,7 @@ import ReturnsNewEditDistributor from './returns-new-edit-distributor';
 // ----------------------------------------------------------------------
 
 export default function ReturnsNewEditInfo() {
-  const {
-    control,
-    watch,
-    setValue
-  } = useFormContext();
+  const { control, watch, setValue } = useFormContext();
 
   const mdUp = useResponsive('up', 'md');
 
@@ -31,12 +27,10 @@ export default function ReturnsNewEditInfo() {
   const defaultDate = values.order_date ? dayjs(values.order_date) : dayjs();
 
   useEffect(() => {
-    
     if (!watch('order_date')) {
       setValue('order_date', defaultDate.toDate());
     }
-  }, [defaultDate, setValue,watch]);
-
+  }, [defaultDate, setValue, watch]);
 
   return (
     <>
@@ -104,7 +98,7 @@ export default function ReturnsNewEditInfo() {
           sx={{ maxWidth: { md: 250 } }}
         />
 
-        <ReturnsNewEditGodown/>
+        <ReturnsNewEditGodown />
 
         <RHFTextField
           name="remarks"

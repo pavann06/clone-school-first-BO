@@ -6,9 +6,6 @@ import { AuthGuard, PermissionBasedGuard } from 'src/auth/guard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
 
-
-
-
 // import { Lazy } from 'yup';
 
 // ----------------------------------------------------------------------
@@ -38,7 +35,6 @@ const HospitalsEditPage = lazy(() => import('src/pages/dashboard/hospitals/edit'
 
 const AppointmentsViewPage = lazy(() => import('src/pages/dashboard/hospitals/view'));
 
-
 // Sales
 const SalesListPage = lazy(() => import('src/pages/dashboard/sales/list'));
 const SalesCreatePage = lazy(() => import('src/pages/dashboard/sales/new'));
@@ -49,12 +45,9 @@ const SalesAnalyticsPage = lazy(() => import('src/pages/dashboard/sales/analytic
 // BLANK PAGE
 const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
 
-
 const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
 const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
 const EdutainmentEditPage = lazy(() => import('src/pages/dashboard/edutainment/edit'));
-
-
 
 const OnlineStoresListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
 const OnlineStoresCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));

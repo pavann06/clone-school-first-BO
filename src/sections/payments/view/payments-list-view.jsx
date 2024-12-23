@@ -37,11 +37,11 @@ import PaymentsTableToolbar from '../payments-table-toolbar';
 
 const TABLE_HEAD = [
   { id: 'No', label: 'S_No', width: 120 },
-  { id: 'contact_name', label: 'Contact', width: 300},
+  { id: 'contact_name', label: 'Contact', width: 300 },
   { id: 'payment_date', label: 'Date', width: 120 },
   { id: 'totalAmount', label: 'Amount', width: 120 },
   { id: 'payment_type', label: 'Type', width: 120 },
-  {id:'remarks', label:'Remarks',width:300},
+  { id: 'remarks', label: 'Remarks', width: 300 },
   { id: 'actions', label: 'Actions', width: 50 },
 ];
 

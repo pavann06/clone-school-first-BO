@@ -10,15 +10,22 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import { inputBaseClasses } from '@mui/material/InputBase';
-import { Select, MenuItem, TextField, InputLabel, FormControl, FormHelperText } from '@mui/material';
+import {
+  Select,
+  MenuItem,
+  TextField,
+  InputLabel,
+  FormControl,
+  FormHelperText,
+} from '@mui/material';
 
 import request from 'src/api/request';
 
 import Iconify from 'src/components/iconify';
-import { RHFTextField,RHFAutocomplete } from 'src/components/hook-form';
+import { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 export default function SalesNewEditRow({ index, item, remove }) {
-  const { setValue, watch, setError, formState , control } = useFormContext();
+  const { setValue, watch, setError, formState, control } = useFormContext();
   const { errors } = formState;
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -112,8 +119,8 @@ export default function SalesNewEditRow({ index, item, remove }) {
   return (
     <Stack key={id} alignItems="flex-end" spacing={1.5}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
-      <RHFAutocomplete
-          name={`items[${index}].product`} 
+        <RHFAutocomplete
+          name={`items[${index}].product`}
           placeholder="Search Products"
           control={control}
           sx={{ width: '100%', maxWidth: { md: 500 } }}
@@ -127,7 +134,10 @@ export default function SalesNewEditRow({ index, item, remove }) {
               setError(`items[${index}].product`, { type: 'manual', message: '' });
             } else {
               setValue(`items[${index}].product`, '');
-              setError(`items[${index}].product`, { type: 'manual', message: 'Product is required' });
+              setError(`items[${index}].product`, {
+                type: 'manual',
+                message: 'Product is required',
+              });
             }
           }}
           renderInput={(params) => (
@@ -135,7 +145,12 @@ export default function SalesNewEditRow({ index, item, remove }) {
               {...params}
               label="Products"
               fullWidth
-              error={!!errors.items && !!errors.items[index] && !!errors.items[index].product && formState.submitCount > 0}
+              error={
+                !!errors.items &&
+                !!errors.items[index] &&
+                !!errors.items[index].product &&
+                formState.submitCount > 0
+              }
               helperText={
                 errors.items &&
                 errors.items[index] &&
@@ -188,7 +203,15 @@ export default function SalesNewEditRow({ index, item, remove }) {
           }
           sx={{ maxWidth: { md: 120 } }}
         />
-        <FormControl fullWidth error={!!errors.items && !!errors.items[index] && !!errors.items[index].unit && formState.submitCount > 0}>
+        <FormControl
+          fullWidth
+          error={
+            !!errors.items &&
+            !!errors.items[index] &&
+            !!errors.items[index].unit &&
+            formState.submitCount > 0
+          }
+        >
           <InputLabel id={`unit-label-${index}`}>UNIT</InputLabel>
           <Select
             labelId={`unit-label-${index}`}

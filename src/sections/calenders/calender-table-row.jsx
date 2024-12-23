@@ -1,17 +1,15 @@
-
-
-import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { TableRow, TableCell, Skeleton, IconButton, MenuItem } from '@mui/material';
+import React, { useCallback } from 'react';
+
 import Link from '@mui/material/Link';
-import ListItemText from '@mui/material/ListItemText';
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
+import { TableRow, MenuItem, TableCell, IconButton } from '@mui/material';
+
 import { useRouter } from 'src/routes/hooks';
 
-function CalenderTableRow({ row, onEditRow, onDeleteRow, isLoading ,serialNumber }) {
+import Iconify from 'src/components/iconify';
+import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-  
+function CalenderTableRow({ row, onEditRow, onDeleteRow, serialNumber }) {
   const popover = usePopover();
   const router = useRouter();
 
@@ -22,17 +20,16 @@ function CalenderTableRow({ row, onEditRow, onDeleteRow, isLoading ,serialNumber
     [router]
   );
 
-
-
-
-
   return (
     <>
       <TableRow hover>
-
         <TableCell>{serialNumber}</TableCell>
-    
-        <TableCell align="center" onClick={() => handleViewRow(row.id)} style={{ cursor: 'pointer' }}>
+
+        <TableCell
+          align="center"
+          onClick={() => handleViewRow(row.id)}
+          style={{ cursor: 'pointer' }}
+        >
           {row.prompt || 'No Prompt'}
         </TableCell>
         <TableCell align="center">{row.benefit || 'No Benefit'}</TableCell>
@@ -74,14 +71,14 @@ function CalenderTableRow({ row, onEditRow, onDeleteRow, isLoading ,serialNumber
         sx={{ width: 140 }}
       >
         <MenuItem
-                 onClick={() => {
-                   onEditRow();
-                   popover.onClose();
-                 }}
-               >
-                 <Iconify icon="solar:pen-bold" />
-                 Edit
-               </MenuItem>
+          onClick={() => {
+            onEditRow();
+            popover.onClose();
+          }}
+        >
+          <Iconify icon="solar:pen-bold" />
+          Edit
+        </MenuItem>
         <MenuItem
           onClick={() => {
             onDeleteRow();
@@ -109,7 +106,6 @@ CalenderTableRow.propTypes = {
   serialNumber: PropTypes.number, // Add this line
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
-  isLoading: PropTypes.bool,
 };
 
 CalenderTableRow.defaultProps = {
@@ -117,8 +113,6 @@ CalenderTableRow.defaultProps = {
   serialNumber: null, // Add a default value if necessary
   onEditRow: () => {},
   onDeleteRow: () => {},
-  isLoading: false,
 };
-
 
 export default CalenderTableRow;

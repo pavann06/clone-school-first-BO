@@ -6,7 +6,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import { TextField} from '@mui/material';
+import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -15,17 +15,16 @@ import { inputBaseClasses } from '@mui/material/InputBase';
 import request from 'src/api/request';
 
 import Iconify from 'src/components/iconify';
-import { RHFTextField , RHFAutocomplete} from 'src/components/hook-form';
+import { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 export default function PurchaseNewEditRow({ index, item, remove }) {
-  const { setValue, watch, setError, formState,control } = useFormContext();
+  const { setValue, watch, setError, formState, control } = useFormContext();
   const { errors } = formState;
 
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const values = watch();
   const { product } = values.items[index] || {};
-
 
   const { id } = item;
 
@@ -63,7 +62,7 @@ export default function PurchaseNewEditRow({ index, item, remove }) {
 
   useEffect(() => {
     if (product) {
-      const productObject = data?.info.find(p => p.id === product);
+      const productObject = data?.info.find((p) => p.id === product);
       setSelectedProduct(productObject);
     }
   }, [data, product]);
@@ -71,7 +70,8 @@ export default function PurchaseNewEditRow({ index, item, remove }) {
   useEffect(() => {
     const netWeightValue =
       parseFloat(gross_weight) -
-      (parseFloat(bags) * parseFloat(bag_weight)) - parseFloat(weight_loss);
+      parseFloat(bags) * parseFloat(bag_weight) -
+      parseFloat(weight_loss);
     setFieldValues((prev) => ({
       ...prev,
       net_weight: Number.isNaN(netWeightValue) ? 0 : netWeightValue,
@@ -93,7 +93,7 @@ export default function PurchaseNewEditRow({ index, item, remove }) {
     <Stack key={id} alignItems="flex-end" spacing={1.5}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
         <RHFAutocomplete
-          name={`items[${index}].product`} 
+          name={`items[${index}].product`}
           placeholder="Search Products"
           control={control}
           sx={{ width: '100%', maxWidth: { md: 500 } }}
@@ -107,7 +107,10 @@ export default function PurchaseNewEditRow({ index, item, remove }) {
               setError(`items[${index}].product`, { type: 'manual', message: '' });
             } else {
               setValue(`items[${index}].product`, '');
-              setError(`items[${index}].product`, { type: 'manual', message: 'Product is required' });
+              setError(`items[${index}].product`, {
+                type: 'manual',
+                message: 'Product is required',
+              });
             }
           }}
           renderInput={(params) => (
@@ -115,7 +118,12 @@ export default function PurchaseNewEditRow({ index, item, remove }) {
               {...params}
               label="Products"
               fullWidth
-              error={!!errors.items && !!errors.items[index] && !!errors.items[index].product && formState.submitCount > 0}
+              error={
+                !!errors.items &&
+                !!errors.items[index] &&
+                !!errors.items[index].product &&
+                formState.submitCount > 0
+              }
               helperText={
                 errors.items &&
                 errors.items[index] &&

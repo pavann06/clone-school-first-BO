@@ -21,13 +21,13 @@ export default function PaymentsNewEditInfo() {
 
   const handleType = (event) => {
     setSelectedType(event.target.value);
-    setValue('payment_type', event.target.value)
-  }
+    setValue('payment_type', event.target.value);
+  };
 
   const handlePaymentFor = (event) => {
     setSelectedFor(event.target.value);
     setValue('payment_for', event.target.value);
-  }
+  };
 
   useEffect(() => {
     if (!watch('payment_date')) {
@@ -49,11 +49,12 @@ export default function PaymentsNewEditInfo() {
           <Select
             name="payment_type"
             labelId="payment-type-label0"
-            id='payment_type'
+            id="payment_type"
             value={selectedType}
-            onChange={handleType}>
-            <MenuItem value='DEBIT'>DEBIT</MenuItem>
-            <MenuItem value='CREDIT'>CREDIT</MenuItem>
+            onChange={handleType}
+          >
+            <MenuItem value="DEBIT">DEBIT</MenuItem>
+            <MenuItem value="CREDIT">CREDIT</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -63,19 +64,19 @@ export default function PaymentsNewEditInfo() {
           <InputLabel id="payment-for-label">PAYMENT FOR</InputLabel>
           <Select
             name="payment_for"
-            labelId='payment-for-label'
-            id='payment-for'
+            labelId="payment-for-label"
+            id="payment-for"
             value={selectedFor}
-            onChange={handlePaymentFor}>
-            <MenuItem value='PURCHASE'>PURCHASE</MenuItem>
-            <MenuItem value='SALES'>SALES</MenuItem>
-            <MenuItem value='SALES-RETURN'>SALES-RETURN</MenuItem>
-            <MenuItem value='OFFICE-EXPENSE'>OFFICE-EXPENSE</MenuItem>
-            <MenuItem value='TRANSPORT-EXPENSE'>TRANSPORT-EXPENSE</MenuItem>
-            <MenuItem value='OTHERS'>OTHERS</MenuItem>
+            onChange={handlePaymentFor}
+          >
+            <MenuItem value="PURCHASE">PURCHASE</MenuItem>
+            <MenuItem value="SALES">SALES</MenuItem>
+            <MenuItem value="SALES-RETURN">SALES-RETURN</MenuItem>
+            <MenuItem value="OFFICE-EXPENSE">OFFICE-EXPENSE</MenuItem>
+            <MenuItem value="TRANSPORT-EXPENSE">TRANSPORT-EXPENSE</MenuItem>
+            <MenuItem value="OTHERS">OTHERS</MenuItem>
           </Select>
         </FormControl>
-
       </Grid>
 
       <Grid item xs={12} md={6}>

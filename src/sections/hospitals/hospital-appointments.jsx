@@ -29,13 +29,12 @@
 //   TableEmptyRows,
 //   TableHeadCustom,
 // } from 'src/components/table';
-// import PropTypes from 'prop-types'; 
+// import PropTypes from 'prop-types';
 
 // import HospitalsTableRow from '../hospitals-table-row';
 // import HospitalsTableToolbar from '../hospitals-table-toolbar';
 
 // // ----------------------------------------------------------------------
-
 
 // const TABLE_HEAD = [
 //   { id: 'No', label: 'No',  },
@@ -45,8 +44,7 @@
 //   { id: 'mobile', label: 'Mobile', },
 //   {id: 'full_name',label: 'Full Name'},
 //   {label: 'Actions'}
- 
- 
+
 // ];
 
 // // ----------------------------------------------------------------------
@@ -54,7 +52,6 @@
 // export default function HospitalAppointments() {
 
 //   const queryClient = useQueryClient();
-
 
 //   const { enqueueSnackbar } = useSnackbar();
 
@@ -70,18 +67,14 @@
 //   const [filters, setFilters] = useState({
 //     offset: 0,
 //     limit: 10,
-    
+
 //   });
 
-
-
-
 // const { data, isLoading, isError } = useQuery({
-//   queryKey: ['backoffice','hospitals','doctors','appointments', id ,filters], 
-//   queryFn: () => request.get(`/backoffice/hospitals/doctors/appointments` , {hospital_id:id}), 
+//   queryKey: ['backoffice','hospitals','doctors','appointments', id ,filters],
+//   queryFn: () => request.get(`/backoffice/hospitals/doctors/appointments` , {hospital_id:id}),
 //   staleTime: 24 * 60 * 60 * 1000,
 // });
-
 
 //   useEffect(() => {
 //     if (data?.info?.length > 0) {

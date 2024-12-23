@@ -15,7 +15,8 @@ const CARDS = [
   {
     icon: ' /assets/icons/home/ic_make_brand.svg',
     title: 'End-to-End Seed Management',
-    description: 'Our comprehensive seed management solutions help enterprises streamline the entire process, from seed purchase to yield, assuring efficiency and ease of operation throughout.',
+    description:
+      'Our comprehensive seed management solutions help enterprises streamline the entire process, from seed purchase to yield, assuring efficiency and ease of operation throughout.',
   },
   {
     icon: ' /assets/icons/faqs/ic_refund.svg',
@@ -26,12 +27,14 @@ const CARDS = [
   {
     icon: ' /assets/icons/faqs/ic_assurances.svg',
     title: 'Tax Compliance',
-    description: 'FamiliFirst makes tax compliance easier by automatically calculating and applying taxes to transactions, ensuring that firms comply with tax requirements.',
+    description:
+      'FamiliFirst makes tax compliance easier by automatically calculating and applying taxes to transactions, ensuring that firms comply with tax requirements.',
   },
   {
     icon: ' /assets/icons/navbar/ic_analytics.svg',
     title: 'Real Time Insights',
-    description: 'FamiliFirst gives businesses the ability to track financial performance closely and make rapid adjustments to optimize profitability with real-time data updates and analytics.',
+    description:
+      'FamiliFirst gives businesses the ability to track financial performance closely and make rapid adjustments to optimize profitability with real-time data updates and analytics.',
   },
   {
     icon: ' /assets/icons/glass/ic_glass_users.png',
@@ -42,7 +45,8 @@ const CARDS = [
   {
     icon: ' /assets/icons/home/ic_development.svg',
     title: 'User Friendly Interface',
-    description: 'Our intuitive interface makes it easy for users to navigate and utilize features effectively, enhancing productivity and user satisfaction.',
+    description:
+      'Our intuitive interface makes it easy for users to navigate and utilize features effectively, enhancing productivity and user satisfaction.',
   },
 ];
 
@@ -90,15 +94,16 @@ export default function HomeMinimal() {
             <Card
               sx={{
                 textAlign: 'center',
-                bgcolor: {xs:alpha('#000', 0.02),md:alpha('#000', 0.0)},
+                bgcolor: { xs: alpha('#000', 0.02), md: alpha('#000', 0.0) },
                 p: (theme) => theme.spacing(10, 5),
                 boxShadow: (theme) => ({
-                  md: `-40px 40px 80px ${theme.palette.mode === 'light'
+                  md: `-40px 40px 80px ${
+                    theme.palette.mode === 'light'
                       ? alpha(theme.palette.grey[500], 0.8)
                       : alpha(theme.palette.common.black, 0.8)
-                    }`,
+                  }`,
                 }),
-                height:500,
+                height: 500,
               }}
             >
               <Box

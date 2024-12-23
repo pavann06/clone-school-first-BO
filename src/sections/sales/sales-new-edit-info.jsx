@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/en-gb';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Stack from '@mui/material/Stack';
@@ -18,11 +18,7 @@ import SalesNewEditDistributor from './sales-new-edit-distributor';
 // ----------------------------------------------------------------------
 
 export default function SalesNewEditInfo() {
-  const {
-    control,
-    watch,
-    setValue
-  } = useFormContext();
+  const { control, watch, setValue } = useFormContext();
 
   const mdUp = useResponsive('up', 'md');
 
@@ -31,11 +27,10 @@ export default function SalesNewEditInfo() {
   const defaultDate = values.order_date ? dayjs(values.order_date) : dayjs();
 
   useEffect(() => {
-    
     if (!watch('order_date')) {
       setValue('order_date', defaultDate.toDate());
     }
-  }, [defaultDate, setValue,watch]);
+  }, [defaultDate, setValue, watch]);
 
   return (
     <>
@@ -66,7 +61,7 @@ export default function SalesNewEditInfo() {
 
         <Controller
           name="order_date"
-          control={control} 
+          control={control}
           render={({ field, fieldState: { error } }) => (
             <DatePicker
               label="Sales Date"
@@ -103,7 +98,7 @@ export default function SalesNewEditInfo() {
           sx={{ maxWidth: { md: 250 } }}
         />
 
-        <SalesNewEditGodown/>
+        <SalesNewEditGodown />
 
         <RHFTextField
           name="remarks"

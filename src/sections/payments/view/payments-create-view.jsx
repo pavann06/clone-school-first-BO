@@ -5,7 +5,7 @@ import { paths } from 'src/routes/paths';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import PaymentsNewEditForm from '../payments-new-edit-form'
+import PaymentsNewEditForm from '../payments-new-edit-form';
 
 // ----------------------------------------------------------------------
 

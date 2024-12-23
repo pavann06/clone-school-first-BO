@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -15,7 +15,7 @@ import BranchNewEditForm from '../branch-new-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function BranchEditView({id}) {
+export default function BranchEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
@@ -39,7 +39,7 @@ export default function BranchEditView({id}) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen/> : <BranchNewEditForm currentBranch={ data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <BranchNewEditForm currentBranch={data?.info?.[0]} />}
     </Container>
   );
 }

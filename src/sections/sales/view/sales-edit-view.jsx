@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -19,8 +19,8 @@ export default function SalesEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['sales','details' ,id],
-    queryFn: () => request.get('/sales/details', { sale_id:id }),
+    queryKey: ['sales', 'details', id],
+    queryFn: () => request.get('/sales/details', { sale_id: id }),
     staleTime: 24 * 60 * 60 * 1000,
   });
   const currentSale = isLoading ? null : data?.info;
@@ -44,9 +44,7 @@ export default function SalesEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {
-        isLoading ? <LoadingScreen/> : <SalesNewEditForm currentSale={currentSale} />
-      }
+      {isLoading ? <LoadingScreen /> : <SalesNewEditForm currentSale={currentSale} />}
     </Container>
   );
 }

@@ -49,8 +49,6 @@
 //   id: PropTypes.string,
 // };
 
-
-
 import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
 
@@ -75,8 +73,6 @@ export default function CalenderEditView({ id }) {
     queryKey: ['calender', id],
     queryFn: () => request.get('backoffice/broadcast/calendar/', { id }),
     staleTime: 24 * 60 * 60 * 1000,
-   
-
   });
 
   return (

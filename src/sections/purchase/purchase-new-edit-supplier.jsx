@@ -17,7 +17,7 @@ export default function PurchaseNewEditSupplier() {
   const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
-  const { watch, setValue, formState,control } = useFormContext();
+  const { watch, setValue, formState, control } = useFormContext();
   const values = watch();
   const { supplier } = values;
 
@@ -58,33 +58,33 @@ export default function PurchaseNewEditSupplier() {
           Supplier:
         </Typography>
 
-        <RHFAutocomplete 
-        name="supplier"
-        label="Search Supplier"
-        sx={{ width: 300 }}
-        helperText={!selectedSupplier && formState.submitCount > 0 ? 'Supplier is mandatory' : ''}
-        control={control}
-        options={isLoading ? [] : data?.info || []}
-        getOptionLabel={(option) => option.full_name.toString()}
-        filterOptions={(x) => x}
-        filterSelectedOptions
-        value={selectedSupplier}
-        onChange={(event, newValue) => {
-          setSelectedSupplier(newValue);
-          setValue('supplier', newValue ? newValue.id : null);
-        }}
-        onInputChange={handleFilterName}
-        isOptionEqualToValue={(option, value) => value && option.id === value.id}
-        renderOption={(props, option) => (
-          <li {...props}>
-            <Grid container alignItems="center">
-              <Typography variant="body2" color="text.secondary">
-                {`${option.full_name} - ${option.mobile}`}
-              </Typography>
-            </Grid>
-          </li>
-        )}
-      />
+        <RHFAutocomplete
+          name="supplier"
+          label="Search Supplier"
+          sx={{ width: 300 }}
+          helperText={!selectedSupplier && formState.submitCount > 0 ? 'Supplier is mandatory' : ''}
+          control={control}
+          options={isLoading ? [] : data?.info || []}
+          getOptionLabel={(option) => option.full_name.toString()}
+          filterOptions={(x) => x}
+          filterSelectedOptions
+          value={selectedSupplier}
+          onChange={(event, newValue) => {
+            setSelectedSupplier(newValue);
+            setValue('supplier', newValue ? newValue.id : null);
+          }}
+          onInputChange={handleFilterName}
+          isOptionEqualToValue={(option, value) => value && option.id === value.id}
+          renderOption={(props, option) => (
+            <li {...props}>
+              <Grid container alignItems="center">
+                <Typography variant="body2" color="text.secondary">
+                  {`${option.full_name} - ${option.mobile}`}
+                </Typography>
+              </Grid>
+            </li>
+          )}
+        />
       </Stack>
       {selectedSupplier && (
         <Stack spacing={1}>

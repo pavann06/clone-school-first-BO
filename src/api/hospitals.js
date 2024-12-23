@@ -37,7 +37,7 @@ export const CreateHospital = async (data) => {
 
 export const UpdateHospital = async (data) => {
   try {
-    console.log(data.logo,data.hospital_images)
+    console.log(data.logo, data.hospital_images);
     const new_logo_files = data.logo.filter((item) => typeof item === 'object');
     const old_logo_files = data.logo.filter((item) => typeof item === 'string');
 
@@ -81,7 +81,7 @@ export const UpdateHospital = async (data) => {
 
     // if success then call create product api
     if (response.success) {
-      data.hospital_images = [...response.info,];
+      data.hospital_images = [...response.info];
 
       const resp = await request.put('backoffice/hospitals', data);
       return resp;

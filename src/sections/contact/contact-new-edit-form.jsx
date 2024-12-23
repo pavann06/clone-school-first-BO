@@ -46,8 +46,7 @@ export default function ContactNewEditForm({ currentContact }) {
         return originalValue;
       })
       .required('Role is required'),
-    sub_role: Yup.mixed()
-    .transform((originalValue) => {
+    sub_role: Yup.mixed().transform((originalValue) => {
       if (Array.isArray(originalValue)) {
         return originalValue.map((item) => item.trim());
       }
@@ -74,8 +73,8 @@ export default function ContactNewEditForm({ currentContact }) {
     () => ({
       full_name: currentContact?.full_name || '',
       description: currentContact?.description || '',
-      role: currentContact?.role || [ ],
-      sub_role: currentContact?.sub_role || [ ],
+      role: currentContact?.role || [],
+      sub_role: currentContact?.sub_role || [],
       email: currentContact?.email || '',
       mobile: currentContact?.mobile || '',
       address1: currentContact?.address1 || '',

@@ -2,11 +2,6 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-
-
-
-
-
 // export const CreateCalender = async (data) => {
 //   try {
 //     console.info('FEATURE-CREATE-FORM-DATA', data);
@@ -47,7 +42,7 @@ export const CreateCalender = async (form_data) => {
     if (form_data.image) {
       const payload = {
         files: form_data.image,
-        module:"calender"
+        module: 'calender',
       };
 
       // Uploading files
@@ -71,13 +66,8 @@ export const CreateCalender = async (form_data) => {
   }
 };
 
-
-  
-
-
 export const UpdateCalender = async (data) => {
   try {
-
     const new_files = data.image.filter((item) => typeof item === 'object');
     const old_files = data.image.filter((item) => typeof item === 'string');
 
@@ -98,7 +88,7 @@ export const UpdateCalender = async (data) => {
     const { success, info } = response;
     // if success then call create product api
     if (success) {
-        data.logo = info[0];
+      data.logo = info[0];
 
       const resp = await request.put('features', data);
       return resp;
@@ -111,21 +101,16 @@ export const UpdateCalender = async (data) => {
   return null;
 };
 
+// if (data.video) {
+//   const videoPayload = {
+//     files: data.video,
+//     entity: 'edutain/feeds/',
+//   };
+//   const videoResponse = await request.UploadFiles(videoPayload);
 
-
-
-    // if (data.video) {
-    //   const videoPayload = {
-    //     files: data.video,
-    //     entity: 'edutain/feeds/',
-    //   };
-    //   const videoResponse = await request.UploadFiles(videoPayload);
-
-    //   if (videoResponse.success) {
-    //     data.video = videoResponse.info[0];
-    //   } else {
-    //     return videoResponse;
-    //   }
-    // }
-
-    
+//   if (videoResponse.success) {
+//     data.video = videoResponse.info[0];
+//   } else {
+//     return videoResponse;
+//   }
+// }

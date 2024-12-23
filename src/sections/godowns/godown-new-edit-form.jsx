@@ -20,8 +20,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import request from 'src/api/request';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFTextField} from 'src/components/hook-form';
-
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 export default function GodownNewEditForm({ currentGodown }) {
   const queryClient = useQueryClient();
@@ -126,7 +125,6 @@ export default function GodownNewEditForm({ currentGodown }) {
                 <RHFTextField name="mobile" label="Mobile" />
 
                 <RHFTextField name="address" label="Address" />
-
               </Box>
               <LoadingButton
                 type="submit"

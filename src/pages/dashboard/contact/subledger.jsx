@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { useParams } from 'src/routes/hooks';
 
-import {ContactSubLedgerView} from 'src/sections/contact/view';
+import { ContactSubLedgerView } from 'src/sections/contact/view';
 
 // ----------------------------------------------------------------------
 

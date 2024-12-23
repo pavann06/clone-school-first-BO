@@ -1,9 +1,4 @@
-
-
-
-
 // import React from 'react';
-
 
 // import {
 //   Box,
@@ -35,18 +30,12 @@ export default function OnlineStoreListView() {
   // const [tableData, setTableData] = useState([]);
   // const [totalCount, setTotalCount] = useState(0);
   // const [pagination, setPagination] = useState({ offset: 1, limit: 10 });
-
   // const { data, isLoading, isError } = useQuery({
   //   queryKey: ['edutainment'],
   //   queryFn: () => {
-     
   //     return request.get(`https://dev-api.familifirst.com/edutain/feeds/`);
   //   },
-   
   // });
-  
-  
-
   // useEffect(() => {
   //   if (data) {
   //     console.log('API Response:', data); // Log the entire API response
@@ -59,17 +48,14 @@ export default function OnlineStoreListView() {
   //     }
   //   }
   // }, [data]);
-
   // // Handle page change
   // const handlePageChange = (event, newPage) => {
   //   setPagination((prev) => ({ ...prev, offset: newPage }));
   // };
-
   // // Handle rows per page change
   // const handleRowsPerPageChange = (event) => {
   //   setPagination({ offset: 0, limit: parseInt(event.target.value, 10) });
   // };
-
   // return (
   //   <Container maxWidth="lg">
   //     <Card>
@@ -99,7 +85,6 @@ export default function OnlineStoreListView() {
   //           </Table>
   //         </Scrollbar>
   //       </TableContainer>
-
   //       {/* Pagination */}
   //       <TablePagination
   //         component="div"

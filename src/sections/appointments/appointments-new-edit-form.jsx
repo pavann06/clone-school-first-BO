@@ -34,7 +34,6 @@
 
 //   const { enqueueSnackbar } = useSnackbar();
 
-
 //   const NewAppointmentSchema = Yup.object().shape({
 //     feature_name: Yup.string().required('name is required'),
 //     logo: Yup.mixed(),
@@ -67,13 +66,11 @@
 
 //   const values = watch();
 
-
 //   useEffect(() => {
 //     if (currentAppointment) {
 //       reset(defaultValues);
 //     }
 //   }, [currentAppointment, defaultValues, reset]);
-
 
 //   const onSubmit = handleSubmit(async (data) => {
 
@@ -134,7 +131,6 @@
 //     setValue('logo', []);
 //   }, [setValue]);
 
-
 //   return (
 //     <FormProvider methods={methods} onSubmit={onSubmit}>
 //       <Grid container spacing={3} justifyContent="center" alignItems="center">
@@ -154,8 +150,6 @@
 //               >
 //                 <RHFTextField name="feature_name" label="feature Name" />
 
-
-
 //                 <RHFAutocomplete
 //                   name="feature_type"
 //                   label="Feature Type"
@@ -169,7 +163,6 @@
 //                     </li>
 //                   )}
 //                 />
-
 
 //                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
 //                   <RHFTextField

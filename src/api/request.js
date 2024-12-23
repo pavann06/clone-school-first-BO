@@ -40,7 +40,7 @@ const request = {
         axios.defaults.headers.common.year = getYear();
       }
       const response = await axios.get(endPoint + query);
-      console.log(`FETCHER-${endPoint}`,options, response.data);
+      console.log(`FETCHER-${endPoint}`, options, response.data);
       return response.data;
     } catch (error) {
       console.log('error in get api', error);

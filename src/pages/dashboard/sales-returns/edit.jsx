@@ -14,7 +14,7 @@ export default function ReturnsEditPage() {
   return (
     <>
       <Helmet>
-        <title> Sales  Return Edit</title>
+        <title> Sales Return Edit</title>
       </Helmet>
 
       <ReturnsEditView id={`${id}`} />

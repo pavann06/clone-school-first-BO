@@ -20,7 +20,7 @@ export default function EdutainmentEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/edutain/feeds/${id}`)
+    queryFn: () => request.get(`backoffice/edutain/feeds/${id}`),
   });
 
   return (
@@ -43,8 +43,6 @@ export default function EdutainmentEditView({ id }) {
     </Container>
   );
 }
-
-
 
 EdutainmentEditView.propTypes = {
   id: PropTypes.string,

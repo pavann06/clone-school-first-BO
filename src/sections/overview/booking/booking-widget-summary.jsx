@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 
-
 // ----------------------------------------------------------------------
 
 export default function BookingWidgetSummary({ title, total, icon, sx, symbol, ...other }) {
@@ -20,7 +19,9 @@ export default function BookingWidgetSummary({ title, total, icon, sx, symbol, .
       {...other}
     >
       <Box>
-        <Box sx={{ mb: 1, typography: 'h3' }}>{total} {symbol} </Box>
+        <Box sx={{ mb: 1, typography: 'h3' }}>
+          {total} {symbol}{' '}
+        </Box>
         <Box sx={{ color: 'text.secondary', typography: 'subtitle2' }}>{title}</Box>
       </Box>
 

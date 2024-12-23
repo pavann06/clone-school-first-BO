@@ -128,7 +128,6 @@ export default function ReturnsPDF({ sales }) {
                 <Text style={styles.body2}>{distributor?.mobile}</Text>
               </View>
             </View>
-
           </View>
 
           <Text

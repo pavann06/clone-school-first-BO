@@ -28,7 +28,6 @@ const METHODS = [
 ];
 
 export default function AuthClassicLayout({ children, image, title }) {
-
   const theme = useTheme();
 
   const mdUp = useResponsive('up', 'md');

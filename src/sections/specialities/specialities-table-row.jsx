@@ -35,18 +35,12 @@ export default function SpecialitiesTableRow({ row, onEditRow, onDeleteRow }) {
           <ListItemText
             disableTypography
             primary={
-              <Link
-                noWrap
-                color="inherit"
-                variant="subtitle2"
-                sx={{ cursor: 'pointer' }}
-              >
+              <Link noWrap color="inherit" variant="subtitle2" sx={{ cursor: 'pointer' }}>
                 {speciality_name}
               </Link>
             }
           />
         </TableCell>
-
 
         <TableCell>
           <Label variant="soft" color="success">
@@ -67,7 +61,6 @@ export default function SpecialitiesTableRow({ row, onEditRow, onDeleteRow }) {
         arrow="right-top"
         sx={{ width: 140 }}
       >
-
         <MenuItem
           onClick={() => {
             onEditRow();

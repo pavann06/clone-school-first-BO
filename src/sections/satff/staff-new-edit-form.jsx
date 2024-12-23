@@ -152,7 +152,7 @@ export default function StaffNewEditForm({ currentStaff }) {
                 <LoadingScreen />
               ) : (
                 <PermissionsComponent
-                modulePermissions={data?.info?.module_permissions}
+                  modulePermissions={data?.info?.module_permissions}
                   selectedPermissions={selectedPermissions}
                   setSelectedPermissions={setSelectedPermissions}
                 />

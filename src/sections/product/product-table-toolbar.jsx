@@ -13,20 +13,18 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
-export default function ProductTableToolbar({
-  filters,
-  setFilters
-}) {
+export default function ProductTableToolbar({ filters, setFilters }) {
   const popover = usePopover();
 
-  const handleFilterName = useRef(debounce((event) => {
-    setFilters((prev) => ({
-      ...prev,
-      offset: 0,
-      product_name: event.target.value.toLowerCase(),
-    }));
-  }, 750)).current;
-
+  const handleFilterName = useRef(
+    debounce((event) => {
+      setFilters((prev) => ({
+        ...prev,
+        offset: 0,
+        product_name: event.target.value.toLowerCase(),
+      }));
+    }, 750)
+  ).current;
 
   return (
     <>
@@ -42,7 +40,6 @@ export default function ProductTableToolbar({
           pr: { xs: 2.5, md: 1 },
         }}
       >
-
         <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
           <TextField
             fullWidth

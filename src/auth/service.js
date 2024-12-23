@@ -17,7 +17,7 @@
 //     const data = await response.json();
 //     return data;
 //   } catch (error) {
-   
+
 //     return error;
 
 //   }
@@ -27,12 +27,11 @@
 //   try {
 //     window.localStorage.clear();
 //   } catch (error) {
-   
+
 //     return error;
 //   }
 //   return null;
 // };
-
 
 // import { API_BASE_URL } from '../config-global';
 

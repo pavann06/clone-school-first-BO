@@ -12,8 +12,7 @@
 //       </Helmet>
 
 //        <BannersCreateView />
-      
-      
+
 //     </>
 //   );
 // }

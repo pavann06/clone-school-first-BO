@@ -70,14 +70,9 @@ export default function ReturnsToolbar({ sales }) {
               </Tooltip>
             )}
           </PDFDownloadLink>
-
         </Stack>
 
-        <LoadingButton
-          variant='outlined'
-          color='primary'
-          sx={{ width: { md: 200 } }}
-        >
+        <LoadingButton variant="outlined" color="primary" sx={{ width: { md: 200 } }}>
           Generate Invoice
         </LoadingButton>
       </Stack>
@@ -106,5 +101,5 @@ export default function ReturnsToolbar({ sales }) {
 }
 
 ReturnsToolbar.propTypes = {
-    sales: PropTypes.object,
+  sales: PropTypes.object,
 };

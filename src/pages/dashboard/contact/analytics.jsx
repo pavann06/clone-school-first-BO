@@ -11,7 +11,7 @@ export default function ContactAnalyticsPage() {
         <title>Contact Analytics</title>
       </Helmet>
 
-      <ContactAnalyticsView/>
+      <ContactAnalyticsView />
     </>
   );
 }

@@ -19,7 +19,7 @@ export default function ReturnsDetailsView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['sales returns', 'details','invoice', id],
+    queryKey: ['sales returns', 'details', 'invoice', id],
     queryFn: () => request.get('/sales/returns/details/invoice', { sale_return_id: id }),
     staleTime: 24 * 60 * 60 * 1000,
   });

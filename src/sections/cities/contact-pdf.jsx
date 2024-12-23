@@ -114,11 +114,14 @@ export default function ContactPDF({ subledger, finYearStart, finYearEnd, Contac
   function getVoucherNumber(item) {
     if (item.entity === 'SALES') {
       return `SO-${item.id}`;
-    } if (item.entity === 'SALES RETURNS') {
+    }
+    if (item.entity === 'SALES RETURNS') {
       return `SR-${item.id}`;
-    } if (item.entity === 'PURCHASES') {
+    }
+    if (item.entity === 'PURCHASES') {
       return `PO-${item.id}`;
-    } if (item.entity === 'PAYMENTS') {
+    }
+    if (item.entity === 'PAYMENTS') {
       return `PY-${item.id}`;
     }
     return '';
@@ -137,7 +140,10 @@ export default function ContactPDF({ subledger, finYearStart, finYearEnd, Contac
       <Page size="A4" style={styles.page}>
         <View style={{ borderWidth: 1, borderStyle: 'solid' }}>
           <View style={[styles.gridContainer]}>
-            <Image source={Client?.client?.logo} style={{ width: 50, height: 50, paddingRight: 4 }} />
+            <Image
+              source={Client?.client?.logo}
+              style={{ width: 50, height: 50, paddingRight: 4 }}
+            />
 
             <View style={styles.col6}>
               <Text style={styles.subtitle1}>{Client?.client.client_name}</Text>
@@ -148,7 +154,7 @@ export default function ContactPDF({ subledger, finYearStart, finYearEnd, Contac
               <Text>Phone-{Client?.client.mobile}</Text>
             </View>
 
-            <View style={{ borderLeftWidth: 1, borderLeftStyle: 'solid',marginRight: 10 }} />
+            <View style={{ borderLeftWidth: 1, borderLeftStyle: 'solid', marginRight: 10 }} />
 
             <View style={[styles.col6]}>
               <Text style={styles.subtitle1}>Consignee</Text>
@@ -208,7 +214,9 @@ export default function ContactPDF({ subledger, finYearStart, finYearEnd, Contac
                   </View>
 
                   <View style={styles.tableCell_2}>
-                    <Text style={styles.subtitle2}>{item.date ? format(new Date(item.date), 'dd-MM-yyyy') : ''}</Text>
+                    <Text style={styles.subtitle2}>
+                      {item.date ? format(new Date(item.date), 'dd-MM-yyyy') : ''}
+                    </Text>
                   </View>
 
                   <View style={styles.tableCell_3}>

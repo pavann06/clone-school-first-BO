@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -40,7 +40,7 @@ export default function FeaturesEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen/> : <FeaturesNewEditForm currentFeature={data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <FeaturesNewEditForm currentFeature={data?.info?.[0]} />}
     </Container>
   );
 }

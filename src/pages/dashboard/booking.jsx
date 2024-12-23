@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 
-
 // ----------------------------------------------------------------------
 
 export default function OverviewBookingPage() {
@@ -9,7 +8,6 @@ export default function OverviewBookingPage() {
       <Helmet>
         <title> Dashboard</title>
       </Helmet>
-
       {/* <OverviewBankingView /> */}
       welcome to dashboard
     </>

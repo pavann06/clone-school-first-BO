@@ -21,11 +21,10 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { CreateFeature, UpdateFeature } from 'src/api/feature';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFUpload, RHFTextField,RHFAutocomplete } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function FeaturesNewEditForm({ currentFeature }) {
-
   const queryClient = useQueryClient();
 
   const router = useRouter();
@@ -33,7 +32,6 @@ export default function FeaturesNewEditForm({ currentFeature }) {
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
-
 
   const NewFeatureSchema = Yup.object().shape({
     feature_name: Yup.string().required('name is required'),
@@ -47,7 +45,7 @@ export default function FeaturesNewEditForm({ currentFeature }) {
       feature_name: currentFeature?.feature_name || '',
       logo: currentFeature?.logo ? [currentFeature.logo] : '',
       description: currentFeature?.description || '',
-      feature_type: currentFeature?.feature_type || ''
+      feature_type: currentFeature?.feature_type || '',
     }),
     [currentFeature]
   );
@@ -67,31 +65,28 @@ export default function FeaturesNewEditForm({ currentFeature }) {
 
   const values = watch();
 
-
   useEffect(() => {
     if (currentFeature) {
       reset(defaultValues);
     }
   }, [currentFeature, defaultValues, reset]);
 
-
   const onSubmit = handleSubmit(async (data) => {
-
     // if update
-    let response = {}
-    if(currentFeature){
-      data.id = currentFeature.id
+    let response = {};
+    if (currentFeature) {
+      data.id = currentFeature.id;
       response = await UpdateFeature(data);
     }
     // if create
-    else{
-      response = await CreateFeature(data)
+    else {
+      response = await CreateFeature(data);
     }
 
-    const {success, description } = response
+    const { success, description } = response;
 
     //  creation success
-    if (success){
+    if (success) {
       enqueueSnackbar(currentFeature ? 'Update success!' : 'Create success!');
       // invalidate cache
       queryClient.invalidateQueries(['features']);
@@ -104,7 +99,6 @@ export default function FeaturesNewEditForm({ currentFeature }) {
     // creation failed
     enqueueSnackbar(description);
     reset();
-
   });
 
   const handleDrop = useCallback(
@@ -134,7 +128,6 @@ export default function FeaturesNewEditForm({ currentFeature }) {
     setValue('logo', []);
   }, [setValue]);
 
-
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="center" alignItems="center">
@@ -154,15 +147,15 @@ export default function FeaturesNewEditForm({ currentFeature }) {
               >
                 <RHFTextField name="feature_name" label="feature Name" />
 
-
-
                 <RHFAutocomplete
                   name="feature_type"
                   label="Feature Type"
                   options={['AMENITY', 'SERVICE']}
                   getOptionLabel={(option) => option}
                   isOptionEqualToValue={(option, value) => option === value}
-                  onChange={(event, value) => setValue('feature_type', value, { shouldValidate: true })}
+                  onChange={(event, value) =>
+                    setValue('feature_type', value, { shouldValidate: true })
+                  }
                   renderOption={(props, option) => (
                     <li {...props} key={option}>
                       {option}
@@ -170,14 +163,8 @@ export default function FeaturesNewEditForm({ currentFeature }) {
                   )}
                 />
 
-
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                  <RHFTextField
-                    name="description"
-                    label="Descrption"
-                    multiline
-                    rows={4}
-                  />
+                  <RHFTextField name="description" label="Descrption" multiline rows={4} />
 
                   <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Logo</Typography>

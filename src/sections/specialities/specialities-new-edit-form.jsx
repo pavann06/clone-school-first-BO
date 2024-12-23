@@ -21,11 +21,10 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { CreateSpeciality, UpdateSpeciality } from 'src/api/speciality';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFUpload, RHFTextField,RHFAutocomplete } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function SpecialitiesNewEditForm({ currentSpeciality }) {
-
   const queryClient = useQueryClient();
 
   const router = useRouter();
@@ -33,7 +32,6 @@ export default function SpecialitiesNewEditForm({ currentSpeciality }) {
   const mdUp = useResponsive('up', 'md');
 
   const { enqueueSnackbar } = useSnackbar();
-
 
   const NewSpecialitySchema = Yup.object().shape({
     speciality_name: Yup.string().required('name is required'),
@@ -47,7 +45,7 @@ export default function SpecialitiesNewEditForm({ currentSpeciality }) {
       speciality_name: currentSpeciality?.speciality_name || '',
       logo: currentSpeciality?.logo ? [currentSpeciality.logo] : '',
       description: currentSpeciality?.description || '',
-      speciality_for: currentSpeciality?.speciality_for || ''
+      speciality_for: currentSpeciality?.speciality_for || '',
     }),
     [currentSpeciality]
   );
@@ -67,31 +65,28 @@ export default function SpecialitiesNewEditForm({ currentSpeciality }) {
 
   const values = watch();
 
-
   useEffect(() => {
     if (currentSpeciality) {
       reset(defaultValues);
     }
   }, [currentSpeciality, defaultValues, reset]);
 
-
   const onSubmit = handleSubmit(async (data) => {
-
     // if update
-    let response = {}
-    if(currentSpeciality){
-      data.id = currentSpeciality.id
+    let response = {};
+    if (currentSpeciality) {
+      data.id = currentSpeciality.id;
       response = await UpdateSpeciality(data);
     }
     // if create
-    else{
-      response = await CreateSpeciality(data)
+    else {
+      response = await CreateSpeciality(data);
     }
 
-    const {success, description } = response
+    const { success, description } = response;
 
     //  creation success
-    if (success){
+    if (success) {
       enqueueSnackbar(currentSpeciality ? 'Update success!' : 'Create success!');
       // invalidate cache
       queryClient.invalidateQueries(['specialities']);
@@ -104,7 +99,6 @@ export default function SpecialitiesNewEditForm({ currentSpeciality }) {
     // creation failed
     enqueueSnackbar(description);
     reset();
-
   });
 
   const handleDrop = useCallback(
@@ -134,7 +128,6 @@ export default function SpecialitiesNewEditForm({ currentSpeciality }) {
     setValue('logo', []);
   }, [setValue]);
 
-
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="center" alignItems="center">
@@ -154,15 +147,15 @@ export default function SpecialitiesNewEditForm({ currentSpeciality }) {
               >
                 <RHFTextField name="speciality_name" label="Speciality Name" />
 
-
-
                 <RHFAutocomplete
                   name="speciality_for"
                   label="Speciality For"
                   options={['HOSPITAL', 'DOCTOR']}
                   getOptionLabel={(option) => option}
                   isOptionEqualToValue={(option, value) => option === value}
-                  onChange={(event, value) => setValue('speciality_for', value, { shouldValidate: true })}
+                  onChange={(event, value) =>
+                    setValue('speciality_for', value, { shouldValidate: true })
+                  }
                   renderOption={(props, option) => (
                     <li {...props} key={option}>
                       {option}
@@ -170,14 +163,8 @@ export default function SpecialitiesNewEditForm({ currentSpeciality }) {
                   )}
                 />
 
-
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                  <RHFTextField
-                    name="description"
-                    label="Descrption"
-                    multiline
-                    rows={4}
-                  />
+                  <RHFTextField name="description" label="Descrption" multiline rows={4} />
 
                   <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Logo</Typography>

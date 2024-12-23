@@ -17,8 +17,7 @@ import { useRouter } from 'src/routes/hooks';
 import request from 'src/api/request';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFTextField} from 'src/components/hook-form';
-
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 export default function BranchNewEditForm({ currentBranch }) {
   const queryClient = useQueryClient();
@@ -101,7 +100,6 @@ export default function BranchNewEditForm({ currentBranch }) {
       <Grid container spacing={3} justifyContent="center" alignItems="center">
         <Grid xs={12} md={8}>
           <Card>
-
             <Stack spacing={3} sx={{ p: 3 }}>
               <Box
                 columnGap={2}

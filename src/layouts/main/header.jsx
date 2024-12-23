@@ -61,12 +61,11 @@ export default function Header() {
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack alignItems="right" direction={{ xs: 'row', md: 'row' }} justifyContent="flex-end">
-        <Button variant="outlined" sx={{ mr: 1 }}>
+          <Button variant="outlined" sx={{ mr: 1 }}>
             Contact Us
           </Button>
-          
+
           <LoginButton />
-          
         </Stack>
       </Toolbar>
 

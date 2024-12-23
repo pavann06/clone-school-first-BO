@@ -234,7 +234,7 @@ export default function PurchaseListView() {
                         key={row.id}
                         row={{ ...row, serial_no: index + 1 }}
                         selected={false}
-                        onSelectRow={() => { }}
+                        onSelectRow={() => {}}
                         onViewRow={() => handleViewRow(row.id)}
                         onEditRow={() => handleEditRow(row.id)}
                       />

@@ -2,7 +2,6 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-
 export const CreateFeature = async (data) => {
   try {
     console.info('FEATURE-CREATE-FORM-DATA', data);
@@ -35,10 +34,8 @@ export const CreateFeature = async (data) => {
   }
 };
 
-
 export const UpdateFeature = async (data) => {
   try {
-
     const new_files = data.logo.filter((item) => typeof item === 'object');
     const old_files = data.logo.filter((item) => typeof item === 'string');
 
@@ -59,7 +56,7 @@ export const UpdateFeature = async (data) => {
     const { success, info } = response;
     // if success then call create product api
     if (success) {
-        data.logo = info[0];
+      data.logo = info[0];
 
       const resp = await request.put('features', data);
       return resp;

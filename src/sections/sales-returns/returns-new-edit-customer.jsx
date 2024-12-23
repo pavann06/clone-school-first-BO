@@ -17,7 +17,7 @@ export default function ReturnsNewEditCustomer() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
-  const { watch, setValue, formState ,control} = useFormContext();
+  const { watch, setValue, formState, control } = useFormContext();
   const values = watch();
   const { customer } = values;
 
@@ -47,7 +47,7 @@ export default function ReturnsNewEditCustomer() {
 
   useEffect(() => {
     if (customer) {
-        fetchCustomer(customer);
+      fetchCustomer(customer);
     }
   }, [customer]);
 

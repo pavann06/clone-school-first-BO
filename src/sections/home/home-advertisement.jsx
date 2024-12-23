@@ -56,7 +56,6 @@ export default function HomeAdvertisement() {
             Send Hi @ +91 9182259795
           </Button>
         </m.div>
-
       </Stack>
     </Box>
   );
@@ -77,7 +76,7 @@ export default function HomeAdvertisement() {
   );
 
   return (
-    <Container component={MotionViewport} style={{marginBottom:20}}>
+    <Container component={MotionViewport} style={{ marginBottom: 20 }}>
       <Stack
         alignItems="center"
         direction={{ xs: 'column', md: 'row' }}

@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useEffect, useCallback } from 'react';
 // import { useQuery } from '@tanstack/react-query';
 // import {
@@ -122,35 +120,32 @@
 //   );
 // }
 
-
-
-
+import { useSnackbar } from 'notistack';
 // imp-----------------------------
 import React, { useState, useEffect, useCallback } from 'react';
-
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { 
-  Card, 
-  Table, 
+
+import {
   Box,
-  Container, 
-  TableBody, 
-  TableContainer, 
-  TablePagination, 
-  Skeleton 
+  Card,
+  Table,
+  Skeleton,
+  Container,
+  TableBody,
+  TableContainer,
+  TablePagination,
 } from '@mui/material';
 
-import Scrollbar from 'src/components/scrollbar';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
-import { useSnackbar } from 'notistack';
+
 import request from 'src/api/request';
-import { TableNoData, TableHeadCustom } from 'src/components/table';
+
+import Scrollbar from 'src/components/scrollbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 import CalenderTableRow from '../calender-table-row';
-import CalenderTableToolbar from '../calender-table-toolbar';
 
 const TABLE_HEAD = [
   { id: 'serialNumber', label: 'Serial No' }, // Added serial number column
@@ -210,7 +205,7 @@ export default function CalenderListView() {
   const handleEditRow = useCallback(
     (id) => {
       router.push(paths.dashboard.calender.edit(id));
-      console.log(id, "id of the row");
+      console.log(id, 'id of the row');
     },
     [router]
   );
