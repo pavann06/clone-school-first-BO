@@ -91,9 +91,6 @@ export default function EdutainmentListView() {
   
   );
 
-  // const handleDeleteRow = (id) => {
-  //   console.log('Delete row with ID:', id); 
-  // };
 
     const handleDeleteRow = async (id) => {
 
@@ -132,21 +129,39 @@ export default function EdutainmentListView() {
           <Scrollbar>
             <Table>
               <TableHeadCustom headLabel={TABLE_HEAD} />
-              <TableBody>
+              {/* <TableBody>
                 {isLoading
                   ? [...Array(pagination.page_size)].map((_, index) => (
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
-                  : tableData.map((row) => (
+                  : tableData.map((row , index) => (
                       <EdutainmentTableRow
                         key={row.id}
-                        row={{ ...row, id: Number(row.id) }} 
+                        row={{ ...row, serial_no: index + 1 }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                       />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}
-              </TableBody>
+              </TableBody> */}<TableBody>
+  {isLoading
+    ? [...Array(pagination.page_size)].map((_, index) => (
+        <Skeleton key={index} variant="rectangular" height={40} />
+      ))
+    : tableData.map((row, index) => (
+        <EdutainmentTableRow
+          key={row.id}
+          row={{
+            ...row,
+            serial_no: (pagination.page - 1) * pagination.page_size + index + 1, // Updated serial number calculation
+          }}
+          onEditRow={() => handleEditRow(row.id)}
+          onDeleteRow={() => handleDeleteRow(row.id)}
+        />
+      ))}
+  {!isLoading && tableData.length === 0 && <TableNoData />}
+</TableBody>
+
             </Table>
           </Scrollbar>
         </TableContainer>
@@ -163,6 +178,44 @@ export default function EdutainmentListView() {
     </Container>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import { useState, useEffect, useCallback } from 'react';
 // import { useQuery, useQueryClient } from '@tanstack/react-query';

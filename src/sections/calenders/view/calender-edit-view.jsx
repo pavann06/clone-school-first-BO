@@ -99,7 +99,7 @@ export default function CalenderEditView({ id }) {
 }
 
 CalenderEditView.propTypes = {
-  id: PropTypes.string.isRequired, // Validate id as a required string
+  id: PropTypes.string, // Validate id as a required string
 };
 
 CalenderNewEditForm.propTypes = {

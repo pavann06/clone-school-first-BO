@@ -126,10 +126,9 @@
 
 
 // imp-----------------------------
+import React, { useState, useEffect, useCallback } from 'react';
 
-import React, { useState, useEffect ,useCallback } from 'react';
-
-import { useQuery , useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { 
   Card, 
   Table, 
@@ -150,33 +149,30 @@ import request from 'src/api/request';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-
 import CalenderTableRow from '../calender-table-row';
 import CalenderTableToolbar from '../calender-table-toolbar';
 
-
-
 const TABLE_HEAD = [
+  { id: 'serialNumber', label: 'Serial No' }, // Added serial number column
   { id: 'prompt', label: 'Prompt' },
   { id: 'benefit', label: 'Benefit' },
   { id: 'description', label: 'Description' },
   { id: 'youtube_video_url', label: 'Youtube' },
   { id: 'date', label: 'Date' },
   { id: 'image', label: 'Image' },
-  {id: 'actions ', label :"Actions"},
+  { id: 'actions', label: 'Actions' },
 ];
 
 export default function CalenderListView() {
   const router = useRouter();
-    const queryClient = useQueryClient();
-
+  const queryClient = useQueryClient();
 
   const { enqueueSnackbar } = useSnackbar();
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
-  const { data, isLoading,  } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['calendar', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
@@ -188,14 +184,19 @@ export default function CalenderListView() {
   useEffect(() => {
     if (data) {
       if (data?.data?.length > 0) {
-        setTableData(data.data);
+        // Add serial numbers to the data
+        const updatedData = data.data.map((item, index) => ({
+          ...item,
+          serialNumber: (pagination.page - 1) * pagination.page_size + index + 1,
+        }));
+        setTableData(updatedData);
         setTotalCount(data.total);
       } else {
         setTableData([]);
         setTotalCount(0);
       }
     }
-  }, [data]);
+  }, [data, pagination.page, pagination.page_size]);
 
   const handlePageChange = (event, newPage) => {
     setPagination((prev) => ({ ...prev, page: newPage + 1 }));
@@ -206,36 +207,29 @@ export default function CalenderListView() {
     setPagination({ page: 1, page_size: newPageSize });
   };
 
-   const handleEditRow = useCallback(
-  
+  const handleEditRow = useCallback(
     (id) => {
       router.push(paths.dashboard.calender.edit(id));
-      console.log(id.data , "id of the row")
+      console.log(id, "id of the row");
     },
     [router]
-  
   );
 
   const handleDeleteRow = async (id) => {
-
-    const response = await request.delete('backoffice/broadcast/calendar/', {"id": id});
+    const response = await request.delete('backoffice/broadcast/calendar/', { id });
 
     const { success } = response;
 
-    // contact creation success
     if (success) {
       enqueueSnackbar('Deleted successfully');
-
-      // invalidate cache
       queryClient.invalidateQueries(['backoffice/edutainment']);
-
       router.push(paths.dashboard.edutainment.root);
     }
   };
 
   return (
     <Container maxWidth="lg">
-          <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
+      <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
         <CustomBreadcrumbs
           heading="List"
           links={[
@@ -247,7 +241,7 @@ export default function CalenderListView() {
             { name: 'List' },
           ]}
         />
-        </Box>
+      </Box>
       <Card>
         <TableContainer>
           <Scrollbar>
@@ -261,7 +255,8 @@ export default function CalenderListView() {
                   : tableData.map((row) => (
                       <CalenderTableRow
                         key={row.id}
-                        row={{ ...row, id: Number(row.id) }} 
+                        row={{ ...row, id: Number(row.id) }}
+                        serialNumber={row.serialNumber} // Pass serial number to the row
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                       />

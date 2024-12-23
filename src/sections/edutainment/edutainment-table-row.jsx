@@ -9,7 +9,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
   const {
-    id = 'id',
+    serial_no,
     language,
     heading,
     description,
@@ -29,7 +29,7 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
     <>
       <TableRow hover>
         {/* ID */}
-        <TableCell align="center">{id}</TableCell>
+        <TableCell>{serial_no}</TableCell>
 
         <TableCell>
           <ListItemText
