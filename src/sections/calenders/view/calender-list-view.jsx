@@ -128,10 +128,12 @@
 // imp-----------------------------
 
 import React, { useState, useEffect ,useCallback } from 'react';
-import { useQuery } from '@tanstack/react-query';
+
+import { useQuery , useQueryClient } from '@tanstack/react-query';
 import { 
   Card, 
   Table, 
+  Box,
   Container, 
   TableBody, 
   TableContainer, 
@@ -143,8 +145,10 @@ import Scrollbar from 'src/components/scrollbar';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
+import { useSnackbar } from 'notistack';
 import request from 'src/api/request';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 
 import CalenderTableRow from '../calender-table-row';
@@ -159,10 +163,15 @@ const TABLE_HEAD = [
   { id: 'youtube_video_url', label: 'Youtube' },
   { id: 'date', label: 'Date' },
   { id: 'image', label: 'Image' },
+  {id: 'actions ', label :"Actions"},
 ];
 
 export default function CalenderListView() {
   const router = useRouter();
+    const queryClient = useQueryClient();
+
+
+  const { enqueueSnackbar } = useSnackbar();
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
@@ -207,12 +216,38 @@ export default function CalenderListView() {
   
   );
 
-  const handleDeleteRow = (id) => {
-    console.log('Delete row with ID:', id); 
+  const handleDeleteRow = async (id) => {
+
+    const response = await request.delete('backoffice/broadcast/calendar/', {"id": id});
+
+    const { success } = response;
+
+    // contact creation success
+    if (success) {
+      enqueueSnackbar('Deleted successfully');
+
+      // invalidate cache
+      queryClient.invalidateQueries(['backoffice/edutainment']);
+
+      router.push(paths.dashboard.edutainment.root);
+    }
   };
 
   return (
     <Container maxWidth="lg">
+          <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
+        <CustomBreadcrumbs
+          heading="List"
+          links={[
+            { name: 'Dashboard', href: paths.dashboard.root },
+            {
+              name: 'Calender',
+              href: paths.dashboard.calender.root,
+            },
+            { name: 'List' },
+          ]}
+        />
+        </Box>
       <Card>
         <TableContainer>
           <Scrollbar>

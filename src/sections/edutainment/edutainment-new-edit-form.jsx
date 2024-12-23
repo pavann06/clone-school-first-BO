@@ -24,7 +24,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
-import { useSnackbar } from 'src/components/snackbar';
+import { useSnackbar } from 'notistack';
 
 // API and Services
 
