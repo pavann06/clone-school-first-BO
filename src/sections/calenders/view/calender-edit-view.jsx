@@ -73,8 +73,10 @@ export default function CalenderEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['calender', id],
-    queryFn: () => request.get('broadcast/calendars/', { id }),
+    queryFn: () => request.get('backoffice/broadcast/calendar/', { id }),
     staleTime: 24 * 60 * 60 * 1000,
+   
+
   });
 
   return (

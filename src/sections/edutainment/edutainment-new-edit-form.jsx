@@ -46,7 +46,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     image: Yup.mixed(),
     video: Yup.mixed(),
     duration: Yup.string(),
-    status : Yup.string(),
+    status : Yup.string().required('Status is required'),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
     posting_date: Yup.string().required('Posting date is required'),
