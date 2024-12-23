@@ -31,6 +31,7 @@ import { useSnackbar } from 'src/components/snackbar';
 
 // Form Components
 import FormProvider, { RHFUpload,RHFSelect, RHFTextField } from 'src/components/hook-form';
+import { status } from 'nprogress';
 
 // ----------------------------------------------------------------------
 
@@ -40,36 +41,30 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
   const EdutainmentSchema = Yup.object().shape({
-    field_type: Yup.string().required('Type is required'),
+    feed_type: Yup.string().required('Type is required'),
     heading: Yup.string().required('Heading is required'),
-    image: Yup.mixed().nullable(), 
-    video: Yup.mixed()
-      .nullable() 
-      .when('field_type', {
-        is: 'video',
-        then: Yup.mixed().required('Video is required for video type'),
-      }),
-    duration: Yup.string()
-      .when('field_type', {
-        is: 'video',
-        then: Yup.string().required('Duration is required for video type'),
-      }),
+    image: Yup.mixed(),
+    video: Yup.mixed(),
+    duration: Yup.string(),
+    status : Yup.string(),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
     posting_date: Yup.string().required('Posting date is required'),
   });
+  
   
 
   const defaultValues = useMemo(
     () => ({
       heading: currentEdutainment?.heading || '',
       feed_type: currentEdutainment?.feed_type || '',
-      image: currentEdutainment?.image || null,
-      video: currentEdutainment?.video || null,
-      duration: currentEdutainment?.duration || null,
+      image: currentEdutainment?.image || '',
+      video: currentEdutainment?.video || '',
+      duration: currentEdutainment?.duration ||'',
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
       posting_date: currentEdutainment?.posting_date || '',
+      status: currentEdutainment?.status || '',
     }),
     [currentEdutainment]
   );
@@ -178,6 +173,13 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <MenuItem value="Video">Video</MenuItem>
                     <MenuItem value="Youtube">YouTube</MenuItem>
                   </RHFSelect>
+
+                  <RHFSelect name="status" label="Status">
+                    <MenuItem value="Approved">Approved</MenuItem>
+                    <MenuItem value="Rejected">Rejected</MenuItem>
+                    <MenuItem value="Pending">Pending</MenuItem>
+                   
+                  </RHFSelect>
                 </Box>
 
                 {/* Language, Heading, Description */}
@@ -222,7 +224,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </Box>
                 )}
 
-                {values.feed_type === 'video' && (
+                {values.feed_type === 'Video' && (
                   <Box>
                     <RHFTextField
                       name="duration"

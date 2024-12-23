@@ -45,6 +45,8 @@ export default function EdutainmentEditView({ id }) {
   );
 }
 
+
+
 EdutainmentEditView.propTypes = {
-  id: PropTypes.number.isRequired, 
+  id: PropTypes.string,
 };

@@ -88,14 +88,7 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
           />
         </TableCell>
 
-        {/* Heading */}
-      
-
-      
-
-      
-
-        {/* Posting and Approval Info */}
+       
     
 
         {/* Actions */}
@@ -135,21 +128,11 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
   );
 }
 
+
+
 EdutainmentTableRow.propTypes = {
-  row: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    language: PropTypes.string.isRequired,
-    heading: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    created_date: PropTypes.string.isRequired,
-    likes_count: PropTypes.number.isRequired,
-    comments_count: PropTypes.number.isRequired,
-    whatsapp_share_count: PropTypes.number.isRequired,
-    posting_date: PropTypes.string.isRequired,
-    approved_by: PropTypes.string.isRequired,
-    approved_time: PropTypes.string.isRequired,
-    image: PropTypes.string, // Optional, as not all rows may have an image
-  }).isRequired,
-  onEditRow: PropTypes.func.isRequired,
-  onDeleteRow: PropTypes.func.isRequired,
+  onEditRow: PropTypes.func,
+  onDeleteRow: PropTypes.func,
+  // onViewRow: PropTypes.func,
+  row: PropTypes.object,
 };
