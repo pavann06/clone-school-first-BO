@@ -1,11 +1,10 @@
-
-
 import PropTypes from 'prop-types';
-import { TableRow, TableCell, IconButton, Link , MenuItem } from '@mui/material';
+
 import ListItemText from '@mui/material/ListItemText';
+import { Link, TableRow, MenuItem, TableCell, IconButton } from '@mui/material';
+
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
-
 
 export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
   const {
@@ -23,7 +22,6 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
   } = row;
 
   const popover = usePopover();
-  
 
   return (
     <>
@@ -42,20 +40,17 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
           />
         </TableCell>
 
-             {/* Description */}
-             <TableCell>{description}</TableCell>
-              
+        {/* Description */}
+        <TableCell>{description}</TableCell>
 
-
-              <TableCell>
+        <TableCell>
           <div>Posted: {posting_date}</div>
           <div>Approved By: {approved_by}</div>
           <div>Approved At: {new Date(approved_time).toLocaleDateString()}</div>
-
         </TableCell>
 
-          {/* Image */}
-          <TableCell align="center">
+        {/* Image */}
+        <TableCell align="center">
           {image ? (
             <img
               src={image}
@@ -67,16 +62,12 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
           )}
         </TableCell>
 
-          {/* Interactions */}
-          <TableCell>
+        {/* Interactions */}
+        <TableCell>
           <div>Likes: {likes_count}</div>
           <div>Comments: {comments_count}</div>
           <div>WhatsApp Shares: {whatsapp_share_count}</div>
         </TableCell>
-
-             
-
-       
 
         {/* Language */}
         <TableCell>
@@ -89,9 +80,6 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
             }
           />
         </TableCell>
-
-       
-    
 
         {/* Actions */}
         <TableCell align="center">
@@ -129,8 +117,6 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
     </>
   );
 }
-
-
 
 EdutainmentTableRow.propTypes = {
   onEditRow: PropTypes.func,

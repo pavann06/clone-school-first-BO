@@ -16,7 +16,7 @@ const AUTH_INITIAL_STATE = {
   isLoggedIn: false,
 };
 
-const AUTH_KEYS = ['access_token','refresh_token','user','isLoggedIn']
+const AUTH_KEYS = ['access_token','refresh_token','isLoggedIn']
 
 function hasAllKeys(obj, keys) {
   return keys.every(key => Object.prototype.hasOwnProperty.call(obj, key));

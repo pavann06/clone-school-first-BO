@@ -7,7 +7,6 @@ export const afterLogin = (data) => async (dispatch) => {
       isLoggedIn: true,
     };
     window.localStorage.removeItem('auth_info')
-    console.log(auth_state , "Auth State")
     window.localStorage.setItem('auth_info', JSON.stringify(auth_state));
     dispatch({
       type: actionTypes.REQUEST_SUCCESS,

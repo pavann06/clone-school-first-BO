@@ -20,8 +20,7 @@ export default function EdutainmentEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['edutainment', id],
-    queryFn: () => request.get('backoffice/edutain/feeds', { id }),
-    staleTime: 24 * 60 * 60 * 1000,
+    queryFn: () => request.get(`backoffice/edutain/feeds/${id}`)
   });
 
   return (
@@ -34,13 +33,13 @@ export default function EdutainmentEditView({ id }) {
             name: 'Edutainment',
             href: paths.dashboard.edutainment.root,
           },
-          { name: data?.info?.[0]?.heading },
+          { name: data?.data?.heading },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <EdutainmentNewEditForm currentEdutainment={data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <EdutainmentNewEditForm currentEdutainment={data?.data} />}
     </Container>
   );
 }

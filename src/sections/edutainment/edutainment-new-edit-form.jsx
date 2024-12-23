@@ -1,12 +1,11 @@
-
-
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 // import { useMemo, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useQueryClient } from '@tanstack/react-query';
-import React, {  useMemo, useCallback  } from 'react'; // Combined import
+import React, { useMemo, useState, useCallback } from 'react'; // Combined import
+
+import { useSnackbar } from 'notistack';
 
 // UI Components (Material-UI)
 import Box from '@mui/material/Box';
@@ -18,41 +17,40 @@ import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-
 // Internal Utilities
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
+
 import { useResponsive } from 'src/hooks/use-responsive';
+
+import request from 'src/api/request';
 import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
-import { useSnackbar } from 'notistack';
 
 // API and Services
 
-
 // Form Components
-import FormProvider, { RHFUpload,RHFSelect, RHFTextField } from 'src/components/hook-form';
-import { status } from 'nprogress';
+import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
 export default function EdutainmentNewEditForm({ currentEdutainment }) {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
+
+  const [isUploading, setIsUploading] = useState(false);
+
   const EdutainmentSchema = Yup.object().shape({
     feed_type: Yup.string().required('Type is required'),
     heading: Yup.string().required('Heading is required'),
     image: Yup.mixed(),
     video: Yup.mixed(),
     duration: Yup.string(),
-    status : Yup.string().required('Status is required'),
+    status: Yup.string().required('Status is required'),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
     posting_date: Yup.string().required('Posting date is required'),
   });
-  
-  
 
   const defaultValues = useMemo(
     () => ({
@@ -60,7 +58,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       feed_type: currentEdutainment?.feed_type || '',
       image: currentEdutainment?.image || '',
       video: currentEdutainment?.video || '',
-      duration: currentEdutainment?.duration ||'',
+      duration: currentEdutainment?.duration || 0,
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
       posting_date: currentEdutainment?.posting_date || '',
@@ -86,50 +84,66 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // if update product
-      let response = {};
-      if (currentEdutainment) {
-        data.id = currentEdutainment.id;
-        response = await UpdateEdutainment(data);
-      }
-      // if create product
-      else {
-        response = await CreateEdutainment(data);
-      }
+      const response = currentEdutainment
+        ? await UpdateEdutainment({ ...data, id: currentEdutainment.id })
+        : await CreateEdutainment(data);
 
-      // product creation success
-      if (response && response.success) {
+      if (response?.success) {
         enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
-        reset();
-        // invalidate cache
-        queryClient.invalidateQueries(['edutainment']);
-
-        // redirect to product list
         router.push(paths.dashboard.edutainment.root);
+        reset();
         return response;
       }
-      enqueueSnackbar('Feeds Create failed!');
 
+      enqueueSnackbar('Operation failed');
       return response;
     } catch (error) {
-      console.error('Error submitting form:', error);
-      enqueueSnackbar('Feeds Create failed from user!');
+      console.error('Error:', error);
+      enqueueSnackbar('Operation failed');
+      return null;
     }
-    return null;
   });
 
+  const handleUpload = useCallback(
+    async (file) => {
+      try {
+        setIsUploading(true);
+        const payload = {
+          files: file,
+        };
+        const response = await request.UploadFiles(payload);
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const newFile = acceptedFiles[0]; // Allow only the first file
-      if (newFile) {
-        const fileWithPreview = Object.assign(newFile, {
-          preview: URL.createObjectURL(newFile),
-        });
-        setValue('image', fileWithPreview, { shouldValidate: true }); // Set the single file
+        if (response.success) {
+          return response.data[0].file_url;
+        }
+        throw new Error('Upload failed');
+      } catch (error) {
+        enqueueSnackbar('File upload failed', { variant: 'error' });
+        return null;
+      } finally {
+        setIsUploading(false);
       }
     },
-    [setValue]
+    [enqueueSnackbar]
+  );
+
+  const handleDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const fileWithPreview = Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        });
+        setValue('image', fileWithPreview);
+
+        const uploadedUrl = await handleUpload(file);
+        if (uploadedUrl) {
+          setValue('image', uploadedUrl);
+          enqueueSnackbar('Image uploaded successfully');
+        }
+      }
+    },
+    [setValue, enqueueSnackbar, handleUpload]
   );
 
   const handleRemoveFile = useCallback(() => {
@@ -178,7 +192,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <MenuItem value="Approved">Approved</MenuItem>
                     <MenuItem value="Rejected">Rejected</MenuItem>
                     <MenuItem value="Pending">Pending</MenuItem>
-                   
                   </RHFSelect>
                 </Box>
 
@@ -210,6 +223,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}
+                        isLoading={isUploading}
                       />
                     </Stack>
                   </Box>
@@ -256,7 +270,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 type="submit"
                 variant="contained"
                 size="large"
-                loading={isSubmitting}
+                loading={isSubmitting || isUploading}
                 sx={{ alignSelf: 'flex-end' }}
               >
                 {!currentEdutainment ? 'Create Edutainment' : 'Save Changes'}
