@@ -252,7 +252,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 <Box>
                   <RHFTextField
                     name="posting_date"
-                    label="posting_date"
+                    label="Posting Date"
                     type="date"
                     InputProps={{
                       inputProps: {
