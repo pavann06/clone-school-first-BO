@@ -23,6 +23,7 @@ import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 
 import EdutainmentTableRow from '../edutainment-table-row';
+import EdutainmentTableToolbar from '../edutainment-table-toolbar';
 
 
 
@@ -74,8 +75,10 @@ export default function EdutainmentListView() {
   };
 
    const handleEditRow = useCallback(
+  
     (id) => {
       router.push(paths.dashboard.edutainment.edit(id));
+      console.log(id.data , "id of the row")
     },
     [router]
   

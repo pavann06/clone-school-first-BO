@@ -304,16 +304,16 @@ function CalenderTableRow({ row, onEditRow, onDeleteRow, isLoading }) {
     );
   }
 
-  // Fallback for missing row or row.id
-  if (!row || !row.id) {
-    return (
-      <TableRow>
-        <TableCell align="center" colSpan={6}>
-          No Data Available
-        </TableCell>
-      </TableRow>
-    );
-  }
+  // // Fallback for missing row or row.id
+  // if (!row || !row.id) {
+  //   return (
+  //     <TableRow>
+  //       <TableCell align="center" colSpan={6}>
+  //         No Data Available
+  //       </TableCell>
+  //     </TableRow>
+  //   );
+  // }
 
   return (
     <>
