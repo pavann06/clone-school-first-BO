@@ -71,7 +71,7 @@ export default function CalenderEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['calender', id],
-    queryFn: () => request.get('backoffice/broadcast/calendar/', { id }),
+    queryFn: () => request.get(`backoffice/broadcast/calendar/${id}`),
     staleTime: 24 * 60 * 60 * 1000,
   });
 
@@ -85,13 +85,13 @@ export default function CalenderEditView({ id }) {
             name: 'Calender',
             href: paths.dashboard.calender.root,
           },
-          { name: data?.info?.[0]?.calender },
+          { name: data?.data?.calender },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <CalenderNewEditForm currentCalender={data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <CalenderNewEditForm currentCalender={data?.data} />}
     </Container>
   );
 }

@@ -217,8 +217,8 @@ export default function CalenderListView() {
 
     if (success) {
       enqueueSnackbar('Deleted successfully');
-      queryClient.invalidateQueries(['backoffice/edutainment']);
-      router.push(paths.dashboard.edutainment.root);
+      queryClient.invalidateQueries(['backoffice/calendar']);
+      router.push(paths.dashboard.calendar.root);
     }
   };
 

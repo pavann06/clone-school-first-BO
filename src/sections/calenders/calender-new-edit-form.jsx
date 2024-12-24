@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -11,16 +11,20 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { DatePicker } from '@mui/x-date-pickers';
 
 // Internal Utilities
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
+
+import request from 'src/api/request';
 
 import { CreateCalender, UpdateCalender } from 'src/api/calender-module';
 
 import { useSnackbar } from 'src/components/snackbar';
 // Form Components
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
+import { Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +32,7 @@ export default function CalenderNewEditForm({ currentCalender }) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const [isUploading, setIsUploading] = useState(false);
 
   // Validation Schema for the form
   const CalenderSchema = Yup.object().shape({
@@ -48,7 +53,7 @@ export default function CalenderNewEditForm({ currentCalender }) {
       benefit: currentCalender?.benefit || '',
       youtube_video_url: currentCalender?.youtube_video_url || '',
       description: currentCalender?.description || '',
-      image: typeof currentCalender?.image === 'string' ? currentCalender.image : '',
+      image: currentCalender?.image || '',
     }),
     [currentCalender]
   );
@@ -67,51 +72,75 @@ export default function CalenderNewEditForm({ currentCalender }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // if update product
-      let response = {};
-      if (currentCalender) {
-        data.id = currentCalender.id;
-        response = await UpdateCalender(data);
-      }
-      // if create product
-      else {
-        response = await CreateCalender(data);
-      }
+      const response = currentCalender
+        ? await UpdateCalender({ ...data, id: currentCalender.id })
+        : await CreateCalender(data);
 
-      // product creation success
-      if (response && response.success) {
+      if (response?.success) {
         enqueueSnackbar(currentCalender ? 'Update success!' : 'Create success!');
-        reset();
-        // invalidate cache
-        queryClient.invalidateQueries(['calender']);
-
-        // redirect to product list
         router.push(paths.dashboard.calender.root);
+        reset();
         return response;
       }
-      enqueueSnackbar('Calender Create failed!');
 
+      enqueueSnackbar('Operation failed');
       return response;
     } catch (error) {
-      console.error('Error submitting form:', error);
-      enqueueSnackbar('Feeds Create failed from user!');
+      console.error('Error:', error);
+      enqueueSnackbar('Operation failed');
+      return null;
     }
-    return null;
   });
 
-  // Handle file upload
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const newFile = acceptedFiles[0]; // Allow only the first file
-      if (newFile) {
-        const fileWithPreview = Object.assign(newFile, {
-          preview: URL.createObjectURL(newFile),
-        });
-        setValue('image', fileWithPreview, { shouldValidate: true }); // Set the single file
+  const handleUpload = useCallback(
+    async (file) => {
+      try {
+        setIsUploading(true);
+        const payload = {
+          files: file,
+        };
+        const response = await request.UploadFiles(payload);
+
+        if (response.success) {
+          return response.data[0].file_url;
+        }
+        throw new Error('Upload failed');
+      } catch (error) {
+        enqueueSnackbar('File upload failed', { variant: 'error' });
+        return null;
+      } finally {
+        setIsUploading(false);
       }
     },
-    [setValue]
+    [enqueueSnackbar]
   );
+
+  const handleDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const fileWithPreview = Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        });
+        setValue('image', fileWithPreview);
+
+        const uploadedUrl = await handleUpload(file);
+        if (uploadedUrl) {
+          setValue('image', uploadedUrl);
+          enqueueSnackbar('Image uploaded successfully');
+        }
+      }
+    },
+    [setValue, enqueueSnackbar, handleUpload]
+  );
+
+  const handleRemoveFile = useCallback(() => {
+    setValue('image', null); // Remove the image
+  }, [setValue]);
+
+  const handleRemoveAllFiles = useCallback(() => {
+    setValue('image', null); // Reset to no image
+  }, [setValue]);
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -129,18 +158,26 @@ export default function CalenderNewEditForm({ currentCalender }) {
                 }}
               >
                 <Box>
-                  <RHFTextField
+                  {/* <RHFTextField
                     name="date"
                     label="date"
+                    
                     type="date"
                     InputProps={{
                       inputProps: {
-                        min: '2020-01-01', // Optionally, set a minimum date
+                        min: '2020-01-01', 
                       },
                     }}
                     InputLabelProps={{
                       shrink: true, // Ensures the label stays above the field even when not focused
                     }}
+                  /> */}
+                  {/* <DatePicker label="Uncontrolled picker" defaultValue={dayjs('2022-04-17')} /> */}
+                  <DatePicker
+                    label="Controlled picker"
+                    // value={value}
+                    name = "date"
+                    // onChange={(newValue) => setValue(newValue)}
                   />
                 </Box>
 
@@ -148,12 +185,21 @@ export default function CalenderNewEditForm({ currentCalender }) {
                 <RHFTextField name="benefit" label="Benefit" />
                 <RHFTextField name="youtube_video_url" label="YouTube Video URL" />
                 <RHFTextField name="description" label="Description" multiline rows={4} />
-                <RHFUpload
-                  name="image"
-                  label="Upload Image"
-                  maxSize={3145728}
-                  onDrop={handleDrop}
-                />
+
+                <Box>
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2">Image</Typography>
+                    <RHFUpload
+                      thumbnail
+                      name="image"
+                      maxSize={3145728}
+                      onDrop={handleDrop}
+                      onRemove={handleRemoveFile}
+                      onRemoveAll={handleRemoveAllFiles}
+                      isLoading={isUploading}
+                    />
+                  </Stack>
+                </Box>
               </Box>
 
               <LoadingButton
