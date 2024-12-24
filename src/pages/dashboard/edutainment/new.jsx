@@ -11,9 +11,7 @@ export default function EdutainmentCreatePage() {
         <title> New Speciality </title>
       </Helmet>
 
-       <EdutainmentCreateView />
-      
-      
+      <EdutainmentCreateView />
     </>
   );
 }

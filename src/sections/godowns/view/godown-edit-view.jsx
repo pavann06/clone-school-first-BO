@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -13,10 +13,9 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import GodownNewEditForm from '../godown-new-edit-form';
 
-
 // ----------------------------------------------------------------------
 
-export default function GodownEditView({id}) {
+export default function GodownEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
@@ -40,7 +39,7 @@ export default function GodownEditView({id}) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen/> : <GodownNewEditForm currentGodown={ data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <GodownNewEditForm currentGodown={data?.info?.[0]} />}
     </Container>
   );
 }

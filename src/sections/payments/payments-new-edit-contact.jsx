@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {  useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import React, { useRef, useState, useEffect } from 'react';
 
 import Grid from '@mui/material/Grid';
@@ -11,7 +11,7 @@ import request from 'src/api/request';
 import { RHFAutocomplete } from 'src/components/hook-form';
 
 export default function PaymentsNewEditContact() {
-  const { setValue, formState,watch,control } = useFormContext(); 
+  const { setValue, formState, watch, control } = useFormContext();
   const values = watch();
   const { contact } = values;
 
@@ -48,10 +48,9 @@ export default function PaymentsNewEditContact() {
     }
   }, [contact]);
 
-
   return (
     <Grid item xs={12} md={6}>
-      <RHFAutocomplete 
+      <RHFAutocomplete
         name="contact"
         label="Search Contact"
         placeholder="Search Contact"

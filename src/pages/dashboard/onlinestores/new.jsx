@@ -11,9 +11,7 @@ export default function OnlineStoreCreatePage() {
         <title> New Speciality </title>
       </Helmet>
 
-       <OnlieStoresCreateView />
-      
-      
+      <OnlieStoresCreateView />
     </>
   );
 }

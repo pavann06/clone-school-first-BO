@@ -14,14 +14,11 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { fData } from 'src/utils/format-number';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFTextField,
-  RHFUploadAvatar,
-} from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFUploadAvatar } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function AccountClient({profile}) {
+export default function AccountClient({ profile }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const ClientSchema = Yup.object().shape({
@@ -31,19 +28,19 @@ export default function AccountClient({profile}) {
     address: Yup.string().required('Address is required'),
     state: Yup.string().required('State is required'),
     city: Yup.string().required('City is required'),
-    license_number:Yup.mixed().required('license no. is requried'),
-    gst_number:Yup.mixed().required('gst number is requried')
+    license_number: Yup.mixed().required('license no. is requried'),
+    gst_number: Yup.mixed().required('gst number is requried'),
   });
 
   const defaultValues = {
-    client_name:profile?.client.client_name || '',
+    client_name: profile?.client.client_name || '',
     email: profile?.client.email || '',
     logo: profile?.client.logo || null,
     address: profile?.client.address || '',
     state: profile?.client.state || '',
     city: profile?.client.city || '',
-    license_number:profile?.client.license_number || '',
-    gst_number:profile?.client.gst_number || ''
+    license_number: profile?.client.license_number || '',
+    gst_number: profile?.client.gst_number || '',
   };
 
   const methods = useForm({
@@ -107,7 +104,6 @@ export default function AccountClient({profile}) {
                 </Typography>
               }
             />
-
           </Card>
         </Grid>
 
@@ -129,11 +125,9 @@ export default function AccountClient({profile}) {
               <RHFTextField name="state" label="State/Region" />
               <RHFTextField name="license_number" label="License Number" />
               <RHFTextField name="gst_number" label="GST Number" />
-                        
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
                 Save Changes
               </LoadingButton>
@@ -145,6 +139,6 @@ export default function AccountClient({profile}) {
   );
 }
 
-AccountClient.propTypes ={
-    profile:PropTypes.object, 
-}
+AccountClient.propTypes = {
+  profile: PropTypes.object,
+};

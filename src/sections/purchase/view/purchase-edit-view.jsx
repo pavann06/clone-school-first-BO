@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -19,8 +19,8 @@ export default function PurchaseEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['purchases','details' ,id],
-    queryFn: () => request.get('/purchases/details', { purchase_id:id }),
+    queryKey: ['purchases', 'details', id],
+    queryFn: () => request.get('/purchases/details', { purchase_id: id }),
     staleTime: 0,
     refetchOnWindowFocus: false,
   });
@@ -45,9 +45,11 @@ export default function PurchaseEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {
-        currentPurchase ? <PurchaseNewEditForm currentPurchase={currentPurchase} /> : <LoadingScreen/>
-      }
+      {currentPurchase ? (
+        <PurchaseNewEditForm currentPurchase={currentPurchase} />
+      ) : (
+        <LoadingScreen />
+      )}
     </Container>
   );
 }

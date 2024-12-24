@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import { selectUser } from 'src/redux/auth/selectors';
+import { selectAuth } from 'src/redux/auth/selectors';
 import { ForbiddenIllustration } from 'src/assets/illustrations';
 
 import { varBounce, MotionContainer } from 'src/components/animate';
@@ -15,13 +15,14 @@ import { varBounce, MotionContainer } from 'src/components/animate';
 export default function PermissionBasedGuard({ hasContent, permissions, children, sx }) {
   // Logic here to get current user role
   // const { custom_permissions } =  useSelector(selectUser);
-  const { custom_permissions } = useSelector((state) => state.someState || {});
-
+  const { custom_permissions } = useSelector(selectAuth);
 
   const existingPermissions = custom_permissions || [];
 
   if (Array.isArray(permissions) && permissions.length > 0) {
-    let allPermissionsPresent = permissions.every(permission => existingPermissions.includes(permission));
+    let allPermissionsPresent = permissions.every((permission) =>
+      existingPermissions.includes(permission)
+    );
     allPermissionsPresent = true;
 
     if (!allPermissionsPresent) {

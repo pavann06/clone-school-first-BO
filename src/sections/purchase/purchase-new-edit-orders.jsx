@@ -17,7 +17,6 @@ import PurchaseNewEditRow from './purchase-new-edit-row';
 // ----------------------------------------------------------------------
 
 export default function PurchaseNewEditOrders() {
-
   const { control, setValue, watch } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -33,8 +32,7 @@ export default function PurchaseNewEditOrders() {
 
   useEffect(() => {
     setValue('round_off', Math.round(subTotal) - subTotal);
-  }
-  , [setValue, subTotal]);
+  }, [setValue, subTotal]);
   // setValue('round_off', Math.round(subTotal) - subTotal)
 
   const totalAmount = subTotal + values.round_off;
@@ -48,16 +46,14 @@ export default function PurchaseNewEditOrders() {
       id: 'NEW',
       product: null,
       bags: 0,
-      bag_weight:0,
-      gross_weight:0,
-      weight_loss:0,
-      net_weight:0,
+      bag_weight: 0,
+      gross_weight: 0,
+      weight_loss: 0,
+      net_weight: 0,
       price: 0,
       total: 0,
     });
   };
-
-
 
   return (
     <Box sx={{ p: 3 }}>
@@ -91,39 +87,36 @@ export default function PurchaseNewEditOrders() {
 
       {/* render total - second stack */}
       <Stack
-      spacing={2}
-      alignItems="flex-end"
-      sx={{ mt: 3, textAlign: 'right', typography: 'body2' }}
-    >
-      <Stack direction="row">
-        <Box sx={{ color: 'text.secondary' }}>Subtotal</Box>
-        <Box sx={{ width: 160, typography: 'subtitle2' }}>{fCurrency(subTotal) || '-'}</Box>
+        spacing={2}
+        alignItems="flex-end"
+        sx={{ mt: 3, textAlign: 'right', typography: 'body2' }}
+      >
+        <Stack direction="row">
+          <Box sx={{ color: 'text.secondary' }}>Subtotal</Box>
+          <Box sx={{ width: 160, typography: 'subtitle2' }}>{fCurrency(subTotal) || '-'}</Box>
+        </Stack>
+
+        <Stack direction="row">
+          <Box sx={{ color: 'text.secondary' }}>Round Off</Box>
+          <Box
+            sx={{
+              width: 160,
+              ...(values.round_off && { color: 'error.main' }),
+            }}
+          >
+            {values.round_off ? fCurrency(values.round_off) : '-'}
+          </Box>
+        </Stack>
+        <Stack direction="row">
+          <Box sx={{ color: 'text.secondary' }}>Taxes</Box>
+          <Box sx={{ width: 160 }}>{values.taxes ? fCurrency(values.taxes) : '₹0'}</Box>
+        </Stack>
+
+        <Stack direction="row" sx={{ typography: 'subtitle1' }}>
+          <Box>Total</Box>
+          <Box sx={{ width: 160 }}>{fCurrency(totalAmount) || '0'}</Box>
+        </Stack>
       </Stack>
-
-      <Stack direction="row">
-        <Box sx={{ color: 'text.secondary' }}>Round Off</Box>
-        <Box
-          sx={{
-            width: 160,
-            ...(values.round_off && { color: 'error.main' }),
-          }}
-        >
-          {values.round_off ? fCurrency(values.round_off) : '-'}
-        </Box>
-
-      </Stack>
-      <Stack direction="row">
-        <Box sx={{ color: 'text.secondary' }}>Taxes</Box>
-        <Box sx={{ width: 160 }}>{values.taxes ? fCurrency(values.taxes) : '₹0'}</Box>
-      </Stack>
-
-
-      <Stack direction="row" sx={{ typography: 'subtitle1' }}>
-        <Box>Total</Box>
-        <Box sx={{ width: 160 }}>{fCurrency(totalAmount) || '0'}</Box>
-      </Stack>
-    </Stack>
-
     </Box>
   );
 }

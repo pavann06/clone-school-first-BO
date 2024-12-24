@@ -39,7 +39,6 @@ export default function ContactToolbar({ subledger, finYearStart, finYearEnd }) 
     refetchOnWindowFocus: false,
   });
 
-
   const {
     data: profileData,
     isLoading: profileLoading,
@@ -65,7 +64,6 @@ export default function ContactToolbar({ subledger, finYearStart, finYearEnd }) 
 
   return (
     <>
-
       <Stack
         spacing={3}
         direction={{ xs: 'column', sm: 'row' }}
@@ -141,32 +139,31 @@ export default function ContactToolbar({ subledger, finYearStart, finYearEnd }) 
         </Box>
       </Dialog>
       <Card sx={{ pt: 5, px: 5 }}>
-      <Box
-        rowGap={5}
-        display="grid"
-        alignItems="center"
-        gridTemplateColumns={{
-          xs: 'repeat(1, 1fr)',
-          sm: 'repeat(2, 1fr)',
-        }}
-      >
-
-        <Stack sx={{ typography: 'body2' }}>
-          <Typography variant="subtitle2" sx={{ mb: 1 }}>
-            Consignee
-          </Typography>
-          {Contact?.full_name}
-          <br />
-          {Contact?.address1}
-          <br />
-          {Contact?.state}
-          <br />
-          {Contact?.mobile}
-          <br />
-          GSTIN-{Contact?.gst_number}
-          <br />
-        </Stack>
-      </Box>
+        <Box
+          rowGap={5}
+          display="grid"
+          alignItems="center"
+          gridTemplateColumns={{
+            xs: 'repeat(1, 1fr)',
+            sm: 'repeat(2, 1fr)',
+          }}
+        >
+          <Stack sx={{ typography: 'body2' }}>
+            <Typography variant="subtitle2" sx={{ mb: 1 }}>
+              Consignee
+            </Typography>
+            {Contact?.full_name}
+            <br />
+            {Contact?.address1}
+            <br />
+            {Contact?.state}
+            <br />
+            {Contact?.mobile}
+            <br />
+            GSTIN-{Contact?.gst_number}
+            <br />
+          </Stack>
+        </Box>
       </Card>
     </>
   );

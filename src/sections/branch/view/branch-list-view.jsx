@@ -30,7 +30,7 @@ import {
 } from 'src/components/table';
 
 import BranchTableRow from '../branch-table-row';
-import BranchTableToolbar from '../branch-table-toolbar'
+import BranchTableToolbar from '../branch-table-toolbar';
 
 const TABLE_HEAD = [
   { id: 'No', label: 'No', width: 100 },
@@ -100,7 +100,6 @@ export default function BranchListView() {
     },
     [router]
   );
-
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

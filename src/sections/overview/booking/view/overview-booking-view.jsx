@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import {fIndianCurrency } from 'src/utils/format-number';
+import { fIndianCurrency } from 'src/utils/format-number';
 
 import request from 'src/api/request';
 import {
@@ -95,7 +95,11 @@ export default function OverviewBookingView() {
         <Grid xs={12} md={4}>
           <BookingWidgetSummary
             title="CURRENT BALANCE"
-            total={(analytics.credit_sum - analytics.debit_sum) ===0 ? '0' : fIndianCurrency(analytics.credit_sum - analytics.debit_sum)}
+            total={
+              analytics.credit_sum - analytics.debit_sum === 0
+                ? '0'
+                : fIndianCurrency(analytics.credit_sum - analytics.debit_sum)
+            }
             icon={<MotivationIllustration />}
           />
         </Grid>

@@ -87,5 +87,5 @@ export default function FeaturesTableRow({ row, onEditRow, onDeleteRow }) {
 FeaturesTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
-  row: PropTypes.object
+  row: PropTypes.object,
 };

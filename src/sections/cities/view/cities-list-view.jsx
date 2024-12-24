@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useQuery , useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -41,7 +41,6 @@ const TABLE_HEAD = [
 ];
 
 export default function CitiesListView() {
-
   const queryClient = useQueryClient();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -99,8 +98,7 @@ export default function CitiesListView() {
   const notFound = isError;
 
   const handleDeleteRow = async (id) => {
-
-    const response = await request.delete('cities', {"id": id});
+    const response = await request.delete('cities', { id });
 
     const { success } = response;
 
@@ -114,8 +112,6 @@ export default function CitiesListView() {
       router.push(paths.dashboard.cities.root);
     }
   };
-
-
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

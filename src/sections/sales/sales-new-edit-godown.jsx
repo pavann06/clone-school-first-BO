@@ -9,11 +9,10 @@ import request from 'src/api/request';
 
 import { RHFAutocomplete } from 'src/components/hook-form';
 
-
 export default function SalesNewEditGodown() {
   const [selectedGodown, setSelectedGodown] = useState(null);
 
-  const { watch, setValue, formState,control } = useFormContext();
+  const { watch, setValue, formState, control } = useFormContext();
   const values = watch();
   const { godown } = values;
 
@@ -35,7 +34,7 @@ export default function SalesNewEditGodown() {
   }, [godown]);
 
   return (
-    <RHFAutocomplete 
+    <RHFAutocomplete
       name="godown"
       label="GoDown"
       sx={{ width: 300 }}

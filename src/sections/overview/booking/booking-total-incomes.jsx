@@ -98,7 +98,7 @@ export default function BookingTotalIncomes({
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
         <div>
           <Box sx={{ mb: 1, typography: 'subtitle2' }}>{title}</Box>
-          <Box sx={{ typography: 'h3' }}>{total===0 ? '0' : fCurrency(total)}</Box>
+          <Box sx={{ typography: 'h3' }}>{total === 0 ? '0' : fCurrency(total)}</Box>
         </div>
 
         <div>

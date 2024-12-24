@@ -1,18 +1,8 @@
-// import { debounce } from 'lodash';
-import PropTypes from 'prop-types';
-import {  useState } from 'react';
-
 import Stack from '@mui/material/Stack';
-// import TextField from '@mui/material/TextField';
-// import { Select, MenuItem } from '@mui/material';
-// import InputAdornment from '@mui/material/InputAdornment';
-
-// import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function CalenderTableToolbar({ filters, setFilters }) {
-  const [searchTerm, setSearchTerm] = useState(filters.name);
+export default function CalenderTableToolbar() {
 
   return (
     <Stack
@@ -31,7 +21,4 @@ export default function CalenderTableToolbar({ filters, setFilters }) {
 }
 
 CalenderTableToolbar.propTypes = {
-  filters: PropTypes.object,
-  setFilters: PropTypes.any,
-  
 };

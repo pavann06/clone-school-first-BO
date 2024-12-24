@@ -11,9 +11,7 @@ export default function CitiesCreatePage() {
         <title> New City</title>
       </Helmet>
 
-       <CitiesCreateView />
-      
-      
+      <CitiesCreateView />
     </>
   );
 }

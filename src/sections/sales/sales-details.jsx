@@ -52,7 +52,7 @@ export default function SalesDetails({ sales }) {
         </TableCell>
         <TableCell width={120} sx={{ typography: 'subtitle2' }}>
           <Box sx={{ mt: 2 }} />
-           {fCurrency(subTotal)}
+          {fCurrency(subTotal)}
         </TableCell>
       </StyledTableRow>
 
@@ -78,7 +78,7 @@ export default function SalesDetails({ sales }) {
         <TableCell colSpan={4} />
         <TableCell sx={{ typography: 'subtitle1' }}>Total</TableCell>
         <TableCell width={140} sx={{ typography: 'subtitle1' }}>
-         {fCurrency(sales.final_amount)}
+          {fCurrency(sales.final_amount)}
         </TableCell>
       </StyledTableRow>
     </>
@@ -89,9 +89,7 @@ export default function SalesDetails({ sales }) {
       <Grid xs={12} md={9} sx={{ py: 3 }}>
         <Typography variant="subtitle2">NOTES</Typography>
 
-        <Typography variant="body2">
-          We appreciate your business!
-        </Typography>
+        <Typography variant="body2">We appreciate your business!</Typography>
       </Grid>
 
       <Grid xs={12} md={3} sx={{ py: 3, textAlign: 'right' }}>
@@ -130,7 +128,6 @@ export default function SalesDetails({ sales }) {
                 <TableCell>
                   <Box sx={{ maxWidth: 560 }}>
                     <Typography variant="subtitle2">{row.product_name}</Typography>
-
                   </Box>
                 </TableCell>
 
@@ -164,12 +161,7 @@ export default function SalesDetails({ sales }) {
             sm: 'repeat(2, 1fr)',
           }}
         >
-          <Box
-            component="img"
-            alt="logo"
-            src={sales.client.logo}
-            sx={{ width: 48, height: 48 }}
-          />
+          <Box component="img" alt="logo" src={sales.client.logo} sx={{ width: 48, height: 48 }} />
 
           <Stack spacing={1} alignItems={{ xs: 'flex-start', md: 'flex-end' }}>
             <Label
@@ -180,17 +172,15 @@ export default function SalesDetails({ sales }) {
                 (sales.status === 'REJECTED' && 'error') ||
                 'default'
               }
-              >
+            >
               {sales.status}
             </Label>
             <Typography variant="h6">
-              {
-                (sales.status === 'INVOICE' && `INV-${sales.order_no}`) ||
+              {(sales.status === 'INVOICE' && `INV-${sales.order_no}`) ||
                 (sales.status === 'DELIVERY-CHALLAN' && `DC-${sales.order_no}`) ||
-                (sales.status === 'REJECTED' && '')
-              }
-              </Typography>
-              {fDate(sales.order_date)}
+                (sales.status === 'REJECTED' && '')}
+            </Typography>
+            {fDate(sales.order_date)}
           </Stack>
           <Stack sx={{ typography: 'body2' }}>
             <Typography variant="subtitle2" sx={{ mb: 1 }}>
@@ -204,17 +194,21 @@ export default function SalesDetails({ sales }) {
             <br />
           </Stack>
 
-          {sales.distributor?<Stack sx={{ typography: 'body2' }}>
-            <Typography variant="subtitle2" sx={{ mb: 1 }}>
-              Distributor
-            </Typography>
-            {sales.distributor.full_name}
-            <br />
-            {sales.distributor.address1}
-            <br />
-            Phone: {sales.distributor.mobile}
-            <br />
-          </Stack>:<Stack sx={{ typography: 'body2' }}/>}
+          {sales.distributor ? (
+            <Stack sx={{ typography: 'body2' }}>
+              <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                Distributor
+              </Typography>
+              {sales.distributor.full_name}
+              <br />
+              {sales.distributor.address1}
+              <br />
+              Phone: {sales.distributor.mobile}
+              <br />
+            </Stack>
+          ) : (
+            <Stack sx={{ typography: 'body2' }} />
+          )}
 
           <Stack sx={{ typography: 'body2' }}>
             {/* <Typography variant="subtitle2" sx={{ mb: 1 }}>

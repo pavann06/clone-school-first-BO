@@ -65,7 +65,6 @@ export default function BranchTableRow({ row, onEditRow }) {
           <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
-
       </CustomPopover>
     </>
   );

@@ -58,19 +58,14 @@ const StyledTextGradient = styled(m.h1)(({ theme }) => ({
   },
 }));
 
-
-
 // ----------------------------------------------------------------------
 
 export default function HomeHero() {
-
-
   const heroRef = useRef(null);
 
   const { scrollY } = useScroll();
 
   const [percent, setPercent] = useState(0);
-
 
   const getScroll = useCallback(() => {
     let heroHeight = 0;
@@ -89,8 +84,6 @@ export default function HomeHero() {
   useEffect(() => {
     getScroll();
   }, [getScroll]);
-
-
 
   const opacity = 1 - percent / 100;
 
@@ -145,7 +138,6 @@ export default function HomeHero() {
     </Stack>
   );
 
-
   return (
     <>
       <StyledRoot
@@ -162,13 +154,10 @@ export default function HomeHero() {
               <Grid xs={12} md={6}>
                 {renderDescription}
               </Grid>
-
             </Grid>
           </Container>
-
         </StyledWrapper>
       </StyledRoot>
-
 
       <Box sx={{ height: { md: '100vh' } }} />
     </>

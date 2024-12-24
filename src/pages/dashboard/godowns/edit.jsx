@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { useParams } from 'src/routes/hooks';
 
-import { GodownEditView } from 'src/sections/godowns/view'
+import { GodownEditView } from 'src/sections/godowns/view';
 
 // ----------------------------------------------------------------------
 

@@ -1,19 +1,10 @@
-// import { debounce } from 'lodash';
-import PropTypes from 'prop-types';
-import {  useState } from 'react';
+// import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
-// import TextField from '@mui/material/TextField';
-// import { Select, MenuItem } from '@mui/material';
-// import InputAdornment from '@mui/material/InputAdornment';
-
-// import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function EdutainmentTableToolbar({ filters, setFilters }) {
-  const [searchTerm, setSearchTerm] = useState(filters.name);
-
+export default function EdutainmentTableToolbar() {
   return (
     <Stack
       spacing={2}
@@ -31,6 +22,6 @@ export default function EdutainmentTableToolbar({ filters, setFilters }) {
 }
 
 EdutainmentTableToolbar.propTypes = {
-  filters: PropTypes.object,
-  setFilters: PropTypes.any,
+  // filters: PropTypes.object,
+  // setFilters: PropTypes.any,
 };

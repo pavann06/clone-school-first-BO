@@ -45,7 +45,7 @@ export default function ContactNewEditState() {
       label="State"
       options={stateOptions}
       getOptionLabel={(option) => option}
-      isOptionEqualToValue={(option, value) =>value && option === value}
+      isOptionEqualToValue={(option, value) => value && option === value}
       renderInput={(params) => <TextField {...params} label="State" variant="outlined" />}
     />
   );

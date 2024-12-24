@@ -70,7 +70,6 @@ export default function PurchaseToolbar({ purchase }) {
             )}
           </PDFDownloadLink>
         </Stack>
-
       </Stack>
 
       <Dialog fullScreen open={view.value}>

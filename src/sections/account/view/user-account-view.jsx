@@ -73,12 +73,7 @@ export default function AccountView() {
     setCurrentTab(newValue);
   }, []);
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ['profile'],
     queryFn: () => request.get('/profile'),
     staleTime: 0,
@@ -125,7 +120,7 @@ export default function AccountView() {
 
       {currentTab === 'branch' && <AccountBranch profile={profile} />}
 
-      {currentTab === 'client' && <AccountClient profile={profile}/>}
+      {currentTab === 'client' && <AccountClient profile={profile} />}
 
       {/* {currentTab === 'billing' && (
         <AccountBilling

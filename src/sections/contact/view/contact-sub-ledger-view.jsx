@@ -29,7 +29,7 @@ export default function ContactSubLedgerView({ id }) {
   const formatDate = (dateString) => {
     if (!dateString) return null;
     return format(new Date(dateString), 'dd-mm-yyyy');
-  }
+  };
 
   const currentSubLedger = data?.info;
   const finYearStart = formatDate(data?.start_date);

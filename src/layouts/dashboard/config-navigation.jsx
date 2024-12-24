@@ -27,13 +27,13 @@ const ICONS = {
   invoice: icon('ic_invoice'),
   product: icon('ic_product'),
   contact: icon('ic_menu_item'),
-  godowns:icon('ic_tour'),
-  branches:icon('ic_folder'),
-  staff:icon('ic_lock'),
+  godowns: icon('ic_tour'),
+  branches: icon('ic_folder'),
+  staff: icon('ic_lock'),
   purchase: icon('ic_ecommerce'),
   sales: icon('ic_external'),
   returns: icon('ic_label'),
-  payments:icon('ic_invoice'),
+  payments: icon('ic_invoice'),
   calendar: icon('ic_calendar'),
   disabled: icon('ic_disabled'),
   external: icon('ic_external'),
@@ -46,14 +46,11 @@ const ICONS = {
 // ----------------------------------------------------------------------
 
 export function useNavData() {
-
   let userPermissions = useSelector(selectUser);
   userPermissions = userPermissions?.custom_permissions || [];
 
-
-  const data = useMemo(
-    () => {
-      const modules = [
+  const data = useMemo(() => {
+    const modules = [
       // OVERVIEW
       // ----------------------------------------------------------------------
       {
@@ -62,10 +59,9 @@ export function useNavData() {
           {
             title: 'Dashboard',
             path: paths.dashboard.root,
-          
+
             icon: ICONS.dashboard,
           },
-
         ],
       },
 
@@ -74,9 +70,6 @@ export function useNavData() {
       {
         subheader: 'management',
         items: [
-
-         
-     
           // {
           //   title: 'features',
           //   path: paths.dashboard.features.root,
@@ -87,9 +80,6 @@ export function useNavData() {
           //   ],
           // },
 
-        
-      
-        
           // {
           //   title: 'hospitals',
           //   path: paths.dashboard.hospitals.root,
@@ -98,18 +88,17 @@ export function useNavData() {
           //     { title: 'list', path: paths.dashboard.hospitals.root, permissions: ['is_superuser'] },
           //     { title: 'create', path: paths.dashboard.hospitals.new, permissions: ['is_superuser'] },
           //     // {title:'view' , path: paths.dashboard.hospitals.view, permissions : ['is_superuser']},
-              
+
           //   ],
           // },
 
-
-             {
+          {
             title: 'edutainment',
             path: paths.dashboard.edutainment.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.edutainment.root, },
-              { title: 'create', path: paths.dashboard.edutainment.new,},
+              { title: 'list', path: paths.dashboard.edutainment.root },
+              { title: 'create', path: paths.dashboard.edutainment.new },
             ],
           },
 
@@ -118,8 +107,8 @@ export function useNavData() {
             path: paths.dashboard.onlinestores.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.onlinestores.root, },
-              { title: 'create', path: paths.dashboard.onlinestores.new,  },
+              { title: 'list', path: paths.dashboard.onlinestores.root },
+              { title: 'create', path: paths.dashboard.onlinestores.new },
             ],
           },
 
@@ -128,11 +117,20 @@ export function useNavData() {
             path: paths.dashboard.calender.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.calender.root, },
-              { title: 'create', path: paths.dashboard.calender.new,  },
+              { title: 'list', path: paths.dashboard.calender.root },
+              { title: 'create', path: paths.dashboard.calender.new },
             ],
           },
 
+          {
+            title: 'polls',
+            path: paths.dashboard.polls.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.polls.root },
+              { title: 'create', path: paths.dashboard.polls.new },
+            ],
+          },
 
           // {
           //   title: 'appointments',
@@ -154,35 +152,39 @@ export function useNavData() {
           //     { title: 'analytics', path: paths.dashboard.sales.analytics, permissions: ['is_superuser'] },
           //   ],
           // },
-
         ],
       },
     ];
 
-    const filteredModules = modules.map(module => {
-      const filteredItems = module.items.reduce((acc, item) => {
-        if (!item.permissions || item.permissions.some(permission => userPermissions.includes(permission))) {
-          if (!item.children) {
-            acc.push(item);
-          } else {
-            const filteredChildren = item.children.filter(child =>
-              !child.permissions || child.permissions.some(permission =>
-                userPermissions.includes(permission)
-              )
-            );
-            if (filteredChildren.length > 0) {
-              acc.push({ ...item, children: filteredChildren });
+    const filteredModules = modules
+      .map((module) => {
+        const filteredItems = module.items.reduce((acc, item) => {
+          if (
+            !item.permissions ||
+            item.permissions.some((permission) => userPermissions.includes(permission))
+          ) {
+            if (!item.children) {
+              acc.push(item);
+            } else {
+              const filteredChildren = item.children.filter(
+                (child) =>
+                  !child.permissions ||
+                  child.permissions.some((permission) => userPermissions.includes(permission))
+              );
+              if (filteredChildren.length > 0) {
+                acc.push({ ...item, children: filteredChildren });
+              }
             }
           }
-        }
-        return acc;
-      }, []);
+          return acc;
+        }, []);
 
-      return {
-        ...module,
-        items: filteredItems,
-      };
-    }).filter(module => module.items.length > 0);
+        return {
+          ...module,
+          items: filteredItems,
+        };
+      })
+      .filter((module) => module.items.length > 0);
 
     return filteredModules;
   }, [userPermissions]);

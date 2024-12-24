@@ -9,7 +9,7 @@ export function fNumber(number) {
 export function fCurrency(number) {
   let format;
 
-  if (number && number >100) {
+  if (number && number > 100) {
     format = number.toLocaleString('en-IN', {
       style: 'currency',
       currency: 'INR',

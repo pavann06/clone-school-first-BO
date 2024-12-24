@@ -34,7 +34,7 @@ export default function FileThumbnail({ file, tooltip, imageView, onDownload, sx
         sx={{
           width: 32,
           height: 32,
-          right:10,
+          right: 10,
           flexShrink: 0,
           ...sx,
         }}

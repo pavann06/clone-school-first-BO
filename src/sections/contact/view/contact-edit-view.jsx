@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -13,10 +13,9 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import ContactNewEditForm from '../contact-new-edit-form';
 
-
 // ----------------------------------------------------------------------
 
-export default function ContactEditView({id}) {
+export default function ContactEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
@@ -40,7 +39,7 @@ export default function ContactEditView({id}) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen/> : <ContactNewEditForm currentContact={ data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <ContactNewEditForm currentContact={data?.info?.[0]} />}
     </Container>
   );
 }

@@ -33,12 +33,12 @@ import StaffTableRow from '../staff-table-row';
 import StaffTableToolbar from '../staff-table-toolbar';
 
 const TABLE_HEAD = [
- { id: 'No', label: 'No', width: 100 },
+  { id: 'No', label: 'No', width: 100 },
   { id: 'full_name', label: 'Name', width: 250 },
   { id: 'mobile', label: 'Moblie', width: 160 },
   { id: 'email', label: 'Email', width: 160 },
   { id: 'role', label: 'Role', width: 200 },
-  {id:'is_active',label:'Status',width:160},
+  { id: 'is_active', label: 'Status', width: 160 },
   { id: 'actions', label: 'Actions', width: 80 },
 ];
 

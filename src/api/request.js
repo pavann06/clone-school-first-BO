@@ -40,7 +40,7 @@ const request = {
         axios.defaults.headers.common.year = getYear();
       }
       const response = await axios.get(endPoint + query);
-      console.log(`FETCHER-${endPoint}`,options, response.data);
+      console.log(`FETCHER-${endPoint}`, options, response.data);
       return response.data;
     } catch (error) {
       console.log('error in get api', error);
@@ -123,11 +123,11 @@ const request = {
       if (token) {
         axios.defaults.headers.common.Authorization = token;
       }
-      const response = await axios.post('backoffice/saveFile', jsonData, config);
+      const response = await axios.post('userservice/storage/upload', jsonData, config);
 
       return response.data;
     } catch (error) {
-      console.error('error in delete api', error);
+      console.error('error in file upload api', error);
       return error;
     }
   },

@@ -1,6 +1,3 @@
 export default function ContactAnalyticsView() {
-    return(
-        <h1>analytics</h1>
-    );
-
+  return <h1>analytics</h1>;
 }

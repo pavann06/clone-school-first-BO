@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -19,8 +19,8 @@ export default function PaymentsEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['payments',id],
-    queryFn: () => request.get('/payments', { payment_id:id }),
+    queryKey: ['payments', id],
+    queryFn: () => request.get('/payments', { payment_id: id }),
     staleTime: 2 * 60 * 60 * 1000,
   });
   const currentPayment = isLoading ? null : data?.info?.[0];
@@ -44,9 +44,7 @@ export default function PaymentsEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {
-        isLoading ? <LoadingScreen/> : <PaymentsNewEditForm currentPayment={currentPayment} />
-      }
+      {isLoading ? <LoadingScreen /> : <PaymentsNewEditForm currentPayment={currentPayment} />}
     </Container>
   );
 }

@@ -41,8 +41,7 @@
 //   { id: 'city', label: 'City', },
 //   { id: 'mobile', label: 'Mobile', },
 //   {label: 'Actions'}
- 
- 
+
 // ];
 
 // // ----------------------------------------------------------------------
@@ -50,7 +49,6 @@
 // export default function HospitalsListView() {
 
 //   const queryClient = useQueryClient();
-
 
 //   const { enqueueSnackbar } = useSnackbar();
 
@@ -75,7 +73,7 @@
 //     queryKey: ['backoffice/hospitals', filters],
 //     queryFn: () => request.get('/backoffice/hospitals', filters),
 //     staleTime: 24 * 60 * 60 * 1000,
-   
+
 //   });
 //   console.log("hospital data" , data);
 
@@ -135,12 +133,11 @@
 //   const handleViewRow = useCallback(
 //     (id) => {
 //       router.push(paths.dashboard.hospitals.view(id));
-      
+
 //     },
 //     [router]
-    
+
 //   );
-  
 
 //   return (
 //     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

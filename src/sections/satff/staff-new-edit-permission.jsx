@@ -12,7 +12,7 @@ export default function PermissionsComponent({
   selectedPermissions,
   setSelectedPermissions,
 }) {
-  const isFullScreen = useMediaQuery('(min-width:500px)'); 
+  const isFullScreen = useMediaQuery('(min-width:500px)');
 
   const stackDirection = isFullScreen ? 'row' : 'column';
 
@@ -27,7 +27,9 @@ export default function PermissionsComponent({
 
   return (
     <>
-      <Typography variant="h6" sx={{ borderBottom:'2px solid #ccc' }}>Permissions</Typography>
+      <Typography variant="h6" sx={{ borderBottom: '2px solid #ccc' }}>
+        Permissions
+      </Typography>
       {modulePermissions.map(({ module, permissions }) => (
         <div key={module}>
           <Typography variant="subtitle1">{module}</Typography>
@@ -53,13 +55,17 @@ export default function PermissionsComponent({
 }
 
 PermissionsComponent.propTypes = {
-  modulePermissions: PropTypes.arrayOf(PropTypes.shape({
-    module: PropTypes.string,
-    permissions: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      value: PropTypes.string,
-    })),
-  })),
+  modulePermissions: PropTypes.arrayOf(
+    PropTypes.shape({
+      module: PropTypes.string,
+      permissions: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          value: PropTypes.string,
+        })
+      ),
+    })
+  ),
   selectedPermissions: PropTypes.array,
   setSelectedPermissions: PropTypes.func,
 };

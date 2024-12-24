@@ -73,16 +73,21 @@ export default function Footer() {
               sx={{
                 maxWidth: 270,
                 mx: { xs: 'auto', md: 'unset' },
-                marginBottom:1,
+                marginBottom: 1,
               }}
             >
               FamiliFirst!
             </Typography>
 
-            <Typography variant="body2" sx={{marginBottom:3}} >Address:<br />
-              3rd Floor,GMR & GS Complex,<br />
-              Kishanpura,Hanamkonda. Warangal,<br />
-              Telangana - 506001</Typography>
+            <Typography variant="body2" sx={{ marginBottom: 3 }}>
+              Address:
+              <br />
+              3rd Floor,GMR & GS Complex,
+              <br />
+              Kishanpura,Hanamkonda. Warangal,
+              <br />
+              Telangana - 506001
+            </Typography>
 
             <Stack
               direction="row"
@@ -103,7 +108,6 @@ export default function Footer() {
                   <Iconify color={social.color} icon={social.icon} width={35} />
                 </IconButton>
               ))}
-
             </Stack>
           </Grid>
 

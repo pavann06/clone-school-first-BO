@@ -46,7 +46,7 @@ const TABLE_HEAD = [
   { id: 'order_date', label: 'Date' },
   { id: 'final_amount', label: 'Amount' },
   { id: 'status', label: 'Status' },
-  { id: 'actions',label:'Actions' },
+  { id: 'actions', label: 'Actions' },
 ];
 
 // ----------------------------------------------------------------------
@@ -63,7 +63,6 @@ export default function ReturnsListView() {
   const [tableData, setTableData] = useState([]);
 
   const [salesCount, setSalesCount] = useState(0);
-
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['sales returns', filters],
@@ -96,7 +95,7 @@ export default function ReturnsListView() {
     });
   };
 
-  const denseHeight =  76;
+  const denseHeight = 76;
 
   const notFound = isError;
 
@@ -127,36 +126,35 @@ export default function ReturnsListView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
-      <CustomBreadcrumbs
-        heading="List"
-        links={[
-          {
-            name: 'Dashboard',
-            href: paths.dashboard.root,
-          },
-          {
-            name: 'Sales Returns',
-            href: paths.dashboard.returns.root,
-          },
-          {
-            name: 'List',
-          },
-        ]}
+        <CustomBreadcrumbs
+          heading="List"
+          links={[
+            {
+              name: 'Dashboard',
+              href: paths.dashboard.root,
+            },
+            {
+              name: 'Sales Returns',
+              href: paths.dashboard.returns.root,
+            },
+            {
+              name: 'List',
+            },
+          ]}
         />
-          <Button
-            component={RouterLink}
-            href={paths.dashboard.returns.new}
-            variant="contained"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-            sx={{
-              position: 'absolute',
-              bottom: '5px',
-              right: '5px',
-            }}
-          >
-            New Returns
-          </Button>
-
+        <Button
+          component={RouterLink}
+          href={paths.dashboard.returns.new}
+          variant="contained"
+          startIcon={<Iconify icon="mingcute:add-line" />}
+          sx={{
+            position: 'absolute',
+            bottom: '5px',
+            right: '5px',
+          }}
+        >
+          New Returns
+        </Button>
       </Box>
 
       <Card

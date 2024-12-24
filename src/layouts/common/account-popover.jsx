@@ -74,7 +74,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src=''
+          src=""
           alt={user?.branch_name}
           sx={{
             width: 36,

@@ -36,7 +36,7 @@ import ProductTableToolbar from '../product-table-toolbar';
 
 const TABLE_HEAD = [
   { id: 'No', label: 'No', width: 150 },
-  { id: 'name', label: 'Product' ,width:400},
+  { id: 'name', label: 'Product', width: 400 },
   { id: 'inventoryType', label: 'Stock', width: 200 },
   { id: 'is_active', label: 'Status', width: 160 },
   { id: 'actions', label: 'Action', width: 100 },

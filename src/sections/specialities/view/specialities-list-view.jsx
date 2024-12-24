@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useQuery , useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -36,10 +36,10 @@ import SpecialitiesTableToolbar from '../specialities-table-toolbar';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'No', label: 'No',  },
-  { id: 'speciality_name', label: 'Speciality', },
-  { id: 'speciality_for', label: 'Entity', },
-  { id: 'actions', label: 'Actions', },
+  { id: 'No', label: 'No' },
+  { id: 'speciality_name', label: 'Speciality' },
+  { id: 'speciality_for', label: 'Entity' },
+  { id: 'actions', label: 'Actions' },
 ];
 
 // ----------------------------------------------------------------------
@@ -61,7 +61,7 @@ export default function SpecialitiesListView() {
     offset: 0,
     limit: 10,
     speciality_name: '',
-    speciality_for:'DOCTOR',
+    speciality_for: 'DOCTOR',
   });
 
   const { data, isLoading, isError } = useQuery({
@@ -107,8 +107,7 @@ export default function SpecialitiesListView() {
   );
 
   const handleDeleteRow = async (id) => {
-
-    const response = await request.delete('specialities', {"id": id});
+    const response = await request.delete('specialities', { id });
 
     const { success } = response;
 

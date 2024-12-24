@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useQuery , useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -36,18 +36,16 @@ import FeaturesTableToolbar from '../features-table-toolbar';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'No', label: 'No',  },
-  { id: 'feature_name', label: 'Feature', },
-  { id: 'feature_type', label: 'Entity', },
-  { id: 'actions', label: 'Actions', },
+  { id: 'No', label: 'No' },
+  { id: 'feature_name', label: 'Feature' },
+  { id: 'feature_type', label: 'Entity' },
+  { id: 'actions', label: 'Actions' },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function FeaturesListView() {
-
   const queryClient = useQueryClient();
-
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -65,7 +63,6 @@ export default function FeaturesListView() {
     limit: 10,
     feature_name: '',
     feature_type: 'SERVICE',
-
   });
 
   const { data, isLoading, isError } = useQuery({
@@ -111,8 +108,7 @@ export default function FeaturesListView() {
   );
 
   const handleDeleteRow = async (id) => {
-
-    const response = await request.delete('features', {"id": id});
+    const response = await request.delete('features', { id });
 
     const { success } = response;
 

@@ -11,9 +11,7 @@ export default function CalenderCreatePage() {
         <title> New Calender </title>
       </Helmet>
 
-       <CalenderCreateView />
-      
-      
+      <CalenderCreateView />
     </>
   );
 }

@@ -2,7 +2,6 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-
 export const CreateProduct = async (data) => {
   try {
     console.info('PRODUCT-CREATE-FORM-DATA', data);
@@ -13,7 +12,7 @@ export const CreateProduct = async (data) => {
         files: data.images,
         entity: 'products',
       };
-      
+
       // Uploading files
       const response = await request.UploadFiles(payload);
       const { success, info } = response;
@@ -34,7 +33,6 @@ export const CreateProduct = async (data) => {
     return null;
   }
 };
-
 
 export const UpdateProduct = async (data) => {
   try {

@@ -8,7 +8,6 @@ function isJsonString(str) {
   return true;
 }
 
-
 export const storePersist = {
   set: (key, state) => {
     window.localStorage.setItem(key, JSON.stringify(state));

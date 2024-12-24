@@ -9,9 +9,6 @@ import { selectAuth } from 'src/redux/auth/selectors';
 
 import { SplashScreen } from 'src/components/loading-screen';
 
-
-
-
 // ----------------------------------------------------------------------
 
 export default function GuestGuard({ children }) {

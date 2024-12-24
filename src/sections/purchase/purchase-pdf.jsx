@@ -86,28 +86,19 @@ const useStyles = () =>
 // ----------------------------------------------------------------------
 
 export default function PurchasePDF({ purchase }) {
-
   const totalOnRow = purchase.items.map((item) => parseFloat(item.total));
 
   const subTotal = sum(totalOnRow);
   const round_off = Math.round(subTotal) - subTotal;
 
-
-  const {
-    items,
-    order_no,
-    order_date,
-    supplier,
-    organizer,
-    final_amount,
-  } = purchase;
+  const { items, order_no, order_date, supplier, organizer, final_amount } = purchase;
 
   const styles = useStyles();
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-      <View style={[styles.gridContainer, styles.mb40]}>
+        <View style={[styles.gridContainer, styles.mb40]}>
           <Image source={purchase.client.logo} style={{ width: 48, height: 48 }} />
 
           <View style={{ alignItems: 'flex-end', flexDirection: 'column' }}>
@@ -220,7 +211,7 @@ export default function PurchasePDF({ purchase }) {
                 <Text>Round Off</Text>
               </View>
               <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text>{round_off?fCurrency(round_off):'₹0'}</Text>
+                <Text>{round_off ? fCurrency(round_off) : '₹0'}</Text>
               </View>
             </View>
 
@@ -253,9 +244,7 @@ export default function PurchasePDF({ purchase }) {
         <View style={[styles.gridContainer, styles.footer]} fixed>
           <View style={styles.col8}>
             <Text style={styles.subtitle2}>NOTES</Text>
-            <Text>
-              We appreciate your business.
-            </Text>
+            <Text>We appreciate your business.</Text>
           </View>
           <View style={[styles.col4, styles.alignRight]}>
             <Text style={styles.subtitle2}>Have a Question?</Text>

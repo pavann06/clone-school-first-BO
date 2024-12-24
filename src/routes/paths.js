@@ -75,12 +75,12 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/hospitals`,
       new: `${ROOTS.DASHBOARD}/hospitals/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/hospitals/${id}/edit`,
-      view :  (id) => `${ROOTS.DASHBOARD}/hospitals/${id}/view`,
+      view: (id) => `${ROOTS.DASHBOARD}/hospitals/${id}/view`,
     },
     edutainment: {
       root: `${ROOTS.DASHBOARD}/edutainment`,
       new: `${ROOTS.DASHBOARD}/edutainment/new`,
-      // edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
+      edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
     },
 
     onlinestores: {
@@ -89,13 +89,11 @@ export const paths = {
       // edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
     },
 
-    calender : {
+    calender: {
       root: `${ROOTS.DASHBOARD}/calender`,
       new: `${ROOTS.DASHBOARD}/calender/new`,
-       edit: (id) => `${ROOTS.DASHBOARD}/calender/${id}/edit`,
+      edit: (id) => `${ROOTS.DASHBOARD}/calender/${id}/edit`,
     },
-
-    
 
     // appointments: {
     //   root: `${ROOTS.DASHBOARD}/appointments`,
@@ -103,13 +101,17 @@ export const paths = {
     //   edit: (id) => `${ROOTS.DASHBOARD}/appointments/${id}/edit`,
     // },
 
+    polls: {
+      root: `${ROOTS.DASHBOARD}/polls`,
+      new: `${ROOTS.DASHBOARD}/polls/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/polls/${id}/edit`,
+    },
+
     banners: {
       root: `${ROOTS.DASHBOARD}/banners`,
       new: `${ROOTS.DASHBOARD}/banners/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/banners/${id}/edit`,
     },
-
-
 
     contact: {
       root: `${ROOTS.DASHBOARD}/contact`,
@@ -144,7 +146,7 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/payments/new`,
       details: (id) => `${ROOTS.DASHBOARD}/payments/${id}`,
       edit: (id) => `${ROOTS.DASHBOARD}/payments/${id}/edit`,
-      analytics:`${ROOTS.DASHBOARD}/payments/analytics`,
+      analytics: `${ROOTS.DASHBOARD}/payments/analytics`,
     },
     godowns: {
       root: `${ROOTS.DASHBOARD}/godowns`,
@@ -152,17 +154,17 @@ export const paths = {
       details: (id) => `${ROOTS.DASHBOARD}/godowns/${id}`,
       edit: (id) => `${ROOTS.DASHBOARD}/godowns/${id}/edit`,
     },
-    branches:{
+    branches: {
       root: `${ROOTS.DASHBOARD}/branches`,
       new: `${ROOTS.DASHBOARD}/branches/new`,
       details: (id) => `${ROOTS.DASHBOARD}/branches/${id}`,
       edit: (id) => `${ROOTS.DASHBOARD}/branches/${id}/edit`,
     },
-    staff:{
+    staff: {
       root: `${ROOTS.DASHBOARD}/staff`,
       new: `${ROOTS.DASHBOARD}/staff/new`,
       details: (id) => `${ROOTS.DASHBOARD}/staff/${id}`,
       edit: (id) => `${ROOTS.DASHBOARD}/staff/${id}/edit`,
-    }
+    },
   },
 };

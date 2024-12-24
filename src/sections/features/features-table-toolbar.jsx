@@ -51,7 +51,7 @@ export default function FeaturesTableToolbar({ filters, setFilters }) {
         pr: { xs: 2.5, md: 1 },
       }}
     >
-       <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
+      <Stack direction="row" alignItems="center" spacing={2} flexGrow={1} sx={{ width: 1 }}>
         <Select value={filters.feature_type} onChange={handleEntityChange} sx={{ width: 0.5 }}>
           <MenuItem value="AMENITY">AMENITY</MenuItem>
           <MenuItem value="SERVICE">SERVICE</MenuItem>

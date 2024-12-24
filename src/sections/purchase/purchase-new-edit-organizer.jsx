@@ -17,7 +17,7 @@ export default function PurchaseNewEditOrganizer() {
   const [selectedOrganizer, setSelectedOrganizer] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
-  const { watch, setValue,control} = useFormContext();
+  const { watch, setValue, control } = useFormContext();
   const values = watch();
   const { organizer } = values;
 
@@ -59,32 +59,32 @@ export default function PurchaseNewEditOrganizer() {
           Organiser:
         </Typography>
 
-        <RHFAutocomplete 
-        name="organizer"
-        label="Search Organiser"
-        sx={{ width: 300 }}
-        control={control}
-        options={isLoading ? [] : data?.info || []}
-        getOptionLabel={(option) => option.full_name.toString()}
-        filterOptions={(x) => x}
-        filterSelectedOptions
-        value={selectedOrganizer}
-        onChange={(event, newValue) => {
-          setSelectedOrganizer(newValue);
-          setValue('organizer', newValue ? newValue.id : null);
-        }}
-        onInputChange={handleFilterName}
-        isOptionEqualToValue={(option, value) => option && value && option.id === value.id}
-        renderOption={(props, option) => (
-          <li {...props}>
-            <Grid container alignItems="center">
-              <Typography variant="body2" color="text.secondary">
-                {`${option.full_name} - ${option.mobile}`}
-              </Typography>
-            </Grid>
-          </li>
-        )}
-      />
+        <RHFAutocomplete
+          name="organizer"
+          label="Search Organiser"
+          sx={{ width: 300 }}
+          control={control}
+          options={isLoading ? [] : data?.info || []}
+          getOptionLabel={(option) => option.full_name.toString()}
+          filterOptions={(x) => x}
+          filterSelectedOptions
+          value={selectedOrganizer}
+          onChange={(event, newValue) => {
+            setSelectedOrganizer(newValue);
+            setValue('organizer', newValue ? newValue.id : null);
+          }}
+          onInputChange={handleFilterName}
+          isOptionEqualToValue={(option, value) => option && value && option.id === value.id}
+          renderOption={(props, option) => (
+            <li {...props}>
+              <Grid container alignItems="center">
+                <Typography variant="body2" color="text.secondary">
+                  {`${option.full_name} - ${option.mobile}`}
+                </Typography>
+              </Grid>
+            </li>
+          )}
+        />
       </Stack>
 
       {selectedOrganizer && (

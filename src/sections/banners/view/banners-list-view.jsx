@@ -33,7 +33,6 @@
 // import BannersTableRow from '../banners-table-row';
 // import BannersTableToolbar from '../banners-table-toolbar';
 
-
 // // ----------------------------------------------------------------------
 
 // const TABLE_HEAD = [
@@ -48,7 +47,6 @@
 // export default function BannersListView() {
 
 //   const queryClient = useQueryClient();
-
 
 //   const { enqueueSnackbar } = useSnackbar();
 
@@ -65,7 +63,6 @@
 //     offset: 0,
 //     limit: 10,
 //     banner_name: '',
-  
 
 //   });
 
@@ -158,7 +155,7 @@
 //       </Box>
 
 //       <Card>
-//         <BannersTableToolbar filters={filters} setFilters={setFilters} /> 
+//         <BannersTableToolbar filters={filters} setFilters={setFilters} />
 
 //         <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
 //           <Scrollbar>

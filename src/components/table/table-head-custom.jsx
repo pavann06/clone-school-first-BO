@@ -22,17 +22,10 @@ const visuallyHidden = {
 
 // ----------------------------------------------------------------------
 
-export default function TableHeadCustom({
-  order,
-  orderBy,
-  headLabel,
-  onSort,
-  sx,
-}) {
+export default function TableHeadCustom({ order, orderBy, headLabel, onSort, sx }) {
   return (
     <TableHead sx={sx}>
       <TableRow>
-
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}

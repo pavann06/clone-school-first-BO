@@ -5,11 +5,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 import { AuthGuard, PermissionBasedGuard } from 'src/auth/guard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
-import OnlineStoresListPage from 'src/pages/dashboard/edutainment/list';
-import OnlineStoresCreatePage from 'src/pages/dashboard/edutainment/new';
-import CalenderListPage from 'src/pages/dashboard/calender/list';
-import CalenderCreatePage from 'src/pages/dashboard/calender/new';
-import CalenderEditPage from 'src/pages/dashboard/calender/edit';
+
 // import { Lazy } from 'yup';
 
 // ----------------------------------------------------------------------
@@ -39,7 +35,6 @@ const HospitalsEditPage = lazy(() => import('src/pages/dashboard/hospitals/edit'
 
 const AppointmentsViewPage = lazy(() => import('src/pages/dashboard/hospitals/view'));
 
-
 // Sales
 const SalesListPage = lazy(() => import('src/pages/dashboard/sales/list'));
 const SalesCreatePage = lazy(() => import('src/pages/dashboard/sales/new'));
@@ -50,9 +45,20 @@ const SalesAnalyticsPage = lazy(() => import('src/pages/dashboard/sales/analytic
 // BLANK PAGE
 const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
 
+const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
+const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
+const EdutainmentEditPage = lazy(() => import('src/pages/dashboard/edutainment/edit'));
 
-const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'))
-const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'))
+const OnlineStoresListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
+const OnlineStoresCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
+
+const CalenderListPage = lazy(() => import('src/pages/dashboard/calender/list'));
+const CalenderCreatePage = lazy(() => import('src/pages/dashboard/calender/new'));
+const CalenderEditPage = lazy(() => import('src/pages/dashboard/calender/edit'));
+
+const PollsListPage = lazy(() => import('src/pages/dashboard/polls/list'));
+const PollsCreatePage = lazy(() => import('src/pages/dashboard/polls/new'));
+const PollsEditPage = lazy(() => import('src/pages/dashboard/polls/edit'));
 
 // WELCOME PAGE
 
@@ -150,14 +156,14 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-          // {
-          //   path: ':id/edit',
-          //   element: (
-          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-          //       <FeaturesEditPage />
-          //     </PermissionBasedGuard>
-          //   ),
-          // },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EdutainmentEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
         ],
       },
 
@@ -215,6 +221,36 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <CalenderEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: 'polls',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <PollsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <PollsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <PollsEditPage />
               </PermissionBasedGuard>
             ),
           },

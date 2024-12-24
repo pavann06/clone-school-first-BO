@@ -11,29 +11,29 @@ import Grid from '@mui/material/Unstable_Grid2';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFTextField,
-} from 'src/components/hook-form';
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function AccountUser({profile}) {
+export default function AccountUser({ profile }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const UserSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     mobile: Yup.string().required('Phone number is required'),
-    is_active:Yup.boolean(),
-    last_login:Yup.mixed().required('date requried'),
-    role:Yup.string().required('role requried')
+    is_active: Yup.boolean(),
+    last_login: Yup.mixed().required('date requried'),
+    role: Yup.string().required('role requried'),
   });
 
   const defaultValues = {
     email: profile?.user.email || '',
     mobile: profile?.user.mobile || '',
-    is_active:profile?.user.is_active || true,
-    last_login: profile?.user.last_login ? format(new Date(profile?.user.last_login), 'dd-MM-yyyy') : '', 
-    role:profile?.user.role[0] || []
+    is_active: profile?.user.is_active || true,
+    last_login: profile?.user.last_login
+      ? format(new Date(profile?.user.last_login), 'dd-MM-yyyy')
+      : '',
+    role: profile?.user.role[0] || [],
   };
 
   const methods = useForm({
@@ -78,7 +78,6 @@ export default function AccountUser({profile}) {
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
                 Save Changes
               </LoadingButton>
@@ -89,6 +88,6 @@ export default function AccountUser({profile}) {
     </FormProvider>
   );
 }
-AccountUser.propTypes ={
-  profile:PropTypes.object, 
-}
+AccountUser.propTypes = {
+  profile: PropTypes.object,
+};

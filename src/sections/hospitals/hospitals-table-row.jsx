@@ -13,14 +13,12 @@
 // import Iconify from 'src/components/iconify';
 // import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-
 // // ----------------------------------------------------------------------
 
 // export default function HospitalsTableRow({ row, onEditRow, onDeleteRow, onViewRow }) {
 //   const { serial_no, display_name, city, mobile, logo } = row;
 
 //   const popover = usePopover();
-  
 
 //   return (
 //     <>

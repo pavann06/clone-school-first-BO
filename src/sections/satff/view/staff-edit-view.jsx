@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useQuery} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Container from '@mui/material/Container';
 
@@ -13,14 +13,13 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import StaffNewEditForm from '../staff-new-edit-form';
 
-
 // ----------------------------------------------------------------------
 
-export default function StaffEditView({id}) {
+export default function StaffEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['branch','staff', id],
+    queryKey: ['branch', 'staff', id],
     queryFn: () => request.get('branch/staff', { id }),
     staleTime: 24 * 60 * 60 * 1000,
   });
@@ -40,7 +39,7 @@ export default function StaffEditView({id}) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen/> : <StaffNewEditForm currentStaff={ data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <StaffNewEditForm currentStaff={data?.info?.[0]} />}
     </Container>
   );
 }

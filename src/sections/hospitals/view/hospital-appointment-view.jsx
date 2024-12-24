@@ -29,25 +29,23 @@
 //   TableEmptyRows,
 //   TableHeadCustom,
 // } from 'src/components/table';
-// import PropTypes from 'prop-types'; 
+// import PropTypes from 'prop-types';
 
 // import AppointmentsTableRow from '../appointment-table-row';
 // import HospitalsTableToolbar from '../hospitals-table-toolbar';
 
 // // ----------------------------------------------------------------------
 
-
 // const TABLE_HEAD = [
 //   { id: 'No', label: 'No',  },
 //   { id: 'booking_id', label: 'Booking Id', },
 //   { id: 'doctor_name', label: 'Doctor Name', },
- 
+
 //   {id: 'full_name',label: 'Full Name'},
 //   { id: 'mobile', label: 'Mobile', },
-  
+
 //   {label: 'Actions'}
- 
- 
+
 // ];
 
 // // ----------------------------------------------------------------------
@@ -55,7 +53,6 @@
 // export default function AppointmentsListView({id}) {
 
 //   const queryClient = useQueryClient();
-
 
 //   const { enqueueSnackbar } = useSnackbar();
 
@@ -71,18 +68,14 @@
 //   const [filters, setFilters] = useState({
 //     offset: 0,
 //     limit: 10,
-    
+
 //   });
 
-
-
-
 // const { data, isLoading, isError } = useQuery({
-//   queryKey: ['backoffice','hospitals','doctors','appointments', id ,filters], 
-//   queryFn: () => request.get(`/backoffice/hospitals/doctors/appointments?hospital=${id}&offset=${filters.offset}&limit=${filters.limit}`), 
+//   queryKey: ['backoffice','hospitals','doctors','appointments', id ,filters],
+//   queryFn: () => request.get(`/backoffice/hospitals/doctors/appointments?hospital=${id}&offset=${filters.offset}&limit=${filters.limit}`),
 //   staleTime: 24 * 60 * 60 * 1000,
 // });
-
 
 //   useEffect(() => {
 //     if (data?.info?.length > 0) {
@@ -112,8 +105,6 @@
 //   const denseHeight = table.dense ? 60 : 80;
 
 //   const notFound = isError;
-
-  
 
 //   return (
 //     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -213,7 +204,6 @@
 
 // // // ----------------------------------------------------------------------
 
-
 // import { useState, useEffect, useCallback } from 'react';
 // import { useQuery, useQueryClient } from '@tanstack/react-query';
 // import Box from '@mui/material/Box';
@@ -249,11 +239,6 @@
 
 // // ----------------------------------------------------------------------
 
-
-
-
-
-
 // const TABLE_HEAD = [
 //   { id: 'No', label: 'No' },
 //   { id: 'booking_id', label: 'Booking Id' },
@@ -288,9 +273,9 @@
 //       request.get(
 //         `/backoffice/hospitals/doctors/appointments?hospital=${id}&offset=${filters.offset}&limit=${filters.limit}&start_date=${filters.start_date}&end_date=${filters.end_date}`
 //       ),
-      
+
 //     staleTime: 24 * 60 * 60 * 1000,
-    
+
 //   });
 
 //   useEffect(() => {
@@ -375,7 +360,7 @@
 //             InputLabelProps={{ shrink: true }}
 //             value={filters.end_date}
 //             onChange={handleDateChange('end_date')}
-//           /> 
+//           />
 //         </Box>
 
 //         <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>

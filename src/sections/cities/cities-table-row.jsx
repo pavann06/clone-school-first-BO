@@ -20,7 +20,6 @@ export default function CitiesTableRow({ row, onDeleteRow }) {
       <TableRow hover>
         <TableCell>{serial_no}</TableCell>
 
-
         <TableCell>{city_name}</TableCell>
 
         <TableCell>{state}</TableCell>

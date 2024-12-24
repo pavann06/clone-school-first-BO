@@ -1,5 +1,3 @@
-export default  function ReturnsAnalyticsView(){
-    return(
-        <h1>Analytics</h1>
-    );
+export default function ReturnsAnalyticsView() {
+  return <h1>Analytics</h1>;
 }

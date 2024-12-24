@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import EdutainmentListView from 'src/sections/edutainment/view/edutainment-list-view';
-
+import { EdutainmentListView } from 'src/sections/edutainment/view';
 
 // ----------------------------------------------------------------------
 
@@ -9,12 +8,10 @@ export default function EdutainmentListPage() {
   return (
     <>
       <Helmet>
-        <title>Speciality List</title>
+        <title>Feeds List</title>
       </Helmet>
 
       <EdutainmentListView />
-
     </>
   );
 }
-
