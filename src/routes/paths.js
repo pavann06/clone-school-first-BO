@@ -101,6 +101,12 @@ export const paths = {
     //   edit: (id) => `${ROOTS.DASHBOARD}/appointments/${id}/edit`,
     // },
 
+    polls: {
+      root: `${ROOTS.DASHBOARD}/polls`,
+      new: `${ROOTS.DASHBOARD}/polls/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/polls/${id}/edit`,
+    },
+
     banners: {
       root: `${ROOTS.DASHBOARD}/banners`,
       new: `${ROOTS.DASHBOARD}/banners/new`,

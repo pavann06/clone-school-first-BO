@@ -51,9 +51,14 @@ const EdutainmentEditPage = lazy(() => import('src/pages/dashboard/edutainment/e
 
 const OnlineStoresListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
 const OnlineStoresCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
+
 const CalenderListPage = lazy(() => import('src/pages/dashboard/calender/list'));
 const CalenderCreatePage = lazy(() => import('src/pages/dashboard/calender/new'));
 const CalenderEditPage = lazy(() => import('src/pages/dashboard/calender/edit'));
+
+const PollsListPage = lazy(() => import('src/pages/dashboard/polls/list'));
+const PollsCreatePage = lazy(() => import('src/pages/dashboard/polls/new'));
+const PollsEditPage = lazy(() => import('src/pages/dashboard/polls/edit'));
 
 // WELCOME PAGE
 
@@ -216,6 +221,36 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <CalenderEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: 'polls',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <PollsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <PollsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <PollsEditPage />
               </PermissionBasedGuard>
             ),
           },

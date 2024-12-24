@@ -122,6 +122,16 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'polls',
+            path: paths.dashboard.polls.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.polls.root },
+              { title: 'create', path: paths.dashboard.polls.new },
+            ],
+          },
+
           // {
           //   title: 'appointments',
           //   path: paths.dashboard.appointments.root,

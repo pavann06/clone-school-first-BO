@@ -1,9 +1,7 @@
-
-
-import { useSnackbar } from 'notistack';
 // imp-----------------------------
+
+import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   Box,
@@ -22,56 +20,49 @@ import { useRouter } from 'src/routes/hooks';
 import request from 'src/api/request';
 
 import Scrollbar from 'src/components/scrollbar';
+import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
-import CalenderTableRow from '../calender-table-row';
+import PollsTableRow from '../polls-table-row';
 
 const TABLE_HEAD = [
-  { id: 'serialNumber', label: 'Serial No' }, // Added serial number column
-  { id: 'prompt', label: 'Prompt' },
-  { id: 'benefit', label: 'Benefit' },
-  { id: 'description', label: 'Description' },
-  { id: 'youtube_video_url', label: 'Youtube' },
-  { id: 'date', label: 'Date' },
-  { id: 'image', label: 'Image' },
-  { id: 'actions', label: 'Actions' },
+  { id: 'index', label: 'Serial No' },
+  { id: 'question', label: 'Question' },
+  { id: 'options', label: 'Options' },
+  { id: 'answer', label: 'Answer ' },
+  // { id: 'is_active', label: 'Active' },
+  { id: 'description', label: 'Description ' },
+  // { id: 'language', label: 'language' },
+  { id: 'actions ', label: 'Actions' },
 ];
 
-export default function CalenderListView() {
+export default function PollsListView() {
   const router = useRouter();
-  const queryClient = useQueryClient();
-
   const { enqueueSnackbar } = useSnackbar();
+
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
   const { data, isLoading } = useQuery({
-    queryKey: ['calendar', pagination.page, pagination.page_size],
+    queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
-      request.get(
-        `https://dev-api.familifirst.com/backoffice/broadcast/calendar?page=${pagination.page}&page_size=${pagination.page_size}`
-      ),
+      request.get(`backoffice/poll?page=${pagination.page}&page_size=${pagination.page_size}`),
     keepPreviousData: true,
   });
 
   useEffect(() => {
     if (data) {
       if (data?.data?.length > 0) {
-        // Add serial numbers to the data
-        const updatedData = data.data.map((item, index) => ({
-          ...item,
-          serialNumber: (pagination.page - 1) * pagination.page_size + index + 1,
-        }));
-        setTableData(updatedData);
+        setTableData(data.data);
         setTotalCount(data.total);
       } else {
         setTableData([]);
         setTotalCount(0);
       }
     }
-  }, [data, pagination.page, pagination.page_size]);
+  }, [data]);
 
   const handlePageChange = (event, newPage) => {
     setPagination((prev) => ({ ...prev, page: newPage + 1 }));
@@ -84,21 +75,22 @@ export default function CalenderListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.calender.edit(id));
-      console.log(id, 'id of the row');
+      router.push(paths.dashboard.polls.edit(id));
     },
     [router]
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete('backoffice/broadcast/calendar/', { id });
+    const response = await request.delete(`backoffice/poll/${id}`);
 
     const { success } = response;
 
+    // contact creation success
     if (success) {
       enqueueSnackbar('Deleted successfully');
-      queryClient.invalidateQueries(['backoffice/calendar']);
-      router.push(paths.dashboard.calendar.root);
+
+      // refetch the data
+      setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
 
@@ -110,8 +102,8 @@ export default function CalenderListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Calender',
-              href: paths.dashboard.calender.root,
+              name: 'Edutainment',
+              href: paths.dashboard.edutainment.root,
             },
             { name: 'List' },
           ]}
@@ -125,13 +117,15 @@ export default function CalenderListView() {
               <TableBody>
                 {isLoading
                   ? [...Array(pagination.page_size)].map((_, index) => (
-                      <Skeleton key={index} variant="rectangular" height={40} />
+                      <Skeleton key={`skeleton-${index}`} variant="rectangular" height={40} />
                     ))
-                  : tableData.map((row) => (
-                      <CalenderTableRow
-                        key={row.id}
-                        row={{ ...row, id: Number(row.id) }}
-                        serialNumber={row.serialNumber} // Pass serial number to the row
+                  : tableData.map((row, index) => (
+                      <PollsTableRow
+                        key={`poll-row-${row.id}`} // Ensure each key is unique with a prefix
+                        row={{
+                          ...row,
+                          serial_no: (pagination.page - 1) * pagination.page_size + index + 1, // Updated serial number calculation
+                        }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                       />

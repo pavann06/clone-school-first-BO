@@ -1,5 +1,3 @@
-
-
 import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
 
@@ -13,17 +11,16 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import CalenderNewEditForm from '../calender-new-edit-form';
+import PollsNewEditForm from '../polls-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function CalenderEditView({ id }) {
+export default function PollsEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['calender', id],
-    queryFn: () => request.get(`backoffice/broadcast/calendar/${id}`),
-    staleTime: 24 * 60 * 60 * 1000,
+    queryKey: ['polls', id],
+    queryFn: () => request.get(`backoffice/poll/${id}`),
   });
 
   return (
@@ -33,24 +30,20 @@ export default function CalenderEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Calender',
-            href: paths.dashboard.calender.root,
+            name: 'Polls',
+            href: paths.dashboard.polls.root,
           },
-          { name: data?.data?.calender },
+          { name: data?.data?.heading },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <CalenderNewEditForm currentCalender={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <PollsNewEditForm currentPoll={data?.data} />}
     </Container>
   );
 }
 
-CalenderEditView.propTypes = {
-  id: PropTypes.string, // Validate id as a required string
-};
-
-CalenderNewEditForm.propTypes = {
-  currentCalender: PropTypes.object, // Ensure currentCalender is validated
+PollsEditView.propTypes = {
+  id: PropTypes.string,
 };
