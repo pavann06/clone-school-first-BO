@@ -37,6 +37,7 @@ import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 import EdutainmentTableRow from '../edutainment-table-row';
 
+
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'heading', label: 'Heading' },
@@ -44,7 +45,8 @@ const TABLE_HEAD = [
   { id: 'approved_date', label: 'Approved ' },
   { id: 'image', label: 'Image' },
   { id: 'likes_count', label: 'Likes ' },
-  { id: 'language', label: 'language' },
+  { id: 'language', label: 'Language' },
+  {id: 'status' , label : 'Status'},
   { id: 'actions ', label: 'Actions' },
 ];
 

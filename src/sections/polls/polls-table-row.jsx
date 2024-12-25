@@ -12,9 +12,8 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
     question,
     options,
     answer,
-   
+
     description,
-   
   } = row;
 
   const popover = usePopover();
@@ -38,37 +37,23 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
 
         {/* Description */}
         <TableCell>
-  {options && typeof options === 'object' ? (
-    <ul style={{ margin: 0, paddingLeft: '1rem' }}>
-      {Object.entries(options).map(([key, value], idx) => (
-        <li key={`option-${key}-${idx}`}>
-          {key.toUpperCase()}: {typeof value === 'object' ? JSON.stringify(value) : value}
-        </li>
-      ))}
-    </ul>
-  ) : (
-    'No options available'
-  )}
-</TableCell>
-
-
-
-
-        <TableCell>
-          {answer}
+          {options && typeof options === 'object' ? (
+            <ul style={{ margin: 0, paddingLeft: '1rem' }}>
+              {Object.entries(options).map(([key, value], idx) => (
+                <li key={`option-${key}-${idx}`}>
+                  {key.toUpperCase()}: {typeof value === 'object' ? JSON.stringify(value) : value}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            'No options available'
+          )}
         </TableCell>
 
-        {/* Image */}
-        {/* <TableCell align="center">
-        {is_active}
-        </TableCell> */}
+        <TableCell>{answer}</TableCell>
 
         {/* Interactions */}
-        <TableCell>
-       {description}
-        </TableCell>
-
-       
+        <TableCell>{description}</TableCell>
 
         {/* Actions */}
         <TableCell align="center">

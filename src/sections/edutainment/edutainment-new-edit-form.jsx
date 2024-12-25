@@ -49,7 +49,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     status: Yup.string().required('Status is required'),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
-    posting_date: Yup.string().required('Posting date is required'),
+    // posting_date: Yup.string(),
   });
 
   const defaultValues = useMemo(
@@ -61,7 +61,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       duration: currentEdutainment?.duration || 0,
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
-      posting_date: currentEdutainment?.posting_date || '',
+      // posting_date: currentEdutainment?.posting_date || '',
       status: currentEdutainment?.status || '',
     }),
     [currentEdutainment]
@@ -204,7 +204,10 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       <MenuItem value="English">English</MenuItem>
                     </RHFSelect>
                     <RHFTextField name="heading" label="Heading" />
-                    <RHFTextField name="description" label="Description" />
+                    <RHFTextField name="description" label="Description"
+                     multiline
+                     rows={4} 
+                      />
                   </Stack>
                 </Box>
 
@@ -249,7 +252,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </Box>
                 )}
 
-                <Box>
+                {/* <Box>
                   <RHFTextField
                     name="posting_date"
                     label="Posting Date"
@@ -263,7 +266,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       shrink: true, // Ensures the label stays above the field even when not focused
                     }}
                   />
-                </Box>
+                </Box> */}
               </Box>
 
               <LoadingButton
