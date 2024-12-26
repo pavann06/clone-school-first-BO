@@ -46,10 +46,10 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     image: Yup.mixed(),
     video: Yup.mixed(),
     duration: Yup.string(),
-    status: Yup.string().required('Status is required'),
+    status: Yup.string(),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
-    // posting_date: Yup.string(),
+    
   });
 
   const defaultValues = useMemo(
@@ -62,7 +62,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
       // posting_date: currentEdutainment?.posting_date || '',
-      status: currentEdutainment?.status || '',
+      status: currentEdutainment?.status || 'Pending',
     }),
     [currentEdutainment]
   );
@@ -84,9 +84,20 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+
+      const payload = {
+        ...data,
+        image: data.image || null,
+        video: data.video || null, 
+      };
+      if (!currentEdutainment) {
+        payload.status = 'Pending';
+      }
+
+
       const response = currentEdutainment
-        ? await UpdateEdutainment({ ...data, id: currentEdutainment.id })
-        : await CreateEdutainment(data);
+        ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
+        : await CreateEdutainment(payload);
 
       if (response?.success) {
         enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
@@ -188,11 +199,14 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <MenuItem value="Youtube">YouTube</MenuItem>
                   </RHFSelect>
 
-                  <RHFSelect name="status" label="Status">
-                    <MenuItem value="Approved">Approved</MenuItem>
-                    <MenuItem value="Rejected">Rejected</MenuItem>
-                    <MenuItem value="Pending">Pending</MenuItem>
-                  </RHFSelect>
+{currentEdutainment && (
+  <RHFSelect name="status" label="Status">
+    <MenuItem value="Approved">Approved</MenuItem>
+    <MenuItem value="Rejected">Rejected</MenuItem>
+    <MenuItem value="Pending">Pending</MenuItem>
+  </RHFSelect>
+)}
+
                 </Box>
 
                 {/* Language, Heading, Description */}
@@ -252,21 +266,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </Box>
                 )}
 
-                {/* <Box>
-                  <RHFTextField
-                    name="posting_date"
-                    label="Posting Date"
-                    type="date"
-                    InputProps={{
-                      inputProps: {
-                        min: '2020-01-01', // Optionally, set a minimum date
-                      },
-                    }}
-                    InputLabelProps={{
-                      shrink: true, // Ensures the label stays above the field even when not focused
-                    }}
-                  />
-                </Box> */}
+           
               </Box>
 
               <LoadingButton
