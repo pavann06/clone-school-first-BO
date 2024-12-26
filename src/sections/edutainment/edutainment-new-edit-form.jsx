@@ -105,12 +105,12 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         reset();
         return response;
       }
-
-      enqueueSnackbar('Operation failed');
+    
+      enqueueSnackbar('Operation failed:' , response.error);
       return response;
     } catch (error) {
       console.error('Error:', error);
-      enqueueSnackbar('Operation failed');
+      enqueueSnackbar('Operation failed:' );
       return null;
     }
   });
