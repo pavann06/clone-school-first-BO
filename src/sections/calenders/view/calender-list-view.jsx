@@ -11,6 +11,7 @@ import {
   Table,
   Skeleton,
   Container,
+  Button,
   TableBody,
   TableContainer,
   TablePagination,
@@ -18,6 +19,8 @@ import {
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
+import { RouterLink } from 'src/routes/components';
+import Iconify from 'src/components/iconify';
 
 import request from 'src/api/request';
 
@@ -98,7 +101,7 @@ export default function CalenderListView() {
     if (success) {
       enqueueSnackbar('Deleted successfully');
       queryClient.invalidateQueries(['backoffice/calendar']);
-      router.push(paths.dashboard.calendar.root);
+      router.push(paths.dashboard.calender.root);
     }
   };
 
@@ -116,6 +119,19 @@ export default function CalenderListView() {
             { name: 'List' },
           ]}
         />
+               <Button
+          component={RouterLink}
+          href={paths.dashboard.calender.new}
+          variant="contained"
+          startIcon={<Iconify icon="mingcute:add-line" />}
+          sx={{
+            position: 'absolute',
+            bottom: '5px',
+            right: '5px',
+          }}
+        >
+          New Calender
+        </Button>
       </Box>
       <Card>
         <TableContainer>

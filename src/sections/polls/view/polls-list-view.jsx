@@ -8,6 +8,7 @@ import {
   Card,
   Table,
   Skeleton,
+  Button,
   Container,
   TableBody,
   TableContainer,
@@ -18,6 +19,8 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import request from 'src/api/request';
+import { RouterLink } from 'src/routes/components';
+import Iconify from 'src/components/iconify';
 
 import Scrollbar from 'src/components/scrollbar';
 import { useSnackbar } from 'src/components/snackbar';
@@ -102,12 +105,25 @@ export default function PollsListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Edutainment',
-              href: paths.dashboard.edutainment.root,
+              name: 'Polls',
+              href: paths.dashboard.polls.root,
             },
             { name: 'List' },
           ]}
         />
+             <Button
+          component={RouterLink}
+          href={paths.dashboard.polls.new}
+          variant="contained"
+          startIcon={<Iconify icon="mingcute:add-line" />}
+          sx={{
+            position: 'absolute',
+            bottom: '5px',
+            right: '5px',
+          }}
+        >
+          New Poll
+        </Button>
       </Box>
       <Card>
         <TableContainer>

@@ -1,5 +1,3 @@
-
-
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -23,11 +21,7 @@ import { useRouter } from 'src/routes/hooks';
 // Form Components
 import { CreatePoll, UpdatePoll } from 'src/api/polls';
 
-import FormProvider, { RHFSelect , RHFTextField  } from 'src/components/hook-form';
-
-
-
-
+import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
 
 export default function PollsNewEditForm({ currentPoll }) {
   const router = useRouter();
@@ -127,7 +121,11 @@ export default function PollsNewEditForm({ currentPoll }) {
                         label={`Option ${String.fromCharCode(65 + index)}`}
                         fullWidth
                       />
-                      <Typography variant="body2" onClick={() => remove(index)} sx={{ cursor: 'pointer', color: 'error.main' }}>
+                      <Typography
+                        variant="body2"
+                        onClick={() => remove(index)}
+                        sx={{ cursor: 'pointer', color: 'error.main' }}
+                      >
                         Remove
                       </Typography>
                     </Box>
@@ -152,18 +150,17 @@ export default function PollsNewEditForm({ currentPoll }) {
               </RHFSelect> */}
 
               {/* Answer */}
-<RHFSelect name="answer" label="Answer">
-  {Array.isArray(values.options) && values.options.length > 0 ? (
-    values.options.map((option, index) => (
-      <MenuItem key={index} value={option.label}>
-        {option.label}
-      </MenuItem>
-    ))
-  ) : (
-    <MenuItem disabled>No options available</MenuItem>
-  )}
-</RHFSelect>
-
+              <RHFSelect name="answer" label="Answer">
+                {Array.isArray(values.options) && values.options.length > 0 ? (
+                  values.options.map((option, index) => (
+                    <MenuItem key={index} value={option.label}>
+                      {option.label}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>No options available</MenuItem>
+                )}
+              </RHFSelect>
 
               {/* Description */}
               <RHFTextField name="description" label="Description" multiline rows={4} />
@@ -178,12 +175,7 @@ export default function PollsNewEditForm({ currentPoll }) {
               </Box>
 
               {/* Submit Button */}
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                size="large"
-                loading={isSubmitting}
-              >
+              <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
                 {!currentPoll ? 'Create Poll' : 'Save Changes'}
               </LoadingButton>
             </Stack>

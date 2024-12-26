@@ -15,17 +15,17 @@ export default function PollsCreateView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Edutainment"
+        heading="Create a New Poll"
         links={[
           {
             name: 'Dashboard',
             href: paths.dashboard.root,
           },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.edutainment.root,
+            name: 'Polls',
+            href: paths.dashboard.polls.root,
           },
-          { name: 'New Edutainment' },
+          { name: 'New Poll' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
