@@ -45,6 +45,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     heading: Yup.string().required('Heading is required'),
     image: Yup.mixed(),
     video: Yup.mixed(),
+    youtube_video : Yup.mixed(),
     duration: Yup.string(),
     status: Yup.string(),
     language: Yup.string().required('Language is required'),
@@ -57,6 +58,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       feed_type: currentEdutainment?.feed_type || '',
       image: currentEdutainment?.image || '',
       video: currentEdutainment?.video || '',
+      youtube_video : currentEdutainment?.youtube_video || '',
       duration: currentEdutainment?.duration || 0,
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
@@ -118,6 +120,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         ...data,
         image: data.image || null,
         video: data.video || null,
+        youtube_video: data.youtube_video || null ,
       };
       if (!currentEdutainment) {
         payload.status = 'Pending';
@@ -230,7 +233,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <MenuItem value="Text">Text</MenuItem>
                     <MenuItem value="Image">Image</MenuItem>
                     <MenuItem value="Video">Video</MenuItem>
-                    <MenuItem value="Youtube">YouTube</MenuItem>
+                    <MenuItem value="Youtube video">YouTube</MenuItem>
                   </RHFSelect>
 
                   {currentEdutainment && (
@@ -258,7 +261,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 {/* Conditionally Render Image Field */}
                 {(values.feed_type === 'Image' ||
                   values.feed_type === 'Video' ||
-                  values.feed_type === 'Youtube') && (
+                  values.feed_type === 'Youtube video') && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     {/* Image Field */}
                     <Stack spacing={1.5}>
@@ -276,11 +279,21 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </Box>
                 )}
 
-                {(values.feed_type === 'Video' || values.feed_type === 'Youtube') && (
+                
+
+                {values.feed_type === 'Video' && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Video</Typography>
                       <RHFTextField name="video" label="Video URL or ID" />
+                    </Stack>
+                  </Box>
+                )}
+                     {values.feed_type === 'Youtube video' && (
+                  <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Youtube Video</Typography>
+                      <RHFTextField name="youtube_video" label="Video URL or ID" />
                     </Stack>
                   </Box>
                 )}

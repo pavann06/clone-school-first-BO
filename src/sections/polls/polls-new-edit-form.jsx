@@ -46,7 +46,7 @@ export default function PollsNewEditForm({ currentPoll }) {
   const defaultValues = useMemo(
     () => ({
       question: currentPoll?.question || '',
-      options: currentPoll?.options || [{ label: '' }, { label: '' }],
+      options: currentPoll?.options || [ '' , '' ],
       answer: currentPoll?.answer || '',
       is_active: currentPoll?.is_active || false,
       description: currentPoll?.description || '',
