@@ -49,7 +49,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     status: Yup.string(),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
-    
   });
 
   const defaultValues = useMemo(
@@ -82,38 +81,73 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const values = watch();
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = {
+  //       ...data,
+  //       image: data.image || null,
+  //       video: data.video || null,
+  //     };
+  //     if (!currentEdutainment) {
+  //       payload.status = 'Pending';
+  //     }
+
+  //     const response = currentEdutainment
+  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
+  //       : await CreateEdutainment(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
+  //       router.push(paths.dashboard.edutainment.root);
+  //       reset();
+  //       return response;
+  //     }
+
+  //     enqueueSnackbar('Operation failed:', response.error);
+  //     return response;
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     enqueueSnackbar('Operation failed:');
+  //     return null;
+  //   }
+  // });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
-
       const payload = {
         ...data,
         image: data.image || null,
-        video: data.video || null, 
+        video: data.video || null,
       };
       if (!currentEdutainment) {
         payload.status = 'Pending';
       }
-
-
+  
       const response = currentEdutainment
         ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
         : await CreateEdutainment(payload);
-
+  
       if (response?.success) {
-        enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
+        enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
+          variant: 'success',
+        });
         router.push(paths.dashboard.edutainment.root);
         reset();
         return response;
       }
-    
-      enqueueSnackbar('Operation failed:' , response.error);
+  
+      // Display API error message in a red toast
+      const errorMessage = response?.error || 'Operation failed';
+      enqueueSnackbar(errorMessage, { variant: 'error' });
       return response;
     } catch (error) {
+      // Handle unexpected errors (e.g., network issues)
       console.error('Error:', error);
-      enqueueSnackbar('Operation failed:' );
+      enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
       return null;
     }
   });
+  
 
   const handleUpload = useCallback(
     async (file) => {
@@ -199,14 +233,13 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <MenuItem value="Youtube">YouTube</MenuItem>
                   </RHFSelect>
 
-{currentEdutainment && (
-  <RHFSelect name="status" label="Status">
-    <MenuItem value="Approved">Approved</MenuItem>
-    <MenuItem value="Rejected">Rejected</MenuItem>
-    <MenuItem value="Pending">Pending</MenuItem>
-  </RHFSelect>
-)}
-
+                  {currentEdutainment && (
+                    <RHFSelect name="status" label="Status">
+                      <MenuItem value="Approved">Approved</MenuItem>
+                      <MenuItem value="Rejected">Rejected</MenuItem>
+                      <MenuItem value="Pending">Pending</MenuItem>
+                    </RHFSelect>
+                  )}
                 </Box>
 
                 {/* Language, Heading, Description */}
@@ -218,10 +251,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       <MenuItem value="English">English</MenuItem>
                     </RHFSelect>
                     <RHFTextField name="heading" label="Heading" />
-                    <RHFTextField name="description" label="Description"
-                     multiline
-                     rows={4} 
-                      />
+                    <RHFTextField name="description" label="Description" multiline rows={4} />
                   </Stack>
                 </Box>
 
@@ -265,8 +295,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     />
                   </Box>
                 )}
-
-           
               </Box>
 
               <LoadingButton
