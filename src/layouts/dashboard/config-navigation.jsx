@@ -132,6 +132,16 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'servey',
+            path: paths.dashboard.servey.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.servey.root },
+              { title: 'create', path: paths.dashboard.servey.new },
+            ],
+          },
+
           // {
           //   title: 'appointments',
           //   path: paths.dashboard.appointments.root,

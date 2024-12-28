@@ -107,6 +107,13 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/polls/${id}/edit`,
     },
 
+    servey: {
+      root: `${ROOTS.DASHBOARD}/servey`,
+      new: `${ROOTS.DASHBOARD}/servey/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/servey/${id}/edit`,
+    },
+
+
     banners: {
       root: `${ROOTS.DASHBOARD}/banners`,
       new: `${ROOTS.DASHBOARD}/banners/new`,

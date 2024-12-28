@@ -43,16 +43,34 @@ export default function PollsNewEditForm({ currentPoll }) {
     description: Yup.string().required('Description is required'),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      question: currentPoll?.question || '',
-      options: currentPoll?.options || [ '' , '' ],
-      answer: currentPoll?.answer || '',
-      is_active: currentPoll?.is_active || false,
-      description: currentPoll?.description || '',
-    }),
-    [currentPoll]
-  );
+  // const defaultValues = useMemo(
+  //   () => ({
+  //     question: currentPoll?.question || '',
+  //     options: currentPoll?.options || '',
+  //     answer: currentPoll?.answer || '',
+  //     is_active: currentPoll?.is_active || false,
+  //     description: currentPoll?.description || '',
+  //   }),
+  //   [currentPoll]
+  // );
+  const defaultValues = useMemo(() => ({
+    question: currentPoll?.question || '',
+    options: currentPoll?.options
+      ? Object.entries(currentPoll.options || {}).map(([key, value]) => ({
+          label: value,
+        }))
+      : [],
+    answer: currentPoll?.answer
+      ? Object.entries(currentPoll.options || {}).find(
+          ([key]) => key === currentPoll.answer
+        )?.[1] || ''
+      : '',
+    is_active: currentPoll?.is_active || false,
+    description: currentPoll?.description || '',
+  }), [currentPoll]);
+  
+  
+  
 
   const methods = useForm({
     resolver: yupResolver(PollSchema),
@@ -77,9 +95,27 @@ export default function PollsNewEditForm({ currentPoll }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+
+      const formattedOptions = {};
+      data.options.forEach((option, index) => {
+        const labelKey = String.fromCharCode(65 + index); // Converts 0 to 'A', 1 to 'B', etc.
+        formattedOptions[labelKey] = option.label; // Use 'label' or other fields as needed
+      });
+
+      const selectedAnswerKey = Object.keys(formattedOptions).find(
+        (key) => formattedOptions[key] === data.answer
+      );
+  
+      const payload = {
+        ...data,
+        options: formattedOptions,
+        answer: selectedAnswerKey, // Replace array with formatted object
+      };
+
+
       const response = currentPoll
-        ? await UpdatePoll({ ...data, id: currentPoll.id })
-        : await CreatePoll(data);
+        ? await UpdatePoll({ ...payload, id: currentPoll.id })
+        : await CreatePoll(payload);
 
       if (response?.success) {
         enqueueSnackbar(currentPoll ? 'Update success!' : 'Create success!');
@@ -140,14 +176,7 @@ export default function PollsNewEditForm({ currentPoll }) {
                 </Stack>
               </Box>
 
-              {/* Answer */}
-              {/* <RHFSelect name="answer" label="Answer">
-                {values.options.map((option, index) => (
-                  <MenuItem key={index} value={option.label}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </RHFSelect> */}
+            
 
               {/* Answer */}
               <RHFSelect name="answer" label="Answer">

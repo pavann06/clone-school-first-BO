@@ -26,7 +26,7 @@ export const UpdatePoll = async (form_data) => {
       }
     });
 
-    const resp = await request.put(`backoffice/poll//${form_data.id}`, form_data);
+    const resp = await request.put(`backoffice/poll/${form_data.id}`, form_data);
 
     return resp;
   } catch (error) {
