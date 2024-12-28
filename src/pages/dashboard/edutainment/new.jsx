@@ -8,7 +8,7 @@ export default function EdutainmentCreatePage() {
   return (
     <>
       <Helmet>
-        <title> New Speciality </title>
+        <title> New Feed </title>
       </Helmet>
 
       <EdutainmentCreateView />

@@ -45,7 +45,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     heading: Yup.string().required('Heading is required'),
     image: Yup.mixed(),
     video: Yup.mixed(),
-    youtube_video : Yup.mixed(),
+    youtube_video: Yup.mixed(),
     duration: Yup.string(),
     status: Yup.string(),
     language: Yup.string().required('Language is required'),
@@ -58,7 +58,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       feed_type: currentEdutainment?.feed_type || '',
       image: currentEdutainment?.image || '',
       video: currentEdutainment?.video || '',
-      youtube_video : currentEdutainment?.youtube_video || '',
+      youtube_video: currentEdutainment?.youtube_video || '',
       duration: currentEdutainment?.duration || 0,
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
@@ -83,53 +83,22 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const values = watch();
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       image: data.image || null,
-  //       video: data.video || null,
-  //     };
-  //     if (!currentEdutainment) {
-  //       payload.status = 'Pending';
-  //     }
-
-  //     const response = currentEdutainment
-  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-  //       : await CreateEdutainment(payload);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
-  //       router.push(paths.dashboard.edutainment.root);
-  //       reset();
-  //       return response;
-  //     }
-
-  //     enqueueSnackbar('Operation failed:', response.error);
-  //     return response;
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     enqueueSnackbar('Operation failed:');
-  //     return null;
-  //   }
-  // });
-
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
         ...data,
         image: data.image || null,
         video: data.video || null,
-        youtube_video: data.youtube_video || null ,
+        youtube_video: data.youtube_video || null,
       };
       if (!currentEdutainment) {
         payload.status = 'Pending';
       }
-  
+
       const response = currentEdutainment
         ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
         : await CreateEdutainment(payload);
-  
+
       if (response?.success) {
         enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
           variant: 'success',
@@ -138,7 +107,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         reset();
         return response;
       }
-  
+
       // Display API error message in a red toast
       const errorMessage = response?.error || 'Operation failed';
       enqueueSnackbar(errorMessage, { variant: 'error' });
@@ -150,7 +119,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       return null;
     }
   });
-  
 
   const handleUpload = useCallback(
     async (file) => {
@@ -175,6 +143,24 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     [enqueueSnackbar]
   );
 
+  // const handleDrop = useCallback(
+  //   async (acceptedFiles) => {
+  //     const file = acceptedFiles[0];
+  //     if (file) {
+  //       const fileWithPreview = Object.assign(file, {
+  //         preview: URL.createObjectURL(file),
+  //       });
+  //       setValue('image', fileWithPreview);
+
+  //       const uploadedUrl = await handleUpload(file);
+  //       if (uploadedUrl) {
+  //         setValue('image', uploadedUrl);
+  //         enqueueSnackbar('Image uploaded successfully');
+  //       }
+  //     }
+  //   },
+  //   [setValue, enqueueSnackbar, handleUpload]
+  // );
   const handleDrop = useCallback(
     async (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -182,17 +168,30 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         const fileWithPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         });
-        setValue('image', fileWithPreview);
-
-        const uploadedUrl = await handleUpload(file);
-        if (uploadedUrl) {
-          setValue('image', uploadedUrl);
-          enqueueSnackbar('Image uploaded successfully');
+  
+        // Check file type (image or video) and set the corresponding value
+        if (file.type.startsWith('image/')) {
+          setValue('image', fileWithPreview);
+          const uploadedUrl = await handleUpload(file);
+          if (uploadedUrl) {
+            setValue('image', uploadedUrl);
+            enqueueSnackbar('Image uploaded successfully', { variant: 'success' });
+          }
+        } else if (file.type.startsWith('video/')) {
+          setValue('video', fileWithPreview);
+          const uploadedUrl = await handleUpload(file);
+          if (uploadedUrl) {
+            setValue('video', uploadedUrl);
+            enqueueSnackbar('Video uploaded successfully', { variant: 'success' });
+          }
+        } else {
+          enqueueSnackbar('Unsupported file type', { variant: 'error' });
         }
       }
     },
     [setValue, enqueueSnackbar, handleUpload]
   );
+  
 
   const handleRemoveFile = useCallback(() => {
     setValue('image', null); // Remove the image
@@ -279,17 +278,26 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </Box>
                 )}
 
-                
-
                 {values.feed_type === 'Video' && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+                    {/* Video Field */}
                     <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Video</Typography>
-                      <RHFTextField name="video" label="Video URL or ID" />
+                      <RHFUpload
+                        thumbnail
+                        name="video"
+                        maxSize={3145728} // Adjust the max size as per your requirement
+                        onDrop={handleDrop}
+                        onRemove={handleRemoveFile}
+                        onRemoveAll={handleRemoveAllFiles}
+                        isLoading={isUploading}
+                        accept="video/*" // Allows only video files
+                      />
                     </Stack>
                   </Box>
                 )}
-                     {values.feed_type === 'Youtube video' && (
+
+                {values.feed_type === 'Youtube video' && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Youtube Video</Typography>
@@ -330,3 +338,37 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 EdutainmentNewEditForm.propTypes = {
   currentEdutainment: PropTypes.any,
 };
+
+
+
+
+// const onSubmit = handleSubmit(async (data) => {
+//   try {
+//     const payload = {
+//       ...data,
+//       image: data.image || null,
+//       video: data.video || null,
+//     };
+//     if (!currentEdutainment) {
+//       payload.status = 'Pending';
+//     }
+
+//     const response = currentEdutainment
+//       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
+//       : await CreateEdutainment(payload);
+
+//     if (response?.success) {
+//       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
+//       router.push(paths.dashboard.edutainment.root);
+//       reset();
+//       return response;
+//     }
+
+//     enqueueSnackbar('Operation failed:', response.error);
+//     return response;
+//   } catch (error) {
+//     console.error('Error:', error);
+//     enqueueSnackbar('Operation failed:');
+//     return null;
+//   }
+// });
