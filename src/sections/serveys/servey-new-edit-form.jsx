@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-// import { useMemo, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useMemo, useState, useCallback } from 'react'; // Combined import
 
@@ -11,7 +10,7 @@ import { useSnackbar } from 'notistack';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import { MenuItem } from '@mui/material';
+import { MenuItem, Checkbox, ListItemText } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
@@ -24,16 +23,18 @@ import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import request from 'src/api/request';
-import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
 
-// API and Services
+import { CreateSurvey, UpdateSurvey } from 'src/api/survey';
 
 // Form Components
-import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components/hook-form';
+import FormProvider, {
+  RHFUpload,
+  RHFSelect,
+  RHFTextField,
+  RHFMultiSelect,
+} from 'src/components/hook-form';
 
-// ----------------------------------------------------------------------
-
-export default function ServeyNewEditForm({ currentSurvey }) {
+export default function SurveyNewEditForm({ currentSurvey }) {
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
@@ -41,29 +42,30 @@ export default function ServeyNewEditForm({ currentSurvey }) {
   const [isUploading, setIsUploading] = useState(false);
 
   const SurveySchema = Yup.object().shape({
-    feed_type: Yup.string().required('Type is required'),
-    heading: Yup.string().required('Heading is required'),
-    image: Yup.mixed(),
-    video: Yup.mixed(),
-    youtube_video : Yup.mixed(),
-    duration: Yup.string(),
-    status: Yup.string(),
-    language: Yup.string().required('Language is required'),
+    title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
+    duration: Yup.number().required('Duration is required'),
+    image: Yup.mixed(),
+    survey_type: Yup.string().required('Survey type is required'),
+    target_group: Yup.array().min(1, 'At least one target group is required'),
+    status: Yup.string().required('Status is required'),
+    closing_date: Yup.date().required('Closing date is required'),
+    total_responses: Yup.number(),
+    number_of_questions: Yup.number(),
   });
 
   const defaultValues = useMemo(
     () => ({
-      heading: currentSurvey?.heading || '',
-      feed_type: currentSurvey?.feed_type || '',
-      image: currentSurvey?.image || '',
-      video: currentSurvey?.video || '',
-      youtube_video : currentSurvey?.youtube_video || '',
-      duration: currentSurvey?.duration || 0,
-      language: currentSurvey?.language || '',
+      title: currentSurvey?.title || '',
       description: currentSurvey?.description || '',
-      // posting_date: currentEdutainment?.posting_date || '',
-      status: currentSurvey?.status || 'Pending',
+      duration: currentSurvey?.duration || 0,
+      image: currentSurvey?.image || '',
+      survey_type: currentSurvey?.survey_type || 'General',
+      target_group: currentSurvey?.target_group || ['All'], // Ensure default value is always an array
+      status: currentSurvey?.status || 'Closed',
+      closing_date: currentSurvey?.closing_date || '',
+      total_responses: currentSurvey?.total_responses || 0,
+      number_of_questions: currentSurvey?.number_of_questions || 0,
     }),
     [currentSurvey]
   );
@@ -81,76 +83,40 @@ export default function ServeyNewEditForm({ currentSurvey }) {
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
-
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       image: data.image || null,
-  //       video: data.video || null,
-  //     };
-  //     if (!currentEdutainment) {
-  //       payload.status = 'Pending';
-  //     }
-
-  //     const response = currentEdutainment
-  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-  //       : await CreateEdutainment(payload);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
-  //       router.push(paths.dashboard.edutainment.root);
-  //       reset();
-  //       return response;
-  //     }
-
-  //     enqueueSnackbar('Operation failed:', response.error);
-  //     return response;
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     enqueueSnackbar('Operation failed:');
-  //     return null;
-  //   }
-  // });
+  const values = watch(); // Correct usage here
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
         ...data,
         image: data.image || null,
-        video: data.video || null,
-        youtube_video: data.youtube_video || null ,
       };
       if (!currentSurvey) {
-        payload.status = 'Pending';
+        payload.status = 'Closed';
       }
-  
+
       const response = currentSurvey
-        ? await UpdateEdutainment({ ...payload, id: currentSurvey.id })
-        : await CreateEdutainment(payload);
-  
+        ? await UpdateSurvey({ ...payload, id: currentSurvey.id })
+        : await CreateSurvey(payload);
+
       if (response?.success) {
         enqueueSnackbar(currentSurvey ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-        router.push(paths.dashboard.edutainment.root);
+        router.push(paths.dashboard.survey.root);
         reset();
         return response;
       }
-  
-      // Display API error message in a red toast
+
       const errorMessage = response?.error || 'Operation failed';
       enqueueSnackbar(errorMessage, { variant: 'error' });
       return response;
     } catch (error) {
-      // Handle unexpected errors (e.g., network issues)
       console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
       return null;
     }
   });
-  
 
   const handleUpload = useCallback(
     async (file) => {
@@ -207,7 +173,7 @@ export default function ServeyNewEditForm({ currentSurvey }) {
       <Grid container spacing={3} justifyContent="center" alignItems="center">
         <Grid xs={12} md={8}>
           <Card>
-            {!mdUp && <CardHeader title="Properties" />}
+            {!mdUp && <CardHeader title="Survey Information" />}
 
             <Stack spacing={3} sx={{ p: 3 }}>
               <Box
@@ -219,95 +185,86 @@ export default function ServeyNewEditForm({ currentSurvey }) {
                   md: 'repeat(2, 1fr)',
                 }}
               >
-                {/* Type Dropdown */}
-                <Box
-                  columnGap={2}
-                  rowGap={3}
-                  display="grid"
-                  gridTemplateColumns={{
-                    xs: 'repeat(1, 1fr)', // Single column on small screens
-                    md: 'repeat(2, 1fr)', // Three columns on medium and up
-                  }}
-                >
-                  <RHFSelect name="feed_type" label="Type">
-                    <MenuItem value="Text">Text</MenuItem>
-                    <MenuItem value="Image">Image</MenuItem>
-                    <MenuItem value="Video">Video</MenuItem>
-                    <MenuItem value="Youtube video">YouTube</MenuItem>
-                  </RHFSelect>
+                {/* Title Field */}
+                <RHFTextField name="title" label="Title" />
 
-                  {currentSurvey && (
-                    <RHFSelect name="status" label="Status">
-                      <MenuItem value="Approved">Approved</MenuItem>
-                      <MenuItem value="Rejected">Rejected</MenuItem>
-                      <MenuItem value="Pending">Pending</MenuItem>
-                    </RHFSelect>
-                  )}
-                </Box>
+                {/* Description Field */}
 
-                {/* Language, Heading, Description */}
+                {/* Duration Field */}
+                <RHFTextField
+                  name="duration"
+                  label="Duration (in minutes)"
+                  type="number"
+                  InputProps={{ inputProps: { min: 0 } }}
+                />
+
+                {/* Survey Type Dropdown */}
+                <RHFSelect name="survey_type" label="Survey Type">
+                  <MenuItem value="General">General</MenuItem>
+                  <MenuItem value="Assessment">Assessment</MenuItem>
+                </RHFSelect>
+
+                {/* Status Dropdown */}
+                <RHFSelect name="status" label="Status">
+                  <MenuItem value="Draft">Draft</MenuItem>
+                  <MenuItem value="Published">Published</MenuItem>
+                  <MenuItem value="Closed">Closed</MenuItem>
+                  <MenuItem value="Deleted">Deleted</MenuItem>
+                </RHFSelect>
+
+                {/* Closing Date Picker */}
+                <RHFTextField
+                  name="closing_date"
+                  label="Closing Date"
+                  type="datetime-local"
+                  InputLabelProps={{ shrink: true }}
+                />
+
+                {/* Total Responses Field */}
+                <RHFTextField name="total_responses" label="Total Responses" type="number" />
+
+                <RHFTextField name="description" label="Description" multiline rows={4} />
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                  <Stack spacing={2}>
-                    <RHFSelect name="language" label="Language">
-                      <MenuItem value="Telugu">Telugu</MenuItem>
-                      <MenuItem value="Hindi">Hindi</MenuItem>
-                      <MenuItem value="English">English</MenuItem>
-                    </RHFSelect>
-                    <RHFTextField name="heading" label="Heading" />
-                    <RHFTextField name="description" label="Description" multiline rows={4} />
+  <Stack spacing={1.5}>
+    <Typography variant="subtitle2">Target Group</Typography>
+    <RHFMultiSelect
+      name="target_group"
+      label="Target Group"
+      options={[
+        { label: 'All', value: 'All' },
+        { label: 'Youth', value: 'Youth' },
+        { label: 'Parents', value: 'Parents' },
+        { label: 'Single Parents', value: 'Single Parents' },
+        { label: 'Grand Parents', value: 'Grand Parents' },
+      ]}
+      multiple
+    />
+  </Stack>
+</Box>
+                
+
+                {/* Image Field */}
+                <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2">Image</Typography>
+                    <RHFUpload
+                      thumbnail
+                      name="image"
+                      maxSize={3145728}
+                      onDrop={handleDrop}
+                      onRemove={handleRemoveFile}
+                      onRemoveAll={handleRemoveAllFiles}
+                      isLoading={isUploading}
+                    />
                   </Stack>
                 </Box>
 
-                {/* Conditionally Render Image Field */}
-                {(values.feed_type === 'Image' ||
-                  values.feed_type === 'Video' ||
-                  values.feed_type === 'Youtube video') && (
-                  <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                    {/* Image Field */}
-                    <Stack spacing={1.5}>
-                      <Typography variant="subtitle2">Image</Typography>
-                      <RHFUpload
-                        thumbnail
-                        name="image"
-                        maxSize={3145728}
-                        onDrop={handleDrop}
-                        onRemove={handleRemoveFile}
-                        onRemoveAll={handleRemoveAllFiles}
-                        isLoading={isUploading}
-                      />
-                    </Stack>
-                  </Box>
-                )}
-
-                
-
-                {values.feed_type === 'Video' && (
-                  <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                    <Stack spacing={1.5}>
-                      <Typography variant="subtitle2">Video</Typography>
-                      <RHFTextField name="video" label="Video URL or ID" />
-                    </Stack>
-                  </Box>
-                )}
-                     {values.feed_type === 'Youtube video' && (
-                  <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                    <Stack spacing={1.5}>
-                      <Typography variant="subtitle2">Youtube Video</Typography>
-                      <RHFTextField name="youtube_video" label="Video URL or ID" />
-                    </Stack>
-                  </Box>
-                )}
-
-                {values.feed_type === 'Video' && (
-                  <Box>
-                    <RHFTextField
-                      name="duration"
-                      label="Duration (in seconds)"
-                      type="number"
-                      InputProps={{ inputProps: { min: 0 } }} // Restrict to non-negative values
-                    />
-                  </Box>
-                )}
+                {/* Number of Questions Field */}
+                <RHFTextField
+                  name="number_of_questions"
+                  label="Number of Questions"
+                  type="number"
+                />
               </Box>
 
               <LoadingButton
@@ -317,7 +274,7 @@ export default function ServeyNewEditForm({ currentSurvey }) {
                 loading={isSubmitting || isUploading}
                 sx={{ alignSelf: 'flex-end' }}
               >
-                {!currentSurvey ? 'Create Edutainment' : 'Save Changes'}
+                {!currentSurvey ? 'Create Survey' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>
@@ -327,6 +284,6 @@ export default function ServeyNewEditForm({ currentSurvey }) {
   );
 }
 
-ServeyNewEditForm.propTypes = {
+SurveyNewEditForm.propTypes = {
   currentSurvey: PropTypes.any,
 };

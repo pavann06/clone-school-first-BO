@@ -18,17 +18,16 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 export default function ServeyTableRow({ row, onEditRow, onDeleteRow }) {
   const {
     serial_no,
-    language,
-    heading,
+    title,
     description,
-    likes_count,
-    comments_count,
-    whatsapp_share_count,
-    posting_date,
-    approved_by,
-    approved_time,
+    duration,
     image,
+    survey_type,
+    target_group,
     status,
+    closing_date,
+    total_responses,
+    number_of_questions,
   } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -44,10 +43,11 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow }) {
   return (
     <>
       <TableRow hover>
-        {/* ID */}
+        {/* Serial Number */}
         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>{heading}</TableCell>
+        {/* Title */}
+        <TableCell>{title}</TableCell>
 
         {/* Description */}
         <TableCell>
@@ -61,19 +61,15 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow }) {
           </Typography>
         </TableCell>
 
-        {/* Approved Info */}
-        <TableCell>
-          <div>Posted: {posting_date}</div>
-          {/* <div>Approved By: {approved_by}</div> */}
-          <div>Approved At: {new Date(approved_time).toLocaleDateString()}</div>
-        </TableCell>
+        {/* Duration */}
+        <TableCell>{duration} mins</TableCell>
 
         {/* Image */}
         <TableCell align="center">
           {image ? (
             <img
               src={image}
-              alt={`Thumbnail for ${heading}`}
+              alt={`Thumbnail for ${title}`}
               style={{ maxWidth: 100, maxHeight: 50 }}
             />
           ) : (
@@ -81,18 +77,23 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow }) {
           )}
         </TableCell>
 
-        {/* Interactions */}
-        <TableCell>
-          <div>Likes: {likes_count}</div>
-          <div>Comments: {comments_count}</div>
-          <div>WhatsApp Shares: {whatsapp_share_count}</div>
-        </TableCell>
+        {/* Survey Type */}
+        <TableCell>{survey_type}</TableCell>
 
-        {/* Language */}
-        <TableCell>{language}</TableCell>
+        {/* Target Group */}
+        <TableCell>{target_group.join(', ')}</TableCell>
 
         {/* Status */}
         <TableCell>{status}</TableCell>
+
+        {/* Closing Date */}
+        <TableCell>{new Date(closing_date).toLocaleDateString()}</TableCell>
+
+        {/* Total Responses */}
+        <TableCell>{total_responses}</TableCell>
+
+        {/* Number of Questions */}
+        <TableCell>{number_of_questions}</TableCell>
 
         {/* Actions */}
         <TableCell align="center">
@@ -115,8 +116,8 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow }) {
               color: 'rgba(0, 0, 0, 0.1)',
               fontSize: '5rem',
               fontWeight: 'bold',
-              pointerEvents: 'none', // Prevent interaction
-              userSelect: 'none', // Prevent selection
+              pointerEvents: 'none',
+              userSelect: 'none',
             }}
           >
             FamiliFirst

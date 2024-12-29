@@ -32,16 +32,21 @@ import SurveyTableRow from '../servey-table-row';
 
 
 const TABLE_HEAD = [
-  { id: 'index', label: 'Serial No' },
-  { id: 'heading', label: 'Heading' },
+  { id: 'index', label: 'Serial No' }, // Keep Serial No
+  { id: 'title', label: 'Title' },
   { id: 'description', label: 'Description' },
-  { id: 'approved_date', label: 'Approved ' },
+  { id: 'duration', label: 'Duration (mins)' },
   { id: 'image', label: 'Image' },
-  { id: 'likes_count', label: 'Likes ' },
-  { id: 'language', label: 'Language' },
-  {id: 'status' , label : 'Status'},
-  { id: 'actions ', label: 'Actions' },
+  { id: 'survey_type', label: 'Survey Type' },
+  { id: 'target_group', label: 'Target Group' },
+  { id: 'status', label: 'Status' },
+  { id: 'closing_date', label: 'Closing Date' },
+  { id: 'total_responses', label: 'Total Responses' },
+  { id: 'number_of_questions', label: 'Number of Questions' },
+  { id: 'actions', label: 'Actions' }, // Ensure Actions column is retained
 ];
+
+
 
 export default function SurveyListView() {
   const router = useRouter();
@@ -55,7 +60,7 @@ export default function SurveyListView() {
     queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `backoffice/servey?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/survey?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
