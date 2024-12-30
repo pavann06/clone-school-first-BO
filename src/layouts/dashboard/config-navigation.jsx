@@ -101,6 +101,7 @@ export function useNavData() {
               { title: 'create', path: paths.dashboard.edutainment.new },
             ],
           },
+        
 
           {
             title: 'onlinestores',
@@ -139,6 +140,15 @@ export function useNavData() {
             children: [
               { title: 'list', path: paths.dashboard.servey.root },
               { title: 'create', path: paths.dashboard.servey.new },
+            ],
+          },
+          {
+            title: 'subscribedusers',
+            path: paths.dashboard.subscribedusers.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.subscribedusers.root },
+              // { title: 'create', path: paths.dashboard.edutainment.new },
             ],
           },
 

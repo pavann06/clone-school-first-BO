@@ -21,6 +21,8 @@ const SpecialitiesListPage = lazy(() => import('src/pages/dashboard/specialities
 const SpecialitiesCreatePage = lazy(() => import('src/pages/dashboard/specialities/new'));
 const SpecialitiesEditPage = lazy(() => import('src/pages/dashboard/specialities/edit'));
 
+const SubscribedusersListPage = lazy(() => import('src/pages/dashboard/subscribedusers/list'));
+
 // const FeaturesListPage = lazy(() => import('src/pages/dashboard/features/list'));
 // const FeatureCreatePage = lazy(() => import('src/pages/dashboard/features/new'));
 // const FeaturesEditPage = lazy(() => import('src/pages/dashboard/features/edit'));
@@ -174,6 +176,37 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+      {
+        path: 'subscribedusers',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SubscribedusersListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          // {
+          //   path: 'new',
+          //   element: (
+          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+          //       <EdutainmentCreatePage />
+          //     </PermissionBasedGuard>
+          //   ),
+          // },
+          // {
+          //   path: ':id/edit',
+          //   element: (
+          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+          //       <EdutainmentEditPage />
+          //     </PermissionBasedGuard>
+          //   ),
+          // },
+        ],
+      },
+
 
       {
         path: 'onlinestores',

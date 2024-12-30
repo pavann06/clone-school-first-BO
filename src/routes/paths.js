@@ -94,6 +94,11 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/calender/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/calender/${id}/edit`,
     },
+    subscribedusers: {
+      root: `${ROOTS.DASHBOARD}/subscribedusers`,
+      // new: `${ROOTS.DASHBOARD}/calender/new`,
+      // edit: (id) => `${ROOTS.DASHBOARD}/calender/${id}/edit`,
+    },
 
     // appointments: {
     //   root: `${ROOTS.DASHBOARD}/appointments`,
