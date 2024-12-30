@@ -1,39 +1,44 @@
+// import { useState } from 'react';
 // import PropTypes from 'prop-types';
-
 // import ListItemText from '@mui/material/ListItemText';
-// import { Link, TableRow, MenuItem, TableCell, IconButton } from '@mui/material';
-
+// import {
+//   Link,
+//   TableRow,
+//   MenuItem,
+//   TableCell,
+//   IconButton,
+//   Dialog,
+//   DialogContent,
+//   Typography,
+//   Button,
+// } from '@mui/material';
 // import Iconify from 'src/components/iconify';
 // import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-// export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
+// export default function ServeyTableRow({ row, onEditRow, onDeleteRow,  }) {
 //   const {
 //     serial_no,
 //     question,
 //     options,
-//     answer,
-
-//     description,
+//     question_type,
+   
 //   } = row;
+
+ 
+
+
+
 
 //   const popover = usePopover();
 
 //   return (
 //     <>
 //       <TableRow hover>
-//         {/* ID */}
+//         {/* Serial Number */}
 //         <TableCell>{serial_no}</TableCell>
 
-//         <TableCell>
-//           <ListItemText
-//             disableTypography
-//             primary={
-//               <Link noWrap color="inherit" variant="subtitle2" sx={{ cursor: 'pointer' }}>
-//                 {question}
-//               </Link>
-//             }
-//           />
-//         </TableCell>
+//         {/* Title */}
+//         <TableCell>{question}</TableCell>
 
 //         {/* Description */}
 //         <TableCell>
@@ -50,10 +55,12 @@
 //           )}
 //         </TableCell>
 
-//         <TableCell>{answer}</TableCell>
+//         {/* Duration */}
+//         <TableCell>{question_type} mins</TableCell>
 
-//         {/* Interactions */}
-//         <TableCell>{description}</TableCell>
+      
+
+    
 
 //         {/* Actions */}
 //         <TableCell align="center">
@@ -63,6 +70,9 @@
 //         </TableCell>
 //       </TableRow>
 
+     
+
+//       {/* Custom Popover */}
 //       <CustomPopover
 //         open={popover.open}
 //         onClose={popover.onClose}
@@ -87,33 +97,45 @@
 //           <Iconify icon="material-symbols:delete" />
 //           Delete
 //         </MenuItem>
+// {/* 
+//         <MenuItem
+//           onClick={() => {
+//             onViewRow();
+//             popover.onClose();
+//           }}
+//         >
+//           <Iconify icon="carbon:view" />
+//           {/* <AppointmentListPage /> */}
+//           {/* View
+//         </MenuItem> */} 
 //       </CustomPopover>
 //     </>
 //   );
 // }
 
-// PollsTableRow.propTypes = {
+// ServeyTableRow.propTypes = {
 //   onEditRow: PropTypes.func,
 //   onDeleteRow: PropTypes.func,
-//   // onViewRow: PropTypes.func,
 //   row: PropTypes.object,
 // };
 
 
-
 import PropTypes from 'prop-types';
+
 import ListItemText from '@mui/material/ListItemText';
 import { Link, TableRow, MenuItem, TableCell, IconButton } from '@mui/material';
+
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
+export default function ServeyQuestionsTableRow({ row, onEditRow, onDeleteRow }) {
   const {
-    serial_no,  // Serial Number
-    question,   // Question
-    options,    // Options
-    answer,     // Answer
-    description, // Description
+    serial_no,
+    question,
+    options,
+    answer,
+
+    description,
   } = row;
 
   const popover = usePopover();
@@ -121,10 +143,9 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
   return (
     <>
       <TableRow hover>
-        {/* Serial No */}
+        {/* ID */}
         <TableCell>{serial_no}</TableCell>
 
-        {/* Question */}
         <TableCell>
           <ListItemText
             disableTypography
@@ -136,7 +157,7 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
           />
         </TableCell>
 
-        {/* Options */}
+        {/* Description */}
         <TableCell>
           {options && typeof options === 'object' ? (
             <ul style={{ margin: 0, paddingLeft: '1rem' }}>
@@ -151,10 +172,9 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
           )}
         </TableCell>
 
-        {/* Answer */}
         <TableCell>{answer}</TableCell>
 
-        {/* Description */}
+        {/* Interactions */}
         <TableCell>{description}</TableCell>
 
         {/* Actions */}
@@ -165,7 +185,6 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
       </TableRow>
 
-      {/* Action Popover */}
       <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
@@ -195,8 +214,9 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
   );
 }
 
-PollsTableRow.propTypes = {
+ServeyQuestionsTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
+  // onViewRow: PropTypes.func,
   row: PropTypes.object,
 };

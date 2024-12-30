@@ -64,7 +64,9 @@ const PollsEditPage = lazy(() => import('src/pages/dashboard/polls/edit'));
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
 const SurveyCreatePage = lazy(() => import('src/pages/dashboard/survey/new'));
 const SurveyEditPage = lazy(() => import('src/pages/dashboard/survey/edit'));
-
+const SurveyQuestionEditPage = lazy(() => import('src/pages/dashboard/survey/questions-edit'));
+const ServeyQuestionsListPage = lazy(() => import('src/pages/dashboard/survey/questions'));
+const SurveyQuestionsCreatePage = lazy(() => import('src/pages/dashboard/survey/questions-form'));
 
 // WELCOME PAGE
 
@@ -288,6 +290,30 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <SurveyEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/questions_new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveyQuestionsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/questions_edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveyQuestionEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/questions',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ServeyQuestionsListPage />
               </PermissionBasedGuard>
             ),
           },

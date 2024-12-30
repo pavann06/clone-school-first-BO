@@ -111,6 +111,9 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/servey`,
       new: `${ROOTS.DASHBOARD}/servey/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/servey/${id}/edit`,
+      questions: (id) => `${ROOTS.DASHBOARD}/servey/${id}/questions`,
+      questions_new: (id) => `${ROOTS.DASHBOARD}/servey/${id}/questions_new`,
+      questions_edit : (id) => `${ROOTS.DASHBOARD}/servey/${id}/questions_edit`,
     },
 
 
