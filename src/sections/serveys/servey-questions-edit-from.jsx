@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useMemo, useState, useCallback } from 'react'; // Combined import
+import React, { useMemo, useState, useCallback } from 'react'; 
 
 import { useSnackbar } from 'notistack';
 
@@ -10,7 +10,7 @@ import { useSnackbar } from 'notistack';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import { MenuItem, Checkbox, ListItemText } from '@mui/material';
+import { MenuItem } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
@@ -19,18 +19,13 @@ import LoadingButton from '@mui/lab/LoadingButton';
 // Internal Utilities
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
-
 import { useResponsive } from 'src/hooks/use-responsive';
-
-import request from 'src/api/request';
-
-import { CreateSurvey, UpdateSurvey } from 'src/api/survey';
+import { CreateSurveyQuestion, UpdateSurveyQuestion } from 'src/api/servey-questions';
 
 // Form Components
 import FormProvider, {
-  RHFUpload,
-  RHFSelect,
   RHFTextField,
+  RHFSelect,
   RHFMultiSelect,
 } from 'src/components/hook-form';
 
@@ -39,33 +34,23 @@ export default function SurveyQuestionEditForm({ currentSurvey }) {
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
 
-  const [isUploading, setIsUploading] = useState(false);
+  const [questionType, setQuestionType] = useState('Text'); // State to track selected question type
+  const [options, setOptions] = useState(['']); // State to hold options for Single Choice/Multiple Choice
 
   const SurveySchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
-    description: Yup.string().required('Description is required'),
-    duration: Yup.number().required('Duration is required'),
-    image: Yup.mixed(),
-    survey_type: Yup.string().required('Survey type is required'),
-    target_group: Yup.array().min(1, 'At least one target group is required'),
-    status: Yup.string().required('Status is required'),
-    closing_date: Yup.date().required('Closing date is required'),
-    total_responses: Yup.number(),
-    number_of_questions: Yup.number(),
+    question_type: Yup.string().required('Question Type is required'),
+    question_text: Yup.string().required('Question Text is required'),
+    options: Yup.array().when('question_type', {
+      is: (val) => val === 'Single Choice' || val === 'Multiple Choice',
+      then: Yup.array().min(1, 'At least one option is required'),
+    }),
   });
 
   const defaultValues = useMemo(
     () => ({
-      title: currentSurvey?.title || '',
-      description: currentSurvey?.description || '',
-      duration: currentSurvey?.duration || 0,
-      image: currentSurvey?.image || '',
-      survey_type: currentSurvey?.survey_type || 'General',
-      target_group: currentSurvey?.target_group || ['All'], // Ensure default value is always an array
-      status: currentSurvey?.status || 'Closed',
-      closing_date: currentSurvey?.closing_date || '',
-      total_responses: currentSurvey?.total_responses || 0,
-      number_of_questions: currentSurvey?.number_of_questions || 0,
+      question_type: 'Text',
+      question_text: currentSurvey?.question_text || '',
+      options: currentSurvey?.options || [''],
     }),
     [currentSurvey]
   );
@@ -83,21 +68,11 @@ export default function SurveyQuestionEditForm({ currentSurvey }) {
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch(); // Correct usage here
-
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const payload = {
-        ...data,
-        image: data.image || null,
-      };
-      if (!currentSurvey) {
-        payload.status = 'Closed';
-      }
-
       const response = currentSurvey
-        ? await UpdateSurvey({ ...payload, id: currentSurvey.id })
-        : await CreateSurvey(payload);
+        ? await UpdateSurveyQuestion({ ...data, id: currentSurvey.id })
+        : await CreateSurveyQuestion(data);
 
       if (response?.success) {
         enqueueSnackbar(currentSurvey ? 'Update success!' : 'Create success!', {
@@ -118,62 +93,41 @@ export default function SurveyQuestionEditForm({ currentSurvey }) {
     }
   });
 
-  const handleUpload = useCallback(
-    async (file) => {
-      try {
-        setIsUploading(true);
-        const payload = {
-          files: file,
-        };
-        const response = await request.UploadFiles(payload);
+  const handleQuestionTypeChange = (e) => {
+    const selectedType = e.target.value;
+    setQuestionType(selectedType);
+    setValue('question_type', selectedType); // Set the selected type in form state
 
-        if (response.success) {
-          return response.data[0].file_url;
-        }
-        throw new Error('Upload failed');
-      } catch (error) {
-        enqueueSnackbar('File upload failed', { variant: 'error' });
-        return null;
-      } finally {
-        setIsUploading(false);
-      }
-    },
-    [enqueueSnackbar]
-  );
+    // Reset options if switching from Text or Yes/No
+    if (selectedType !== 'Single Choice' && selectedType !== 'Multiple Choice') {
+      setOptions(['']);
+      setValue('options', []);
+    }
+  };
 
-  const handleDrop = useCallback(
-    async (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        const fileWithPreview = Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        });
-        setValue('image', fileWithPreview);
+  const handleAddOption = () => {
+    setOptions((prev) => [...prev, '']); // Add a new empty option field
+  };
 
-        const uploadedUrl = await handleUpload(file);
-        if (uploadedUrl) {
-          setValue('image', uploadedUrl);
-          enqueueSnackbar('Image uploaded successfully');
-        }
-      }
-    },
-    [setValue, enqueueSnackbar, handleUpload]
-  );
+  const handleOptionChange = (index, value) => {
+    const updatedOptions = [...options];
+    updatedOptions[index] = value;
+    setOptions(updatedOptions);
+    setValue('options', updatedOptions); // Update options in form state
+  };
 
-  const handleRemoveFile = useCallback(() => {
-    setValue('image', null); // Remove the image
-  }, [setValue]);
-
-  const handleRemoveAllFiles = useCallback(() => {
-    setValue('image', null); // Reset to no image
-  }, [setValue]);
+  const handleRemoveOption = (index) => {
+    const updatedOptions = options.filter((_, i) => i !== index);
+    setOptions(updatedOptions);
+    setValue('options', updatedOptions); // Remove the option from form state
+  };
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="center" alignItems="center">
         <Grid xs={12} md={8}>
           <Card>
-            {!mdUp && <CardHeader title="Survey Information" />}
+            {!mdUp && <CardHeader title="Survey Question Information" />}
 
             <Stack spacing={3} sx={{ p: 3 }}>
               <Box
@@ -185,96 +139,87 @@ export default function SurveyQuestionEditForm({ currentSurvey }) {
                   md: 'repeat(2, 1fr)',
                 }}
               >
-                {/* Title Field */}
-                <RHFTextField name="title" label="Title" />
-
-                {/* Description Field */}
-
-                {/* Duration Field */}
-                <RHFTextField
-                  name="duration"
-                  label="Duration (in minutes)"
-                  type="number"
-                  InputProps={{ inputProps: { min: 0 } }}
-                />
-
-                {/* Survey Type Dropdown */}
-                <RHFSelect name="survey_type" label="Survey Type">
-                  <MenuItem value="General">General</MenuItem>
-                  <MenuItem value="Assessment">Assessment</MenuItem>
+                {/* Question Type Dropdown */}
+                <RHFSelect
+                  name="question_type"
+                  label="Question Type"
+                  onChange={handleQuestionTypeChange}
+                >
+                  <MenuItem value="Text">Text</MenuItem>
+                  <MenuItem value="Single Choice">Single Choice</MenuItem>
+                  <MenuItem value="Multiple Choice">Multiple Choice</MenuItem>
+                  <MenuItem value="Yes/No">Yes/No</MenuItem>
                 </RHFSelect>
 
-                {/* Status Dropdown */}
-                <RHFSelect name="status" label="Status">
-                  <MenuItem value="Draft">Draft</MenuItem>
-                  <MenuItem value="Published">Published</MenuItem>
-                  <MenuItem value="Closed">Closed</MenuItem>
-                  <MenuItem value="Deleted">Deleted</MenuItem>
-                </RHFSelect>
+                {/* Question Text Field */}
+                <RHFTextField name="question_text" label="Question Text" />
 
-                {/* Closing Date Picker */}
-                <RHFTextField
-                  name="closing_date"
-                  label="Closing Date"
-                  type="datetime-local"
-                  InputLabelProps={{ shrink: true }}
-                />
+                {/* Conditionally Render Fields Based on Question Type */}
+                {questionType === 'Text' && (
+                  <RHFTextField name="answer" label="Answer" />
+                )}
 
-                {/* Total Responses Field */}
-                <RHFTextField name="total_responses" label="Total Responses" type="number" />
-
-                <RHFTextField name="description" label="Description" multiline rows={4} />
-                <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-  <Stack spacing={1.5}>
-    <Typography variant="subtitle2">Target Group</Typography>
-    <RHFMultiSelect
-      name="target_group"
-      label="Target Group"
-      options={[
-        { label: 'All', value: 'All' },
-        { label: 'Youth', value: 'Youth' },
-        { label: 'Parents', value: 'Parents' },
-        { label: 'Single Parents', value: 'Single Parents' },
-        { label: 'Grand Parents', value: 'Grand Parents' },
-      ]}
-      multiple
-    />
-  </Stack>
-</Box>
-                
-
-                {/* Image Field */}
-                <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Image</Typography>
-                    <RHFUpload
-                      thumbnail
-                      name="image"
-                      maxSize={3145728}
-                      onDrop={handleDrop}
-                      onRemove={handleRemoveFile}
-                      onRemoveAll={handleRemoveAllFiles}
-                      isLoading={isUploading}
-                    />
+                {questionType === 'Single Choice' && (
+                  <Stack spacing={2}>
+                    <Typography variant="subtitle2">Options</Typography>
+                    {options.map((option, index) => (
+                      <Box key={index} display="flex" gap={2}>
+                        <RHFTextField
+                          name={`options[${index}]`}
+                          label={`Option ${index + 1}`}
+                          value={option}
+                          onChange={(e) => handleOptionChange(index, e.target.value)}
+                        />
+                        <button type="button" onClick={() => handleRemoveOption(index)}>
+                          Remove
+                        </button>
+                      </Box>
+                    ))}
+                    <button type="button" onClick={handleAddOption}
+                    >
+                      Add Option
+                    </button>
                   </Stack>
-                </Box>
+                )}
 
-                {/* Number of Questions Field */}
-                <RHFTextField
-                  name="number_of_questions"
-                  label="Number of Questions"
-                  type="number"
-                />
+                {questionType === 'Multiple Choice' && (
+                  <Stack spacing={2}>
+                    <Typography variant="subtitle2">Options</Typography>
+                    {options.map((option, index) => (
+                      <Box key={index} display="flex" gap={2}>
+                        <RHFTextField
+                          name={`options[${index}]`}
+                          label={`Option ${index + 1}`}
+                          value={option}
+                          onChange={(e) => handleOptionChange(index, e.target.value)}
+                        />
+                        <button type="button" onClick={() => handleRemoveOption(index)}>
+                          Remove
+                        </button>
+                      </Box>
+                    ))}
+                    <button type="button" onClick={handleAddOption}>
+                      Add Option
+                    </button>
+                  </Stack>
+                )}
+
+                {questionType === 'Yes/No' && (
+                  <RHFSelect name="yes_no_option" label="Answer">
+                    <MenuItem value="Yes">Yes</MenuItem>
+                    <MenuItem value="No">No</MenuItem>
+                  </RHFSelect>
+                )}
               </Box>
 
               <LoadingButton
                 type="submit"
                 variant="contained"
                 size="large"
-                loading={isSubmitting || isUploading}
+                loading={isSubmitting}
                 sx={{ alignSelf: 'flex-end' }}
               >
-                {!currentSurvey ? 'Create Survey' : 'Save Changes'}
+                {!currentSurvey ? 'Create Question' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

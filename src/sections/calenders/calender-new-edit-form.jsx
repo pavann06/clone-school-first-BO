@@ -386,19 +386,7 @@ export default function CalenderNewEditForm({ currentCalender }) {
                 }}
               >
                 <Box>
-                  <RHFTextField
-                    name="date"
-                    label="Date"
-                    type="date"
-                    InputProps={{
-                      inputProps: {
-                        min: '2020-01-01',
-                      },
-                    }}
-                    InputLabelProps={{
-                      shrink: true, // Ensures the label stays above the field even when not focused
-                    }}
-                  />
+                <RHFTextField name="date" label="Date" />
                 </Box>
 
                 <RHFTextField name="prompt" label="Prompt" />

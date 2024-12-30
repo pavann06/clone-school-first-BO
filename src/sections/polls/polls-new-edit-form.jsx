@@ -53,24 +53,24 @@ export default function PollsNewEditForm({ currentPoll }) {
   //   }),
   //   [currentPoll]
   // );
-  const defaultValues = useMemo(() => ({
-    question: currentPoll?.question || '',
-    options: currentPoll?.options
-      ? Object.entries(currentPoll.options || {}).map(([key, value]) => ({
-          label: value,
-        }))
-      : [],
-    answer: currentPoll?.answer
-      ? Object.entries(currentPoll.options || {}).find(
-          ([key]) => key === currentPoll.answer
-        )?.[1] || ''
-      : '',
-    is_active: currentPoll?.is_active || false,
-    description: currentPoll?.description || '',
-  }), [currentPoll]);
-  
-  
-  
+  const defaultValues = useMemo(
+    () => ({
+      question: currentPoll?.question || '',
+      options: currentPoll?.options
+        ? Object.entries(currentPoll.options || {}).map(([key, value]) => ({
+            label: value,
+          }))
+        : [],
+      answer: currentPoll?.answer
+        ? Object.entries(currentPoll.options || {}).find(
+            ([key]) => key === currentPoll.answer
+          )?.[1] || ''
+        : '',
+      is_active: currentPoll?.is_active || false,
+      description: currentPoll?.description || '',
+    }),
+    [currentPoll]
+  );
 
   const methods = useForm({
     resolver: yupResolver(PollSchema),
@@ -95,7 +95,6 @@ export default function PollsNewEditForm({ currentPoll }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-
       const formattedOptions = {};
       data.options.forEach((option, index) => {
         const labelKey = String.fromCharCode(65 + index); // Converts 0 to 'A', 1 to 'B', etc.
@@ -105,13 +104,12 @@ export default function PollsNewEditForm({ currentPoll }) {
       const selectedAnswerKey = Object.keys(formattedOptions).find(
         (key) => formattedOptions[key] === data.answer
       );
-  
+
       const payload = {
         ...data,
         options: formattedOptions,
         answer: selectedAnswerKey, // Replace array with formatted object
       };
-
 
       const response = currentPoll
         ? await UpdatePoll({ ...payload, id: currentPoll.id })
@@ -160,7 +158,12 @@ export default function PollsNewEditForm({ currentPoll }) {
                       <Typography
                         variant="body2"
                         onClick={() => remove(index)}
-                        sx={{ cursor: 'pointer', color: 'error.main' }}
+                        sx={{
+                          cursor: 'pointer',
+                          color: 'error.main',
+                          textAlign: 'left',
+                          fontWeight: 'medium',
+                        }}
                       >
                         Remove
                       </Typography>
@@ -169,14 +172,17 @@ export default function PollsNewEditForm({ currentPoll }) {
                   <Typography
                     variant="body2"
                     onClick={() => append({ label: '' })}
-                    sx={{ cursor: 'pointer', color: 'primary.main', textAlign: 'left' }}
+                    sx={{
+                      cursor: 'pointer',
+                      color: 'primary.main',
+                      textAlign: 'left',
+                      fontWeight: 'medium',
+                    }}
                   >
                     Add Option
                   </Typography>
                 </Stack>
               </Box>
-
-            
 
               {/* Answer */}
               <RHFSelect name="answer" label="Answer">
