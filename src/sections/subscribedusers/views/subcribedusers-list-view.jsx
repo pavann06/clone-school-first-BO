@@ -204,7 +204,7 @@ import SubscribedusersTableRow from '../subscribedusers-table-row';
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   {id: 'mobile' , label : 'Number'},
-  { id: 'actions ', label: 'Actions' },
+//   { id: 'actions ', label: 'Actions' },
 ];
 
 export default function SubscribedusersListView() {
@@ -260,7 +260,8 @@ export default function SubscribedusersListView() {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg"
+    >
       <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
         <CustomBreadcrumbs
           heading="List"
@@ -285,9 +286,10 @@ export default function SubscribedusersListView() {
         </Button>
       </Box>
       <Card>
-        <TableContainer>
+        <TableContainer
+         >
           <Scrollbar>
-            <Table>
+            <Table >
               <TableHeadCustom headLabel={TABLE_HEAD} />
               <TableBody>
                 {isLoading

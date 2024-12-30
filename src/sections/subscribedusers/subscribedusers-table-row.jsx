@@ -45,11 +45,13 @@ export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow })
         <TableCell>{}</TableCell>
 
         {/* Actions */}
-        <TableCell align="center">
+
+
+        {/* <TableCell align="center">
           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
-        </TableCell>
+        </TableCell> */}
       </TableRow>
 
     
