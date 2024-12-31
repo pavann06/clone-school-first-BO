@@ -1,15 +1,13 @@
 
-
-
-import React, { useState, useEffect, useCallback } from 'react';
+// import { useSnackbar } from 'src/components/snackbar';
 import { useQuery } from '@tanstack/react-query';
+import React, { useState, useEffect,  } from 'react';
 
 import {
   Box,
   Card,
   Table,
   Skeleton,
-  Button,
   Container,
   TableBody,
   TableContainer,
@@ -17,19 +15,15 @@ import {
 } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-import { RouterLink } from 'src/routes/components';
-import Iconify from 'src/components/iconify';
 
 import request from 'src/api/request';
 
 import Scrollbar from 'src/components/scrollbar';
-import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 import SubscribedusersTableRow from '../subscribedusers-table-row';
-// import { label } from 'yet-another-react-lightbox';
+
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' ,width: '20%'},
@@ -39,8 +33,8 @@ const TABLE_HEAD = [
 ];
 
 export default function SubscribedusersListView() {
-  const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
+  // const router = useRouter();
+  // const { enqueueSnackbar } = useSnackbar();
 
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -72,23 +66,23 @@ export default function SubscribedusersListView() {
     setPagination({ page: 1, page_size: newPageSize });
   };
 
-  const handleEditRow = useCallback(
-    (id) => {
-      router.push(paths.dashboard.subscribedusers.edit(id));
-    },
-    [router]
-  );
+  // const handleEditRow = useCallback(
+  //   (id) => {
+  //     router.push(paths.dashboard.subscribedusers.edit(id));
+  //   },
+  //   [router]
+  // );
 
-  const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+  // const handleDeleteRow = async (id) => {
+  //   const response = await request.delete(`backoffice/edutain/feeds/${id}`);
 
-    const { success } = response;
+  //   const { success } = response;
 
-    if (success) {
-      enqueueSnackbar('Deleted successfully');
-      setPagination((prev) => ({ ...prev, page: 1 }));
-    }
-  };
+  //   if (success) {
+  //     enqueueSnackbar('Deleted successfully');
+  //     setPagination((prev) => ({ ...prev, page: 1 }));
+  //   }
+  // };
 
   return (
     <Container maxWidth="lg"

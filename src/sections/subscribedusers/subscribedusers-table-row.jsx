@@ -1,12 +1,10 @@
 
-import { useState } from 'react';
 import PropTypes from 'prop-types';
-import ListItemText from '@mui/material/ListItemText';
-import { Link, TableRow, MenuItem, TableCell, IconButton, Dialog, DialogContent, Typography, Button } from '@mui/material';
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow }) {
+import {  TableRow,  TableCell } from '@mui/material';
+
+
+export default function SubscribedusersTableRow({ row }) {
   const {
     serial_no,
     mobile,
@@ -14,14 +12,9 @@ export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow })
  
   } = row;
 
-  const [openDialog, setOpenDialog] = useState(false);
+  
 
-  const handleOpenDialog = () => setOpenDialog(true);
-  const handleCloseDialog = () => setOpenDialog(false);
 
- 
-
-  const popover = usePopover();
 
   return (
     <>
@@ -45,21 +38,7 @@ export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow })
 
      
 
-        {/* Interactions */}
-       
-
-
-        {/* Status */}
-       
-
-        {/* Actions */}
-
-
-        {/* <TableCell align="center">
-          <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell> */}
+      
       </TableRow>
 
     
@@ -96,7 +75,6 @@ export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow })
 }
 
 SubscribedusersTableRow.propTypes = {
-  onEditRow: PropTypes.func,
-  onDeleteRow: PropTypes.func,
+
   row: PropTypes.object,
 };

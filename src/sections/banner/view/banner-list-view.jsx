@@ -128,7 +128,7 @@ export default function BannerListView() {
             right: '5px',
           }}
         >
-          New Feed
+          New Banner
         </Button>
       </Box>
       <Card>
