@@ -23,9 +23,9 @@ export default function EdutainmentCreateView() {
           },
           {
             name: 'Edutainment',
-            href: paths.dashboard.edutainment.root,
+            href: paths.dashboard.banner.root,
           },
-          { name: 'New Edutainment' },
+          { name: 'New Banner' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
