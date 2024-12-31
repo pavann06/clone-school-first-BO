@@ -103,15 +103,15 @@ export function useNavData() {
           },
         
 
-          {
-            title: 'onlinestores',
-            path: paths.dashboard.onlinestores.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.onlinestores.root },
-              { title: 'create', path: paths.dashboard.onlinestores.new },
-            ],
-          },
+          // {
+          //   title: 'onlinestores',
+          //   path: paths.dashboard.onlinestores.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.onlinestores.root },
+          //     { title: 'create', path: paths.dashboard.onlinestores.new },
+          //   ],
+          // },
 
           {
             title: 'calender',
