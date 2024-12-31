@@ -77,12 +77,18 @@ export default function CalenderNewEditForm({ currentCalender }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // Format the date before submitting
+
+      const payload = {
+        ...data,
+        image: data.image || null,
+     
+      };
+      
     
 
       const response = currentCalender
-        ? await UpdateCalender({ ...data, id: currentCalender.id })
-        : await CreateCalender(data);
+        ? await UpdateCalender({ ...payload, id: currentCalender.id })
+        : await CreateCalender(payload);
 
       if (response?.success) {
         enqueueSnackbar(currentCalender ? 'Update success!' : 'Create success!');
