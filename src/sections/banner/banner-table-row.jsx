@@ -1,68 +1,58 @@
-
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import ListItemText from '@mui/material/ListItemText';
-import { Link, TableRow, MenuItem, TableCell, IconButton, Dialog, DialogContent, Typography, Button } from '@mui/material';
+import { TableRow, TableCell, IconButton, MenuItem, Typography } from '@mui/material';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow }) {
+export default function BannerTableRow({ row, onEditRow, onDeleteRow }) {
   const {
     serial_no,
-    mobile,
-    created_at,
- 
+    banner_image,
+    module,
+    is_active,
+    action_type,
   } = row;
-
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const handleOpenDialog = () => setOpenDialog(true);
-  const handleCloseDialog = () => setOpenDialog(false);
-
- 
 
   const popover = usePopover();
 
   return (
     <>
       <TableRow hover>
-        {/* ID */}
+        {/* Serial No */}
         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>
-       {mobile}
+        {/* Banner Image */}
+        <TableCell align="center">
+          {banner_image ? (
+            <img
+              src={banner_image}
+              alt={`Thumbnail for ${banner_image}`}
+              style={{ maxWidth: 100, maxHeight: 50 }}
+            />
+          ) : (
+            'No Image'
+          )}
         </TableCell>
 
-        {/* Description */}
-        <TableCell>
-       {created_at}
-        </TableCell>
-    
+        {/* Module */}
+        <TableCell>{module}</TableCell>
 
-     
+        {/* Active Status */}
+        <TableCell>{is_active ? 'Active' : 'Inactive'}</TableCell>
 
-        {/* Interactions */}
-       
-
-
-        {/* Status */}
-       
+        {/* Action Type */}
+        <TableCell>{action_type}</TableCell>
 
         {/* Actions */}
-
-
-        {/* <TableCell align="center">
+        <TableCell align="center">
           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
-        </TableCell> */}
+        </TableCell>
       </TableRow>
 
-    
-
-
-      {/* Custom Popover */}
-      {/* <CustomPopover
+      {/* Custom Popover for Actions */}
+      <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
         arrow="right-top"
@@ -86,13 +76,13 @@ export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow })
           <Iconify icon="material-symbols:delete" />
           Delete
         </MenuItem>
-      </CustomPopover> */}
+      </CustomPopover>
     </>
   );
 }
 
-SubscribedusersTableRow.propTypes = {
+BannerTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
-  row: PropTypes.object,
+  row: PropTypes.object.isRequired,
 };

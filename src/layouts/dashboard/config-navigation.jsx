@@ -152,6 +152,16 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'banner',
+            path: paths.dashboard.banner.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.banner.root },
+               { title: 'create', path: paths.dashboard.banner.new },
+            ],
+          },
+
           // {
           //   title: 'appointments',
           //   path: paths.dashboard.appointments.root,

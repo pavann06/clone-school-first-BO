@@ -1,8 +1,8 @@
 
 
-
-import React, { useState, useEffect, useCallback } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import {
   Box,
@@ -28,17 +28,19 @@ import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
-import SubscribedusersTableRow from '../subscribedusers-table-row';
-// import { label } from 'yet-another-react-lightbox';
+import EdutainmentTableRow from '../banner-table-row';
+
 
 const TABLE_HEAD = [
-  { id: 'index', label: 'Serial No' ,width: '20%'},
-  {id: 'mobile' , label : 'Number' , width: '40%'},
-  {id: 'created_at' , label : 'Created Date' , width: '40%'},
- 
+  { id: 'index', label: 'Serial No' },
+  { id: 'banner_image', label: 'Image' },
+  { id: 'module', label: 'Module' },
+  { id: 'is_active', label: 'Active ' },
+  { id: 'action_type', label: 'Action Type' },
+  { id: 'actions ', label: 'Actions' },
 ];
 
-export default function SubscribedusersListView() {
+export default function BannerListView() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -47,19 +49,24 @@ export default function SubscribedusersListView() {
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
   const { data, isLoading } = useQuery({
-    queryKey: ['subscribedusers', pagination.page, pagination.page_size],
+    queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `backoffice/broadcast/subscribedusers?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/broadcast/banners?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
 
+  // Set data when fetched successfully
   useEffect(() => {
     if (data) {
-      const fetchedData = data?.data || [];
-      setTableData(fetchedData);
-      setTotalCount(data?.total || 0);
+      if (data?.data?.length > 0) {
+        setTableData(data.data);
+        setTotalCount(data.total);
+      } else {
+        setTableData([]);
+        setTotalCount(0);
+      }
     }
   }, [data]);
 
@@ -67,6 +74,7 @@ export default function SubscribedusersListView() {
     setPagination((prev) => ({ ...prev, page: newPage + 1 }));
   };
 
+  // Handle change in number of rows per page
   const handleRowsPerPageChange = (event) => {
     const newPageSize = parseInt(event.target.value, 10);
     setPagination({ page: 1, page_size: newPageSize });
@@ -74,37 +82,44 @@ export default function SubscribedusersListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.subscribedusers.edit(id));
+      router.push(paths.dashboard.banner.edit(id));
     },
     [router]
   );
 
+
+
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+    const response = await request.delete(`backoffice/broadcast/banners/${id}`);
 
     const { success } = response;
 
+    // contact creation success
     if (success) {
       enqueueSnackbar('Deleted successfully');
+
+      // refetch the data
       setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
 
   return (
-    <Container maxWidth="lg"
-    >
+    <Container maxWidth="lg">
       <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
         <CustomBreadcrumbs
           heading="List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Subscribedusers', href: paths.dashboard.subscribedusers.root },
+            {
+              name: 'Banner',
+              href: paths.dashboard.banner.root,
+            },
             { name: 'List' },
           ]}
         />
-        {/* <Button
+              <Button
           component={RouterLink}
-          href={paths.dashboard.subscribedusers.new}
+          href={paths.dashboard.banner.new}
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
@@ -114,22 +129,12 @@ export default function SubscribedusersListView() {
           }}
         >
           New Feed
-        </Button> */}
+        </Button>
       </Box>
-      <Card 
-        sx={{
-          width: '70%', // Set the width to 70%
-          margin: 'auto', // Horizontally center it
-          marginTop: '5%', // Add some space at the top to center vertically
-          display: 'flex', // Ensure content aligns properly inside
-          flexDirection: 'column',
-        }}
-      >
-        <TableContainer
-      
-         >
+      <Card>
+        <TableContainer>
           <Scrollbar>
-            <Table >
+            <Table>
               <TableHeadCustom headLabel={TABLE_HEAD} />
               <TableBody>
                 {isLoading
@@ -137,17 +142,14 @@ export default function SubscribedusersListView() {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <SubscribedusersTableRow
+                      <EdutainmentTableRow
                         key={row.id}
                         row={{
                           ...row,
-                          serial_no:
-                            (pagination.page - 1) * pagination.page_size +
-                            index +
-                            1,
+                          serial_no: (pagination.page - 1) * pagination.page_size + index + 1, // Updated serial number calculation
                         }}
-                        // onEditRow={() => handleEditRow(row.id)}
-                        // onDeleteRow={() => handleDeleteRow(row.id)}
+                        onEditRow={() => handleEditRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
                       />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}
@@ -155,6 +157,7 @@ export default function SubscribedusersListView() {
             </Table>
           </Scrollbar>
         </TableContainer>
+
         <TablePagination
           component="div"
           count={totalCount}

@@ -121,12 +121,21 @@ export const paths = {
       questions_edit : (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions_edit`,
     },
 
-
-    banners: {
-      root: `${ROOTS.DASHBOARD}/banners`,
-      new: `${ROOTS.DASHBOARD}/banners/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/banners/${id}/edit`,
+    banner: {
+      root: `${ROOTS.DASHBOARD}/banner`,
+      new: `${ROOTS.DASHBOARD}/banner/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/banner/${id}/edit`,
     },
+
+
+
+
+
+    // banners: {
+    //   root: `${ROOTS.DASHBOARD}/banners`,
+    //   new: `${ROOTS.DASHBOARD}/banners/new`,
+    //   edit: (id) => `${ROOTS.DASHBOARD}/banners/${id}/edit`,
+    // },
 
     contact: {
       root: `${ROOTS.DASHBOARD}/contact`,

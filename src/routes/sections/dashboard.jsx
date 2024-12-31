@@ -63,6 +63,13 @@ const PollsCreatePage = lazy(() => import('src/pages/dashboard/polls/new'));
 const PollsEditPage = lazy(() => import('src/pages/dashboard/polls/edit'));
 
 
+const BannerListPage = lazy(() => import('src/pages/dashboard/banner/list'));
+const BannerCreatePage = lazy(() => import('src/pages/dashboard/banner/new'));
+const BannerEditPage = lazy(() => import('src/pages/dashboard/banner/edit'));
+
+
+
+
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
 const SurveyCreatePage = lazy(() => import('src/pages/dashboard/survey/new'));
 const SurveyEditPage = lazy(() => import('src/pages/dashboard/survey/edit'));
@@ -383,35 +390,35 @@ export const dashboardRoutes = [
       //   ],
       // },
 
-      {
-        path: 'banners',
-        children: [
-          {
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <BannersListPage />
-              </PermissionBasedGuard>
-            ),
-            index: true,
-          },
-          {
-            path: 'new',
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <BannersCreatePage />
-              </PermissionBasedGuard>
-            ),
-          },
-          {
-            path: ':id/edit',
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <BannersEditPage />
-              </PermissionBasedGuard>
-            ),
-          },
-        ],
-      },
+      // {
+      //   path: 'banners',
+      //   children: [
+      //     {
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <BannersListPage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //       index: true,
+      //     },
+      //     {
+      //       path: 'new',
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <BannersCreatePage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //     },
+      //     {
+      //       path: ':id/edit',
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <BannersEditPage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //     },
+      //   ],
+      // },
 
       {
         path: 'hospitals',
@@ -450,6 +457,40 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+      {
+        path: 'banner',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <BannerListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <BannerCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <BannerEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          
+        ],
+      },
+      
+      
+      
 
       {
         path: 'sales',
