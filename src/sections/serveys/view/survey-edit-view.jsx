@@ -11,16 +11,16 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import SurveyNewEditForm from '../servey-new-edit-form';
+import SurveyNewEditForm from '../survey-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function SurveyQuestionEditView({ id }) {
+export default function SurveyEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
     queryKey: ['servey', id],
-    queryFn: () => request.get(`backoffice/edutain/feeds/${id}`),
+    queryFn: () => request.get(`backoffice/survey/${id}`),
   });
 
   return (
@@ -31,7 +31,7 @@ export default function SurveyQuestionEditView({ id }) {
           { name: 'Dashboard', href: paths.dashboard.root },
           {
             name: 'Servey',
-            href: paths.dashboard.servey.root,
+            href: paths.dashboard.survey.root,
           },
           { name: data?.data?.heading },
         ]}
@@ -39,11 +39,11 @@ export default function SurveyQuestionEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <SurveyNewEditForm currentEdutainment={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <SurveyNewEditForm currentSurvey={data?.data} />}
     </Container>
   );
 }
 
-SurveyQuestionEditView.propTypes = {
+SurveyEditView.propTypes = {
   id: PropTypes.string,
 };

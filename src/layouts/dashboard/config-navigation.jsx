@@ -134,12 +134,12 @@ export function useNavData() {
           },
 
           {
-            title: 'servey',
-            path: paths.dashboard.servey.root,
+            title: 'survey',
+            path: paths.dashboard.survey.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.servey.root },
-              { title: 'create', path: paths.dashboard.servey.new },
+              { title: 'list', path: paths.dashboard.survey.root },
+              { title: 'create', path: paths.dashboard.survey.new },
             ],
           },
           {

@@ -150,7 +150,7 @@ import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 import { paths } from 'src/routes/paths';
-import ServeyQuestionsTableRow from '../servey-questions-row';
+import ServeyQuestionsTableRow from '../survey-questions-row';
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
@@ -189,13 +189,13 @@ export default function SurveyQuestionListView() {
           heading="Survey List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Survey', href: paths.dashboard.servey.root },
+            { name: 'Survey', href: paths.dashboard.survey.root },
             { name: 'List' },
           ]}
         />
         <Button
           component={RouterLink}
-          href={paths.dashboard.servey.questions_new(survey_id)} // Dynamic path for new question
+          href={paths.dashboard.survey.questions_new(survey_id)} // Dynamic path for new question
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{ position: 'absolute', bottom: '5px', right: '5px' }}

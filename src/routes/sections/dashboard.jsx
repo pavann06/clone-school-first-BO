@@ -300,7 +300,7 @@ export const dashboardRoutes = [
 
 
       {
-        path: 'servey',
+        path: 'survey',
         children: [
           {
             element: (

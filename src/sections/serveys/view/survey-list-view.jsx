@@ -209,7 +209,7 @@ import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 import { paths } from 'src/routes/paths';
-import SurveyTableRow from '../servey-table-row';
+import SurveyTableRow from '../survey-table-row';
 
 
 const TABLE_HEAD = [
@@ -260,15 +260,32 @@ export default function SurveyListView() {
     setPagination({ page: 1, page_size: parseInt(event.target.value, 10) });
   };
 
-  // const handleViewRow = useCallback(
-  //   (id) => {
-  //     router.push(`${paths.dashboard.servey.questions}?survey_id=${id}`);
-  //   },
-  //   [router]
-  // );
+    const handleEditRow = useCallback(
+      (id) => {
+        router.push(paths.dashboard.survey.edit(id));
+      },
+      [router]
+    );
+
+    const handleDeleteRow = async (id) => {
+      const response = await request.delete(`backoffice/survey/${id}`);
+  
+      const { success } = response;
+  
+      // contact creation success
+      if (success) {
+        enqueueSnackbar('Deleted successfully');
+  
+        // refetch the data
+        setPagination((prev) => ({ ...prev, page: 1 }));
+      }
+    };
+  
+
+ 
   const handleViewRow = useCallback(
     (id) => {
-      const targetPath = paths.dashboard.servey.questions(id);
+      const targetPath = paths.dashboard.survey.questions(id);
       console.log('Navigating to:', targetPath); // Debug log
       router.push(targetPath);
     },
@@ -283,13 +300,13 @@ export default function SurveyListView() {
           heading="Survey List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Survey', href: paths.dashboard.servey.root },
+            { name: 'Survey', href: paths.dashboard.survey.root },
             { name: 'List' },
           ]}
         />
         <Button
           component={RouterLink}
-          href={paths.dashboard.servey.new}
+          href={paths.dashboard.survey.new}
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{ position: 'absolute', bottom: '5px', right: '5px' }}
@@ -314,6 +331,8 @@ export default function SurveyListView() {
                           ...row,
                           serial_no: (pagination.page - 1) * pagination.page_size + index + 1,
                         }}
+                        onEditRow={() => handleEditRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
                         onViewRow={() => {
                           console.log('Row ID:', row.id); // Debugging log
                           handleViewRow(row.id);

@@ -58,7 +58,7 @@ export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow })
 
 
       {/* Custom Popover */}
-      <CustomPopover
+      {/* <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
         arrow="right-top"
@@ -82,7 +82,7 @@ export default function SubscribedusersTableRow({ row, onEditRow, onDeleteRow })
           <Iconify icon="material-symbols:delete" />
           Delete
         </MenuItem>
-      </CustomPopover>
+      </CustomPopover> */}
     </>
   );
 }

@@ -136,9 +136,9 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
                 <RHFTextField name="question_text" label="Question Text" />
                 
-                {questionType === 'Text' && (
+                {/* {questionType === 'Text' && (
                 <RHFTextField name="question_text" label="Answer" />
-              )}
+              )} */}
 
                 {['Single Choice', 'Multiple Choice'].includes(questionType) && (
                   <Stack spacing={2}>

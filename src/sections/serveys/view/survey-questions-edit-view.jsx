@@ -11,11 +11,11 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import SurveyNewEditForm from '../servey-new-edit-form';
+import SurveyNewEditForm from '../survey-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function SurveyEditView({ id }) {
+export default function SurveyQuestionEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
@@ -44,6 +44,6 @@ export default function SurveyEditView({ id }) {
   );
 }
 
-SurveyEditView.propTypes = {
+SurveyQuestionEditView.propTypes = {
   id: PropTypes.string,
 };

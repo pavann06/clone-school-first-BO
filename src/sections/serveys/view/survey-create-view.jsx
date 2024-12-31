@@ -5,7 +5,7 @@ import { paths } from 'src/routes/paths';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import SurveyNewEditForm from '../servey-new-edit-form';
+import SurveyNewEditForm from '../survey-new-edit-form';
 
 // ----------------------------------------------------------------------
 
