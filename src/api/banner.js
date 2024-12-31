@@ -26,7 +26,7 @@ export const UpdateBannerr = async (form_data) => {
       }
     });
 
-    const resp = await request.put(`backoffice/broadcast/banners5/${form_data.id}`, form_data);
+    const resp = await request.put(`backoffice/broadcast/banners/${form_data.id}`, form_data);
 
     return resp;
   } catch (error) {

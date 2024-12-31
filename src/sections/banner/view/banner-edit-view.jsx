@@ -20,7 +20,7 @@ export default function BannerEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['banners', id],
-    queryFn: () => request.get(`backoffice/banners/${id}`),
+    queryFn: () => request.get(`backoffice/broadcast/banners/${id}`),
   });
 
   return (
