@@ -162,6 +162,31 @@ export function useNavData() {
             ],
           },
 
+
+          {
+            title: 'news',
+            path: paths.dashboard.news.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.news.root },
+               { title: 'create', path: paths.dashboard.news.new },
+            ],
+          },
+
+          {
+            title: 'categories',
+            path: paths.dashboard.categories.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.categories.root },
+               { title: 'create', path: paths.dashboard.categories.new },
+            ],
+          },
+
+          
+
+          
+
           // {
           //   title: 'appointments',
           //   path: paths.dashboard.appointments.root,

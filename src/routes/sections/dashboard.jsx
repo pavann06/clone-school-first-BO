@@ -67,6 +67,16 @@ const BannerListPage = lazy(() => import('src/pages/dashboard/banner/list'));
 const BannerCreatePage = lazy(() => import('src/pages/dashboard/banner/new'));
 const BannerEditPage = lazy(() => import('src/pages/dashboard/banner/edit'));
 
+const NewsListPage = lazy(() => import('src/pages/dashboard/news/list'));
+const NewsCreatePage = lazy(() => import('src/pages/dashboard/news/new'));
+const NewsEditPage = lazy(() => import('src/pages/dashboard/news/edit'));
+
+const CategoryListPage = lazy(() => import('src/pages/dashboard/categories/list'));
+const CategoryCreatePage = lazy(() => import('src/pages/dashboard/categories/new'));
+const CategoryEditPage = lazy(() => import('src/pages/dashboard/categories/edit'));
+
+
+
 
 
 
@@ -482,6 +492,70 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <BannerEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          
+        ],
+      },
+      
+
+      {
+        path: 'news',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <NewsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <NewsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <NewsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          
+        ],
+      },
+
+
+      {
+        path: 'categories',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CategoryListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CategoryCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CategoryEditPage />
               </PermissionBasedGuard>
             ),
           },

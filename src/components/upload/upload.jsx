@@ -22,10 +22,8 @@ export default function Upload({
   multiple = false,
   error,
   helperText,
-  //
   file,
   onDelete,
-  //
   files,
   thumbnail,
   onUpload,

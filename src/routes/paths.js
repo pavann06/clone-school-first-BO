@@ -127,6 +127,19 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/banner/${id}/edit`,
     },
 
+    news: {
+      root: `${ROOTS.DASHBOARD}/news`,
+      new: `${ROOTS.DASHBOARD}/news/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/news/${id}/edit`,
+    },
+
+    categories: {
+      root: `${ROOTS.DASHBOARD}/categories`,
+      new: `${ROOTS.DASHBOARD}/categories/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/categories/${id}/edit`,
+    },
+
+
 
 
 
