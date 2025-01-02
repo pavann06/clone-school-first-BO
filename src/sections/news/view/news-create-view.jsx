@@ -15,15 +15,15 @@ export default function NewsCreateView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Edutainment"
+        heading="Create a  News"
         links={[
           {
             name: 'Dashboard',
             href: paths.dashboard.root,
           },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.banner.root,
+            name: 'News',
+            href: paths.dashboard.news.root,
           },
           { name: 'New Banner' },
         ]}

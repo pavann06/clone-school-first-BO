@@ -38,6 +38,8 @@ const TABLE_HEAD = [
   { id: 'language', label: 'Language' },
 
   { id: 'tags', label: 'Tags ' },
+  { id: 'categories', label: 'Categories ' },
+
   { id: 'images', label: 'Images' },
 
   { id: 'likes_count', label: 'Likes ' },
@@ -132,7 +134,7 @@ export default function NewsListView() {
             right: '5px',
           }}
         >
-          New Feed
+          New News
         </Button>
       </Box>
       <Card>

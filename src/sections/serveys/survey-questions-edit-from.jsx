@@ -32,7 +32,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
   const SurveySchema = Yup.object().shape({
     question_type: Yup.string().required('Question Type is required'),
-    question_text: Yup.string().required('Question Text is required'),
+    question: Yup.string().required('Question Text is required'),
     options: Yup.array().when('question_type', {
       is: (val) => val === 'Single Choice' || val === 'Multiple Choice',
       then: Yup.array().min(1, 'At least one option is required'),
@@ -41,11 +41,11 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
   const defaultValues = useMemo(
     () => ({
-      question_type: questionType, // Use questionType here
-      question_text: '',
+      question_type: "", // Use questionType here
+      question: '',
       options,
     }),
-    [questionType, options] // Include both questionType and options in the dependency array
+    [ options] // Include both questionType and options in the dependency array
   );
   
 
@@ -63,10 +63,22 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      // Format the payload based on question type
       const payload = { ...data };
-
+  
+      if (data.question_type === 'Yes/No') {
+        // For Yes/No questions, options can be ["Yes", "No"]
+        payload.options = ['Yes', 'No'];
+      } else if (data.question_type === 'Single Choice' || data.question_type === 'Multiple Choice') {
+        // For Single Choice and Multiple Choice, options should be an array of selected options
+        payload.options = data.options.filter(option => option !== ''); // Remove empty options
+      } else {
+        // For Text type, no options are needed
+        payload.options = [];
+      }
+  
       const response = await CreateSurveyQuestion(payload, surveyId); // Create new question
-
+  
       if (response?.success) {
         enqueueSnackbar('Create success!', { variant: 'success' });
         router.push(paths.dashboard.survey.root);
@@ -79,7 +91,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
     }
   });
-
+  
   const handleQuestionTypeChange = (e) => {
     const selectedType = e.target.value;
     setQuestionType(selectedType);
@@ -134,7 +146,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
                   <MenuItem value="Yes/No">Yes/No</MenuItem>
                 </RHFSelect>
 
-                <RHFTextField name="question_text" label="Question Text" />
+                <RHFTextField name="question" label="Question Text" />
                 
                 {/* {questionType === 'Text' && (
                 <RHFTextField name="question_text" label="Answer" />

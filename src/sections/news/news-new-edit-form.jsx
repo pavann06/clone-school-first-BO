@@ -1,18 +1,20 @@
-// import * as Yup from 'yup';
+
+
+// import React, { useMemo, useState, useCallback } from 'react';
 // import PropTypes from 'prop-types';
 // import { useForm, Controller } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
-// import React, { useMemo, useState, useCallback } from 'react';
+// import * as Yup from 'yup';
 // import { useSnackbar } from 'notistack';
 
-// // UI Components (Material-UI)
+// // Material-UI Components
 // import Box from '@mui/material/Box';
 // import Card from '@mui/material/Card';
 // import Stack from '@mui/material/Stack';
-// import { MenuItem, Chip, TextField } from '@mui/material';
-// import Grid from '@mui/material/Unstable_Grid2';
-// import Typography from '@mui/material/Typography';
+// import { MenuItem, Typography } from '@mui/material';
 // import LoadingButton from '@mui/lab/LoadingButton';
+
+// import Grid from '@mui/material/Unstable_Grid2';
 
 // // Internal Utilities
 // import { useRouter } from 'src/routes/hooks';
@@ -22,23 +24,20 @@
 // import { CreateNews, UpdateNews } from 'src/api/news';
 // import CategoriesDropdown from './news-categories';
 
-// // Form Components 
-
 // export default function NewsNewEditForm({ currentNews }) {
 //   const router = useRouter();
-//   const mdUp = useResponsive('up', 'md');
 //   const { enqueueSnackbar } = useSnackbar();
-
 //   const [isUploading, setIsUploading] = useState(false);
 
 //   const NewsSchema = Yup.object().shape({
 //     title: Yup.string().required('Title is required'),
 //     language: Yup.string().required('Language is required'),
-//     categories: Yup.string().required('Categories is required'),
-//     tags: Yup.string().required('Tags is required'),
-//     target_groups: Yup.string().required('Target groups is required'),
-//     images: Yup.mixed(),
-//     videos: Yup.mixed(),
+//     categories: Yup.array().required('Categories is required'),
+//     description : Yup.string().required("Description is required"),
+//     tags: Yup.string(),
+//     target_groups: Yup.string(),
+//     images: Yup.array().nullable(),
+//     videos: Yup.array().nullable(),
 //     youtube_urls: Yup.string(),
 //     remarks: Yup.string(),
 //   });
@@ -47,13 +46,14 @@
 //     () => ({
 //       title: currentNews?.title || '',
 //       language: currentNews?.language || '',
+//       description: currentNews?.description || "" ,
 //       categories: currentNews?.categories || [],
 //       tags: currentNews?.tags || [],
 //       target_groups: currentNews?.target_groups || [],
 //       images: currentNews?.images || [],
 //       videos: currentNews?.videos || [],
-//       youtube_urls: currentNews?.youtube_urls || '', // If it's an array, convert to a string
-//       remarks: currentNews?.remarks || '', // Use an empty string instead of null
+//       youtube_urls: currentNews?.youtube_urls || '',
+//       remarks: currentNews?.remarks || '',
 //     }),
 //     [currentNews]
 //   );
@@ -77,22 +77,36 @@
 //     try {
 //       const payload = {
 //         ...data,
-//         categories: data.categories.split(',').map((item) => item.trim()),
-//         tags: data.tags.split(',').map((item) => item.trim()),
-//         target_groups: data.target_groups.split(',').map((item) => item.trim()),
+//         // Check if categories is an array, then map over it
+//         categories: Array.isArray(data.categories)
+//           ? data.categories.map((item) => item.trim())
+//           : data.categories.split(',').map((item) => item.trim()),
+
+
+  
+//         // Similarly, check if tags and target_groups are arrays
+//         tags: Array.isArray(data.tags)
+//           ? data.tags.map((item) => item.trim())
+//           : data.tags.split(',').map((item) => item.trim()),
+  
+//         target_groups: Array.isArray(data.target_groups)
+//           ? data.target_groups.map((item) => item.trim())
+//           : data.target_groups.split(',').map((item) => item.trim()),
+  
 //         youtube_urls:
 //           Array.isArray(data.youtube_urls) && data.youtube_urls.length > 0
 //             ? data.youtube_urls.split(',').map((url) => url.trim())
 //             : [],
+  
 //         images: data.images || [],
 //         videos: data.videos || [],
 //         remarks: data.remarks || null,
 //       };
-
+  
 //       const response = currentNews
 //         ? await UpdateNews({ ...payload, id: currentNews.id })
 //         : await CreateNews(payload);
-
+  
 //       if (response?.success) {
 //         enqueueSnackbar(currentNews ? 'Update success!' : 'Create success!', {
 //           variant: 'success',
@@ -103,12 +117,11 @@
 //         enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
 //       }
 //     } catch (error) {
-//       console.error('Error:', error);
 //       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
 //     }
 //   });
+  
 
- 
 //   const handleUpload = useCallback(
 //     async (file) => {
 //       try {
@@ -137,7 +150,7 @@
 //         const uploadedUrls = (await Promise.all(uploadPromises)).filter(Boolean);
 
 //         if (uploadedUrls.length > 0) {
-//           setValue('images', [...values.images, ...uploadedUrls]);
+//           setValue('images', [...values.images, ...uploadedUrls]);  // Make sure these are strings or objects
 //           enqueueSnackbar('Files uploaded successfully', { variant: 'success' });
 //         }
 //       } catch (error) {
@@ -147,24 +160,16 @@
 //     [handleUpload, setValue, values.images, enqueueSnackbar]
 //   );
 
-
-
-  
-
 //   const handleVideoUpload = useCallback(
 //     async (file) => {
 //       const uploadedUrl = await handleUpload(file);
 //       if (uploadedUrl) {
-//         setValue('videos', [uploadedUrl]);
+//         setValue('videos', [uploadedUrl]);  // Ensure this is an array of strings or objects
 //         enqueueSnackbar('Video uploaded successfully', { variant: 'success' });
 //       }
 //     },
 //     [handleUpload, setValue, enqueueSnackbar]
 //   );
-
-
-//  ;
-  
 
 //   return (
 //     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -178,8 +183,8 @@
 //                 <MenuItem value="Hindi">Hindi</MenuItem>
 //                 <MenuItem value="English">English</MenuItem>
 //               </RHFSelect>
-//               <RHFTextField name="description" label="Description" multiline rows={4} />
-//               {/* <RHFTextField name="categories" label="Categories" helperText="Comma-separated" /> */}
+
+//               <RHFTextField name="tags" label="Tags" helperText="Comma-separated" />
 
 //               <Controller
 //                 name="categories"
@@ -193,8 +198,6 @@
 //                 )}
 //               />
 
-//               <RHFTextField name="tags" label="Tags" helperText="Comma-separated" />
-//               {/* <RHFTextField name="target_groups" label="Target Groups" helperText="Comma-separated" /> */}
 //               <RHFSelect name="target_groups" label="Target Groups">
 //                 <MenuItem value="All">All</MenuItem>
 //                 <MenuItem value="Youth">Youth</MenuItem>
@@ -202,6 +205,8 @@
 //                 <MenuItem value="Single Parents">Single Parents</MenuItem>
 //                 <MenuItem value="Grand Parents">Grand Parents</MenuItem>
 //               </RHFSelect>
+
+//               <RHFTextField name="description" label = "Description " />
 
 //               <Stack spacing={1.5}>
 //                 <Typography variant="subtitle2">Images</Typography>
@@ -211,6 +216,7 @@
 //                   multiple
 //                   onDrop={handleDrop}
 //                   isLoading={isUploading}
+//                   currentFiles={values.images}  // Ensure this is an array of strings/objects
 //                 />
 //               </Stack>
 
@@ -222,10 +228,11 @@
 //                   onDrop={(files) => handleVideoUpload(files[0])}
 //                   isLoading={isUploading}
 //                   accept="video/*"
+//                   currentFiles={values.videos}  // Ensure this is an array of strings/objects
 //                 />
 //               </Stack>
 
-//               <RHFTextField name="youtube_urls" label="YouTube URLs" helperText="Comma-separated" />
+//               <RHFTextField name="youtube_urls" label="YouTube URLs" />
 //               <RHFTextField name="remarks" label="Remarks" multiline rows={3} />
 
 //               <LoadingButton
@@ -247,6 +254,7 @@
 // NewsNewEditForm.propTypes = {
 //   currentNews: PropTypes.object,
 // };
+
 
 import React, { useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
@@ -281,7 +289,7 @@ export default function NewsNewEditForm({ currentNews }) {
     title: Yup.string().required('Title is required'),
     language: Yup.string().required('Language is required'),
     categories: Yup.array().required('Categories is required'),
-    description : Yup.string().required("Description is required"),
+    description: Yup.string().required("Description is required"),
     tags: Yup.string(),
     target_groups: Yup.string(),
     images: Yup.array().nullable(),
@@ -290,21 +298,38 @@ export default function NewsNewEditForm({ currentNews }) {
     remarks: Yup.string(),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      title: currentNews?.title || '',
-      language: currentNews?.language || '',
-      description: currentNews?.description || "" ,
-      categories: currentNews?.categories || [],
-      tags: currentNews?.tags || '',
-      target_groups: currentNews?.target_groups || '',
-      images: currentNews?.images || [],
-      videos: currentNews?.videos || [],
-      youtube_urls: currentNews?.youtube_urls || '',
-      remarks: currentNews?.remarks || '',
-    }),
-    [currentNews]
-  );
+  // const defaultValues = useMemo(
+  //   () => ({
+  //     title: currentNews?.title || '',
+  //     language: currentNews?.language || '',
+  //     description: currentNews?.description || "",
+  //     categories: currentNews?.categories || [],
+  //     tags: currentNews?.tags || [],
+  //     target_groups: currentNews?.target_groups || [],
+  //     images: currentNews?.images || [],
+  //     videos: currentNews?.videos || [],
+  //     youtube_urls: currentNews?.youtube_urls || '',
+  //     remarks: currentNews?.remarks || '',
+  //   }),
+  //   [currentNews]
+  // );
+  const defaultValues = useMemo(() => ({
+    title: currentNews?.title || '',
+    language: currentNews?.language || '',
+    description: currentNews?.description || '',
+    categories: currentNews?.categories || [],
+    tags: Array.isArray(currentNews?.tags) ? currentNews.tags.join(', ') : currentNews?.tags || '',
+    target_groups: Array.isArray(currentNews?.target_groups)
+      ? currentNews.target_groups.join(', ')
+      : currentNews?.target_groups || '',
+    images: currentNews?.images || [],
+    videos: currentNews?.videos || [],
+    youtube_urls: Array.isArray(currentNews?.youtube_urls)
+      ? currentNews.youtube_urls.join(', ')
+      : currentNews?.youtube_urls || '',
+    remarks: currentNews?.remarks || '',
+  }), [currentNews]);
+  
 
   const methods = useForm({
     resolver: yupResolver(NewsSchema),
@@ -329,30 +354,29 @@ export default function NewsNewEditForm({ currentNews }) {
         categories: Array.isArray(data.categories)
           ? data.categories.map((item) => item.trim())
           : data.categories.split(',').map((item) => item.trim()),
-  
-        // Similarly, check if tags and target_groups are arrays
+
         tags: Array.isArray(data.tags)
           ? data.tags.map((item) => item.trim())
           : data.tags.split(',').map((item) => item.trim()),
-  
+
         target_groups: Array.isArray(data.target_groups)
           ? data.target_groups.map((item) => item.trim())
           : data.target_groups.split(',').map((item) => item.trim()),
-  
+
         youtube_urls:
           Array.isArray(data.youtube_urls) && data.youtube_urls.length > 0
             ? data.youtube_urls.split(',').map((url) => url.trim())
             : [],
-  
+
         images: data.images || [],
         videos: data.videos || [],
         remarks: data.remarks || null,
       };
-  
+
       const response = currentNews
         ? await UpdateNews({ ...payload, id: currentNews.id })
         : await CreateNews(payload);
-  
+
       if (response?.success) {
         enqueueSnackbar(currentNews ? 'Update success!' : 'Create success!', {
           variant: 'success',
@@ -366,7 +390,6 @@ export default function NewsNewEditForm({ currentNews }) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
     }
   });
-  
 
   const handleUpload = useCallback(
     async (file) => {
@@ -396,7 +419,7 @@ export default function NewsNewEditForm({ currentNews }) {
         const uploadedUrls = (await Promise.all(uploadPromises)).filter(Boolean);
 
         if (uploadedUrls.length > 0) {
-          setValue('images', [...values.images, ...uploadedUrls]);  // Make sure these are strings or objects
+          setValue('images', [...values.images, ...uploadedUrls]);
           enqueueSnackbar('Files uploaded successfully', { variant: 'success' });
         }
       } catch (error) {
@@ -410,7 +433,7 @@ export default function NewsNewEditForm({ currentNews }) {
     async (file) => {
       const uploadedUrl = await handleUpload(file);
       if (uploadedUrl) {
-        setValue('videos', [uploadedUrl]);  // Ensure this is an array of strings or objects
+        setValue('videos', [uploadedUrl]);
         enqueueSnackbar('Video uploaded successfully', { variant: 'success' });
       }
     },
@@ -430,7 +453,7 @@ export default function NewsNewEditForm({ currentNews }) {
                 <MenuItem value="English">English</MenuItem>
               </RHFSelect>
 
-              <RHFTextField name="tags" label="Tags" helperText="Comma-separated" />
+              <RHFTextField name="tags" label="Tags" />
 
               <Controller
                 name="categories"
@@ -452,7 +475,7 @@ export default function NewsNewEditForm({ currentNews }) {
                 <MenuItem value="Grand Parents">Grand Parents</MenuItem>
               </RHFSelect>
 
-              <RHFTextField name="description" label = "Description " />
+              <RHFTextField name="description" label="Description " />
 
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Images</Typography>
@@ -462,7 +485,7 @@ export default function NewsNewEditForm({ currentNews }) {
                   multiple
                   onDrop={handleDrop}
                   isLoading={isUploading}
-                  currentFiles={values.images}  // Ensure this is an array of strings/objects
+                  currentFiles={values.images}
                 />
               </Stack>
 
@@ -474,11 +497,11 @@ export default function NewsNewEditForm({ currentNews }) {
                   onDrop={(files) => handleVideoUpload(files[0])}
                   isLoading={isUploading}
                   accept="video/*"
-                  currentFiles={values.videos}  // Ensure this is an array of strings/objects
+                  currentFiles={values.videos}
                 />
               </Stack>
 
-              <RHFTextField name="youtube_urls" label="YouTube URLs" helperText="Comma-separated" />
+              <RHFTextField name="youtube_urls" label="YouTube URLs" />
               <RHFTextField name="remarks" label="Remarks" multiline rows={3} />
 
               <LoadingButton
