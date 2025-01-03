@@ -1,5 +1,3 @@
-
-
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
@@ -41,13 +39,12 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
   const defaultValues = useMemo(
     () => ({
-      question_type: "", // Use questionType here
+      question_type: '', // Use questionType here
       question: '',
       options,
     }),
-    [ options] // Include both questionType and options in the dependency array
+    [options] // Include both questionType and options in the dependency array
   );
-  
 
   const methods = useForm({
     resolver: yupResolver(SurveySchema),
@@ -65,20 +62,23 @@ export default function SurveyQuestionEditForm({ surveyId }) {
     try {
       // Format the payload based on question type
       const payload = { ...data };
-  
+
       if (data.question_type === 'Yes/No') {
         // For Yes/No questions, options can be ["Yes", "No"]
         payload.options = ['Yes', 'No'];
-      } else if (data.question_type === 'Single Choice' || data.question_type === 'Multiple Choice') {
+      } else if (
+        data.question_type === 'Single Choice' ||
+        data.question_type === 'Multiple Choice'
+      ) {
         // For Single Choice and Multiple Choice, options should be an array of selected options
-        payload.options = data.options.filter(option => option !== ''); // Remove empty options
+        payload.options = data.options.filter((option) => option !== ''); // Remove empty options
       } else {
         // For Text type, no options are needed
         payload.options = [];
       }
-  
+
       const response = await CreateSurveyQuestion(payload, surveyId); // Create new question
-  
+
       if (response?.success) {
         enqueueSnackbar('Create success!', { variant: 'success' });
         router.push(paths.dashboard.survey.root);
@@ -91,7 +91,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
     }
   });
-  
+
   const handleQuestionTypeChange = (e) => {
     const selectedType = e.target.value;
     setQuestionType(selectedType);
@@ -147,10 +147,6 @@ export default function SurveyQuestionEditForm({ surveyId }) {
                 </RHFSelect>
 
                 <RHFTextField name="question" label="Question Text" />
-                
-                {/* {questionType === 'Text' && (
-                <RHFTextField name="question_text" label="Answer" />
-              )} */}
 
                 {['Single Choice', 'Multiple Choice'].includes(questionType) && (
                   <Stack spacing={2}>
@@ -182,12 +178,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
                 )}
               </Box>
 
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                size="large"
-                loading={isSubmitting}
-              >
+              <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
                 Create Question
               </LoadingButton>
             </Stack>

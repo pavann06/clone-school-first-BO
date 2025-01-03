@@ -25,9 +25,9 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
     categories,
     tags,
     likes_count,
-    
+
     heading,
-   
+
     images,
     status,
   } = row;

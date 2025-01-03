@@ -85,38 +85,6 @@ export default function SurveyNewEditForm({ currentSurvey }) {
 
   const values = watch(); // Correct usage here
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       image: data.image || null,
-  //     };
-  //     if (!currentSurvey) {
-  //       payload.status = 'Closed';
-  //     }
-
-  //     const response = currentSurvey
-  //       ? await UpdateSurvey({ ...payload, id: currentSurvey.id })
-  //       : await CreateSurvey(payload);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentSurvey ? 'Update success!' : 'Create success!', {
-  //         variant: 'success',
-  //       });
-  //       router.push(paths.dashboard.servey.root);
-  //       reset();
-  //       return response;
-  //     }
-
-  //     const errorMessage = response?.error || 'Operation failed';
-  //     enqueueSnackbar(errorMessage, { variant: 'error' });
-  //     return response;
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //     return null;
-  //   }
-  // });
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
@@ -126,26 +94,26 @@ export default function SurveyNewEditForm({ currentSurvey }) {
       if (!currentSurvey) {
         payload.status = 'Closed';
       }
-  
+
       const response = currentSurvey
         ? await UpdateSurvey({ ...payload, id: currentSurvey.id })
         : await CreateSurvey(payload);
-  
+
       if (response?.success) {
         enqueueSnackbar(currentSurvey ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-  
+
         // Navigate to the "add questions" form with the survey ID
         const surveyId = response.data?.id || currentSurvey.id;
         if (surveyId) {
           router.push(paths.dashboard.survey(surveyId).questions_new);
         }
-  
+
         reset();
         return response;
       }
-  
+
       const errorMessage = response?.error || 'Operation failed';
       enqueueSnackbar(errorMessage, { variant: 'error' });
       return response;
@@ -155,7 +123,6 @@ export default function SurveyNewEditForm({ currentSurvey }) {
       return null;
     }
   });
-  
 
   const handleUpload = useCallback(
     async (file) => {
@@ -264,23 +231,22 @@ export default function SurveyNewEditForm({ currentSurvey }) {
 
                 <RHFTextField name="description" label="Description" multiline rows={4} />
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-  <Stack spacing={1.5}>
-    <Typography variant="subtitle2">Target Group</Typography>
-    <RHFMultiSelect
-      name="target_group"
-      label="Target Group"
-      options={[
-        { label: 'All', value: 'All' },
-        { label: 'Youth', value: 'Youth' },
-        { label: 'Parents', value: 'Parents' },
-        { label: 'Single Parents', value: 'Single Parents' },
-        { label: 'Grand Parents', value: 'Grand Parents' },
-      ]}
-      multiple
-    />
-  </Stack>
-</Box>
-                
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2">Target Group</Typography>
+                    <RHFMultiSelect
+                      name="target_group"
+                      label="Target Group"
+                      options={[
+                        { label: 'All', value: 'All' },
+                        { label: 'Youth', value: 'Youth' },
+                        { label: 'Parents', value: 'Parents' },
+                        { label: 'Single Parents', value: 'Single Parents' },
+                        { label: 'Grand Parents', value: 'Grand Parents' },
+                      ]}
+                      multiple
+                    />
+                  </Stack>
+                </Box>
 
                 {/* Image Field */}
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>

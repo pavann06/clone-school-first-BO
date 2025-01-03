@@ -1,20 +1,9 @@
-
 import PropTypes from 'prop-types';
 
-import {  TableRow,  TableCell } from '@mui/material';
-
+import { TableRow, TableCell } from '@mui/material';
 
 export default function SubscribedusersTableRow({ row }) {
-  const {
-    serial_no,
-    mobile,
-    created_at,
- 
-  } = row;
-
-  
-
-
+  const { serial_no, mobile, created_at } = row;
 
   return (
     <>
@@ -22,27 +11,28 @@ export default function SubscribedusersTableRow({ row }) {
         {/* ID */}
         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>
-       {mobile}
-        </TableCell>
+        <TableCell>{mobile}</TableCell>
 
         {/* Description */}
         <TableCell>
- <div> {new Date(created_at).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })} </div>
- <div> {new Date(created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
-</TableCell>
-
-
-
-    
-
-     
-
-      
+          <div>
+            {' '}
+            {new Date(created_at).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })}{' '}
+          </div>
+          <div>
+            {' '}
+            {new Date(created_at).toLocaleTimeString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+            })}
+          </div>
+        </TableCell>
       </TableRow>
-
-    
-
 
       {/* Custom Popover */}
       {/* <CustomPopover
@@ -75,6 +65,5 @@ export default function SubscribedusersTableRow({ row }) {
 }
 
 SubscribedusersTableRow.propTypes = {
-
   row: PropTypes.object,
 };
