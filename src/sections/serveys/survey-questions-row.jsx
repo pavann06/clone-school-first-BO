@@ -11,7 +11,7 @@ export default function ServeyQuestionsTableRow({ row, onEditRow, onDeleteRow })
     serial_no,
     question,
     options,
-    answer,
+    question_type,
 
     description,
   } = row;
@@ -50,7 +50,7 @@ export default function ServeyQuestionsTableRow({ row, onEditRow, onDeleteRow })
           )}
         </TableCell>
 
-        <TableCell>{answer}</TableCell>
+        <TableCell>{question_type}</TableCell>
 
         {/* Interactions */}
         <TableCell>{description}</TableCell>

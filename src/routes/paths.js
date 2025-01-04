@@ -117,7 +117,7 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/survey/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/survey/${id}/edit`,
       questions: (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions`,
-      questions_new: (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions_new`,
+      questions_new: (surveyId) => `${ROOTS.DASHBOARD}/survey/${surveyId}/questions_new`,
       questions_edit : (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions_edit`,
     },
 

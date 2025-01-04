@@ -5,7 +5,7 @@ import { SurveyQuestionsCreateView } from 'src/sections/serveys/view';
 // ----------------------------------------------------------------------
 
 export default function SurveyQuestionsCreatePage() {
-  const { surveyId } = useParams();  // Extract the surveyId from URL params
+  const { surveyId } = useParams();  
 
   return (
     <>
@@ -13,8 +13,10 @@ export default function SurveyQuestionsCreatePage() {
         <title> New Survey </title>
       </Helmet>
 
-      {/* Pass surveyId to SurveyQuestionsCreateView */}
-      <SurveyQuestionsCreateView surveyId={surveyId} />
+    
+      <SurveyQuestionsCreateView 
+      surveyId={surveyId}
+       />
     </>
   );
 }

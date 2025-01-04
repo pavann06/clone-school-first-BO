@@ -344,7 +344,7 @@ export const dashboardRoutes = [
             ),
           },
           {
-            path: ':id/questions_new',
+            path: ':surveyId/questions_new',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <SurveyQuestionsCreatePage />

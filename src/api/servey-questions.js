@@ -39,9 +39,9 @@ import request from 'src/api/request';
 
 
 // Create a Survey Question
-export const CreateSurveyQuestion = async (form_data, survey_id) => {
+export const CreateSurveyQuestion = async (form_data, surveyId) => {
   try {
-    const response = await request.post(`/backoffice/survey/${survey_id}/question`, form_data);
+    const response = await request.post(`/backoffice/survey/${surveyId}/question`, form_data);
     return response?.data;
   } catch (error) {
     console.error(error);
