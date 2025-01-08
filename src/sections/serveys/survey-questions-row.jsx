@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-
-
->>>>>>> dev-test
 import PropTypes from 'prop-types';
 
 import ListItemText from '@mui/material/ListItemText';
