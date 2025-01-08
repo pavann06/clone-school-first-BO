@@ -42,7 +42,7 @@ export const login = async (mobile, password) => {
       password,
     };
 
-    const response = await fetch(`https://dev-api.familifirst.com/userservice/login`, {
+    const response = await fetch(`https://dev-api.familifirst.com/user/authentication/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

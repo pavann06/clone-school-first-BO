@@ -34,9 +34,7 @@ const TABLE_HEAD = [
   { id: 'question', label: 'Question' },
   { id: 'options', label: 'Options' },
   { id: 'answer', label: 'Answer ' },
- 
   { id: 'description', label: 'Description ' },
- 
   { id: 'actions ', label: 'Actions' },
 ];
 
