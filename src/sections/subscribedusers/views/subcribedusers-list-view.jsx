@@ -66,23 +66,7 @@ export default function SubscribedusersListView() {
     setPagination({ page: 1, page_size: newPageSize });
   };
 
-  // const handleEditRow = useCallback(
-  //   (id) => {
-  //     router.push(paths.dashboard.subscribedusers.edit(id));
-  //   },
-  //   [router]
-  // );
 
-  // const handleDeleteRow = async (id) => {
-  //   const response = await request.delete(`backoffice/edutain/feeds/${id}`);
-
-  //   const { success } = response;
-
-  //   if (success) {
-  //     enqueueSnackbar('Deleted successfully');
-  //     setPagination((prev) => ({ ...prev, page: 1 }));
-  //   }
-  // };
 
   return (
     <Container maxWidth="lg"
