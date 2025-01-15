@@ -167,7 +167,6 @@
 //   );
 // }
 
-
 import { Stack, Typography, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -182,13 +181,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
-const StyledLogoContainer = styled(Stack)({
+const StyledLogoContainer = styled(Stack)(({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
   gap: 8,
-});
+}));
 
 const StyledDescriptionBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[400]}`,
@@ -202,51 +201,59 @@ const StyledDescriptionBox = styled(Box)(({ theme }) => ({
 export default function HomeHero() {
   return (
     <StyledContainer>
-     
-
       {/* Welcome Text */}
       <Box
-  sx={{
-    width: '100%', // Full width or adjust to your requirement
-    maxWidth: 900, // Set a consistent maximum width
-    mx: 'auto', // Center the content horizontally
-    textAlign: 'center', // Optional: Center-align the text
-  }}
->
-  <Typography
-    variant="h2"
-    component="h2"
-    sx={{
-      mt: 3,
-      fontWeight: 'Lexend, SemiBold',
-      color: "#076839",
-      fontSize : '92px',
-    }}
-  >
-    WELCOME TO FAMILI FIRST
-  </Typography>
+        sx={{
+          width: '100%', // Full width or adjust to your requirement
+          maxWidth: 900, // Set a consistent maximum width
+          mx: 'auto', // Center the content horizontally
+          textAlign: 'center', // Optional: Center-align the text
+        }}
+      >
+        <Typography
+          variant="h2"
+          component="h2"
+          sx={{
+            mt: 3,
+            fontWeight: 'semi-bold',
+            color: "#076839",
+            fontSize: {
+              xs: '36px', // Smaller font size for mobile
+              sm: '48px', // Medium font size for tablets
+              md: '62px', // Larger font size for desktop
+            },
+          }}
+        >
+          WELCOME TO FAMILI FIRST
+        </Typography>
 
-  {/* Description */}
-  <Typography
-    variant="body1"
-    sx={{
-      mt: 3,
-      fontWeight: 'Lexend, Regular',
-      color : "#076839",
-      fontSize:"22px"
-    }}
-  >
-    This admin panel is proprietary property of Famili First and is
-    strictly for the use of authorized internal staff and administrators
-    only. If you have accessed this link without authorization, please
-    email us at familifirst.team@gmail.com immediately to explain how you
-    obtained it. Unauthorized access is prohibited, and you are explicitly
-    barred from attempting to proceed further. Any unauthorized attempts
-    will be logged and may result in legal action.
-  </Typography>
-</Box>
-
-    
+        {/* Description */}
+        <Typography
+          variant="body1"
+          sx={{
+            mt: 3,
+            fontWeight: 'regular',
+            color: "#076839",
+            fontSize: {
+              xs: '14px', // Smaller font size for mobile
+              sm: '16px', // Medium font size for tablets
+              md: '22px', // Larger font size for desktop
+            },
+            px: {
+              xs: 2, // Padding for mobile
+              sm: 3, // Padding for tablets
+            },
+          }}
+        >
+          This admin panel is proprietary property of Famili First and is
+          strictly for the use of authorized internal staff and administrators
+          only. If you have accessed this link without authorization, please
+          email us at familifirst.team@gmail.com immediately to explain how you
+          obtained it. Unauthorized access is prohibited, and you are explicitly
+          barred from attempting to proceed further. Any unauthorized attempts
+          will be logged and may result in legal action.
+        </Typography>
+      </Box>
     </StyledContainer>
   );
 }

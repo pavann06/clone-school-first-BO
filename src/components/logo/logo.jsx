@@ -20,15 +20,15 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
 
   const logo = (
     <Box
-      ref={ref}
-      component="div"
-      sx={{
-        width: 190,
-        height: 40,
-        display: 'inline-flex',
-        ...sx,
-      }}
-      {...other}
+    ref={ref}
+    component="div"
+    sx={{
+      width: 140,
+      height: 40,
+      display: 'inline-flex',
+      ...sx,
+    }}
+    {...other}
     >
       <svg xmlns="http://www.w3.org/2000/assets" width="10" height="10" viewBox="0 0 512 512">
         <defs>
@@ -277,99 +277,3 @@ export default Logo;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import PropTypes from 'prop-types';
-// import { forwardRef } from 'react';
-
-// import Box from '@mui/material/Box';
-// import Link from '@mui/material/Link';
-// import { useTheme } from '@mui/material/styles';
-
-// import { RouterLink } from 'src/routes/components';
-
-// // ----------------------------------------------------------------------
-
-// const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
-//   const theme = useTheme();
-
-//   const PRIMARY_LIGHT = theme.palette.primary.light;
-//   const PRIMARY_MAIN = theme.palette.primary.main;
-//   const PRIMARY_DARK = theme.palette.primary.dark;
-
-//   // OR using local (public folder)
-//   const logo = (
-//     <Box
-//     ref={ref}
-//     component="div"
-//     sx={{
-//       display: 'flex',
-//       alignItems: 'center',
-//       gap: 1,
-//       ...sx,
-//     }}
-//     {...other}
-//   >
-//     <img
-//       src="/src/assets/logo.png"
-//       alt="Logo"
-//       style={{
-//         width: 60,
-//         height: 60,
-//         objectFit: 'contain',
-//       }}
-//     />
-//     <img
-//       src="/src/assets/logo-name.svg"
-//       alt="Logo Name"
-//       style={{
-//         width: 'auto',
-//         height: 60,
-//         objectFit: 'contain',
-//       }}
-//     />
-//   </Box>
-
-//   );
-
-//   if (disabledLink) {
-//     return logo;
-//   }
-
-//   return (
-//     <Link component={RouterLink} to="/dashboard" sx={{ display: 'contents' }}>
-//       {logo}
-//     </Link>
-//   );
-// });
-
-// Logo.propTypes = {
-//   disabledLink: PropTypes.bool,
-//   sx: PropTypes.object,
-// };
-
-// export default Logo;
