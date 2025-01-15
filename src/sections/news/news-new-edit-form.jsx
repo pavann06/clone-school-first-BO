@@ -87,9 +87,10 @@ export default function NewsNewEditForm({ currentNews }) {
           ? data.categories.map((item) => item.trim())
           : data.categories.split(',').map((item) => item.trim()),
 
-        tags: Array.isArray(data.tags)
+          tags: Array.isArray(data.tags)
           ? data.tags.map((item) => item.trim())
           : data.tags.split(',').map((item) => item.trim()),
+        
 
         target_groups: Array.isArray(data.target_groups)
           ? data.target_groups.map((item) => item.trim())
