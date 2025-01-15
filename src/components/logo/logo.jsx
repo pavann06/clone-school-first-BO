@@ -23,14 +23,14 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
     ref={ref}
     component="div"
     sx={{
-      width: 140,
+      width: 240,
       height: 40,
       display: 'inline-flex',
       ...sx,
     }}
     {...other}
     >
-      <svg xmlns="http://www.w3.org/2000/assets" width="10" height="10" viewBox="0 0 512 512">
+      {/* <svg xmlns="http://www.w3.org/2000/assets" width="100" height="100" viewBox="0 0 512 512">
         <defs>
           <linearGradient id="BG1" x1="100%" x2="50%" y1="9.946%" y2="50%">
             <stop offset="0%" stopColor={PRIMARY_DARK} />
@@ -190,9 +190,9 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
             transform="translate(28,86)"
           />
         </g>
-      </svg>
+      </svg> */}
 
-      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="10" viewBox="0 0 364 110">
+      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="50" viewBox="0 0 364 110">
         <g id="Group_131411" data-name="Group 131411" transform="translate(-301 -122)">
           <text
             id="Famili_First"
