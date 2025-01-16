@@ -54,7 +54,8 @@ export default function CalenderListView() {
     queryKey: ['calendar', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `https://dev-api.familifirst.com/backoffice/broadcast/calendar?page=${pagination.page}&page_size=${pagination.page_size}`
+        // `backoffice/broadcast/calendar?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/broadcast/calendar?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
