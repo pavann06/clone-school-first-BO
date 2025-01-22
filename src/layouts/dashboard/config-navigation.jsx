@@ -183,6 +183,28 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'listings',
+            path: paths.dashboard.listings.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.listings.root },
+               { title: 'create', path: paths.dashboard.listings.new },
+            ],
+          },
+
+          {
+            title: 'business_categories',
+            path: paths.dashboard.business_categories.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.business_categories.root },
+               { title: 'create', path: paths.dashboard.business_categories.new },
+            ],
+          },
+
+          
+
           
 
           

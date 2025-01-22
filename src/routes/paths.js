@@ -139,6 +139,20 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/categories/${id}/edit`,
     },
 
+    listings: {
+      root: `${ROOTS.DASHBOARD}/listings`,
+      new: `${ROOTS.DASHBOARD}/listings/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/listings/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/listings/${id}/view`,
+    },
+
+    business_categories: {
+      root: `${ROOTS.DASHBOARD}/business_categories`,
+      new: `${ROOTS.DASHBOARD}/business_categories/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/business_categories/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/business_categories/${id}/view`,
+    },
+
 
 
 

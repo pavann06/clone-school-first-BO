@@ -75,6 +75,14 @@ const CategoryListPage = lazy(() => import('src/pages/dashboard/categories/list'
 const CategoryCreatePage = lazy(() => import('src/pages/dashboard/categories/new'));
 const CategoryEditPage = lazy(() => import('src/pages/dashboard/categories/edit'));
 
+const ListingsListPage = lazy(() => import('src/pages/dashboard/listings/list'));
+const ListingsCreatePage = lazy(() => import('src/pages/dashboard/listings/new'));
+const ListingsEditPage = lazy(() => import('src/pages/dashboard/listings/edit'));
+
+const BusinessCategoriesListPage = lazy(() => import('src/pages/dashboard/business-categories/list'));
+const BusinessCategoriesCreatePage = lazy(() => import('src/pages/dashboard/business-categories/new'));
+const BusinessCategoriesEditPage = lazy(() => import('src/pages/dashboard/business-categories/edit'));
+
 
 
 
@@ -468,6 +476,8 @@ export const dashboardRoutes = [
         ],
       },
 
+
+
       {
         path: 'banner',
         children: [
@@ -611,6 +621,77 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+      {
+        path: 'listings',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ListingsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ListingsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ListingsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          // {
+          //   path: ':id/view',
+          //   element: (
+          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+          //       <AppointmentsViewPage />
+          //     </PermissionBasedGuard>
+          //   ),
+          // },
+        ],
+      },
+
+      {
+        path: 'business_categories',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <BusinessCategoriesListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <BusinessCategoriesCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <BusinessCategoriesEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+
       { path: 'welcome', element: <WelcomePage /> },
       { path: 'blank', element: <BlankPage /> },
     ],
