@@ -37,7 +37,7 @@ const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'business_name', label: 'Business Name' },
   { id: 'description', label: 'Description' },
-  { id: 'approved_date', label: 'Approved ' },
+  { id: 'tags', label: 'Tags ' },
   { id: 'thumbnail', label: 'Image' },
   { id: 'services', label: 'Services ' },
   // { id: 'language', label: 'Language' },
@@ -93,7 +93,7 @@ export default function ListingsListView() {
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+    const response = await request.delete(`backoffice/business/categories/${id}`);
 
     const { success } = response;
 

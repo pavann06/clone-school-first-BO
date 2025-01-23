@@ -1,15 +1,20 @@
+
+
+
+
+
 import React, { useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-
+import dayjs from 'dayjs';
 // Material-UI Components
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import { MenuItem, Typography, FormControl, InputLabel } from '@mui/material';
+import { Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
@@ -20,9 +25,10 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 import request from 'src/api/request';
-import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 import { CreateListing, UpdateListing } from 'src/api/listings';
 import BusinessCategoriesDropdown from './business-categories-dropdown';
+import BusinessSubcategoriesDropdown from './business-subcategories-dropdown';
 
 export default function ListingsNewEditForm({ currentListing }) {
   const router = useRouter();
@@ -35,9 +41,8 @@ export default function ListingsNewEditForm({ currentListing }) {
     services: Yup.array()
       .of(Yup.string().required('Service is required'))
       .required('Services are required'),
-    categories: Yup.array()
-      .min(1, 'At least one category is required')
-      .required('Categories are required'), // Validation for categories
+    category: Yup.string().required('Category is required'), // Validation for categories
+    sub_categories: Yup.array().of(Yup.string()).required('Subcategories are required'),
     thumbnail: Yup.mixed().required('Thumbnail is required'),
     images: Yup.array().nullable(),
     address: Yup.string().required('Address is required'),
@@ -47,6 +52,7 @@ export default function ListingsNewEditForm({ currentListing }) {
     whatsapp: Yup.string().required('WhatsApp is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     tags: Yup.array().of(Yup.string()).required('Tags are required'),
+    valid_till: Yup.string('Date is required'),
   });
 
   const defaultValues = useMemo(
@@ -56,7 +62,8 @@ export default function ListingsNewEditForm({ currentListing }) {
       services: currentListing?.services || [],
       thumbnail: currentListing?.thumbnail || null,
       images: currentListing?.images || [],
-      categories: currentListing?.categories || [],
+      category: currentListing?.category || '',
+      sub_categories: currentListing?.sub_categories || [],
       address: currentListing?.address || '',
       longitude: currentListing?.longitude || '',
       latitude: currentListing?.latitude || '',
@@ -64,6 +71,8 @@ export default function ListingsNewEditForm({ currentListing }) {
       whatsapp: currentListing?.whatsapp || '',
       email: currentListing?.email || '',
       tags: currentListing?.tags || [],
+      valid_till: currentListing?.valid_till ? dayjs(currentListing.valid_till) : null,
+  
     }),
     [currentListing]
   );
@@ -93,7 +102,6 @@ export default function ListingsNewEditForm({ currentListing }) {
           : data.tags.split(',').map((item) => item.trim()),
         images: data.images || [],
         thumbnail: data.thumbnail || null,
-        categories: data.categories || [],
       };
 
       const response = currentListing
@@ -104,7 +112,7 @@ export default function ListingsNewEditForm({ currentListing }) {
         enqueueSnackbar(currentListing ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-        router.push('/dashboard/news');
+        router.push('/dashboard/listings');
         reset();
       } else {
         enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
@@ -186,12 +194,31 @@ export default function ListingsNewEditForm({ currentListing }) {
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Categories</Typography>
                 <Controller
-                  name="categories" // Field name for categories (multiple selections)
-                  control={methods.control} // Link with form control
+                  name="category"
+                  control={methods.control}
                   render={({ field }) => (
                     <BusinessCategoriesDropdown
-                      value={field.value || []} // Default to empty array if no categories are selected
-                      onChange={(value) => field.onChange(value)} // Update form state with selected categories
+                      value={field.value || ''}
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setValue('sub_categories', []); // Clear subcategories when category changes
+                      }}
+                    />
+                  )}
+                />
+              </Stack>
+
+              <Stack spacing={1.5}>
+                <Typography variant="subtitle2">Subcategories</Typography>
+                <Controller
+                  name="sub_categories"
+                  control={methods.control}
+                  render={({ field }) => (
+                    <BusinessSubcategoriesDropdown
+                      categoryId={values.category}
+                      categoryName={values.category}
+                      value={field.value || []}
+                      onChange={(value) => field.onChange(value)}
                     />
                   )}
                 />
@@ -228,33 +255,23 @@ export default function ListingsNewEditForm({ currentListing }) {
               <RHFTextField name="email" label="Email" />
               <RHFTextField name="maps_link" label="Maps link" />
 
+              <Stack spacing={1.5}>
+                <Typography variant="subtitle2">Valid Till</Typography>
+                <Controller
+                  name="valid_till"
+                  control={methods.control}
+                  render={({ field }) => (
+                    <DatePicker
+  {...field}
+  label="Valid Till"
+  inputFormat="yyyy-MM-dd"
+  onChange={(date) => field.onChange(date ? date.format('YYYY-MM-DD') : '')}
+  renderInput={(params) => <RHFTextField {...params} />}
+/>
 
-
-       
-
-
-
-
-<Stack spacing={1.5}>
-  <Typography variant="subtitle2">Valid Till</Typography>
-  <Controller
-    name="valid_till"
-    control={methods.control}
-    render={({ field }) => (
-      <DatePicker
-        {...field}
-        label="Valid Till"
-        inputFormat="yyyy-MM-dd"  // Ensure the date format is yyyy-mm-dd
-        onChange={(date) => field.onChange(date ? date.format('YYYY-MM-DD') : '')}  // Format the date before sending it
-        renderInput={(params) => <RHFTextField {...params} />}
-      />
-    )}
-  />
-</Stack>
-
-
-
-
+                  )}
+                />
+              </Stack>
 
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Tags</Typography>

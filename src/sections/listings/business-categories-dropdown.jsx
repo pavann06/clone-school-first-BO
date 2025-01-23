@@ -1,5 +1,6 @@
 
 
+
 import React, { useEffect, useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
@@ -33,7 +34,6 @@ const BusinessCategoriesDropdown = forwardRef(({ value, onChange }, ref) => {
     fetchCategories();
   }, [enqueueSnackbar]);
 
- 
   let menuContent;
 
   if (loading) {
@@ -50,22 +50,22 @@ const BusinessCategoriesDropdown = forwardRef(({ value, onChange }, ref) => {
 
   return (
     <Select
-      ref={ref} 
-      value={value} 
-      onChange={(event) => onChange(event.target.value)} 
+      ref={ref}
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
       fullWidth
-      multiple 
     >
       {menuContent}
     </Select>
   );
 });
 
-
 BusinessCategoriesDropdown.propTypes = {
-  value: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired, 
-}
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default BusinessCategoriesDropdown;
+
+
 
