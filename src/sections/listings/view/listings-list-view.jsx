@@ -1,6 +1,6 @@
 
 
-// import React, { useState, useEffect } from 'react';
+
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
 
@@ -14,7 +14,10 @@ import {
   TableBody,
   TableContainer,
   TablePagination,
+  FormControl, 
+  InputLabel ,
 } from '@mui/material';
+
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -40,8 +43,7 @@ const TABLE_HEAD = [
   { id: 'tags', label: 'Tags ' },
   { id: 'thumbnail', label: 'Image' },
   { id: 'services', label: 'Services ' },
-  // { id: 'language', label: 'Language' },
-  {id: 'status' , label : 'Status'},
+  { id: 'status', label: 'Status' },
   { id: 'actions ', label: 'Actions' },
 ];
 
@@ -53,16 +55,22 @@ export default function ListingsListView() {
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+
   const { data, isLoading } = useQuery({
-    queryKey: ['edutainment', pagination.page, pagination.page_size],
-    queryFn: () =>
-      request.get(
-        `backoffice/business/listings?page=${pagination.page}&page_size=${pagination.page_size}`
-      ),
+    queryKey: ['listings', pagination.page, pagination.page_size, selectedCategory, selectedSubcategory],
+    queryFn: () => {
+      const categoryFilter = selectedCategory ? `&category=${selectedCategory}` : '';
+      const subcategoryFilter = selectedSubcategory ? `&subcategory=${selectedSubcategory}` : '';
+
+      return request.get(
+        `backoffice/business/listings?page=${pagination.page}&page_size=${pagination.page_size}${categoryFilter}${subcategoryFilter}`
+      );
+    },
     keepPreviousData: true,
   });
 
-  // Set data when fetched successfully
   useEffect(() => {
     if (data) {
       if (data?.data?.length > 0) {
@@ -79,7 +87,6 @@ export default function ListingsListView() {
     setPagination((prev) => ({ ...prev, page: newPage + 1 }));
   };
 
-  // Handle change in number of rows per page
   const handleRowsPerPageChange = (event) => {
     const newPageSize = parseInt(event.target.value, 10);
     setPagination({ page: 1, page_size: newPageSize });
@@ -97,13 +104,21 @@ export default function ListingsListView() {
 
     const { success } = response;
 
-    // contact creation success
     if (success) {
       enqueueSnackbar('Deleted successfully');
-
-      // refetch the data
       setPagination((prev) => ({ ...prev, page: 1 }));
     }
+  };
+
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setSelectedSubcategory(null); // Reset subcategory when category changes
+    setPagination((prev) => ({ ...prev, page: 1 }));
+  };
+
+  const handleSubcategoryChange = (subcategoryId) => {
+    setSelectedSubcategory(subcategoryId);
+    setPagination((prev) => ({ ...prev, page: 1 }));
   };
 
   return (
@@ -120,7 +135,7 @@ export default function ListingsListView() {
             { name: 'List' },
           ]}
         />
-              <Button
+        <Button
           component={RouterLink}
           href={paths.dashboard.listings.new}
           variant="contained"
@@ -134,6 +149,21 @@ export default function ListingsListView() {
           New Listing
         </Button>
       </Box>
+
+      <Box sx={{ display: 'flex', gap: 2, mb: 3, width: '290px' }}>
+  <FormControl fullWidth>
+    <InputLabel>Select Category</InputLabel>
+    <BusinessCategoriesDropdown onChange={handleCategoryChange} />
+  </FormControl>
+</Box>
+
+        {/* <BusinessSubcategoriesDropdown
+          categoryId={selectedCategory}
+          onChange={handleSubcategoryChange}
+          value={selectedSubcategory}
+          categoryName={selectedCategory ? 'Selected Category' : ''}
+        /> */}
+
       <Card>
         <TableContainer>
           <Scrollbar>
@@ -149,7 +179,7 @@ export default function ListingsListView() {
                         key={row.id}
                         row={{
                           ...row,
-                          serial_no: (pagination.page - 1) * pagination.page_size + index + 1, // Updated serial number calculation
+                          serial_no: (pagination.page - 1) * pagination.page_size + index + 1,
                         }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
@@ -173,3 +203,5 @@ export default function ListingsListView() {
     </Container>
   );
 }
+
+
