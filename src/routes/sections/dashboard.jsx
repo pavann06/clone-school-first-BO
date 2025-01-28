@@ -84,6 +84,11 @@ const BusinessCategoriesCreatePage = lazy(() => import('src/pages/dashboard/busi
 const BusinessCategoriesEditPage = lazy(() => import('src/pages/dashboard/business-categories/edit'));
 
 
+const FamilyServiceListPage = lazy(() => import('src/pages/dashboard/familyservice/list'));
+const FamilyServiceCreatePage = lazy(() => import('src/pages/dashboard/familyservice/new'));
+const FamilyServiceEditPage = lazy(() => import('src/pages/dashboard/familyservice/edit'));
+
+
 
 
 
@@ -689,6 +694,38 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+      {
+        path: 'family',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <FamilyServiceListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <FamilyServiceCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <FamilyServiceEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          
+        ],
+      },
+
 
 
 

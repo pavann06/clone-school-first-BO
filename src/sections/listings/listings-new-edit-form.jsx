@@ -1,8 +1,3 @@
-
-
-
-
-
 import React, { useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';
@@ -72,7 +67,6 @@ export default function ListingsNewEditForm({ currentListing }) {
       email: currentListing?.email || '',
       tags: currentListing?.tags || [],
       valid_till: currentListing?.valid_till ? dayjs(currentListing.valid_till) : null,
-  
     }),
     [currentListing]
   );
@@ -262,13 +256,14 @@ export default function ListingsNewEditForm({ currentListing }) {
                   control={methods.control}
                   render={({ field }) => (
                     <DatePicker
-  {...field}
-  label="Valid Till"
-  inputFormat="yyyy-MM-dd"
-  onChange={(date) => field.onChange(date ? date.format('YYYY-MM-DD') : '')}
-  renderInput={(params) => <RHFTextField {...params} />}
-/>
-
+                      {...field}
+                      label="Valid Till"
+                      inputFormat="yyyy-MM-dd"
+                      onChange={(date) => {
+                        field.onChange(date ? date.format('YYYY-MM-DD') : ''); // Ensure the format is yyyy-MM-dd
+                      }}
+                      renderInput={(params) => <RHFTextField {...params} />}
+                    />
                   )}
                 />
               </Stack>

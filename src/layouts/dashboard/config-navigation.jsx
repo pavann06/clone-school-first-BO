@@ -70,27 +70,7 @@ export function useNavData() {
       {
         subheader: 'management',
         items: [
-          // {
-          //   title: 'features',
-          //   path: paths.dashboard.features.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.features.root, permissions: ['is_superuser'] },
-          //     { title: 'create', path: paths.dashboard.features.new, permissions: ['is_superuser'] },
-          //   ],
-          // },
-
-          // {
-          //   title: 'hospitals',
-          //   path: paths.dashboard.hospitals.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.hospitals.root, permissions: ['is_superuser'] },
-          //     { title: 'create', path: paths.dashboard.hospitals.new, permissions: ['is_superuser'] },
-          //     // {title:'view' , path: paths.dashboard.hospitals.view, permissions : ['is_superuser']},
-
-          //   ],
-          // },
+       
 
           {
             title: 'edutainment',
@@ -103,15 +83,7 @@ export function useNavData() {
           },
         
 
-          // {
-          //   title: 'onlinestores',
-          //   path: paths.dashboard.onlinestores.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.onlinestores.root },
-          //     { title: 'create', path: paths.dashboard.onlinestores.new },
-          //   ],
-          // },
+         
 
           {
             title: 'calender',
@@ -202,6 +174,17 @@ export function useNavData() {
                { title: 'create', path: paths.dashboard.business_categories.new },
             ],
           },
+
+          // {
+          //   title: 'family',
+          //   path: paths.dashboard.family.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.family.root },
+          //      { title: 'create', path: paths.dashboard.family.new },
+          //   ],
+          // },
+
 
           
 
