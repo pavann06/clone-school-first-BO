@@ -11,16 +11,16 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import FamilyServiceNewEditForm from '../familyservice-new-edit-form';
+import GroupsNewEditForm from '../groups-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function FamilyServiceEditView({ id }) {
+export default function GroupsEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/edutain/feeds/${id}`),
+    queryKey: ['gropus', id],
+    queryFn: () => request.get(`backoffice/groups/${id}`),
   });
 
   return (
@@ -30,8 +30,8 @@ export default function FamilyServiceEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.edutainment.root,
+            name: 'Groups',
+            href: paths.dashboard.groups.root,
           },
           { name: data?.data?.heading },
         ]}
@@ -39,11 +39,11 @@ export default function FamilyServiceEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <FamilyServiceNewEditForm currentEdutainment={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <GroupsNewEditForm currentGroup={data?.data} />}
     </Container>
   );
 }
 
-FamilyServiceEditView.propTypes = {
+GroupsEditView.propTypes = {
   id: PropTypes.string,
 };

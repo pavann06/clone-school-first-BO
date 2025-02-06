@@ -153,11 +153,11 @@ export const paths = {
       view: (id) => `${ROOTS.DASHBOARD}/business_categories/${id}/view`,
     },
 
-    family: {
-      root: `${ROOTS.DASHBOARD}/family`,
-      new: `${ROOTS.DASHBOARD}/family/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/family/${id}/edit`,
-      view: (id) => `${ROOTS.DASHBOARD}/family/${id}/view`,
+    groups: {
+      root: `${ROOTS.DASHBOARD}/groups`,
+      new: `${ROOTS.DASHBOARD}/groups/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/view`,
     },
 
 

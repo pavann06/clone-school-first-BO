@@ -38,7 +38,8 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
   const handleCloseDialog = () => setOpenDialog(false);
 
   const truncatedDescription =
-    description.length > 100 ? `${description.slice(0, 100)}...` : description;
+  description?.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
+
 
   const popover = usePopover();
 

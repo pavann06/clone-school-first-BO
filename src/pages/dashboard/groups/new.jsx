@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { FamilyServiceCreateView } from 'src/sections/familyservice/view';
+import { GroupsCreateView } from 'src/sections/groups/view';
 
 // ----------------------------------------------------------------------
 
@@ -8,10 +8,10 @@ export default function FamilyServiceCreatePage() {
   return (
     <>
       <Helmet>
-        <title> New Family </title>
+        <title> New Group </title>
       </Helmet>
 
-      <FamilyServiceCreateView />
+      <GroupsCreateView />
     </>
   );
 }

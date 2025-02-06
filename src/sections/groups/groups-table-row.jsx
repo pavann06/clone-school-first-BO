@@ -4,6 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import {
   Link,
   TableRow,
+  Box,
   MenuItem,
   TableCell,
   IconButton,
@@ -15,16 +16,17 @@ import {
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function FamilyServiceTableRow({ row, onEditRow, onDeleteRow }) {
+export default function GroupsTableRow({ row, onEditRow, onDeleteRow }) {
   const {
     serial_no,
-    full_name,
-    mobile,
-    email,
+    name,
+    logo,
+   
     profile_image,
-    relation_type,
-    date_of_birth,
-    notes,
+    subscribers,
+    admins,
+    posts,
+  
     status,
   } = row;
 
@@ -36,20 +38,13 @@ export default function FamilyServiceTableRow({ row, onEditRow, onDeleteRow }) {
         {/* ID */}
         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>{full_name}</TableCell>
-
-        {/* Description */}
-        <TableCell>{mobile}</TableCell>
-
-        {/* Approved Info */}
-        <TableCell>{email}</TableCell>
-
-        {/* Image */}
-        <TableCell align="center">
+        <TableCell>{name}</TableCell>
+           {/* Image */}
+           <TableCell align="center">
           {profile_image ? (
             <img
               src={profile_image}
-              alt={`Thumbnail for ${full_name}`}
+              alt={`Thumbnail for ${name}`}
               style={{ maxWidth: 100, maxHeight: 50 }}
             />
           ) : (
@@ -57,13 +52,47 @@ export default function FamilyServiceTableRow({ row, onEditRow, onDeleteRow }) {
           )}
         </TableCell>
 
+             {/* Image */}
+             <TableCell align="center">
+          {logo ? (
+            <img
+              src={logo}
+              alt={`Thumbnail for ${name}`}
+              style={{ maxWidth: 100, maxHeight: 50 }}
+            />
+          ) : (
+            'No logo'
+          )}
+        </TableCell>
+
+      
+
+   
+
+     
+
         {/* Interactions */}
-        <TableCell>{relation_type}</TableCell>
+        <TableCell>{subscribers}</TableCell>
+
+        {/* <TableCell>
+          <Box>
+            {Array.isArray(admins) ? (
+              <ul>
+                {admins.map((admin, index) => (
+                  <li key={index}>
+                    <Typography variant="body2">{admin}</Typography>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              admins
+            )}
+          </Box>
+        </TableCell> */}
 
         {/* Language */}
-        <TableCell>{date_of_birth}</TableCell>
+        <TableCell>{posts}</TableCell>
 
-        <TableCell>{notes}</TableCell>
 
         {/* Status */}
         <TableCell>{status}</TableCell>
@@ -106,7 +135,7 @@ export default function FamilyServiceTableRow({ row, onEditRow, onDeleteRow }) {
   );
 }
 
-FamilyServiceTableRow.propTypes = {
+GroupsTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
   row: PropTypes.object,

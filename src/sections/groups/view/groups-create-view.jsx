@@ -5,17 +5,17 @@ import { paths } from 'src/routes/paths';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import FamilyServiceNewEditForm from '../familyservice-new-edit-form';
+import GroupsNewEditForm from '../groups-new-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function FamilyServiceCreateView() {
+export default function GroupsCreateView() {
   const settings = useSettingsContext();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Family Member"
+        heading="Create a New Group"
         links={[
           {
             name: 'Dashboard',
@@ -23,16 +23,16 @@ export default function FamilyServiceCreateView() {
           },
           {
             name: 'Family',
-            href: paths.dashboard.banner.root,
+            href: paths.dashboard.groups.root,
           },
-          { name: 'New Family' },
+          { name: 'New Group' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
 
-      <FamilyServiceNewEditForm />
+      <GroupsNewEditForm />
     </Container>
   );
 }

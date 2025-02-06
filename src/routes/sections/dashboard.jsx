@@ -6,6 +6,7 @@ import { AuthGuard, PermissionBasedGuard } from 'src/auth/guard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
 
+
 // import { Lazy } from 'yup';
 
 // ----------------------------------------------------------------------
@@ -84,9 +85,9 @@ const BusinessCategoriesCreatePage = lazy(() => import('src/pages/dashboard/busi
 const BusinessCategoriesEditPage = lazy(() => import('src/pages/dashboard/business-categories/edit'));
 
 
-const FamilyServiceListPage = lazy(() => import('src/pages/dashboard/familyservice/list'));
-const FamilyServiceCreatePage = lazy(() => import('src/pages/dashboard/familyservice/new'));
-const FamilyServiceEditPage = lazy(() => import('src/pages/dashboard/familyservice/edit'));
+const GroupsListPage = lazy(() => import('src/pages/dashboard/groups/list'));
+const GroupsCreatePage = lazy(() => import('src/pages/dashboard/groups/new'));
+const GroupsEditPage = lazy(() => import('src/pages/dashboard/groups/edit'));
 
 
 
@@ -696,12 +697,12 @@ export const dashboardRoutes = [
       },
 
       {
-        path: 'family',
+        path: 'groups',
         children: [
           {
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <FamilyServiceListPage />
+                <GroupsListPage />
               </PermissionBasedGuard>
             ),
             index: true,
@@ -710,7 +711,7 @@ export const dashboardRoutes = [
             path: 'new',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <FamilyServiceCreatePage />
+                <GroupsCreatePage />
               </PermissionBasedGuard>
             ),
           },
@@ -718,7 +719,7 @@ export const dashboardRoutes = [
             path: ':id/edit',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <FamilyServiceEditPage />
+                <GroupsEditPage />
               </PermissionBasedGuard>
             ),
           },

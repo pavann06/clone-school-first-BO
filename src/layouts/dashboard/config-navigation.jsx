@@ -175,15 +175,15 @@ export function useNavData() {
             ],
           },
 
-          // {
-          //   title: 'family',
-          //   path: paths.dashboard.family.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.family.root },
-          //      { title: 'create', path: paths.dashboard.family.new },
-          //   ],
-          // },
+          {
+            title: 'groups',
+            path: paths.dashboard.groups.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.groups.root },
+               { title: 'create', path: paths.dashboard.groups.new },
+            ],
+          },
 
 
           

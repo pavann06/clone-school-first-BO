@@ -29,24 +29,26 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 import { label } from 'yet-another-react-lightbox';
 
-import FamilyServiceTableRow from '../familyserice-table-row';
+
+import GroupsTableRow from '../groups-table-row';
 
 
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'full_name', label: 'Name' },
-  { id: 'mobile', label: 'Mobile' },
-  { id: 'email', label: 'Email ' },
+  { id: 'name', label: 'Name' },
   { id: 'profile_image', label: 'Image' },
-  { id: 'relation_type', label: 'Relation Type ' },
-  { id: 'date_of_birth', label: 'Date of Birth' },
-  {id: 'notes' , label : 'Notes'},
+  { id: 'logo', label: 'Logo' },
+  { id: 'subscribers', label: 'Subscribers ' },
+
+  { id: 'posts', label: 'Posts ' },
+  // { id: 'admins' , label : 'Admins'},
+ 
   {id: 'status', label : 'Status'},
   { id: 'actions ', label: 'Actions' },
 ];
 
-export default function FamilyServiceListView() {
+export default function GroupsListView() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -58,7 +60,7 @@ export default function FamilyServiceListView() {
     queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `family/familymaster?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/groups?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
@@ -88,13 +90,13 @@ export default function FamilyServiceListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.edutainment.edit(id));
+      router.push(paths.dashboard.groups.edit(id));
     },
     [router]
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+    const response = await request.delete(`backoffice/groups/${id}`);
 
     const { success } = response;
 
@@ -115,15 +117,15 @@ export default function FamilyServiceListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Edutainment',
-              href: paths.dashboard.edutainment.root,
+              name: 'Groups',
+              href: paths.dashboard.groups.root,
             },
             { name: 'List' },
           ]}
         />
               <Button
           component={RouterLink}
-          href={paths.dashboard.edutainment.new}
+          href={paths.dashboard.groups.new}
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
@@ -146,7 +148,7 @@ export default function FamilyServiceListView() {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <FamilyServiceTableRow
+                      <GroupsTableRow
                         key={row.id}
                         row={{
                           ...row,

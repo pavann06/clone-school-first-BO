@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 
 // ----------------------------------------------------------------------
 
-export default function FamilyServiceTableToolbar() {
+export default function GroupsTableToolbar() {
   return (
     <Stack
       spacing={2}
@@ -21,7 +21,7 @@ export default function FamilyServiceTableToolbar() {
   );
 }
 
-FamilyServiceTableToolbar.propTypes = {
+GroupsTableToolbar.propTypes = {
   // filters: PropTypes.object,
   // setFilters: PropTypes.any,
 };

@@ -2,11 +2,11 @@ import { Helmet } from 'react-helmet-async';
 
 import { useParams } from 'src/routes/hooks';
 
-import { FamilyServiceEditView } from 'src/sections/familyservice/view';
+import { GroupsEditView } from 'src/sections/groups/view';
 
 // ----------------------------------------------------------------------
 
-export default function FamilyServiceEditPage() {
+export default function GroupsEditPage() {
   const params = useParams();
 
   const { id } = params;
@@ -14,10 +14,10 @@ export default function FamilyServiceEditPage() {
   return (
     <>
       <Helmet>
-        <title> Family Edit</title>
+        <title> Groups Edit</title>
       </Helmet>
 
-      <FamilyServiceEditView id={`${id}`} />
+      <GroupsEditView id={`${id}`} />
     </>
   );
 }
