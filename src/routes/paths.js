@@ -157,7 +157,21 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/groups`,
       new: `${ROOTS.DASHBOARD}/groups/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
+
+
+
       view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/view`,
+
+
+      
+    },
+
+    forum_feeds: {
+      root: `${ROOTS.DASHBOARD}/forum_feeds`,
+      
+      new: `${ROOTS.DASHBOARD}/forum_feeds/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/view`,
     },
 
 

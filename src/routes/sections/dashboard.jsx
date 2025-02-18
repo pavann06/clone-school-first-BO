@@ -6,7 +6,6 @@ import { AuthGuard, PermissionBasedGuard } from 'src/auth/guard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
 
-
 // import { Lazy } from 'yup';
 
 // ----------------------------------------------------------------------
@@ -63,7 +62,6 @@ const PollsListPage = lazy(() => import('src/pages/dashboard/polls/list'));
 const PollsCreatePage = lazy(() => import('src/pages/dashboard/polls/new'));
 const PollsEditPage = lazy(() => import('src/pages/dashboard/polls/edit'));
 
-
 const BannerListPage = lazy(() => import('src/pages/dashboard/banner/list'));
 const BannerCreatePage = lazy(() => import('src/pages/dashboard/banner/new'));
 const BannerEditPage = lazy(() => import('src/pages/dashboard/banner/edit'));
@@ -80,19 +78,24 @@ const ListingsListPage = lazy(() => import('src/pages/dashboard/listings/list'))
 const ListingsCreatePage = lazy(() => import('src/pages/dashboard/listings/new'));
 const ListingsEditPage = lazy(() => import('src/pages/dashboard/listings/edit'));
 
-const BusinessCategoriesListPage = lazy(() => import('src/pages/dashboard/business-categories/list'));
-const BusinessCategoriesCreatePage = lazy(() => import('src/pages/dashboard/business-categories/new'));
-const BusinessCategoriesEditPage = lazy(() => import('src/pages/dashboard/business-categories/edit'));
-
+const BusinessCategoriesListPage = lazy(
+  () => import('src/pages/dashboard/business-categories/list')
+);
+const BusinessCategoriesCreatePage = lazy(
+  () => import('src/pages/dashboard/business-categories/new')
+);
+const BusinessCategoriesEditPage = lazy(
+  () => import('src/pages/dashboard/business-categories/edit')
+);
 
 const GroupsListPage = lazy(() => import('src/pages/dashboard/groups/list'));
 const GroupsCreatePage = lazy(() => import('src/pages/dashboard/groups/new'));
 const GroupsEditPage = lazy(() => import('src/pages/dashboard/groups/edit'));
+const GroupsViewPage = lazy(() => import('src/pages/dashboard/groups/view'));
 
-
-
-
-
+const ForumFeedsListPage = lazy(() => import('src/pages/dashboard/forum-feeds/list'));
+const ForumFeedsCreatePage = lazy(() => import('src/pages/dashboard/forum-feeds/new'));
+const ForumFeedsEditPage = lazy(() => import('src/pages/dashboard/forum-feeds/edit'));
 
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
 const SurveyCreatePage = lazy(() => import('src/pages/dashboard/survey/new'));
@@ -238,7 +241,6 @@ export const dashboardRoutes = [
         ],
       },
 
-
       {
         path: 'onlinestores',
         children: [
@@ -327,8 +329,7 @@ export const dashboardRoutes = [
             ),
           },
         ],
-      },   
-
+      },
 
       {
         path: 'survey',
@@ -382,7 +383,7 @@ export const dashboardRoutes = [
             ),
           },
         ],
-      }, 
+      },
 
       // {
       //   path: 'appointments',
@@ -482,8 +483,6 @@ export const dashboardRoutes = [
         ],
       },
 
-
-
       {
         path: 'banner',
         children: [
@@ -511,10 +510,8 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-          
         ],
       },
-      
 
       {
         path: 'news',
@@ -543,10 +540,8 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-          
         ],
       },
-
 
       {
         path: 'categories',
@@ -575,12 +570,8 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-          
         ],
       },
-      
-      
-      
 
       {
         path: 'sales',
@@ -723,12 +714,51 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-          
+          {
+            path: ':id/view',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <GroupsViewPage />
+              </PermissionBasedGuard>
+            ),
+          },
+
+
+
+
+
         ],
       },
 
-
-
+      {
+        path: 'forum_feeds',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ForumFeedsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ForumFeedsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ForumFeedsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
 
       { path: 'welcome', element: <WelcomePage /> },
       { path: 'blank', element: <BlankPage /> },

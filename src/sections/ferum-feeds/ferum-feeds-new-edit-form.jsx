@@ -24,7 +24,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import request from 'src/api/request';
-import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
+import { CreateForumFeeds, UpdateForumFeeds } from 'src/api/forum-feeds';
 
 // API and Services
 
@@ -33,7 +33,7 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 
 // ----------------------------------------------------------------------
 
-export default function EdutainmentNewEditForm({ currentEdutainment }) {
+export default function FerumFeedsNewEditForm({ currentFeed }) {
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
@@ -50,22 +50,24 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     status: Yup.string(),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
+    group_id: Yup.string().required('Group is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      heading: currentEdutainment?.heading || '',
-      feed_type: currentEdutainment?.feed_type || '',
-      image: currentEdutainment?.image || '',
-      video: currentEdutainment?.video || '',
-      youtube_video: currentEdutainment?.youtube_video || '',
-      duration: currentEdutainment?.duration || 0,
-      language: currentEdutainment?.language || '',
-      description: currentEdutainment?.description || '',
+      heading: currentFeed?.heading || '',
+      feed_type: currentFeed?.feed_type || '',
+      image: currentFeed?.image || '',
+      video: currentFeed?.video || '',
+      youtube_video: currentFeed?.youtube_video || '',
+      duration: currentFeed?.duration || 0,
+      language: currentFeed?.language || '',
+      description: currentFeed?.description || '',
       // posting_date: currentEdutainment?.posting_date || '',
-      status: currentEdutainment?.status || 'Pending',
+      status: currentFeed?.status || 'Pending',
+      group_id: currentFeed?.group_id || '',
     }),
-    [currentEdutainment]
+    [currentFeed]
   );
 
   const methods = useForm({
@@ -91,19 +93,19 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         video: data.video || null,
         youtube_video: data.youtube_video || null,
       };
-      if (!currentEdutainment) {
+      if (!currentFeed) {
         payload.status = 'Pending';
       }
 
-      const response = currentEdutainment
-        ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-        : await CreateEdutainment(payload);
+      const response = currentFeed
+        ? await UpdateForumFeeds({ ...payload, id: currentFeed.id })
+        : await CreateForumFeeds(payload);
 
       if (response?.success) {
-        enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
+        enqueueSnackbar(currentFeed ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-        router.push(paths.dashboard.edutainment.root);
+        router.push(paths.dashboard.forum_feeds.root);
         reset();
         return response;
       }
@@ -143,7 +145,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     [enqueueSnackbar]
   );
 
-
   const handleDrop = useCallback(
     async (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -151,7 +152,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         const fileWithPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         });
-  
+
         // Check file type (image or video) and set the corresponding value
         if (file.type.startsWith('image/')) {
           setValue('image', fileWithPreview);
@@ -174,7 +175,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     },
     [setValue, enqueueSnackbar, handleUpload]
   );
-  
 
   const handleRemoveFile = useCallback(() => {
     setValue('image', null); // Remove the image
@@ -217,14 +217,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <MenuItem value="Video">Video</MenuItem>
                     <MenuItem value="Youtube video">YouTube</MenuItem>
                   </RHFSelect>
-
-                  {currentEdutainment && (
-                    <RHFSelect name="status" label="Status">
-                      <MenuItem value="Approved">Approved</MenuItem>
-                      <MenuItem value="Rejected">Rejected</MenuItem>
-                      <MenuItem value="Pending">Pending</MenuItem>
-                    </RHFSelect>
-                  )}
                 </Box>
 
                 {/* Language, Heading, Description */}
@@ -260,6 +252,10 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     </Stack>
                   </Box>
                 )}
+
+<RHFTextField name="group_id" label="Group Id" />
+
+              
 
                 {values.feed_type === 'Video' && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
@@ -308,7 +304,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 loading={isSubmitting || isUploading}
                 sx={{ alignSelf: 'flex-end' }}
               >
-                {!currentEdutainment ? 'Create Edutainment' : 'Save Changes'}
+                {!currentFeed ? 'Create Edutainment' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>
@@ -318,9 +314,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   );
 }
 
-EdutainmentNewEditForm.propTypes = {
-  currentEdutainment: PropTypes.any,
+FerumFeedsNewEditForm.propTypes = {
+  currentFeed: PropTypes.any,
 };
-
-
-
