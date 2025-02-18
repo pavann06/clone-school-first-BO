@@ -24,7 +24,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import request from 'src/api/request';
-import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
+import { CreateForumFeeds, UpdateForumFeeds } from 'src/api/forum-feeds';
 
 // API and Services
 
@@ -33,7 +33,7 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 
 // ----------------------------------------------------------------------
 
-export default function EdutainmentNewEditForm({ currentEdutainment }) {
+export default function FerumFeedsNewEditForm({ currentEdutainment }) {
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
@@ -50,6 +50,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     status: Yup.string(),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
+    group_id: Yup.string().required('Group is required'),
   });
 
   const defaultValues = useMemo(
@@ -64,6 +65,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       description: currentEdutainment?.description || '',
       // posting_date: currentEdutainment?.posting_date || '',
       status: currentEdutainment?.status || 'Pending',
+      group_id: currentEdutainment?.group_id || '',
     }),
     [currentEdutainment]
   );
@@ -96,14 +98,14 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       }
 
       const response = currentEdutainment
-        ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-        : await CreateEdutainment(payload);
+        ? await UpdateForumFeeds({ ...payload, id: currentEdutainment.id })
+        : await CreateForumFeeds(payload);
 
       if (response?.success) {
         enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-        router.push(paths.dashboard.edutainment.root);
+        router.push(paths.dashboard.forum_feeds.root);
         reset();
         return response;
       }
@@ -143,7 +145,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     [enqueueSnackbar]
   );
 
-
   const handleDrop = useCallback(
     async (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -151,7 +152,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         const fileWithPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         });
-  
+
         // Check file type (image or video) and set the corresponding value
         if (file.type.startsWith('image/')) {
           setValue('image', fileWithPreview);
@@ -174,7 +175,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     },
     [setValue, enqueueSnackbar, handleUpload]
   );
-  
 
   const handleRemoveFile = useCallback(() => {
     setValue('image', null); // Remove the image
@@ -217,14 +217,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <MenuItem value="Video">Video</MenuItem>
                     <MenuItem value="Youtube video">YouTube</MenuItem>
                   </RHFSelect>
-
-                  {currentEdutainment && (
-                    <RHFSelect name="status" label="Status">
-                      <MenuItem value="Approved">Approved</MenuItem>
-                      <MenuItem value="Rejected">Rejected</MenuItem>
-                      <MenuItem value="Pending">Pending</MenuItem>
-                    </RHFSelect>
-                  )}
                 </Box>
 
                 {/* Language, Heading, Description */}
@@ -260,6 +252,10 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     </Stack>
                   </Box>
                 )}
+
+<RHFTextField name="group_id" label="Group Id" />
+
+              
 
                 {values.feed_type === 'Video' && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
@@ -318,40 +314,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   );
 }
 
-EdutainmentNewEditForm.propTypes = {
+FerumFeedsNewEditForm.propTypes = {
   currentEdutainment: PropTypes.any,
 };
-
-
-
-
-// const onSubmit = handleSubmit(async (data) => {
-//   try {
-//     const payload = {
-//       ...data,
-//       image: data.image || null,
-//       video: data.video || null,
-//     };
-//     if (!currentEdutainment) {
-//       payload.status = 'Pending';
-//     }
-
-//     const response = currentEdutainment
-//       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-//       : await CreateEdutainment(payload);
-
-//     if (response?.success) {
-//       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!');
-//       router.push(paths.dashboard.edutainment.root);
-//       reset();
-//       return response;
-//     }
-
-//     enqueueSnackbar('Operation failed:', response.error);
-//     return response;
-//   } catch (error) {
-//     console.error('Error:', error);
-//     enqueueSnackbar('Operation failed:');
-//     return null;
-//   }
-// });

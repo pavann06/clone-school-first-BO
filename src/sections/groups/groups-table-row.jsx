@@ -16,7 +16,7 @@ import {
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function GroupsTableRow({ row, onEditRow, onDeleteRow }) {
+export default function GroupsTableRow({ row, onEditRow, onDeleteRow , onViewRow,}) {
   const {
     serial_no,
     name,
@@ -130,6 +130,16 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow }) {
           <Iconify icon="material-symbols:delete" />
           Delete
         </MenuItem>
+                <MenuItem
+          onClick={() => {
+            onViewRow();
+            popover.onClose();
+          }}
+        >
+          <Iconify icon="carbon:view" />
+          {/* <AppointmentListPage /> */}
+          View
+        </MenuItem>
       </CustomPopover>
     </>
   );
@@ -138,5 +148,6 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow }) {
 GroupsTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
+  onViewRow: PropTypes.func,
   row: PropTypes.object,
 };

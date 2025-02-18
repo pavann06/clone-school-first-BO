@@ -115,7 +115,7 @@ export function useNavData() {
             ],
           },
           {
-            title: 'subscribedusers',
+            title: 'subscribed Users',
             path: paths.dashboard.subscribedusers.root,
             icon: ICONS.contact,
             children: [
@@ -166,7 +166,7 @@ export function useNavData() {
           },
 
           {
-            title: 'business_categories',
+            title: 'Business Categories',
             path: paths.dashboard.business_categories.root,
             icon: ICONS.contact,
             children: [
@@ -184,6 +184,18 @@ export function useNavData() {
                { title: 'create', path: paths.dashboard.groups.new },
             ],
           },
+
+          {
+            title: 'Forum Feeds',
+            path: paths.dashboard.forum_feeds.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.forum_feeds.root },
+               { title: 'create', path: paths.dashboard.forum_feeds.new },
+            ],
+          },
+
+          
 
 
           
