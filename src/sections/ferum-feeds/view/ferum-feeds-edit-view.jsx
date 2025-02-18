@@ -39,7 +39,11 @@ export default function FerumFeedsEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
+<<<<<<< HEAD
       {isLoading ? <LoadingScreen /> : <FerumFeedsNewEditForm currentFeed={data?.data} />}
+=======
+      {isLoading ? <LoadingScreen /> : <FerumFeedsNewEditForm currentEdutainment={data?.data} />}
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
     </Container>
   );
 }

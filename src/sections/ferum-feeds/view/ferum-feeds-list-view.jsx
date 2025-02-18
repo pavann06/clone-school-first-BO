@@ -128,7 +128,11 @@ export default function FerumFeedsListView() {
             { name: 'List' },
           ]}
         />
+<<<<<<< HEAD
          <Button
+=======
+         {/* <Button
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
           component={RouterLink}
           href={paths.dashboard.forum_feeds.new}
           variant="contained"
@@ -140,8 +144,25 @@ export default function FerumFeedsListView() {
           }}
         >
           New Feeds
+<<<<<<< HEAD
         </Button>  
 
+=======
+        </Button>  */}
+<Button
+  component={RouterLink}
+  to={`${paths.dashboard.forum_feeds.new}?groupId=${groupId}`} // Dynamically set groupId
+  variant="contained"
+  startIcon={<Iconify icon="mingcute:add-line" />}
+  sx={{
+    position: 'absolute',
+    bottom: '5px',
+    right: '5px',
+  }}
+>
+  New Feeds
+</Button>
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
 
 
       </Box>

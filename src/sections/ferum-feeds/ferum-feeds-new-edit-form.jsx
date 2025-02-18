@@ -33,7 +33,11 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 
 // ----------------------------------------------------------------------
 
+<<<<<<< HEAD
 export default function FerumFeedsNewEditForm({ currentFeed }) {
+=======
+export default function FerumFeedsNewEditForm({ currentEdutainment }) {
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
@@ -55,6 +59,7 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
 
   const defaultValues = useMemo(
     () => ({
+<<<<<<< HEAD
       heading: currentFeed?.heading || '',
       feed_type: currentFeed?.feed_type || '',
       image: currentFeed?.image || '',
@@ -68,6 +73,21 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
       group_id: currentFeed?.group_id || '',
     }),
     [currentFeed]
+=======
+      heading: currentEdutainment?.heading || '',
+      feed_type: currentEdutainment?.feed_type || '',
+      image: currentEdutainment?.image || '',
+      video: currentEdutainment?.video || '',
+      youtube_video: currentEdutainment?.youtube_video || '',
+      duration: currentEdutainment?.duration || 0,
+      language: currentEdutainment?.language || '',
+      description: currentEdutainment?.description || '',
+      // posting_date: currentEdutainment?.posting_date || '',
+      status: currentEdutainment?.status || 'Pending',
+      group_id: currentEdutainment?.group_id || '',
+    }),
+    [currentEdutainment]
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
   );
 
   const methods = useForm({
@@ -93,6 +113,7 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
         video: data.video || null,
         youtube_video: data.youtube_video || null,
       };
+<<<<<<< HEAD
       if (!currentFeed) {
         payload.status = 'Pending';
       }
@@ -103,6 +124,18 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
 
       if (response?.success) {
         enqueueSnackbar(currentFeed ? 'Update success!' : 'Create success!', {
+=======
+      if (!currentEdutainment) {
+        payload.status = 'Pending';
+      }
+
+      const response = currentEdutainment
+        ? await UpdateForumFeeds({ ...payload, id: currentEdutainment.id })
+        : await CreateForumFeeds(payload);
+
+      if (response?.success) {
+        enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
           variant: 'success',
         });
         router.push(paths.dashboard.forum_feeds.root);
@@ -304,7 +337,11 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
                 loading={isSubmitting || isUploading}
                 sx={{ alignSelf: 'flex-end' }}
               >
+<<<<<<< HEAD
                 {!currentFeed ? 'Create Edutainment' : 'Save Changes'}
+=======
+                {!currentEdutainment ? 'Create Edutainment' : 'Save Changes'}
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
               </LoadingButton>
             </Stack>
           </Card>
@@ -315,5 +352,9 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
 }
 
 FerumFeedsNewEditForm.propTypes = {
+<<<<<<< HEAD
   currentFeed: PropTypes.any,
+=======
+  currentEdutainment: PropTypes.any,
+>>>>>>> 7d8da8edeb75d949672fccfbd73988aa5f36885b
 };
