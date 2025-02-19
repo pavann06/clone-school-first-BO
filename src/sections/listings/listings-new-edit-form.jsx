@@ -248,7 +248,7 @@ export default function ListingsNewEditForm({ currentListing }) {
               <RHFTextField name="whatsapp" label="WhatsApp" />
               <RHFTextField name="email" label="Email" />
               <RHFTextField name="maps_link" label="Maps link" />
-
+{/* 
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Valid Till</Typography>
                 <Controller
@@ -266,7 +266,8 @@ export default function ListingsNewEditForm({ currentListing }) {
                     />
                   )}
                 />
-              </Stack>
+              </Stack> */}
+              <RHFTextField name='valid_till' label='valid till' />
 
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Tags</Typography>
