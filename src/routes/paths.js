@@ -153,27 +153,37 @@ export const paths = {
       view: (id) => `${ROOTS.DASHBOARD}/business_categories/${id}/view`,
     },
 
-    groups: {
-      root: `${ROOTS.DASHBOARD}/groups`,
-      new: `${ROOTS.DASHBOARD}/groups/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
+    // groups: {
+    //   root: `${ROOTS.DASHBOARD}/groups`,
+    //   new: `${ROOTS.DASHBOARD}/groups/new`,
+    //   edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
+    //   view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/view`,
+    //   // feedsnew: (id)=> `${ROOTS.DASHBOARD}/forum_feeds/${id}/new`,
+    // },
 
-
-
-      view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/view`,
-
-
+    // forum_feeds: {
+    //   root: `${ROOTS.DASHBOARD}/forum_feeds`,
       
-    },
-
-    forum_feeds: {
-      root: `${ROOTS.DASHBOARD}/forum_feeds`,
+    //   new: (groupId)=> `${ROOTS.DASHBOARD}/forum_feeds/${groupId}/new`,
+    //   edit: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/edit`,
+    //   view: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/view`,
+    // },
+  
+        groups: {
+          root: `${ROOTS.DASHBOARD}/groups`,
+          new: `${ROOTS.DASHBOARD}/groups/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
+          view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/view`,
+          forumFeeds: {
+            root: (groupId) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds`,
+            new: (groupId) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/new`,
+            edit: (groupId, id) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/${id}/edit`,
+            view: (groupId, id) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/${id}/view`,
+          },
+        },
       
-      new: `${ROOTS.DASHBOARD}/forum_feeds/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/edit`,
-      view: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/view`,
-    },
-
+    
+    
 
 
 

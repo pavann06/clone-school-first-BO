@@ -33,7 +33,7 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 
 // ----------------------------------------------------------------------
 
-export default function FerumFeedsNewEditForm({ currentFeed }) {
+export default function FerumFeedsNewEditForm({ currentFeed, groupId  }) {
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
@@ -65,9 +65,9 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
       description: currentFeed?.description || '',
       // posting_date: currentEdutainment?.posting_date || '',
       status: currentFeed?.status || 'Pending',
-      group_id: currentFeed?.group_id || '',
+      group_id:  groupId || '',
     }),
-    [currentFeed]
+    [currentFeed , groupId]
   );
 
   const methods = useForm({
@@ -316,4 +316,5 @@ export default function FerumFeedsNewEditForm({ currentFeed }) {
 
 FerumFeedsNewEditForm.propTypes = {
   currentFeed: PropTypes.any,
+  groupId: PropTypes.any,
 };

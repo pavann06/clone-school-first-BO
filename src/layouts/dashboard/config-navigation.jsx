@@ -185,15 +185,15 @@ export function useNavData() {
             ],
           },
 
-          {
-            title: 'Forum Feeds',
-            path: paths.dashboard.forum_feeds.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.forum_feeds.root },
-               { title: 'create', path: paths.dashboard.forum_feeds.new },
-            ],
-          },
+          // {
+          //   title: 'Forum Feeds',
+          //   path: paths.dashboard.forum_feeds.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.forum_feeds.root },
+          //      { title: 'create', path: paths.dashboard.forum_feeds.new },
+          //   ],
+          // },
 
           
 

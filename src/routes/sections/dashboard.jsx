@@ -687,6 +687,74 @@ export const dashboardRoutes = [
         ],
       },
 
+      // {
+      //   path: 'groups',
+      //   children: [
+      //     {
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <GroupsListPage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //       index: true,
+      //     },
+      //     {
+      //       path: 'new',
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <GroupsCreatePage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //     },
+      //     {
+      //       path: ':id/edit',
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <GroupsEditPage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //     },
+      //     {
+      //       path: ':id/view',
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <GroupsViewPage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //     },
+      //   ],
+      // },
+
+      // {
+      //   path: 'forum_feeds',
+      //   children: [
+      //     {
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <ForumFeedsListPage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //       index: true,
+      //     },
+      //     {
+      //       path: ':groupId/new',
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <ForumFeedsCreatePage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //     },
+      //     {
+      //       path: ':id/edit',
+      //       element: (
+      //         <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+      //           <ForumFeedsEditPage />
+      //         </PermissionBasedGuard>
+      //       ),
+      //     },
+      //   ],
+      // },
+
       {
         path: 'groups',
         children: [
@@ -722,27 +790,16 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-
-
-
-
-
-        ],
-      },
-
-      {
-        path: 'forum_feeds',
-        children: [
           {
+            path: ':id/forum_feeds', // ✅ Forums are now under groups/:id
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <ForumFeedsListPage />
               </PermissionBasedGuard>
             ),
-            index: true,
           },
           {
-            path: 'new',
+            path: ':id/forum_feeds/new', // ✅ Creating a forum feed for a group
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <ForumFeedsCreatePage />
@@ -750,7 +807,7 @@ export const dashboardRoutes = [
             ),
           },
           {
-            path: ':id/edit',
+            path: ':id/forum_feeds/:feedId/edit', // ✅ Editing a forum feed for a group
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <ForumFeedsEditPage />
@@ -759,6 +816,7 @@ export const dashboardRoutes = [
           },
         ],
       },
+      
 
       { path: 'welcome', element: <WelcomePage /> },
       { path: 'blank', element: <BlankPage /> },

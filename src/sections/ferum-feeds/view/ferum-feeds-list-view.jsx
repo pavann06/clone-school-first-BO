@@ -50,6 +50,7 @@ const TABLE_HEAD = [
 export default function FerumFeedsListView() {
 
   const { groupId } = useParams(); // Get groupId from URL
+  console.log(groupId, "group id of groups")
   
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -92,7 +93,7 @@ export default function FerumFeedsListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.forum_feeds.edit(id));
+      router.push(paths.dashboard.groups.forumFeeds.edit(id));
     },
     [router]
   );
@@ -123,24 +124,26 @@ export default function FerumFeedsListView() {
             { name: 'Dashboard', href: paths.dashboard.root },
             {
               name: 'News',
-              href: paths.dashboard.forum_feeds.root,
+              href: paths.dashboard.groups.root,
             },
             { name: 'List' },
           ]}
         />
-         <Button
-          component={RouterLink}
-          href={paths.dashboard.forum_feeds.new}
-          variant="contained"
-          startIcon={<Iconify icon="mingcute:add-line" />}
-          sx={{
-            position: 'absolute',
-            bottom: '5px',
-            right: '5px',
-          }}
-        >
-          New Feeds
-        </Button>  
+        
+        <Button
+  component={RouterLink}
+  href={paths.dashboard.groups.forumFeeds.new(groupId)} // ✅ Pass groupId in the URL
+  variant="contained"
+  startIcon={<Iconify icon="mingcute:add-line" />}
+  sx={{
+    position: 'absolute',
+    bottom: '5px',
+    right: '5px',
+  }}
+>
+  New Feeds
+</Button>
+
 
 
 
