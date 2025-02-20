@@ -181,7 +181,23 @@ export const paths = {
             view: (groupId, id) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/${id}/view`,
           },
         },
+
+
+        schools: {
+          root: `${ROOTS.DASHBOARD}/schools`,
+          new: `${ROOTS.DASHBOARD}/schools/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/schools/${id}/edit`,
+          view: (id) => `${ROOTS.DASHBOARD}/schools/${id}/view`,
+        },
       
+
+        
+        students: {
+          root: `${ROOTS.DASHBOARD}/students`,
+          new: `${ROOTS.DASHBOARD}/students/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/students/${id}/edit`,
+          view: (id) => `${ROOTS.DASHBOARD}/students/${id}/view`,
+        },
     
     
 

@@ -195,6 +195,27 @@ export function useNavData() {
           //   ],
           // },
 
+          {
+            title: 'schools',
+            path: paths.dashboard.schools.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.schools.root },
+               { title: 'create', path: paths.dashboard.schools.new },
+            ],
+          },
+
+
+          {
+            title: 'Students',
+            path: paths.dashboard.students.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.students.root },
+               { title: 'create', path: paths.dashboard.students.new },
+            ],
+          },
+
           
 
 

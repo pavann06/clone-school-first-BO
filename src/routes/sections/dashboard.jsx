@@ -97,6 +97,14 @@ const ForumFeedsListPage = lazy(() => import('src/pages/dashboard/forum-feeds/li
 const ForumFeedsCreatePage = lazy(() => import('src/pages/dashboard/forum-feeds/new'));
 const ForumFeedsEditPage = lazy(() => import('src/pages/dashboard/forum-feeds/edit'));
 
+const SchoolListPage = lazy(() => import('src/pages/dashboard/schools/list'));
+const SchoolCreatePage = lazy(() => import('src/pages/dashboard/schools/new'));
+const SchoolEditPage = lazy(() => import('src/pages/dashboard/schools/edit'));
+
+const StudentsListPage = lazy(() => import('src/pages/dashboard/students/list'));
+const StudentsCreatePage = lazy(() => import('src/pages/dashboard/students/new'));
+const StudentsEditPage = lazy(() => import('src/pages/dashboard/students/edit'));
+
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
 const SurveyCreatePage = lazy(() => import('src/pages/dashboard/survey/new'));
 const SurveyEditPage = lazy(() => import('src/pages/dashboard/survey/edit'));
@@ -816,6 +824,72 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+      {
+        path: 'schools',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SchoolListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SchoolCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SchoolEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+      
+      {
+        path: 'students',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <StudentsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <StudentsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <StudentsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+      
       
 
       { path: 'welcome', element: <WelcomePage /> },
