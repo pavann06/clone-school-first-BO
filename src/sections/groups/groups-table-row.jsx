@@ -124,7 +124,7 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow , onViewRow
         >
           <Iconify icon="carbon:view" />
           {/* <AppointmentListPage /> */}
-          View
+          Feeds
         </MenuItem>
       </CustomPopover>
     </>

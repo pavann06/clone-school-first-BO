@@ -166,7 +166,7 @@ export const paths = {
       
     //   new: (groupId)=> `${ROOTS.DASHBOARD}/forum_feeds/${groupId}/new`,
     //   edit: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/edit`,
-    //   view: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/view`,
+    //   view: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/view`, 
     // },
   
         groups: {
@@ -175,7 +175,8 @@ export const paths = {
           edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
           view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/view`,
           forumFeeds: {
-            root: (groupId) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds`,
+            // root: (groupId) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds`,
+            root: `${ROOTS.DASHBOARD}/groups/forum_feeds`, // ✅ Fixed static root
             new: (groupId) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/new`,
             edit: (groupId, id) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/${id}/edit`,
             view: (groupId, id) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/${id}/view`,

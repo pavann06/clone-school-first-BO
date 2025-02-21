@@ -93,9 +93,9 @@ const GroupsCreatePage = lazy(() => import('src/pages/dashboard/groups/new'));
 const GroupsEditPage = lazy(() => import('src/pages/dashboard/groups/edit'));
 const GroupsViewPage = lazy(() => import('src/pages/dashboard/groups/view'));
 
-const ForumFeedsListPage = lazy(() => import('src/pages/dashboard/forum-feeds/list'));
-const ForumFeedsCreatePage = lazy(() => import('src/pages/dashboard/forum-feeds/new'));
-const ForumFeedsEditPage = lazy(() => import('src/pages/dashboard/forum-feeds/edit'));
+const ForumFeedsListPage = lazy(() => import('src/pages/dashboard/groups/feeds-list'));
+const ForumFeedsCreatePage = lazy(() => import('src/pages/dashboard/groups/feeds-new'));
+const ForumFeedsEditPage = lazy(() => import('src/pages/dashboard/groups/feeds-edit'));
 
 const SchoolListPage = lazy(() => import('src/pages/dashboard/schools/list'));
 const SchoolCreatePage = lazy(() => import('src/pages/dashboard/schools/new'));
@@ -763,6 +763,8 @@ export const dashboardRoutes = [
       //   ],
       // },
 
+
+
       {
         path: 'groups',
         children: [
@@ -798,16 +800,20 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
-          {
-            path: ':id/forum_feeds', // ✅ Forums are now under groups/:id
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <ForumFeedsListPage />
-              </PermissionBasedGuard>
-            ),
+          // {
+          //   path: ':id/forum_feeds', 
+          //   element: (
+          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+          //       <ForumFeedsListPage />
+          //     </PermissionBasedGuard>
+          //   ),
+          // },
+          { 
+            path: ':groupId/forum_feeds',  // ✅ Fixed variable name
+            element: <PermissionBasedGuard hasContent permissions={['is_superuser']}><ForumFeedsListPage /></PermissionBasedGuard> 
           },
           {
-            path: ':id/forum_feeds/new', // ✅ Creating a forum feed for a group
+            path: ':groupId/forum_feeds/new',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <ForumFeedsCreatePage />
@@ -815,7 +821,7 @@ export const dashboardRoutes = [
             ),
           },
           {
-            path: ':id/forum_feeds/:feedId/edit', // ✅ Editing a forum feed for a group
+            path: ':id/forum_feeds/:feedId/edit', 
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <ForumFeedsEditPage />

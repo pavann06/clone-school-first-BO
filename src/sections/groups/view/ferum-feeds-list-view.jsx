@@ -1,3 +1,4 @@
+// import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
 
@@ -5,43 +6,53 @@ import {
   Box,
   Card,
   Table,
-  Button,
   Skeleton,
+  Button,
   Container,
   TableBody,
   TableContainer,
   TablePagination,
 } from '@mui/material';
 
+import PropTypes from 'prop-types';
+
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
+import Iconify from 'src/components/iconify';
 
 import request from 'src/api/request';
+import { useParams } from 'react-router-dom';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
+import { label } from 'yet-another-react-lightbox';
 
-import GroupsTableRow from '../groups-table-row';
+import FerumFeedsTableRow from '../ferum-feeds-table-row';
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'name', label: 'Name' },
-  { id: 'profile_image', label: 'Image' },
-  { id: 'logo', label: 'Logo' },
-  { id: 'subscribers', label: 'Subscribers ' },
+  { id: 'feed_type', label: 'Feed Type' },
+  { id: 'heading', label: 'Heading' },
+  { id: 'description', label: 'Description' },
+  { id: 'language', label: 'Language' },
 
-  { id: 'posts', label: 'Posts ' },
-  // { id: 'admins' , label : 'Admins'},
+  { id: 'image', label: 'Image' },
 
+  { id: 'likes_count', label: 'Likes ' },
+
+  // {id: 'trending' , label : 'Trending'},
+  { id: 'comment_type', label: 'Comment Type' },
   { id: 'status', label: 'Status' },
   { id: 'actions ', label: 'Actions' },
 ];
 
-export default function GroupsListView() {
+export default function FerumFeedsListView({groupId}) {
+  // const { groupId } = useParams(); // Get groupId from URL
+  // console.log(groupId, 'group id of groups');
+
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -49,12 +60,23 @@ export default function GroupsListView() {
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ['edutainment', pagination.page, pagination.page_size],
+  //   queryFn: () =>
+  //     request.get(
+  //       `backoffice/forum/feeds?page=${pagination.page}&page_size=${pagination.page_size}`
+  //     ),
+  //   keepPreviousData: true,
+  // });
+
   const { data, isLoading } = useQuery({
-    queryKey: ['edutainment', pagination.page, pagination.page_size],
+    queryKey: ['edutainment', groupId, pagination.page, pagination.page_size], // Include groupId in key
     queryFn: () =>
-      request.get(`backoffice/groups?page=${pagination.page}&page_size=${pagination.page_size}`),
+  
+     request.get(`backoffice/forum/feeds?&page=${pagination.page}&page_size=${pagination.page_size}`), // Pass groupId
     keepPreviousData: true,
   });
+  
 
   // Set data when fetched successfully
   useEffect(() => {
@@ -81,33 +103,22 @@ export default function GroupsListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.groups.edit(id));
+      router.push(paths.dashboard.groups.forumFeeds.edit(id));
     },
     [router]
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/groups/${id}`);
+    const response = await request.delete(`backoffice/forum/feeds/${id}`);
 
     const { success } = response;
 
-    // contact creation success
     if (success) {
       enqueueSnackbar('Deleted successfully');
 
-      // refetch the data
       setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
-
-  const handleViewRow = useCallback(
-    (id) => {
-      const targetPath = paths.dashboard.groups.view(id);
-
-      router.push(targetPath);
-    },
-    [router]
-  );
 
   return (
     <Container maxWidth="lg">
@@ -117,16 +128,16 @@ export default function GroupsListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Groups',
-              href: paths.dashboard.groups.root,
+              name: 'News',
+              href: paths.dashboard.groups.forumFeeds.root,
             },
             { name: 'List' },
           ]}
         />
+
         <Button
           component={RouterLink}
-          href={paths.dashboard.groups.new}
-          variant="contained"
+          href={paths.dashboard.groups.forumFeeds.new(groupId)}
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
             position: 'absolute',
@@ -134,7 +145,7 @@ export default function GroupsListView() {
             right: '5px',
           }}
         >
-          New Feed
+          New Feeds
         </Button>
       </Box>
       <Card>
@@ -148,7 +159,7 @@ export default function GroupsListView() {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <GroupsTableRow
+                      <FerumFeedsTableRow
                         key={row.id}
                         row={{
                           ...row,
@@ -156,7 +167,7 @@ export default function GroupsListView() {
                         }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        onViewRow={() => handleViewRow(row.id)}
+                        //  onViewRow={()=> handleViewRow(row.id)}
                       />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}
@@ -177,3 +188,7 @@ export default function GroupsListView() {
     </Container>
   );
 }
+
+FerumFeedsListView.propTypes = {
+  groupId: PropTypes.string.isRequired, // Ensure groupId is a required string
+};

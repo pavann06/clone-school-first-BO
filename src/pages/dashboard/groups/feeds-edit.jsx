@@ -2,22 +2,22 @@ import { Helmet } from 'react-helmet-async';
 
 import { useParams } from 'src/routes/hooks';
 
-import { FerumFeedsListView } from 'src/sections/groups/view';
+import { FerumFeedsEditView } from 'src/sections/groups/view';
 
 // ----------------------------------------------------------------------
 
-export default function GroupsViewPage() {
+export default function ForumFeedsEditPage() {
   const params = useParams();
 
-  const { id : groupId } = params;
+  const { id } = params;
 
   return (
     <>
       <Helmet>
-        <title> Feeds List</title>
+        <title> Forum Feeds Edit</title>
       </Helmet>
 
-      <FerumFeedsListView id={`${groupId}`} />
+      <FerumFeedsEditView id={`${id}`} />
     </>
   );
 }

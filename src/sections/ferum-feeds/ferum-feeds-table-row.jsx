@@ -1,179 +1,179 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import ListItemText from '@mui/material/ListItemText';
-import {
-  Link,
-  Box,
-  TableRow,
-  MenuItem,
-  TableCell,
-  IconButton,
-  Dialog,
-  DialogContent,
-  Typography,
-  Button,
-} from '@mui/material';
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
+// import { useState } from 'react';
+// import PropTypes from 'prop-types';
+// import ListItemText from '@mui/material/ListItemText';
+// import {
+//   Link,
+//   Box,
+//   TableRow,
+//   MenuItem,
+//   TableCell,
+//   IconButton,
+//   Dialog,
+//   DialogContent,
+//   Typography,
+//   Button,
+// } from '@mui/material';
+// import Iconify from 'src/components/iconify';
+// import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function FerumFeedsTableRow({ row, onEditRow, onDeleteRow }) {
-  const {
-    serial_no,
+// export default function FerumFeedsTableRow({ row, onEditRow, onDeleteRow }) {
+//   const {
+//     serial_no,
     
-    language,
-    feed_type,
-    description,
-    comment_type,
-    trending,
-    likes_count,
+//     language,
+//     feed_type,
+//     description,
+//     comment_type,
+//     trending,
+//     likes_count,
 
-    heading,
+//     heading,
 
-    image,
-    status,
-  } = row;
+//     image,
+//     status,
+//   } = row;
 
-  const [openDialog, setOpenDialog] = useState(false);
+//   const [openDialog, setOpenDialog] = useState(false);
 
-  const handleOpenDialog = () => setOpenDialog(true);
-  const handleCloseDialog = () => setOpenDialog(false);
+//   const handleOpenDialog = () => setOpenDialog(true);
+//   const handleCloseDialog = () => setOpenDialog(false);
 
-  const truncatedDescription =
-  description && description.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
+//   const truncatedDescription =
+//   description && description.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
 
 
-  const popover = usePopover();
+//   const popover = usePopover();
 
-  return (
-    <>
-      <TableRow hover>
-        {/* ID */}
-        <TableCell>{serial_no}</TableCell>
+//   return (
+//     <>
+//       <TableRow hover>
+//         {/* ID */}
+//         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>{feed_type}</TableCell>
-        <TableCell>{heading}</TableCell>
+//         <TableCell>{feed_type}</TableCell>
+//         <TableCell>{heading}</TableCell>
 
-        {/* Description */}
-        <TableCell>
-  <Typography variant="body2">
-    {truncatedDescription}{' '}
-    {description && description.length > 100 && (
-      <Button size="small" onClick={handleOpenDialog}>
-        Read More
-      </Button>
-    )}
-  </Typography>
-</TableCell>
+//         {/* Description */}
+//         <TableCell>
+//   <Typography variant="body2">
+//     {truncatedDescription}{' '}
+//     {description && description.length > 100 && (
+//       <Button size="small" onClick={handleOpenDialog}>
+//         Read More
+//       </Button>
+//     )}
+//   </Typography>
+// </TableCell>
 
-        <TableCell>{language}</TableCell>
-
-      
+//         <TableCell>{language}</TableCell>
 
       
 
-        {/* Image */}
-        <TableCell align="center">
-          {image ? (
-            <img
-              src={image}
-              alt={`Thumbnail for ${heading}`}
-              style={{ maxWidth: 100, maxHeight: 50 }}
-            />
-          ) : (
-            'No Image'
-          )}
-        </TableCell>
+      
 
-        {/* Interactions */}
-        <TableCell>{likes_count}</TableCell>
-        <TableCell>{comment_type}</TableCell>
+//         {/* Image */}
+//         <TableCell align="center">
+//           {image ? (
+//             <img
+//               src={image}
+//               alt={`Thumbnail for ${heading}`}
+//               style={{ maxWidth: 100, maxHeight: 50 }}
+//             />
+//           ) : (
+//             'No Image'
+//           )}
+//         </TableCell>
 
-        {/* Language */}
+//         {/* Interactions */}
+//         <TableCell>{likes_count}</TableCell>
+//         <TableCell>{comment_type}</TableCell>
 
-        {/* Status */}
-        <TableCell>{status}</TableCell>
+//         {/* Language */}
 
-        {/* Actions */}
-        <TableCell align="center">
-          <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell>
-      </TableRow>
+//         {/* Status */}
+//         <TableCell>{status}</TableCell>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-        <DialogContent sx={{ position: 'relative', p: 3 }}>
-          {/* Watermark */}
-          <Typography
-            variant="h1"
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              color: 'rgba(0, 0, 0, 0.1)',
-              fontSize: '5rem',
-              fontWeight: 'bold',
-              pointerEvents: 'none', // Prevent interaction
-              userSelect: 'none', // Prevent selection
-            }}
-          >
-            FamiliFirst
-          </Typography>
+//         {/* Actions */}
+//         <TableCell align="center">
+//           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
+//             <Iconify icon="eva:more-vertical-fill" />
+//           </IconButton>
+//         </TableCell>
+//       </TableRow>
 
-          {/* Title */}
-          <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-            Full Description
-          </Typography>
+//       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
+//         <DialogContent sx={{ position: 'relative', p: 3 }}>
+//           {/* Watermark */}
+//           <Typography
+//             variant="h1"
+//             sx={{
+//               position: 'absolute',
+//               top: '50%',
+//               left: '50%',
+//               transform: 'translate(-50%, -50%)',
+//               color: 'rgba(0, 0, 0, 0.1)',
+//               fontSize: '5rem',
+//               fontWeight: 'bold',
+//               pointerEvents: 'none', // Prevent interaction
+//               userSelect: 'none', // Prevent selection
+//             }}
+//           >
+//             FamiliFirst
+//           </Typography>
 
-          {/* Description */}
-          <Typography variant="body1" sx={{ mb: 4 }}>
-            {description}
-          </Typography>
+//           {/* Title */}
+//           <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+//             Full Description
+//           </Typography>
 
-          {/* Close Button */}
-          <Button
-            onClick={handleCloseDialog}
-            variant="contained"
-            sx={{ display: 'block', ml: 'auto', mr: 'auto', p: 1 }}
-          >
-            Close
-          </Button>
-        </DialogContent>
-      </Dialog>
+//           {/* Description */}
+//           <Typography variant="body1" sx={{ mb: 4 }}>
+//             {description}
+//           </Typography>
 
-      {/* Custom Popover */}
-      <CustomPopover
-        open={popover.open}
-        onClose={popover.onClose}
-        arrow="right-top"
-        sx={{ width: 140 }}
-      >
-        <MenuItem
-          onClick={() => {
-            onEditRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="solar:pen-bold" />
-          Edit
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            onDeleteRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="material-symbols:delete" />
-          Delete
-        </MenuItem>
-      </CustomPopover>
-    </>
-  );
-}
+//           {/* Close Button */}
+//           <Button
+//             onClick={handleCloseDialog}
+//             variant="contained"
+//             sx={{ display: 'block', ml: 'auto', mr: 'auto', p: 1 }}
+//           >
+//             Close
+//           </Button>
+//         </DialogContent>
+//       </Dialog>
 
-FerumFeedsTableRow.propTypes = {
-  onEditRow: PropTypes.func,
-  onDeleteRow: PropTypes.func,
-  row: PropTypes.object,
-};
+//       {/* Custom Popover */}
+//       <CustomPopover
+//         open={popover.open}
+//         onClose={popover.onClose}
+//         arrow="right-top"
+//         sx={{ width: 140 }}
+//       >
+//         <MenuItem
+//           onClick={() => {
+//             onEditRow();
+//             popover.onClose();
+//           }}
+//         >
+//           <Iconify icon="solar:pen-bold" />
+//           Edit
+//         </MenuItem>
+//         <MenuItem
+//           onClick={() => {
+//             onDeleteRow();
+//             popover.onClose();
+//           }}
+//         >
+//           <Iconify icon="material-symbols:delete" />
+//           Delete
+//         </MenuItem>
+//       </CustomPopover>
+//     </>
+//   );
+// }
+
+// FerumFeedsTableRow.propTypes = {
+//   onEditRow: PropTypes.func,
+//   onDeleteRow: PropTypes.func,
+//   row: PropTypes.object,
+// };
