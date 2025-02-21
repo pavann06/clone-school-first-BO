@@ -60,22 +60,17 @@ export default function FerumFeedsListView({groupId}) {
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ['edutainment', pagination.page, pagination.page_size],
-  //   queryFn: () =>
-  //     request.get(
-  //       `backoffice/forum/feeds?page=${pagination.page}&page_size=${pagination.page_size}`
-  //     ),
-  //   keepPreviousData: true,
-  // });
+
 
   const { data, isLoading } = useQuery({
-    queryKey: ['edutainment', groupId, pagination.page, pagination.page_size], // Include groupId in key
+    queryKey: ['forum_feeds', groupId, pagination.page, pagination.page_size], 
     queryFn: () =>
-  
-     request.get(`backoffice/forum/feeds?&page=${pagination.page}&page_size=${pagination.page_size}`), // Pass groupId
+      request.get(
+        `backoffice/forum/feeds?group_id=${groupId}&page=${pagination.page}&page_size=${pagination.page_size}`
+      ),
     keepPreviousData: true,
   });
+
   
 
   // Set data when fetched successfully
@@ -101,11 +96,13 @@ export default function FerumFeedsListView({groupId}) {
     setPagination({ page: 1, page_size: newPageSize });
   };
 
+ 
+
   const handleEditRow = useCallback(
-    (id) => {
-      router.push(paths.dashboard.groups.forumFeeds.edit(id));
+    (feedId) => {
+      router.push(paths.dashboard.groups.forumFeeds.edit(groupId, feedId)); 
     },
-    [router]
+    [router, groupId]
   );
 
   const handleDeleteRow = async (id) => {
@@ -127,17 +124,16 @@ export default function FerumFeedsListView({groupId}) {
           heading="List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            {
-              name: 'News',
-              href: paths.dashboard.groups.forumFeeds.root,
-            },
+          
+            { name: 'Feeds', href: paths.dashboard.groups.forumFeeds.root(groupId) }, 
             { name: 'List' },
           ]}
         />
 
         <Button
           component={RouterLink}
-          href={paths.dashboard.groups.forumFeeds.new(groupId)}
+          variant="contained"
+          href={paths.dashboard.groups.forumFeeds.new(groupId)} 
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
             position: 'absolute',
@@ -145,7 +141,7 @@ export default function FerumFeedsListView({groupId}) {
             right: '5px',
           }}
         >
-          New Feeds
+          New Feed
         </Button>
       </Box>
       <Card>
@@ -190,5 +186,5 @@ export default function FerumFeedsListView({groupId}) {
 }
 
 FerumFeedsListView.propTypes = {
-  groupId: PropTypes.string.isRequired, // Ensure groupId is a required string
+  groupId: PropTypes.string.isRequired,// Ensure groupId is a required string
 };

@@ -9,7 +9,7 @@ import { FerumFeedsListView } from 'src/sections/groups/view';
 export default function GroupsViewPage() {
   const params = useParams();
 
-  const { id : groupId } = params;
+  const { id  } = params;
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function GroupsViewPage() {
         <title> Feeds List</title>
       </Helmet>
 
-      <FerumFeedsListView id={`${groupId}`} />
+      <FerumFeedsListView groupId={String(id)} />
     </>
   );
 }

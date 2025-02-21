@@ -9,7 +9,7 @@ import { FerumFeedsEditView } from 'src/sections/groups/view';
 export default function ForumFeedsEditPage() {
   const params = useParams();
 
-  const { id } = params;
+  const { id , feedId} = params;
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function ForumFeedsEditPage() {
         <title> Forum Feeds Edit</title>
       </Helmet>
 
-      <FerumFeedsEditView id={`${id}`} />
+      <FerumFeedsEditView id={id} feedId={feedId} />
     </>
   );
 }

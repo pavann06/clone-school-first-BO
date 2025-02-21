@@ -134,7 +134,7 @@ export default function GroupsListView() {
             right: '5px',
           }}
         >
-          New Feed
+          New Group
         </Button>
       </Box>
       <Card>

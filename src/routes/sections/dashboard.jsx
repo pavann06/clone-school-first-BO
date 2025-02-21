@@ -793,27 +793,16 @@ export const dashboardRoutes = [
             ),
           },
           {
-            path: ':id/view',
+            path: ':id/feeds',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <GroupsViewPage />
               </PermissionBasedGuard>
             ),
           },
-          // {
-          //   path: ':id/forum_feeds', 
-          //   element: (
-          //     <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-          //       <ForumFeedsListPage />
-          //     </PermissionBasedGuard>
-          //   ),
-          // },
-          { 
-            path: ':groupId/forum_feeds',  // ✅ Fixed variable name
-            element: <PermissionBasedGuard hasContent permissions={['is_superuser']}><ForumFeedsListPage /></PermissionBasedGuard> 
-          },
+  
           {
-            path: ':groupId/forum_feeds/new',
+            path: ':id/feeds/new',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <ForumFeedsCreatePage />
@@ -821,7 +810,7 @@ export const dashboardRoutes = [
             ),
           },
           {
-            path: ':id/forum_feeds/:feedId/edit', 
+            path: ':id/feeds/:feedId/edit', 
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <ForumFeedsEditPage />

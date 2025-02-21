@@ -173,13 +173,12 @@ export const paths = {
           root: `${ROOTS.DASHBOARD}/groups`,
           new: `${ROOTS.DASHBOARD}/groups/new`,
           edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
-          view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/view`,
+          view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds`,
           forumFeeds: {
-            // root: (groupId) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds`,
-            root: `${ROOTS.DASHBOARD}/groups/forum_feeds`, // ✅ Fixed static root
-            new: (groupId) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/new`,
-            edit: (groupId, id) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/${id}/edit`,
-            view: (groupId, id) => `${ROOTS.DASHBOARD}/groups/${groupId}/forum_feeds/${id}/view`,
+            root: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds`, 
+            new: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/new`,
+            edit: (id, feedId) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/${feedId}/edit`,
+            view: (id, feedId) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/${feedId}/view`,
           },
         },
 
@@ -205,13 +204,6 @@ export const paths = {
 
 
 
-
-
-    // banners: {
-    //   root: `${ROOTS.DASHBOARD}/banners`,
-    //   new: `${ROOTS.DASHBOARD}/banners/new`,
-    //   edit: (id) => `${ROOTS.DASHBOARD}/banners/${id}/edit`,
-    // },
 
     contact: {
       root: `${ROOTS.DASHBOARD}/contact`,

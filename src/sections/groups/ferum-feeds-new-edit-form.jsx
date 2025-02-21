@@ -33,7 +33,9 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 
 // ----------------------------------------------------------------------
 
-export default function FerumFeedsNewEditForm({ currentFeed  }) {
+export default function FerumFeedsNewEditForm({ currentFeed,  groupId , }) {
+
+  console.log("Received groupId in FerumFeedsNewEditForm:", groupId); // Debugging
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
@@ -50,7 +52,7 @@ export default function FerumFeedsNewEditForm({ currentFeed  }) {
     status: Yup.string(),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
-    group_id: Yup.string().required('Group is required'),
+    group_id: Yup.string(),
   });
 
   const defaultValues = useMemo(
@@ -65,9 +67,11 @@ export default function FerumFeedsNewEditForm({ currentFeed  }) {
       description: currentFeed?.description || '',
       // posting_date: currentEdutainment?.posting_date || '',
       status: currentFeed?.status || 'Pending',
-      group_id: currentFeed?.group_id || '',
+      // group_id: currentFeed?. groupId || '',
+      group_id: currentFeed?.group_id || groupId || ''  ,
+
     }),
-    [currentFeed ]
+    [currentFeed , groupId]
   );
 
   const methods = useForm({
@@ -224,7 +228,7 @@ export default function FerumFeedsNewEditForm({ currentFeed  }) {
                   <Stack spacing={2}>
                     <RHFSelect name="language" label="Language">
                       <MenuItem value="Telugu">Telugu</MenuItem>
-                      <MenuItem value="Hindi">Hindi</MenuItem>
+                     
                       <MenuItem value="English">English</MenuItem>
                     </RHFSelect>
                     <RHFTextField name="heading" label="Heading" />
@@ -253,9 +257,8 @@ export default function FerumFeedsNewEditForm({ currentFeed  }) {
                   </Box>
                 )}
 
-<RHFTextField name="group_id" label="Group Id" />
+<RHFTextField name="group_id" label="Group Id" disabled />
 
-              
 
                 {values.feed_type === 'Video' && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
@@ -316,5 +319,5 @@ export default function FerumFeedsNewEditForm({ currentFeed  }) {
 
 FerumFeedsNewEditForm.propTypes = {
   currentFeed: PropTypes.any,
-  // groupId: PropTypes.any,
+  groupId: PropTypes.any,
 };

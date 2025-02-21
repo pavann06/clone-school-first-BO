@@ -6,14 +6,15 @@ import { useParams } from 'src/routes/hooks';
 // ----------------------------------------------------------------------
 
 export default function ForumFeedsCreatePage() {
-  const { groupId } = useParams(); 
+  const { id } = useParams(); 
+  console.log("Group ID from URL create page :", id); // Debugging
   return (
     <>
       <Helmet>
         <title> New Forum Feed </title>
       </Helmet>
 
-      <ForumFeedsCreateView groupId={groupId} />
+      <ForumFeedsCreateView gruopId={id} />
     </>
   );
 }

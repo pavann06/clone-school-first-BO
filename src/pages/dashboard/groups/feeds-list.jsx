@@ -1,21 +1,24 @@
-// import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 
-// import { FerumFeedsListView } from 'src/sections/groups/view';
-// import { useParams } from 'src/routes/hooks';
+import { useParams } from 'src/routes/hooks';
 
-// // ----------------------------------------------------------------------
+import { FerumFeedsListView } from 'src/sections/groups/view';
 
-// export default function ForumFeedsListPage() {
-//   const { groupId } = useParams(); 
-//   return (
-//     <>
-//       <Helmet>
-//         <title> Ferom Feeds List</title>
-//       </Helmet>
+// ----------------------------------------------------------------------
 
-//       <FerumFeedsListView   groupId = {groupId} />
-//     </>
-//   );
-// }
+export default function GroupsViewPage() {
+  const params = useParams();
 
+  const { id  } = params;
+
+  return (
+    <>
+      <Helmet>
+        <title> Feeds List</title>
+      </Helmet>
+
+      <FerumFeedsListView id={`${id}`} />
+    </>
+  );
+}
 

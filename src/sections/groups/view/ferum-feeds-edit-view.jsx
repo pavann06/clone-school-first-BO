@@ -15,12 +15,12 @@ import FerumFeedsNewEditForm from '../ferum-feeds-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function FerumFeedsEditView({ id }) {
+export default function FerumFeedsEditView({ feedId }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/forum/feeds/${id}`),
+    queryKey: ['edutainment', feedId],
+    queryFn: () => request.get(`backoffice/forum/feeds/${feedId}`),
   });
 
   return (
@@ -39,11 +39,12 @@ export default function FerumFeedsEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <FerumFeedsNewEditForm currentFeed={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <FerumFeedsNewEditForm currentFeed={data?.data}  />}
     </Container>
   );
 }
 
 FerumFeedsEditView.propTypes = {
-  id: PropTypes.string,
+  feedId: PropTypes.string,
+  
 };
