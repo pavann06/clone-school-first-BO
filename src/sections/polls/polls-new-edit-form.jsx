@@ -23,6 +23,8 @@ import { CreatePoll, UpdatePoll } from 'src/api/polls';
 
 import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
 
+import SchoolsDropdown from './schools-dropdown';
+
 export default function PollsNewEditForm({ currentPoll }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -41,6 +43,7 @@ export default function PollsNewEditForm({ currentPoll }) {
     answer: Yup.string().required('Answer is required'),
     is_active: Yup.boolean(),
     description: Yup.string().required('Description is required'),
+      school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
   });
 
   // const defaultValues = useMemo(
@@ -68,6 +71,7 @@ export default function PollsNewEditForm({ currentPoll }) {
         : '',
       is_active: currentPoll?.is_active || false,
       description: currentPoll?.description || '',
+      school_ids: currentPoll?.school_ids || [],
     }),
     [currentPoll]
   );
@@ -199,6 +203,14 @@ export default function PollsNewEditForm({ currentPoll }) {
 
               {/* Description */}
               <RHFTextField name="description" label="Description" multiline rows={4} />
+
+              <Box>
+              <Typography variant="subtitle2">Select Schools</Typography>
+              <SchoolsDropdown
+                value={values.school_ids}
+                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+              />
+            </Box>
 
               {/* Is Active */}
               <Box display="flex" alignItems="center" gap={2}>

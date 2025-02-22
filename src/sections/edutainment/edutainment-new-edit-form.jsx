@@ -30,6 +30,9 @@ import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
 
 // Form Components
 import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components/hook-form';
+import SchoolsDropdown from './schools-dropdown';
+
+
 
 // ----------------------------------------------------------------------
 
@@ -50,6 +53,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     status: Yup.string(),
     language: Yup.string().required('Language is required'),
     description: Yup.string().required('Description is required'),
+    school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
   });
 
   const defaultValues = useMemo(
@@ -62,8 +66,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       duration: currentEdutainment?.duration || 0,
       language: currentEdutainment?.language || '',
       description: currentEdutainment?.description || '',
-      // posting_date: currentEdutainment?.posting_date || '',
-      status: currentEdutainment?.status || 'Pending',
+      school_ids: currentEdutainment?.school_ids || [],
     }),
     [currentEdutainment]
   );
@@ -87,6 +90,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     try {
       const payload = {
         ...data,
+        // school_ids: data.school_ids || [],
         image: data.image || null,
         video: data.video || null,
         youtube_video: data.youtube_video || null,
@@ -143,7 +147,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     [enqueueSnackbar]
   );
 
-
   const handleDrop = useCallback(
     async (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -151,7 +154,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         const fileWithPreview = Object.assign(file, {
           preview: URL.createObjectURL(file),
         });
-  
+
         // Check file type (image or video) and set the corresponding value
         if (file.type.startsWith('image/')) {
           setValue('image', fileWithPreview);
@@ -174,7 +177,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     },
     [setValue, enqueueSnackbar, handleUpload]
   );
-  
 
   const handleRemoveFile = useCallback(() => {
     setValue('image', null); // Remove the image
@@ -239,6 +241,15 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     <RHFTextField name="description" label="Description" multiline rows={4} />
                   </Stack>
                 </Box>
+
+                   {/* Schools Dropdown */}
+            <Box>
+              <Typography variant="subtitle2">Select Schools</Typography>
+              <SchoolsDropdown
+                value={values.school_ids}
+                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+              />
+            </Box>
 
                 {/* Conditionally Render Image Field */}
                 {(values.feed_type === 'Image' ||
@@ -321,6 +332,3 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 EdutainmentNewEditForm.propTypes = {
   currentEdutainment: PropTypes.any,
 };
-
-
-

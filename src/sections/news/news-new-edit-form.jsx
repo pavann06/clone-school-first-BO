@@ -23,6 +23,8 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 import { CreateNews, UpdateNews } from 'src/api/news';
 import CategoriesDropdown from './news-categories';
 
+import SchoolsDropdown from './schools-dropdown';
+
 export default function NewsNewEditForm({ currentNews }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -39,6 +41,8 @@ export default function NewsNewEditForm({ currentNews }) {
     videos: Yup.array().nullable(),
     youtube_urls: Yup.string(),
     remarks: Yup.string(),
+     school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
+    
   });
 
   const defaultValues = useMemo(
@@ -59,6 +63,7 @@ export default function NewsNewEditForm({ currentNews }) {
         ? currentNews.youtube_urls.join(', ')
         : currentNews?.youtube_urls || '',
       remarks: currentNews?.remarks || '',
+      school_ids: currentNews?.school_ids || [],
     }),
     [currentNews]
   );
@@ -216,6 +221,14 @@ export default function NewsNewEditForm({ currentNews }) {
                   )}
                 />
               </FormControl>
+
+              <Box>
+              <Typography variant="subtitle2">Select Schools</Typography>
+              <SchoolsDropdown
+                value={values.school_ids}
+                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+              />
+            </Box>
 
               <RHFSelect name="target_groups" label="Target Groups">
                 <MenuItem value="All">All</MenuItem>
