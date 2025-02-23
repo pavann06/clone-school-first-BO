@@ -9,15 +9,13 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 export default function SurveysTableRow({ row, onEditRow, onDeleteRow , onViewRow }) {
   const {
     serial_no,
-    language,
+    title,
     heading,
     description,
-    likes_count,
-    comments_count,
-    whatsapp_share_count,
-    posting_date,
-    approved_by,
-    approved_time,
+    number_of_questions,
+    survey_type,
+    target_group,
+    total_responses,
     image,
     status,
   } = row;
@@ -38,7 +36,7 @@ export default function SurveysTableRow({ row, onEditRow, onDeleteRow , onViewRo
         <TableCell>{serial_no}</TableCell>
 
         <TableCell>
-       {heading}
+       {title}
         </TableCell>
 
         {/* Description */}
@@ -53,12 +51,7 @@ export default function SurveysTableRow({ row, onEditRow, onDeleteRow , onViewRo
           </Typography>
         </TableCell>
 
-        {/* Approved Info */}
-        <TableCell>
-          <div>Posted: {posting_date}</div>
-          {/* <div>Approved By: {approved_by}</div> */}
-          <div>Approved At: {new Date(approved_time).toLocaleDateString()}</div>
-        </TableCell>
+     
 
         {/* Image */}
         <TableCell align="center">
@@ -75,15 +68,17 @@ export default function SurveysTableRow({ row, onEditRow, onDeleteRow , onViewRo
 
         {/* Interactions */}
         <TableCell>
-          <div>Likes: {likes_count}</div>
-          <div>Comments: {comments_count}</div>
-          <div>WhatsApp Shares: {whatsapp_share_count}</div>
+          {survey_type}
         </TableCell>
 
         {/* Language */}
         <TableCell>
-         {language}
+         {target_group}
         </TableCell>
+
+        <TableCell>{number_of_questions}</TableCell>
+
+        <TableCell>{total_responses}</TableCell>
 
         {/* Status */}
         <TableCell>{status}</TableCell>

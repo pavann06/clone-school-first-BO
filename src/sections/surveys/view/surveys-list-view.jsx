@@ -29,16 +29,23 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 import EdutainmentTableRow from '../surveys-table-row';
+// import { label } from 'yet-another-react-lightbox';
 
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'heading', label: 'Heading' },
+  { id: 'title', label: 'Title' },
   { id: 'description', label: 'Description' },
-  { id: 'approved_date', label: 'Approved ' },
   { id: 'image', label: 'Image' },
-  { id: 'likes_count', label: 'Likes ' },
-  { id: 'language', label: 'Language' },
+  {id: 'survey_type' ,label:'Survey Type'},
+  {id: 'target_group', label:'Target Group'},
+
+
+
+  { id: 'number_of_questions', label: 'Number Of Questions ' },
+  
+  { id: 'total_responses', label: 'Total Responses ' },
+ 
   {id: 'status' , label : 'Status'},
   { id: 'actions ', label: 'Actions' },
 ];
