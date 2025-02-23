@@ -1,5 +1,3 @@
-
-
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
@@ -41,17 +39,15 @@ export default function CategoriesNewEditForm({ currentCategory }) {
 
   // Validation Schema for the form
   const CategorySchema = Yup.object().shape({
-  
     display_name: Yup.string().required('Prompt is required'),
-   
+
     icon_url: Yup.mixed(),
   });
 
   const defaultValues = useMemo(
     () => ({
-    
       display_name: currentCategory?.display_name || '',
-     
+
       icon_url: currentCategory?.icon_url || '',
     }),
     [currentCategory]
@@ -71,14 +67,10 @@ export default function CategoriesNewEditForm({ currentCategory }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-
       const payload = {
         ...data,
         image: data.image || null,
-     
       };
-      
-    
 
       const response = currentCategory
         ? await UpdateCategory({ ...payload, id: currentCategory.id })
@@ -165,30 +157,23 @@ export default function CategoriesNewEditForm({ currentCategory }) {
                   md: 'repeat(2, 1fr)',
                 }}
               >
-               
-
                 <RHFTextField name="display_name" label="Display Name" />
-              
-               
-              
-
-           
               </Box>
-             
+
               <Box>
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Image</Typography>
-                    <RHFUpload
-                      thumbnail
-                      name="icon_url"
-                      maxSize={3145728}
-                      onDrop={handleDrop}
-                      onRemove={handleRemoveFile}
-                      onRemoveAll={handleRemoveAllFiles}
-                      isLoading={isUploading}
-                    />
-                  </Stack>
-                </Box>
+                <Stack spacing={1.5}>
+                  <Typography variant="subtitle2">Image</Typography>
+                  <RHFUpload
+                    thumbnail
+                    name="icon_url"
+                    maxSize={3145728}
+                    onDrop={handleDrop}
+                    onRemove={handleRemoveFile}
+                    onRemoveAll={handleRemoveAllFiles}
+                    isLoading={isUploading}
+                  />
+                </Stack>
+              </Box>
 
               <LoadingButton
                 type="submit"

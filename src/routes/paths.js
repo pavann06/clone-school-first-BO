@@ -121,6 +121,20 @@ export const paths = {
       questions_edit : (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions_edit`,
     },
 
+    surveys:{
+      root: `${ROOTS.DASHBOARD}/surveys`,
+      new: `${ROOTS.DASHBOARD}/surveys/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions`,
+      questions: {
+        root: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions`, 
+        new: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/new`,
+        edit: (id, questionId) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/${questionId}/edit`,
+        view: (id, questionId) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/${questionId}/view`,
+      },
+
+    },
+
     banner: {
       root: `${ROOTS.DASHBOARD}/banner`,
       new: `${ROOTS.DASHBOARD}/banner/new`,

@@ -97,6 +97,15 @@ const ForumFeedsListPage = lazy(() => import('src/pages/dashboard/groups/feeds-l
 const ForumFeedsCreatePage = lazy(() => import('src/pages/dashboard/groups/feeds-new'));
 const ForumFeedsEditPage = lazy(() => import('src/pages/dashboard/groups/feeds-edit'));
 
+
+
+const SurveysListPage = lazy(() => import('src/pages/dashboard/surveys/list'));
+const SurveysCreatePage = lazy(() => import('src/pages/dashboard/surveys/new'));
+const SurveysEditPage = lazy(() => import('src/pages/dashboard/surveys/edit'));
+const SurveysQuestionsViewPage = lazy (() => import('src/pages/dashboard/surveys/questions-list'));
+const SurveysQuestionsCreatePage = lazy(() => import('src/pages/dashboard/surveys/questions-new'));
+const SurveysQuestionsEditPage = lazy(() => import('src/pages/dashboard/surveys/questions-edit'));
+
 const SchoolListPage = lazy(() => import('src/pages/dashboard/schools/list'));
 const SchoolCreatePage = lazy(() => import('src/pages/dashboard/schools/new'));
 const SchoolEditPage = lazy(() => import('src/pages/dashboard/schools/edit'));
@@ -819,6 +828,65 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+
+      {
+        path: 'surveys',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveysListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveysCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveysEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/questions',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveysQuestionsViewPage />
+              </PermissionBasedGuard>
+            ),
+          },
+  
+          {
+            path: ':id/questions/new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveysQuestionsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/questions/:questionId/edit', 
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SurveysQuestionsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
 
 
       {

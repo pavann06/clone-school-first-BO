@@ -16,17 +16,17 @@ import {
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function GroupsTableRow({ row, onEditRow, onDeleteRow , onViewRow,}) {
+export default function GroupsTableRow({ row, onEditRow, onDeleteRow, onViewRow }) {
   const {
     serial_no,
     name,
     logo,
-   
+
     profile_image,
     subscribers,
     admins,
     posts,
-  
+
     status,
   } = row;
 
@@ -39,8 +39,8 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow , onViewRow
         <TableCell>{serial_no}</TableCell>
 
         <TableCell>{name}</TableCell>
-           {/* Image */}
-           <TableCell align="center">
+        {/* Image */}
+        <TableCell align="center">
           {profile_image ? (
             <img
               src={profile_image}
@@ -52,8 +52,8 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow , onViewRow
           )}
         </TableCell>
 
-             {/* Image */}
-             <TableCell align="center">
+        {/* Image */}
+        <TableCell align="center">
           {logo ? (
             <img
               src={logo}
@@ -65,20 +65,11 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow , onViewRow
           )}
         </TableCell>
 
-      
-
-   
-
-     
-
         {/* Interactions */}
         <TableCell>{subscribers}</TableCell>
 
-    
-
         {/* Language */}
         <TableCell>{posts}</TableCell>
-
 
         {/* Status */}
         <TableCell>{status}</TableCell>
@@ -116,7 +107,7 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow , onViewRow
           <Iconify icon="material-symbols:delete" />
           Delete
         </MenuItem>
-                <MenuItem
+        <MenuItem
           onClick={() => {
             onViewRow();
             popover.onClose();

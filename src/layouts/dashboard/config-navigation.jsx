@@ -125,6 +125,17 @@ export function useNavData() {
           },
 
           {
+            title: 'Surveys',
+            path: paths.dashboard.surveys.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.surveys.root },
+               { title: 'create', path: paths.dashboard.surveys.new },
+            ],
+          },
+
+
+          {
             title: 'banner',
             path: paths.dashboard.banner.root,
             icon: ICONS.contact,
