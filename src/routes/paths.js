@@ -212,12 +212,20 @@ export const paths = {
           edit: (id) => `${ROOTS.DASHBOARD}/students/${id}/edit`,
           view: (id) => `${ROOTS.DASHBOARD}/students/${id}/view`,
         },
+
+        onlinecategories: {
+          root: `${ROOTS.DASHBOARD}/onlinecategories`,
+          new: `${ROOTS.DASHBOARD}/onlinecategories/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/onlinecategories/${id}/edit`,
+        },
+
+        onlinestoreproducts: {
+          root: `${ROOTS.DASHBOARD}/onlinestoreproducts`,
+          new: `${ROOTS.DASHBOARD}/onlinestoreproducts/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/onlinestoreproducts/${id}/edit`,
+        },
     
     
-
-
-
-
 
     contact: {
       root: `${ROOTS.DASHBOARD}/contact`,

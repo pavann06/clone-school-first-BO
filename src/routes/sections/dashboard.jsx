@@ -114,6 +114,15 @@ const StudentsListPage = lazy(() => import('src/pages/dashboard/students/list'))
 const StudentsCreatePage = lazy(() => import('src/pages/dashboard/students/new'));
 const StudentsEditPage = lazy(() => import('src/pages/dashboard/students/edit'));
 
+const OnlineCategoriesListPage = lazy(() => import('src/pages/dashboard/onlinecategories/list'));
+const OnlineCategoriesCreatePage = lazy(() => import('src/pages/dashboard/onlinecategories/new'));
+const OnlineCategoriesEditPage = lazy(() => import('src/pages/dashboard/onlinecategories/edit'));
+
+const OnlineStoreProductsEditPage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/edit'));
+const OnlineStoreProductsListPage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/list'));
+const OnlineStoreProductsCreatePage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/new'));
+
+
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
 const SurveyCreatePage = lazy(() => import('src/pages/dashboard/survey/new'));
 const SurveyEditPage = lazy(() => import('src/pages/dashboard/survey/edit'));
@@ -950,6 +959,69 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+      {
+        path: 'onlinecategories',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineCategoriesListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineCategoriesCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineCategoriesEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      
+      {
+        path: 'onlinestoreproducts',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineStoreProductsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineStoreProductsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineStoreProductsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
 
 
       

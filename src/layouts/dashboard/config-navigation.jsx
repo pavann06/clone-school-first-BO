@@ -227,6 +227,26 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'Online Store Categories',
+            path: paths.dashboard.onlinecategories.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.onlinecategories.root },
+               { title: 'create', path: paths.dashboard.onlinecategories.new },
+            ],
+          },
+
+          {
+            title: 'Online Store Products',
+            path: paths.dashboard.onlinestoreproducts.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.onlinestoreproducts.root },
+               { title: 'create', path: paths.dashboard.onlinestoreproducts.new },
+            ],
+          },
+
           
 
 
