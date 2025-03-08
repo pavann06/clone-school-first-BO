@@ -247,6 +247,16 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'Online Orders',
+            path: paths.dashboard.onlineorders.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.onlineorders.root },
+               { title: 'create', path: paths.dashboard.onlineorders.new },
+            ],
+          },
+
           
 
 

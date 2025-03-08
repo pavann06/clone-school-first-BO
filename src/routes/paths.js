@@ -224,6 +224,12 @@ export const paths = {
           new: `${ROOTS.DASHBOARD}/onlinestoreproducts/new`,
           edit: (id) => `${ROOTS.DASHBOARD}/onlinestoreproducts/${id}/edit`,
         },
+
+        onlineorders: {
+          root: `${ROOTS.DASHBOARD}/onlineorders`,
+          new: `${ROOTS.DASHBOARD}/onlineorders/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/onlineorders/${id}/edit`,
+        },
     
     
 

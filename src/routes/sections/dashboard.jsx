@@ -122,6 +122,11 @@ const OnlineStoreProductsEditPage = lazy(() => import('src/pages/dashboard/onlin
 const OnlineStoreProductsListPage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/list'));
 const OnlineStoreProductsCreatePage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/new'));
 
+const OnlineOrdersListPage = lazy(() => import('src/pages/dashboard/onlineorders/list'));
+const OnlineOrdersCreatePage = lazy(() => import('src/pages/dashboard/onlineorders/new'));
+const OnlineOrdersEditPage = lazy(() => import('src/pages/dashboard/onlineorders/edit'));
+
+
 
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
 const SurveyCreatePage = lazy(() => import('src/pages/dashboard/survey/new'));
@@ -1016,6 +1021,37 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <OnlineStoreProductsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+      {
+        path: 'onlineorders',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineOrdersListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineOrdersCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OnlineOrdersEditPage />
               </PermissionBasedGuard>
             ),
           },

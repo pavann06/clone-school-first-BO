@@ -11,16 +11,16 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import OnlineStoreProductsNewEditForm from '../onlinestroreproducts-new-edit-form';
+import OnlineOrdersNewEditForm from '../onlineorders-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function OnlineStoreProductsEditView({ id }) {
+export default function OnlineOrdersEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
     queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/onlinestore/products/${id}`),
+    queryFn: () => request.get(`backoffice/onlinestore/categories/${id}`),
   });
 
   return (
@@ -30,8 +30,8 @@ export default function OnlineStoreProductsEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Online Products',
-            href: paths.dashboard.onlinestoreproducts.root,
+            name: 'Online',
+            href: paths.dashboard.onlinecategories.root,
           },
           { name: data?.data?.heading },
         ]}
@@ -39,11 +39,13 @@ export default function OnlineStoreProductsEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <OnlineStoreProductsNewEditForm currentItem={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <OnlineOrdersNewEditForm currentCategory={data?.data} />}
     </Container>
   );
 }
 
-OnlineStoreProductsEditView.propTypes = {
+OnlineOrdersEditView.propTypes = {
   id: PropTypes.string,
 };
+
+
