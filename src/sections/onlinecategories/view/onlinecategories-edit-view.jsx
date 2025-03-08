@@ -47,3 +47,5 @@ export default function OnlineCategoriesEditView({ id }) {
 OnlineCategoriesEditView.propTypes = {
   id: PropTypes.string,
 };
+
+
