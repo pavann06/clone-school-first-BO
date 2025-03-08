@@ -42,7 +42,12 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
     thumbnail_tag_1: Yup.string().required("Amount is required"),
     thumbnail_tag_2: Yup.string().required("Amount is required"),
     discount_tag: Yup.string().required("Amount is required"),
-    
+    specification: Yup.string().required("enter specification"),
+    highlights : Yup.string().required("enter highlights"),
+    variants: Yup.object().shape({
+      color: Yup.string().required('Color variants are required'),
+      storage: Yup.string().required('Storage variants are required'),
+    }),
 
   });
 
@@ -54,13 +59,19 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
       list_of_images: currentItem?.list_of_images || [],
       mrp: currentItem?.mrp || '',
       final_price: currentItem?.final_price || '',
-      item_category: currentItem?.item_category || '',
+      item_category: currentItem?.item_category || '', 
       gst_percentage: currentItem?.gst_percentage || '',
       gst_amount: currentItem?.gst_amount || '',
       thumbnail_tag_1 : currentItem?.thumbnail_tag_1 || '',
       thumbnail_tag_2 : currentItem?.thumbnail_tag_2 || '',
       discount_tag: currentItem?.discount_tag || '',
       priority: currentItem?.priority || '',
+      highlights: currentItem?.highlights || [],
+      specification: currentItem?.specifications || [],
+      variants: {
+        color: currentItem?.variants?.color?.join(', ') || '',
+        storage: currentItem?.variants?.storage?.join(', ') || '',
+      },
     }),
     [currentItem]
   );
@@ -75,12 +86,23 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const payload = { ...data };
-      const response = currentItem ? await UpdateStoreProduct({ ...payload, id: currentItem.id }) : await CreateStoreProduct(payload);
+      const payload = { 
+        ...data,
+        specification: data.specification.split(',').map((s) => s.trim()), 
+        highlights: data.highlights.split(',').map((h) => h.trim()), 
+        variants: {
+          color: data.variants.color.split(',').map((c) => c.trim()),
+          storage: data.variants.storage.split(',').map((s) => s.trim()),
+        },
+      };
+  
+      const response = currentItem 
+        ? await UpdateStoreProduct({ ...payload, id: currentItem.id }) 
+        : await CreateStoreProduct(payload);
       
       if (response?.success) {
         enqueueSnackbar(currentItem ? 'Update success!' : 'Create success!', { variant: 'success' });
-        router.push('/dashboard/items');
+        router.push('/dashboard/onlinestoreproducts');
         reset();
       } else {
         enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
@@ -89,6 +111,7 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
     }
   });
+  
 
   const handleUpload = useCallback(async (file) => {
     try {
@@ -135,12 +158,14 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
               <RHFTextField name="item_description" label="Description" multiline rows={4} />
 
               <Controller
-                name="category_id"
-                control={control}
-                render={({ field }) => (
-                  <OnlineCategoriesDropdown {...field} onChange={field.onChange} value={field.value} />
-                )}
-              />
+  name="item_category"
+  control={control}
+  defaultValue="" // Ensure it's never undefined
+  render={({ field }) => (
+    <OnlineCategoriesDropdown {...field} value={field.value || ''} onChange={field.onChange} />
+  )}
+/>
+
 
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Thumbnail Image</Typography>
@@ -166,6 +191,13 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
                   currentFiles={values.list_of_images}
                 />
               </Stack>
+
+               <RHFTextField name="highlights" label="Highlights (comma-separated)" />
+              <RHFTextField name="specification" label="Specifications (comma-separated)" />
+
+              <RHFTextField name="variants.color" label="Color Variants (comma-separated)" />
+<RHFTextField name="variants.storage" label="Storage Variants (comma-separated)" />
+
 
               <RHFTextField name="mrp" label="MRP" type="number" />
               <RHFTextField name="final_price" label="Final Price" type="number" />

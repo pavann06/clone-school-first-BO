@@ -20,7 +20,7 @@ export default function OnlineStoreProductsEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/onlinestore/categories/${id}`),
+    queryFn: () => request.get(`backoffice/onlinestore/products/${id}`),
   });
 
   return (
@@ -30,8 +30,8 @@ export default function OnlineStoreProductsEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Online',
-            href: paths.dashboard.onlinecategories.root,
+            name: 'Online Products',
+            href: paths.dashboard.onlinestoreproducts.root,
           },
           { name: data?.data?.heading },
         ]}

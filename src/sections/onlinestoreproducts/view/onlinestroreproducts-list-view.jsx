@@ -83,13 +83,13 @@ export default function OnlineStoreProductsListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.onlinecategories.edit(id));
+      router.push(paths.dashboard.onlinestoreproducts.edit(id));
     },
     [router]
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+    const response = await request.delete(`backoffice/onlinestore/products/${id}`);
 
     const { success } = response;
 
@@ -110,15 +110,15 @@ export default function OnlineStoreProductsListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Online Categories',
-              href: paths.dashboard.onlinecategories.root,
+              name: 'Online Products',
+              href: paths.dashboard.onlinestoreproducts.root,
             },
             { name: 'List' },
           ]}
         />
               <Button
           component={RouterLink}
-          href={paths.dashboard.onlinecategories.new}
+          href={paths.dashboard.onlinestoreproducts.new}
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
@@ -127,7 +127,7 @@ export default function OnlineStoreProductsListView() {
             right: '5px',
           }}
         >
-          New Category
+          New Product
         </Button>
       </Box>
       <Card>

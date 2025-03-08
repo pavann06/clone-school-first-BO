@@ -22,10 +22,10 @@ export default function OnlineStoreProductsCreateView() {
             href: paths.dashboard.root,
           },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.banner.root,
+            name: 'Online Products',
+            href: paths.dashboard.onlinestoreproducts.root,
           },
-          { name: 'New Banner' },
+          { name: 'New Product' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
