@@ -113,13 +113,13 @@ export default function OnlineOrdersListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Online Categories',
-              href: paths.dashboard.onlinecategories.root,
+              name: 'Online Orders',
+              href: paths.dashboard.onlineorders.root,
             },
             { name: 'List' },
           ]}
         />
-              <Button
+              {/* <Button
           component={RouterLink}
           href={paths.dashboard.onlinecategories.new}
           variant="contained"
@@ -131,7 +131,7 @@ export default function OnlineOrdersListView() {
           }}
         >
           New Category
-        </Button>
+        </Button> */}
       </Box>
       <Card>
         <TableContainer>

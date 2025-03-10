@@ -30,8 +30,8 @@ export default function OnlineOrdersEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Online',
-            href: paths.dashboard.onlinecategories.root,
+            name: 'Online Orders',
+            href: paths.dashboard.onlineorders.root,
           },
           { name: data?.data?.heading },
         ]}
