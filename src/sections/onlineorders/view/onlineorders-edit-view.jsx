@@ -20,7 +20,7 @@ export default function OnlineOrdersEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/onlinestore/categories/${id}`),
+    queryFn: () => request.get(`backoffice/onlinestore/order/${id}`),
   });
 
   return (

@@ -10,14 +10,17 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 export default function OnlineOrdersTableRow({ row, onEditRow, onDeleteRow }) {
   const {
     serial_no,
-   
-    category_name,
-    icon,
+    courier_name,
+    contact_number,
+    remarks,
+
+    mrp,
+    final_price,
+    order_status,
     thumbnail_image,
-    is_active,
-    description,
+   
   
-    status,
+   
   } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -36,7 +39,11 @@ export default function OnlineOrdersTableRow({ row, onEditRow, onDeleteRow }) {
         <TableCell>{serial_no}</TableCell>
 
         <TableCell>
-       {category_name}
+       {courier_name}
+        </TableCell>
+
+        <TableCell>
+          {contact_number}
         </TableCell>
 
 
@@ -47,36 +54,34 @@ export default function OnlineOrdersTableRow({ row, onEditRow, onDeleteRow }) {
           {thumbnail_image ? (
             <img
               src={thumbnail_image}
-              alt={`Thumbnail for ${category_name}`}
+              alt={`Thumbnail for ${courier_name}`}
               style={{ maxWidth: 100, maxHeight: 50 }}
             />
           ) : (
             'No Image'
           )}
         </TableCell>
+        <TableCell>
+  {remarks?.note || "No remarks"}
+</TableCell>
+
 
 
        
 
-        {/* Image */}
-        <TableCell align="center">
-          {icon ? (
-            <img
-              src={icon}
-              alt={`Thumbnail for ${category_name}`}
-              style={{ maxWidth: 100, maxHeight: 50 }}
-            />
-          ) : (
-            'No Image'
-          )}
-        </TableCell>
 
    
 
-        {/* Language */}
+       
+
         <TableCell>
-         {is_active}
+          {final_price}
         </TableCell>
+
+        <TableCell>
+{order_status}
+</TableCell>
+
 
         {/* Status */}
        
@@ -111,14 +116,7 @@ export default function OnlineOrdersTableRow({ row, onEditRow, onDeleteRow }) {
     </Typography>
 
     {/* Title */}
-    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-      Full Description
-    </Typography>
-
-    {/* Description */}
-    <Typography variant="body1" sx={{ mb: 4 }}>
-      {description}
-    </Typography>
+ 
 
     {/* Close Button */}
     <Button

@@ -1,72 +1,86 @@
 
 
+
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 // UI Components (Material-UI)
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 // Internal Utilities
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
-import request from 'src/api/request';
-
-import { CreateStoreCategory, UpdateStoreCategory } from 'src/api/edutainment';
+import { CreateOnlineOrder, UpdateOlineOrder } from 'src/api/orders';
 
 // Form Components
-import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 export default function OnlineOrdersNewEditForm({ currentCategory }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [isUploading, setIsUploading] = useState(false);
 
   const CategorySchema = Yup.object().shape({
-    category_name: Yup.string().required('Category Name is required'),
-    thumbnail_image: Yup.mixed(),
-    icon: Yup.mixed(),
-    is_active: Yup.boolean(),
+    remarks: Yup.string().required('Remarks are required'),
+    order_status: Yup.string().required('Order status is required'),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      category_name: currentCategory?.category_name || '',
-      thumbnail_image: currentCategory?.thumbnail_image || '',
-      icon: currentCategory?.icon || '',
-      is_active: currentCategory?.is_active ?? true,
-    }),
-    [currentCategory]
-  );
+  const defaultValues = {
+    remarks: currentCategory?.remarks?.note || '',
+    order_status: currentCategory?.order_status || '',
+  };
 
   const methods = useForm({
     resolver: yupResolver(CategorySchema),
     defaultValues,
   });
 
-  const { reset, setValue, handleSubmit, formState: { isSubmitting } } = methods;
+  const { reset, handleSubmit, setValue, formState: { isSubmitting } } = methods;
+
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = { ...data };
+  //     const response = currentCategory
+  //       ? await UpdateOlineOrder({ ...payload, id: currentCategory.id })
+  //       : await CreateOnlineOrder(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!', { variant: 'success' });
+  //       router.push(paths.dashboard.onlineorders.root);
+  //       reset();
+  //     } else {
+  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //   }
+  // });
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const payload = { ...data };
+      const payload = {
+        ...data,
+        remarks: { note: data.remarks }, // Ensure remarks follows the required format
+      };
+  
       const response = currentCategory
-        ? await UpdateStoreCategory({ ...payload, id: currentCategory.id })
-        : await CreateStoreCategory(payload);
-
+        ? await UpdateOlineOrder({ ...payload, id: currentCategory.id })
+        : await CreateOnlineOrder(payload);
+  
       if (response?.success) {
         enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!', { variant: 'success' });
-        router.push(paths.dashboard.onlinecategories.root);
+        router.push(paths.dashboard.onlineorders.root);
         reset();
       } else {
         enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
@@ -76,76 +90,41 @@ export default function OnlineOrdersNewEditForm({ currentCategory }) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
     }
   });
-
-  const handleUpload = useCallback(async (file) => {
-    try {
-      setIsUploading(true);
-      const response = await request.UploadFiles({ files: file });
-      if (response.success) {
-        return response.data[0].file_url;
-      }
-      throw new Error('Upload failed');
-    } catch (error) {
-      enqueueSnackbar('File upload failed', { variant: 'error' });
-      return null;
-    } finally {
-      setIsUploading(false);
-    }
-  }, [enqueueSnackbar]);
-
-  const handleDrop = useCallback(async (acceptedFiles, field) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      setValue(field, file);
-      const uploadedUrl = await handleUpload(file);
-      if (uploadedUrl) {
-        setValue(field, uploadedUrl);
-        enqueueSnackbar(`${field.replace('_', ' ')} uploaded successfully`, { variant: 'success' });
-      }
-    }
-  }, [setValue, enqueueSnackbar, handleUpload]);
+  
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="center" alignItems="center">
         <Grid xs={12} md={8}>
           <Card>
-            {/* <CardHeader title={currentCategory ? 'Edit Category' : 'Create Category'} /> */}
             <Stack spacing={3} sx={{ p: 3 }}>
-              <RHFTextField name="category_name" label="Category Name" />
+              {/* Remarks Field */}
+              <RHFTextField name="remarks" label="Remarks" />
 
-              <Box>
-                <Typography variant="subtitle2">Thumbnail Image</Typography>
-                <RHFUpload
-                  name="thumbnail_image"
-                  maxSize={3145728}
-                  onDrop={(files) => handleDrop(files, 'thumbnail_image')}
-                  isLoading={isUploading}
-                />
-              </Box>
+              {/* Order Status Dropdown */}
+              <FormControl fullWidth>
+                <InputLabel>Order Status</InputLabel>
+                <Select
+                  name="order_status"
+                  value={methods.watch('order_status')}
+                  onChange={(e) => setValue('order_status', e.target.value)}
+                >
+                  <MenuItem value="pending">Pending</MenuItem>
+                  <MenuItem value="processing">Processing</MenuItem>
+                  <MenuItem value="shipped">Shipped</MenuItem>
+                  <MenuItem value="delivered">Delivered</MenuItem>
+                  <MenuItem value="cancelled">Cancelled</MenuItem>
+                </Select>
+              </FormControl>
 
-              <Box>
-                <Typography variant="subtitle2">Icon</Typography>
-                <RHFUpload
-                  name="icon"
-                  maxSize={3145728}
-                  onDrop={(files) => handleDrop(files, 'icon')}
-                  isLoading={isUploading}
-                />
-              </Box>
-
-              <FormControlLabel
-                control={<Switch {...methods.register('is_active')} defaultChecked />}
-                label="Active"
-              />
-
+              {/* Submit Button */}
               <LoadingButton
                 type="submit"
                 variant="contained"
                 size="large"
-                loading={isSubmitting || isUploading}
+                loading={isSubmitting}
               >
-                {currentCategory ? 'Save Changes' : 'Create Category'}
+                {currentCategory ? 'Save Changes' : 'Create Order'}
               </LoadingButton>
             </Stack>
           </Card>

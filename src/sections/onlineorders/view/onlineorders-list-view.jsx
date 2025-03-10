@@ -34,10 +34,13 @@ import OnlineOrdersTableRow from '../onlineorders-table-row';
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'category_name', label: 'Category Name' },
+  { id: 'courier_name', label: 'Courier Name' },
+
+  { id: 'contact_number', label: 'contact_number',},
   { id: 'thumbnail_image', label: 'Thumbnail' },
-  { id: 'icon', label: 'Icon ' },
-  { id: 'is_active', label: 'Active'},
+  { id: 'remarks', label: 'Remarks ' },
+  { id: 'final_price' , label: 'Final Price'},
+  { id: 'order_status' , label: 'Order Status'},
   { id: 'actions ', label: 'Actions' },
 ];
 
@@ -83,13 +86,13 @@ export default function OnlineOrdersListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.onlinecategories.edit(id));
+      router.push(paths.dashboard.onlineorders.edit(id));
     },
     [router]
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+    const response = await request.delete(`backoffice/onlinestore/order/${id}`);
 
     const { success } = response;
 
