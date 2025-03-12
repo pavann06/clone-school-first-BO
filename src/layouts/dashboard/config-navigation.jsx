@@ -258,7 +258,7 @@ export function useNavData() {
           },
 
           {
-            title: 'Word',
+            title: 'Vocabee',
             path: paths.dashboard.word.root,
             icon: ICONS.contact,
             children: [
