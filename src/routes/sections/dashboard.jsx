@@ -126,6 +126,10 @@ const OnlineOrdersListPage = lazy(() => import('src/pages/dashboard/onlineorders
 const OnlineOrdersCreatePage = lazy(() => import('src/pages/dashboard/onlineorders/new'));
 const OnlineOrdersEditPage = lazy(() => import('src/pages/dashboard/onlineorders/edit'));
 
+const WordListPage = lazy(()=> import('src/pages/dashboard/word/list'));
+const WordCreatePage = lazy(() => import('src/pages/dashboard/word/new'));
+const WordEditPage = lazy(()=> import('src/pages/dashboard/word/edit'));
+
 
 
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
@@ -1057,6 +1061,39 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+      
+      {
+        path: 'word',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WordListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WordCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WordEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
 
 
 

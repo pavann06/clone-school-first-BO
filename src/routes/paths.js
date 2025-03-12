@@ -230,6 +230,12 @@ export const paths = {
           new: `${ROOTS.DASHBOARD}/onlineorders/new`,
           edit: (id) => `${ROOTS.DASHBOARD}/onlineorders/${id}/edit`,
         },
+
+        word: {
+          root: `${ROOTS.DASHBOARD}/word`,
+          new: `${ROOTS.DASHBOARD}/word/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/word/${id}/edit`,
+        },
     
     
 

@@ -257,6 +257,16 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'Word',
+            path: paths.dashboard.word.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.word.root },
+               { title: 'create', path: paths.dashboard.word.new },
+            ],
+          },
+
           
 
 
