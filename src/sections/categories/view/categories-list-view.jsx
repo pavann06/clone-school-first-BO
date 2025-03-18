@@ -54,7 +54,7 @@ export default function CategoryListView() {
     queryKey: ['categories', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `https://dev-api.familifirst.com/backoffice/news/categories?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/news/categories?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });

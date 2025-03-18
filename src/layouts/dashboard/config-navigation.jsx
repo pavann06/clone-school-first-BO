@@ -114,15 +114,15 @@ export function useNavData() {
               { title: 'create', path: paths.dashboard.survey.new },
             ],
           },
-          {
-            title: 'subscribed Users',
-            path: paths.dashboard.subscribedusers.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.subscribedusers.root },
-              // { title: 'create', path: paths.dashboard.edutainment.new },
-            ],
-          },
+          // {
+          //   title: 'subscribed Users',
+          //   path: paths.dashboard.subscribedusers.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.subscribedusers.root },
+          //     // { title: 'create', path: paths.dashboard.edutainment.new },
+          //   ],
+          // },
 
           // {
           //   title: 'Surveys',
@@ -157,7 +157,7 @@ export function useNavData() {
           },
 
           {
-            title: 'categories',
+            title: 'news categories',
             path: paths.dashboard.categories.root,
             icon: ICONS.contact,
             children: [

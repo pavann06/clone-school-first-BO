@@ -41,6 +41,7 @@ export default function NewsNewEditForm({ currentNews }) {
     videos: Yup.array().nullable(),
     youtube_urls: Yup.string(),
     remarks: Yup.string(),
+    status: Yup.string(),
      school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
     
   });
@@ -64,6 +65,7 @@ export default function NewsNewEditForm({ currentNews }) {
         : currentNews?.youtube_urls || '',
       remarks: currentNews?.remarks || '',
       school_ids: currentNews?.school_ids || [],
+      status: currentNews?.status || '',
     }),
     [currentNews]
   );
@@ -193,18 +195,14 @@ export default function NewsNewEditForm({ currentNews }) {
 
               <RHFTextField name="tags" label="Tags" />
 
-              {/* <Controller
-                name="categories"
-              
-                control={methods.control}
-                render={({ field }) => (
-                  <CategoriesDropdown
-                    {...field}
-                    value={field.value || []}
-                    onChange={(value) => field.onChange(value)}
-                  />
-                )}
-              /> */}
+              {currentNews && (
+  <RHFSelect name="status" label="Status">
+    <MenuItem value="Approved">Approved</MenuItem>
+    <MenuItem value="Rejected">Rejected</MenuItem>
+    <MenuItem value="Pending">Pending</MenuItem>
+  </RHFSelect>
+)}
+
 
               <FormControl fullWidth>
                 <InputLabel id="categories-label">Categories</InputLabel>
@@ -237,6 +235,7 @@ export default function NewsNewEditForm({ currentNews }) {
                 <MenuItem value="Single Parents">Single Parents</MenuItem>
                 <MenuItem value="Grand Parents">Grand Parents</MenuItem>
               </RHFSelect>
+
 
               <RHFTextField name="description" label="Description" multiline rows={4} />
 
