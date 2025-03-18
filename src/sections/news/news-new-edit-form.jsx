@@ -46,6 +46,8 @@ export default function NewsNewEditForm({ currentNews }) {
     
   });
 
+
+
   const defaultValues = useMemo(
     () => ({
       title: currentNews?.title || '',
@@ -65,10 +67,11 @@ export default function NewsNewEditForm({ currentNews }) {
         : currentNews?.youtube_urls || '',
       remarks: currentNews?.remarks || '',
       school_ids: currentNews?.school_ids || [],
-      status: currentNews?.status || '',
+      ...(currentNews ? { status: currentNews.status || 'Draft' } : {}), // ✅ Include only for editing
     }),
     [currentNews]
   );
+  
 
   const methods = useForm({
     resolver: yupResolver(NewsSchema),
@@ -240,28 +243,78 @@ export default function NewsNewEditForm({ currentNews }) {
               <RHFTextField name="description" label="Description" multiline rows={4} />
 
               <Stack spacing={1.5}>
-                <Typography variant="subtitle2">Images</Typography>
-                <RHFUpload
-                  name="images"
-                  label="Images"
-                  multiple
-                  onDrop={handleDrop}
-                  isLoading={isUploading}
-                  currentFiles={values.images}
-                />
-              </Stack>
+  <Typography variant="subtitle2">Images</Typography>
+  <RHFUpload
+    name="images"
+    label="Images"
+    multiple
+    onDrop={handleDrop}
+    isLoading={isUploading}
+  />
+  <Stack direction="row" spacing={1} flexWrap="wrap">
+    {values.images.map((url, index) => (
+      <Box key={index} sx={{ position: 'relative', display: 'inline-block' }}>
+        <img src={url} alt={`Uploaded ${index}`} width="100" height="100" style={{ borderRadius: 8 }} />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 5,
+            right: 5,
+            background: 'rgba(0,0,0,0.6)',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            padding: '2px',
+          }}
+          onClick={() => {
+            const updatedImages = values.images.filter((_, i) => i !== index);
+            setValue('images', updatedImages);
+          }}
+        >
+          ❌
+        </Box>
+      </Box>
+    ))}
+  </Stack>
+</Stack>
 
-              <Stack spacing={1.5}>
-                <Typography variant="subtitle2">Video</Typography>
-                <RHFUpload
-                  name="videos"
-                  label="Video"
-                  onDrop={(files) => handleVideoUpload(files[0])}
-                  isLoading={isUploading}
-                  accept="video/*"
-                  currentFiles={values.videos}
-                />
-              </Stack>
+
+
+            
+<Stack spacing={1.5}>
+  <Typography variant="subtitle2">Video</Typography>
+  <RHFUpload
+    name="videos"
+    label="Video"
+    onDrop={(files) => handleVideoUpload(files[0])}
+    isLoading={isUploading}
+    accept="video/*"
+  />
+{values.videos.length > 0 && (
+  <Box sx={{ position: 'relative', display: 'inline-block' }}>
+    <video src={values.videos[0]} width="100" controls style={{ borderRadius: 8 }}>
+      <track kind="captions" src="" label="No captions available" default />
+      Your browser does not support the video tag.
+    </video>
+    <Box
+      sx={{
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        background: 'rgba(0,0,0,0.6)',
+        borderRadius: '50%',
+        cursor: 'pointer',
+        padding: '2px',
+      }}
+      onClick={() => setValue('videos', [])} // Clear video
+    >
+      ❌
+    </Box>
+  </Box>
+)}
+
+</Stack>
+
+
 
               <RHFTextField name="youtube_urls" label="YouTube URLs" />
               <RHFTextField name="remarks" label="Remarks" multiline rows={3} />
