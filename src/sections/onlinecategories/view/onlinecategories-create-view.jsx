@@ -15,17 +15,17 @@ export default function OnlineCategoriesCreateView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Edutainment"
+        heading="Create a New Category"
         links={[
           {
             name: 'Dashboard',
             href: paths.dashboard.root,
           },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.banner.root,
+            name: 'Category',
+            href: paths.dashboard.onlinecategories.root,
           },
-          { name: 'New Banner' },
+          { name: 'New category' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
