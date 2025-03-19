@@ -113,7 +113,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
         // Navigate to the "add questions" form with the survey ID
         const surveyId = response.data?.id || currentSurvey.id;
         if (surveyId) {
-          router.push(paths.dashboard.survey(surveyId).questions_new);
+          router.push(paths.dashboard.survey);
         }
 
         reset();
