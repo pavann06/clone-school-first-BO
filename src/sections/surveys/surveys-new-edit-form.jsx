@@ -160,10 +160,15 @@ export default function SurveysNewEditForm({ currentSurvey }) {
               </RHFSelect>
               <RHFTextField name="closing_date" label="Closing Date" type="datetime-local" />
               <RHFTextField name="total_responses" label="Total Responses" type="number" />
-              <SchoolsDropdown
-  value={methods.watch('school_ids')}
-  onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
-/>
+              <Typography sx={{ marginBottom: '4px', fontWeight: 'bold' }}>School</Typography>
+<Box 
+  sx={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px' }}
+>
+  <SchoolsDropdown
+    value={methods.watch('school_ids')}
+    onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+  />
+</Box>
 
               <RHFTextField name="number_of_questions" label="Number of Questions" type="number" />
               <Box>
