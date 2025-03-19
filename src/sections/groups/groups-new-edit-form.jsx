@@ -43,8 +43,8 @@ export default function GroupsNewEditForm({ currentGroup }) {
     profile_image: Yup.mixed(),
     logo: Yup.mixed(),
     status: Yup.string().required('Status is required'),
-    subscribers: Yup.number().required('Subscribers is required').min(0, 'Subscribers must be a positive number'),
-    posts: Yup.number().required('Posts is required').min(0, 'Posts must be a positive number'),
+    // subscribers: Yup.number().required('Subscribers is required').min(0, 'Subscribers must be a positive number'),
+    // posts: Yup.number().required('Posts is required').min(0, 'Posts must be a positive number'),
   });
 
   const defaultValues = useMemo(
@@ -53,8 +53,8 @@ export default function GroupsNewEditForm({ currentGroup }) {
       profile_image: currentGroup?.profile_image || '',
       logo: currentGroup?.logo || '',
       status: currentGroup?.status || 'Pending',
-      subscribers: currentGroup?.subscribers || 0,
-      posts: currentGroup?.posts || 0,
+      // subscribers: currentGroup?.subscribers || 0,
+      // posts: currentGroup?.posts || 0,
     }),
     [currentGroup]
   );
@@ -256,20 +256,20 @@ const handleRemoveAllFiles = useCallback(() => {
                 </RHFSelect>
 
                 {/* Subscribers Field */}
-                <RHFTextField
+                {/* <RHFTextField
                   name="subscribers"
                   label="Subscribers"
                   type="number"
                   InputProps={{ inputProps: { min: 0 } }} // Restrict to non-negative values
-                />
+                /> */}
 
                 {/* Posts Field */}
-                <RHFTextField
+                {/* <RHFTextField
                   name="posts"
                   label="Posts"
                   type="number"
                   InputProps={{ inputProps: { min: 0 } }} // Restrict to non-negative values
-                />
+                /> */}
 
                 {/* Profile Image Field */}
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
