@@ -56,32 +56,29 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
   const { reset, setValue,watch , handleSubmit, formState: { isSubmitting } } = methods;
 
-  // const options = watch('options', []);
-
 
   // const onSubmit = handleSubmit(async (data) => {
   //   try {
   //     const payload = { ...data };
-
+  
   //     if (data.question_type === 'Yes/No') {
-  //       // For Yes/No questions, options can be ["Yes", "No"]
-  //       payload.options = ['Yes', 'No'];
+  //       payload.options = ['Yes', 'No']; // Yes/No has fixed options
   //     } else if (
   //       data.question_type === 'Single Choice' ||
   //       data.question_type === 'Multiple Choice'
   //     ) {
-  //       // For Single Choice and Multiple Choice, options should be an array of selected options
-  //       payload.options = data.options.filter((option) => option !== ''); // Remove empty options
+  //       payload.options = Array.isArray(data.options)
+  //         ? data.options.filter((option) => option !== '') // Ensure it's an array
+  //         : []; // Default to empty array
   //     } else {
-  //       // For Text type, no options are needed
-  //       payload.options = [];
+  //       payload.options = []; // For 'Text' type
   //     }
-
-  //     const response = await CreateSurveyQuestion(payload, surveyId); // Create new question
-
+  
+  //     const response = await CreateSurveyQuestion(payload, surveyId);
+  
   //     if (response?.success) {
   //       enqueueSnackbar('Create success!', { variant: 'success' });
-  //       router.push(paths.dashboard.survey.root);
+  //       router.push(paths.dashboard.survey?.root || '/dashboard/survey');
   //       reset();
   //     } else {
   //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
@@ -91,6 +88,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
   //   }
   // });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = { ...data };
@@ -110,18 +108,22 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   
       const response = await CreateSurveyQuestion(payload, surveyId);
   
-      if (response?.success) {
+      console.log('API Response:', response); // Debugging
+  
+      if (response?.success || response?.status === 200) {
         enqueueSnackbar('Create success!', { variant: 'success' });
         router.push(paths.dashboard.survey?.root || '/dashboard/survey');
         reset();
       } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        const errorMessage = response?.message || response?.error || 'Operation failed';
+        enqueueSnackbar(errorMessage, { variant: 'error' });
       }
     } catch (error) {
       console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
     }
   });
+  
   
 
   const handleQuestionTypeChange = (e) => {
