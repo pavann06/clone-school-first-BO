@@ -30,8 +30,8 @@ export default function NewsEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.edutainment.root,
+            name: 'News',
+            href: paths.dashboard.news.root,
           },
           { name: data?.data?.heading },
         ]}

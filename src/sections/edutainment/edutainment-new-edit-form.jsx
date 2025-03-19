@@ -45,7 +45,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const EdutainmentSchema = Yup.object().shape({
     feed_type: Yup.string().required('Type is required'),
-    heading: Yup.string().required('Heading is required'),
+    heading: Yup.string(),
     image: Yup.mixed(),
     video: Yup.mixed(),
     youtube_video: Yup.mixed(),
@@ -86,23 +86,63 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const values = watch();
 
+  
+
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = {
+  //       ...data,
+  //       // school_ids: data.school_ids || [],
+  //       image: data.image || null,
+  //       video: data.video || null,
+  //       youtube_video: data.youtube_video || null,
+  //     };
+  //     if (!currentEdutainment) {
+  //       payload.status = 'Pending';
+  //     }
+
+  //     const response = currentEdutainment
+  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
+  //       : await CreateEdutainment(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
+  //         variant: 'success',
+  //       });
+  //       router.push(paths.dashboard.edutainment.root);
+  //       reset();
+  //       return response;
+  //     }
+
+  //     // Display API error message in a red toast
+  //     const errorMessage = response?.error || 'Operation failed';
+  //     enqueueSnackbar(errorMessage, { variant: 'error' });
+  //     return response;
+  //   } catch (error) {
+  //     // Handle unexpected errors (e.g., network issues)
+  //     console.error('Error:', error);
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //     return null;
+  //   }
+  // });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
         ...data,
-        // school_ids: data.school_ids || [],
         image: data.image || null,
         video: data.video || null,
         youtube_video: data.youtube_video || null,
       };
+  
       if (!currentEdutainment) {
         payload.status = 'Pending';
       }
-
+  
       const response = currentEdutainment
         ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
         : await CreateEdutainment(payload);
-
+  
       if (response?.success) {
         enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
           variant: 'success',
@@ -111,18 +151,32 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         reset();
         return response;
       }
-
-      // Display API error message in a red toast
-      const errorMessage = response?.error || 'Operation failed';
+  
+      // Extract error message properly
+      const errorMessage = 
+        response?.error || 
+        response?.message || 
+        response?.data?.message || 
+        (Array.isArray(response?.errors) ? response.errors.join(', ') : 'Operation failed');
+  
       enqueueSnackbar(errorMessage, { variant: 'error' });
       return response;
     } catch (error) {
-      // Handle unexpected errors (e.g., network issues)
+      // Handle unexpected errors (Axios, Network issues, etc.)
       console.error('Error:', error);
-      enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  
+      let errorMessage = 'Unexpected error occurred';
+      if (error.response) {
+        errorMessage = error.response.data?.message || 'Server error';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+  
+      enqueueSnackbar(errorMessage, { variant: 'error' });
       return null;
     }
   });
+  
 
   const handleUpload = useCallback(
     async (file) => {

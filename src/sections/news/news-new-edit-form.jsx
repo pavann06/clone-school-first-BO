@@ -42,7 +42,7 @@ export default function NewsNewEditForm({ currentNews }) {
     youtube_urls: Yup.string(),
     remarks: Yup.string(),
     status: Yup.string(),
-     school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
+    school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
     
   });
 
@@ -127,7 +127,7 @@ export default function NewsNewEditForm({ currentNews }) {
         router.push('/dashboard/news');
         reset();
       } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        enqueueSnackbar(response?.error , { variant: 'error' });
       }
     } catch (error) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });

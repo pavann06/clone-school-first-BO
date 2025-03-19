@@ -15,7 +15,7 @@ export default function SurveyCreateView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Edutainment"
+        heading="Create a New Survey"
         links={[
           {
             name: 'Dashboard',
@@ -25,7 +25,7 @@ export default function SurveyCreateView() {
             name: 'Servey',
             href: paths.dashboard.survey.root,
           },
-          { name: 'New Servey' },
+          { name: 'New Survey' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },

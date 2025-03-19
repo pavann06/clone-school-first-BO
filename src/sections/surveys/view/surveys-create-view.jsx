@@ -23,7 +23,7 @@ export default function SurveysCreateView() {
           },
           {
             name: 'Surveys',
-            href: paths.dashboard.banner.root,
+            href: paths.dashboard.news.root,
           },
           { name: 'New Banner' },
         ]}
