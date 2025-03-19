@@ -28,15 +28,26 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   const [options, setOptions] = useState([]);
 
 
+  // const SurveyQuestionSchema = Yup.object().shape({
+  //   question_type: Yup.string().required('Question Type is required'),
+  //   question: Yup.string().required('Question Text is required'),
+  //   options: Yup.array().when('question_type', {
+  //     is: (val) => val === 'Single Choice' || val === 'Multiple Choice',
+  //     then: Yup.array().min(1, 'At least one option is required'),
+  //     otherwise: Yup.array().notRequired(), // Default case when `is` condition is false
+  //   }),
+  // });
   const SurveyQuestionSchema = Yup.object().shape({
     question_type: Yup.string().required('Question Type is required'),
     question: Yup.string().required('Question Text is required'),
-    options: Yup.array().when('question_type', {
-      is: (val) => val === 'Single Choice' || val === 'Multiple Choice',
-      then: Yup.array().min(1, 'At least one option is required'),
-      otherwise: Yup.array().notRequired(), // Default case when `is` condition is false
+    options: Yup.array().when('question_type', (question_type, schema) => {
+      if (question_type === 'Single Choice' || question_type === 'Multiple Choice') {
+        return schema.min(1, 'At least one option is required');
+      }
+      return schema.strip(); // Removes the field when not needed
     }),
   });
+  
 
   // const defaultValues = useMemo(
   //   () => ({
