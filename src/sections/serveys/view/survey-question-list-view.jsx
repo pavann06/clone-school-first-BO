@@ -61,7 +61,7 @@ export default function SurveyQuestionListView() {
     <Container maxWidth="lg">
       <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
         <CustomBreadcrumbs
-          heading="Survey List"
+          heading="Survey Question List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             { name: 'Survey', href: paths.dashboard.survey.root },
