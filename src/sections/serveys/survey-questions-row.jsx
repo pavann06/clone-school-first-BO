@@ -53,7 +53,7 @@ export default function ServeyQuestionsTableRow({ row, onEditRow, onDeleteRow })
         <TableCell>{question_type}</TableCell>
 
         {/* Interactions */}
-        <TableCell>{description}</TableCell>
+       
 
         {/* Actions */}
         <TableCell align="center">

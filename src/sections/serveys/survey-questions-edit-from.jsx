@@ -28,15 +28,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   const [options, setOptions] = useState([]);
 
 
-  // const SurveyQuestionSchema = Yup.object().shape({
-  //   question_type: Yup.string().required('Question Type is required'),
-  //   question: Yup.string().required('Question Text is required'),
-  //   options: Yup.array().when('question_type', {
-  //     is: (val) => val === 'Single Choice' || val === 'Multiple Choice',
-  //     then: Yup.array().min(1, 'At least one option is required'),
-  //     otherwise: Yup.array().notRequired(), // Default case when `is` condition is false
-  //   }),
-  // });
+
   const SurveyQuestionSchema = Yup.object().shape({
     question_type: Yup.string().required('Question Type is required'),
     question: Yup.string().required('Question Text is required'),
@@ -49,14 +41,6 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   });
   
 
-  // const defaultValues = useMemo(
-  //   () => ({
-  //     question_type: '', // Use questionType here
-  //     question: '',
-  //     options: [''],
-  //   }),
-  //   [] // Include both questionType and options in the dependency array
-  // );
   const defaultValues = useMemo(() => ({
     question_type: '',
     question: '',
@@ -75,29 +59,60 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   // const options = watch('options', []);
 
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = { ...data };
+
+  //     if (data.question_type === 'Yes/No') {
+  //       // For Yes/No questions, options can be ["Yes", "No"]
+  //       payload.options = ['Yes', 'No'];
+  //     } else if (
+  //       data.question_type === 'Single Choice' ||
+  //       data.question_type === 'Multiple Choice'
+  //     ) {
+  //       // For Single Choice and Multiple Choice, options should be an array of selected options
+  //       payload.options = data.options.filter((option) => option !== ''); // Remove empty options
+  //     } else {
+  //       // For Text type, no options are needed
+  //       payload.options = [];
+  //     }
+
+  //     const response = await CreateSurveyQuestion(payload, surveyId); // Create new question
+
+  //     if (response?.success) {
+  //       enqueueSnackbar('Create success!', { variant: 'success' });
+  //       router.push(paths.dashboard.survey.root);
+  //       reset();
+  //     } else {
+  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //   }
+  // });
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = { ...data };
-
+  
       if (data.question_type === 'Yes/No') {
-        // For Yes/No questions, options can be ["Yes", "No"]
-        payload.options = ['Yes', 'No'];
+        payload.options = ['Yes', 'No']; // Yes/No has fixed options
       } else if (
         data.question_type === 'Single Choice' ||
         data.question_type === 'Multiple Choice'
       ) {
-        // For Single Choice and Multiple Choice, options should be an array of selected options
-        payload.options = data.options.filter((option) => option !== ''); // Remove empty options
+        payload.options = Array.isArray(data.options)
+          ? data.options.filter((option) => option !== '') // Ensure it's an array
+          : []; // Default to empty array
       } else {
-        // For Text type, no options are needed
-        payload.options = [];
+        payload.options = []; // For 'Text' type
       }
-
-      const response = await CreateSurveyQuestion(payload, surveyId); // Create new question
-
+  
+      const response = await CreateSurveyQuestion(payload, surveyId);
+  
       if (response?.success) {
         enqueueSnackbar('Create success!', { variant: 'success' });
-        router.push(paths.dashboard.survey.root);
+        router.push(paths.dashboard.survey?.root || '/dashboard/survey');
         reset();
       } else {
         enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
@@ -107,6 +122,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
     }
   });
+  
 
   const handleQuestionTypeChange = (e) => {
     const selectedType = e.target.value;
