@@ -35,8 +35,8 @@ const SchoolsDropdown = forwardRef(({ value, onChange }, ref) => {
 
   const handleChange = (event) => {
     const selectedValues = event.target.value;
-    if (selectedValues.includes('All')) {
-      onChange(['All']);
+    if (selectedValues.includes('ALL')) {
+      onChange(['ALL']);
     } else {
       onChange(selectedValues);
     }
@@ -49,7 +49,7 @@ const SchoolsDropdown = forwardRef(({ value, onChange }, ref) => {
     menuContent = <MenuItem disabled>No schools available</MenuItem>;
   } else {
     menuContent = [
-      <MenuItem key="all" value="All">ALL</MenuItem>,
+      <MenuItem key="ALL" value="ALL">ALL</MenuItem>,
       ...schools.map((school) => (
         <MenuItem key={school.id} value={school.id}>
           {school.school_name}
@@ -62,13 +62,13 @@ const SchoolsDropdown = forwardRef(({ value, onChange }, ref) => {
     <Select
       ref={ref}
       multiple
-      value={value.includes('All') ? ['All'] : value}
+      value={value.includes('ALL') ? ['ALL'] : value}
       onChange={handleChange}
       fullWidth
       renderValue={(selected) => (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          {selected.includes('All') ? (
-            <Chip key="all" label="ALL" />
+          {selected.includes('ALL') ? (
+            <Chip key="ALL" label="ALL" />
           ) : (
             selected.map((schoolId) => {
               const selectedSchool = schools.find((s) => s.id === schoolId);
