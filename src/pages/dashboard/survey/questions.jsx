@@ -14,7 +14,7 @@ export default function ServeyQuestionsListPage() {
   return (
     <>
       <Helmet>
-        <title> Hospitals Edit</title>
+        <title> Questions List</title>
       </Helmet>
 
       <SurveyQuestionListView id={`${id}`} />

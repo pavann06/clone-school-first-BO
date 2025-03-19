@@ -10,7 +10,7 @@ export default function SurveyQuestionsCreatePage() {
   return (
     <>
       <Helmet>
-        <title> New Survey </title>
+        <title> New Question </title>
       </Helmet>
 
     

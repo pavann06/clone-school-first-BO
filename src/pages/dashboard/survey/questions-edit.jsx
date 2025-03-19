@@ -14,7 +14,7 @@ export default function SurveyQuestionEditPage() {
   return (
     <>
       <Helmet>
-        <title> Survey Edit</title>
+        <title> Question Edit</title>
       </Helmet>
 
       <SurveyQuestionEditView id={`${id}`} />
