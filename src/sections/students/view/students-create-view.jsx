@@ -22,10 +22,10 @@ export default function StudentsCreateView() {
             href: paths.dashboard.root,
           },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.banner.root,
+            name: 'Students',
+            href: paths.dashboard.students.root,
           },
-          { name: 'New Banner' },
+          { name: 'New Student' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
