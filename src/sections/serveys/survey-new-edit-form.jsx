@@ -25,6 +25,8 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import request from 'src/api/request';
 
 import { CreateSurvey, UpdateSurvey } from 'src/api/survey';
+import SchoolsDropdown from '../surveys/schools-dropdown';
+
 
 // Form Components
 import FormProvider, {
@@ -52,6 +54,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
     closing_date: Yup.date().required('Closing date is required'),
     total_responses: Yup.number(),
     number_of_questions: Yup.number(),
+    school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
   });
 
   const defaultValues = useMemo(
@@ -66,6 +69,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
       closing_date: currentSurvey?.closing_date || '',
       total_responses: currentSurvey?.total_responses || 0,
       number_of_questions: currentSurvey?.number_of_questions || 0,
+      school_ids: currentSurvey?.school_ids || [],
     }),
     [currentSurvey]
   );
@@ -218,6 +222,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
                   <MenuItem value="Deleted">Deleted</MenuItem>
                 </RHFSelect>
 
+
                 {/* Closing Date Picker */}
                 <RHFTextField
                   name="closing_date"
@@ -271,6 +276,10 @@ export default function SurveyNewEditForm({ currentSurvey }) {
                   type="number"
                 />
               </Box>
+                            <SchoolsDropdown
+                value={methods.watch('school_ids')}
+                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+              />
 
               <LoadingButton
                 type="submit"
