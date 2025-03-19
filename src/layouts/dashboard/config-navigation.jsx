@@ -187,7 +187,7 @@ export function useNavData() {
           },
 
           {
-            title: 'groups',
+            title: 'forums',
             path: paths.dashboard.groups.root,
             icon: ICONS.contact,
             children: [
@@ -253,7 +253,7 @@ export function useNavData() {
             icon: ICONS.contact,
             children: [
               { title: 'list', path: paths.dashboard.onlineorders.root },
-               { title: 'create', path: paths.dashboard.onlineorders.new },
+              //  { title: 'create', path: paths.dashboard.onlineorders.new },
             ],
           },
 
