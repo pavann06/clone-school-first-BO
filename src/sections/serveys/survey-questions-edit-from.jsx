@@ -27,14 +27,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   const [questionType, setQuestionType] = useState('');
   const [options, setOptions] = useState([]);
 
-  // const SurveyQuestionSchema = Yup.object().shape({
-  //   question_type: Yup.string().required('Question Type is required'),
-  //   question: Yup.string().required('Question Text is required'),
-  //   options: Yup.array().when('question_type', {
-  //     is: (val) => val === 'Single Choice' || val === 'Multiple Choice',
-  //     then: Yup.array().min(1, 'At least one option is required'),
-  //   }),
-  // });
+
   const SurveyQuestionSchema = Yup.object().shape({
     question_type: Yup.string().required('Question Type is required'),
     question: Yup.string().required('Question Text is required'),
@@ -45,21 +38,31 @@ export default function SurveyQuestionEditForm({ surveyId }) {
     }),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      question_type: '', // Use questionType here
-      question: '',
-      options: [''],
-    }),
-    [] // Include both questionType and options in the dependency array
-  );
+  // const defaultValues = useMemo(
+  //   () => ({
+  //     question_type: '', // Use questionType here
+  //     question: '',
+  //     options: [''],
+  //   }),
+  //   [] // Include both questionType and options in the dependency array
+  // );
+  const defaultValues = useMemo(() => ({
+    question_type: '',
+    question: '',
+    options: [''],
+    surveyId,  // Add this if required
+  }), [surveyId]);
+  
 
   const methods = useForm({
     resolver: yupResolver(SurveyQuestionSchema),
     defaultValues,
   });
 
-  const { reset, setValue, handleSubmit, formState: { isSubmitting } } = methods;
+  const { reset, setValue,watch , handleSubmit, formState: { isSubmitting } } = methods;
+
+  // const options = watch('options', []);
+
 
   const onSubmit = handleSubmit(async (data) => {
     try {
