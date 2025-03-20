@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -31,13 +29,12 @@ import { label } from 'yet-another-react-lightbox';
 
 import OnlineCategoriesTableRow from '../onlinecategories-table-row';
 
-
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'category_name', label: 'Category Name' },
   { id: 'thumbnail_image', label: 'Thumbnail' },
   { id: 'icon', label: 'Icon ' },
-  { id: 'is_active', label: 'Active'},
+  { id: 'is_active', label: 'Active' },
   { id: 'actions ', label: 'Actions' },
 ];
 
@@ -116,7 +113,7 @@ export default function OnlineCategoriesListView() {
             { name: 'List' },
           ]}
         />
-              <Button
+        <Button
           component={RouterLink}
           href={paths.dashboard.onlinecategories.new}
           variant="contained"

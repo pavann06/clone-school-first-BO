@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -31,13 +29,12 @@ import { label } from 'yet-another-react-lightbox';
 
 import OnlineStoreProductsTableRow from '../onlinestroreproducts-table-row';
 
-
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'item_name', label: 'Item Name' },
   { id: 'item_description', label: 'Description' },
   { id: 'thumbnail_image', label: 'Image ' },
-  { id: 'final_price', label: 'Final Price'},
+  { id: 'final_price', label: 'Final Price' },
   { id: 'actions ', label: 'Actions' },
 ];
 
@@ -116,7 +113,7 @@ export default function OnlineStoreProductsListView() {
             { name: 'List' },
           ]}
         />
-              <Button
+        <Button
           component={RouterLink}
           href={paths.dashboard.onlinestoreproducts.new}
           variant="contained"
