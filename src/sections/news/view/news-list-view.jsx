@@ -3,6 +3,7 @@
 // import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -56,14 +57,40 @@ export default function NewsListView() {
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['edutainment', pagination.page, pagination.page_size],
-    queryFn: () =>
-      request.get(
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ['edutainment', pagination.page, pagination.page_size],
+  //   queryFn: () =>
+  //     request.get(
+  //       `backoffice/news?page=${pagination.page}&page_size=${pagination.page_size}`
+  //     ),
+  //   keepPreviousData: true,
+  // });
+ 
+
+const navigate = useNavigate();
+
+const { data, isLoading, error } = useQuery({
+  queryKey: ['edutainment', pagination.page, pagination.page_size],
+  queryFn: async () => {
+    try {
+      const response = await request.get(
         `backoffice/news?page=${pagination.page}&page_size=${pagination.page_size}`
-      ),
-    keepPreviousData: true,
-  });
+      );
+      return response;
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        console.error('Unauthorized! Redirecting to login...');
+        navigate('/auth/login?returnTo=%2Fdashboard'); // Redirect user to login page
+      }
+      throw err;
+    }
+  },
+  keepPreviousData: true,
+  onError: (err) => {
+    console.error('Query error:', err);
+  },
+});
+
 
   // Set data when fetched successfully
   useEffect(() => {

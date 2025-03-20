@@ -54,7 +54,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
     target_group: Yup.array().min(1, 'At least one target group is required'),
     status: Yup.string().required('Status is required'),
     closing_date: Yup.date().required('Closing date is required'),
-    total_responses: Yup.number(),
+    // total_responses: Yup.number(),
     number_of_questions: Yup.number(),
     school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
   });
@@ -69,7 +69,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
       target_group: currentSurvey?.target_group || ['All'], // Ensure default value is always an array
       status: currentSurvey?.status || 'Closed',
       closing_date: currentSurvey?.closing_date || '',
-      total_responses: currentSurvey?.total_responses || 0,
+      // total_responses: currentSurvey?.total_responses || 0,
       number_of_questions: currentSurvey?.number_of_questions || 0,
       school_ids: currentSurvey?.school_ids || [],
     }),
@@ -234,7 +234,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
                 />
 
                 {/* Total Responses Field */}
-                <RHFTextField name="total_responses" label="Total Responses" type="number" />
+                {/* <RHFTextField name="total_responses" label="Total Responses" type="number" /> */}
 
                 <RHFTextField name="description" label="Description" multiline rows={4} />
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
