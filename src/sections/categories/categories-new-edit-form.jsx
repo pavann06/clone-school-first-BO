@@ -65,32 +65,89 @@ export default function CategoriesNewEditForm({ currentCategory }) {
     formState: { isSubmitting },
   } = methods;
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = {
+  //       ...data,
+  //       icon_url: data.icon_url || null,
+  //     };
+
+  //     const response = currentCategory
+  //       ? await UpdateCategory({ ...payload, id: currentCategory.id })
+  //       : await CreateCategory(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!');
+  //       router.push(paths.dashboard.categories.root);
+  //       reset();
+  //       return response;
+  //     }
+
+  //    // Extract error messages from response.data
+  //    let errorMessage = "Operation failed";
+  //    if (response?.data && typeof response.data === "object") {
+  //     const errors = Object.values(response.data)
+  //       .filter((msg) => Array.isArray(msg)) // Ensure it's an array
+  //       .flat() // Flatten multiple error messages
+  //       .join(", "); // Convert to a single string
+
+  //     if (errors) {
+  //       errorMessage = errors; // Assign extracted errors
+  //     }
+  //   }
+
+  //   enqueueSnackbar(errorMessage, { variant: "error" });
+
+  //     return response;
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     enqueueSnackbar('Operation failed');
+  //     return null;
+  //   }
+  // });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
         ...data,
         image: data.image || null,
       };
-
+  
       const response = currentCategory
         ? await UpdateCategory({ ...payload, id: currentCategory.id })
         : await CreateCategory(payload);
-
+  
       if (response?.success) {
-        enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!');
+        enqueueSnackbar(currentCategory ? "Update success!" : "Create success!");
         router.push(paths.dashboard.categories.root);
         reset();
         return response;
       }
-
-      enqueueSnackbar('Operation failed');
+  
+      // Debugging: Log API response
+      console.log("API Response:", response);
+  
+      // Extract error messages
+      let errorMessage = "Operation failed";
+  
+      if (response?.data && typeof response.data === "object") {
+        const errors = Object.values(response.data).flat(); // Flatten nested error arrays
+  
+        if (errors.length > 0) {
+          errorMessage = errors.join(", "); // Combine error messages
+        }
+      }
+  
+      enqueueSnackbar(errorMessage, { variant: "error" });
+  
       return response;
     } catch (error) {
-      console.error('Error:', error);
-      enqueueSnackbar('Operation failed');
+      console.error("Error:", error);
+      enqueueSnackbar("Operation failed", { variant: "error" });
       return null;
     }
   });
+  
 
   const handleUpload = useCallback(
     async (file) => {
