@@ -352,6 +352,7 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
     total_words: Yup.number().min(1, 'Must be at least 1').required('Total words are required'),
+    school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
     prize_pool: Yup.number()
       .min(0, 'Prize pool must be positive')
       .required('Prize pool is required'),
@@ -375,6 +376,7 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
       total_words: currentCompetition?.total_words || 0,
       prize_pool: currentCompetition?.prize_pool || 0,
       words: currentCompetition?.words || [],
+      school_ids: currentCompetition?.school_ids || [],
     }),
     [currentCompetition]
   );
@@ -500,6 +502,14 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
                 onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
               />
             </Box> */}
+
+<Box>
+              <Typography variant="subtitle2">Select Schools</Typography>
+              <SchoolsDropdown
+                value={values.school_ids}
+                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+              />
+            </Box>
 
               {/* Dynamic Search Words */}
               {fields.map((item, index) => (

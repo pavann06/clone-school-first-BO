@@ -123,20 +123,7 @@ export default function CompetionWordsListView({competitionId}) {
             { name: 'List' },
           ]}
         />
-{/* 
-        <Button
-          component={RouterLink}
-          variant="contained"
-          href={paths.dashboard.competition.competition_words.new(competitionId)} 
-          startIcon={<Iconify icon="mingcute:add-line" />}
-          sx={{
-            position: 'absolute',
-            bottom: '5px',
-            right: '5px',
-          }}
-        >
-          New Feed
-        </Button> */}
+
       </Box>
       <Card>
         <TableContainer>
@@ -149,16 +136,14 @@ export default function CompetionWordsListView({competitionId}) {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <CompetitionWordsTableRow
-                        key={row.id}
-                        row={{
-                          ...row,
-                          serial_no: (pagination.page - 1) * pagination.page_size + index + 1, // Updated serial number calculation
-                        }}
-                        // onEditRow={() => handleEditRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                        //  onViewRow={()=> handleViewRow(row.id)}
-                      />
+                    <CompetitionWordsTableRow
+                    key={row.id || `word-${index}`}     
+                    row={{
+                      ...row,
+                      serial_no: (pagination.page - 1) * pagination.page_size + index + 1,
+                    }}
+                    onDeleteRow={() => handleDeleteRow(row.id)}
+                  />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}
               </TableBody>

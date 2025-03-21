@@ -102,15 +102,7 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <MenuItem
-          onClick={() => {
-            onEditRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="solar:pen-bold" />
-          Edit
-        </MenuItem>
+      
          <MenuItem
                   onClick={() => {
                     onViewRow();

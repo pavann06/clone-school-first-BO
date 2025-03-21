@@ -97,19 +97,7 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
       </TableRow>
 
-      {/* Popup for Full Description */}
-      {/* <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-        <DialogContent>
-          <Typography variant="h6" gutterBottom>
-            Full Description
-          </Typography>
-          <Typography variant="body1">{description}</Typography>
-          <Button onClick={handleCloseDialog} sx={{ mt: 2 }} variant="contained">
-            Close
-          </Button>
-        </DialogContent>
-      </Dialog> */}
-      {/* Popup for Full Description */}
+    
 <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
   <DialogContent sx={{ position: 'relative', p: 3 }}>
     {/* Watermark */}
