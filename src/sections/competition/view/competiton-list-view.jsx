@@ -1,3 +1,5 @@
+
+
 // import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -14,44 +16,32 @@ import {
   TablePagination,
 } from '@mui/material';
 
-import PropTypes from 'prop-types';
-
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 import Iconify from 'src/components/iconify';
 
 import request from 'src/api/request';
-import { useParams } from 'react-router-dom';
 
 import Scrollbar from 'src/components/scrollbar';
 import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
-import { label } from 'yet-another-react-lightbox';
 
-import FerumFeedsTableRow from '../ferum-feeds-table-row';
+import CompetitionTableRow from '../competition-table-row';
+
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'feed_type', label: 'Feed Type' },
-  { id: 'heading', label: 'Heading' },
-  { id: 'description', label: 'Description' },
-  { id: 'language', label: 'Language' },
+  { id: 'contest_name', label: 'Name' },
+  { id: 'contest_description', label: 'Description' },
+  { id: 'total_words', label: 'Total Words ' },
+  { id: 'prize_pool', label: 'Prize Pool' },
 
-  { id: 'image', label: 'Image' },
-
-  { id: 'likes_count', label: 'Likes ' },
-
-  // {id: 'trending' , label : 'Trending'},
-  { id: 'comment_type', label: 'Comment Type' },
-  { id: 'status', label: 'Status' },
   { id: 'actions ', label: 'Actions' },
 ];
 
-export default function FerumFeedsListView({groupId}) {
-
-
+export default function CompetitionListView() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -59,18 +49,14 @@ export default function FerumFeedsListView({groupId}) {
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
-
-
   const { data, isLoading } = useQuery({
-    queryKey: ['forum_feeds', groupId, pagination.page, pagination.page_size], 
+    queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `backoffice/forum/feeds?group_id=${groupId}&page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/contest?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
-
-  
 
   // Set data when fetched successfully
   useEffect(() => {
@@ -95,23 +81,31 @@ export default function FerumFeedsListView({groupId}) {
     setPagination({ page: 1, page_size: newPageSize });
   };
 
- 
-
   const handleEditRow = useCallback(
-    (feedId) => {
-      router.push(paths.dashboard.groups.forumFeeds.edit(groupId, feedId)); 
+    (id) => {
+      router.push(paths.dashboard.competition.edit(id));
     },
-    [router, groupId]
+    [router]
   );
+   const handleViewRow = useCallback(
+      (id) => {
+        const targetPath = paths.dashboard.competition.view(id);
+  
+        router.push(targetPath);
+      },
+      [router]
+    );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/forum/feeds/${id}`);
+    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
 
     const { success } = response;
 
+    // contact creation success
     if (success) {
       enqueueSnackbar('Deleted successfully');
 
+      // refetch the data
       setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
@@ -123,16 +117,17 @@ export default function FerumFeedsListView({groupId}) {
           heading="List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-          
-            { name: 'Feeds', href: paths.dashboard.groups.forumFeeds.root(groupId) }, 
+            {
+              name: 'Competition',
+              href: paths.dashboard.competition.root,
+            },
             { name: 'List' },
           ]}
         />
-
-        <Button
+              <Button
           component={RouterLink}
+          href={paths.dashboard.competition.new}
           variant="contained"
-          href={paths.dashboard.groups.forumFeeds.new(groupId)} 
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
             position: 'absolute',
@@ -140,7 +135,7 @@ export default function FerumFeedsListView({groupId}) {
             right: '5px',
           }}
         >
-          New Feed
+          New Competition
         </Button>
       </Box>
       <Card>
@@ -154,7 +149,7 @@ export default function FerumFeedsListView({groupId}) {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <FerumFeedsTableRow
+                      <CompetitionTableRow
                         key={row.id}
                         row={{
                           ...row,
@@ -162,7 +157,8 @@ export default function FerumFeedsListView({groupId}) {
                         }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        //  onViewRow={()=> handleViewRow(row.id)}
+                        onViewRow={() => handleViewRow(row.id)}
+                        
                       />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}
@@ -183,7 +179,3 @@ export default function FerumFeedsListView({groupId}) {
     </Container>
   );
 }
-
-FerumFeedsListView.propTypes = {
-  groupId: PropTypes.string.isRequired,// Ensure groupId is a required string
-};

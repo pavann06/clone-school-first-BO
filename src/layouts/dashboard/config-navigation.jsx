@@ -227,45 +227,110 @@ export function useNavData() {
             ],
           },
 
+
+
+          // {
+          //   title: 'Online Store Categories',
+          //   path: paths.dashboard.onlinecategories.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.onlinecategories.root },
+          //      { title: 'create', path: paths.dashboard.onlinecategories.new },
+          //   ],
+          // },
+
+          // {
+          //   title: 'Online Store Products',
+          //   path: paths.dashboard.onlinestoreproducts.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.onlinestoreproducts.root },
+          //      { title: 'create', path: paths.dashboard.onlinestoreproducts.new },
+          //   ],
+          // },
+
+          // {
+          //   title: 'Online Orders',
+          //   path: paths.dashboard.onlineorders.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.onlineorders.root },
+          //     //  { title: 'create', path: paths.dashboard.onlineorders.new },
+          //   ],
+          // },
+
           {
-            title: 'Online Store Categories',
+            title: 'Online',
             path: paths.dashboard.onlinecategories.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.onlinecategories.root },
-               { title: 'create', path: paths.dashboard.onlinecategories.new },
+              {
+                title: 'Store Categories',
+                path: paths.dashboard.onlinecategories.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.onlinecategories.root },
+                  { title: 'Create', path: paths.dashboard.onlinecategories.new },
+                ],
+              },
+              {
+                title: 'Store Products',
+                path: paths.dashboard.onlinestoreproducts.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.onlinestoreproducts.root },
+                  { title: 'Create', path: paths.dashboard.onlinestoreproducts.new },
+                ],
+              },
+              {
+                title: 'Orders',
+                path: paths.dashboard.onlineorders.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.onlineorders.root },
+                ],
+              },
             ],
           },
+          
 
-          {
-            title: 'Online Store Products',
-            path: paths.dashboard.onlinestoreproducts.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.onlinestoreproducts.root },
-               { title: 'create', path: paths.dashboard.onlinestoreproducts.new },
-            ],
-          },
 
-          {
-            title: 'Online Orders',
-            path: paths.dashboard.onlineorders.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.onlineorders.root },
-              //  { title: 'create', path: paths.dashboard.onlineorders.new },
-            ],
-          },
+
+
+          // {
+          //   title: 'Vocabee',
+          //   path: paths.dashboard.word.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.word.root },
+          //      { title: 'create', path: paths.dashboard.word.new },
+          //   ],
+          // },
+
 
           {
             title: 'Vocabee',
             path: paths.dashboard.word.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.word.root },
-               { title: 'create', path: paths.dashboard.word.new },
+              {
+                title: 'Word',
+                path: paths.dashboard.word.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.word.root },
+                  { title: 'Create', path: paths.dashboard.word.new },
+                  
+                ],
+              },
+              {
+                title: 'Competition',
+                path: paths.dashboard.competition.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.competition.root },
+                  { title: 'Create', path: paths.dashboard.competition.new },
+                 
+                ],
+              },
             ],
-          },
+          }
+          
 
           
 

@@ -30,26 +30,21 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 import { label } from 'yet-another-react-lightbox';
 
-import FerumFeedsTableRow from '../ferum-feeds-table-row';
+import CompetitionWordsTableRow from '../competition-words-table-row';
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'feed_type', label: 'Feed Type' },
-  { id: 'heading', label: 'Heading' },
-  { id: 'description', label: 'Description' },
-  { id: 'language', label: 'Language' },
+  { id: 'word', label: 'word' },
+  { id: 'points', label: 'points' },
+  { id: 'parts_of_speech', label: 'parts_of_speech' },
+  { id: 'definition', label: 'definition' },
 
-  { id: 'image', label: 'Image' },
+  { id: 'usage', label: 'usage' },
 
-  { id: 'likes_count', label: 'Likes ' },
-
-  // {id: 'trending' , label : 'Trending'},
-  { id: 'comment_type', label: 'Comment Type' },
-  { id: 'status', label: 'Status' },
   { id: 'actions ', label: 'Actions' },
 ];
 
-export default function FerumFeedsListView({groupId}) {
+export default function CompetionWordsListView({competitionId}) {
 
 
   const router = useRouter();
@@ -62,10 +57,10 @@ export default function FerumFeedsListView({groupId}) {
 
 
   const { data, isLoading } = useQuery({
-    queryKey: ['forum_feeds', groupId, pagination.page, pagination.page_size], 
+    queryKey: ['cometition_words', competitionId, pagination.page, pagination.page_size], 
     queryFn: () =>
       request.get(
-        `backoffice/forum/feeds?group_id=${groupId}&page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/contestword?contest_id=${competitionId}&page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
@@ -97,12 +92,12 @@ export default function FerumFeedsListView({groupId}) {
 
  
 
-  const handleEditRow = useCallback(
-    (feedId) => {
-      router.push(paths.dashboard.groups.forumFeeds.edit(groupId, feedId)); 
-    },
-    [router, groupId]
-  );
+//   const handleEditRow = useCallback(
+//     (feedId) => {
+//       router.push(paths.dashboard.competition.competition_words.edit(competitionId, feedId)); 
+//     },
+//     [router, groupId]
+//   );
 
   const handleDeleteRow = async (id) => {
     const response = await request.delete(`backoffice/forum/feeds/${id}`);
@@ -124,15 +119,15 @@ export default function FerumFeedsListView({groupId}) {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
           
-            { name: 'Feeds', href: paths.dashboard.groups.forumFeeds.root(groupId) }, 
+            { name: 'Words', href: paths.dashboard.competition.competition_words.root(competitionId) }, 
             { name: 'List' },
           ]}
         />
-
+{/* 
         <Button
           component={RouterLink}
           variant="contained"
-          href={paths.dashboard.groups.forumFeeds.new(groupId)} 
+          href={paths.dashboard.competition.competition_words.new(competitionId)} 
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
             position: 'absolute',
@@ -141,7 +136,7 @@ export default function FerumFeedsListView({groupId}) {
           }}
         >
           New Feed
-        </Button>
+        </Button> */}
       </Box>
       <Card>
         <TableContainer>
@@ -154,13 +149,13 @@ export default function FerumFeedsListView({groupId}) {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <FerumFeedsTableRow
+                      <CompetitionWordsTableRow
                         key={row.id}
                         row={{
                           ...row,
                           serial_no: (pagination.page - 1) * pagination.page_size + index + 1, // Updated serial number calculation
                         }}
-                        onEditRow={() => handleEditRow(row.id)}
+                        // onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                         //  onViewRow={()=> handleViewRow(row.id)}
                       />
@@ -184,6 +179,6 @@ export default function FerumFeedsListView({groupId}) {
   );
 }
 
-FerumFeedsListView.propTypes = {
-  groupId: PropTypes.string.isRequired,// Ensure groupId is a required string
+CompetionWordsListView.propTypes = {
+  competitionId: PropTypes.string.isRequired,// Ensure groupId is a required string
 };

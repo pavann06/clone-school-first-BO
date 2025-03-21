@@ -57,37 +57,8 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   const { reset, setValue,watch , handleSubmit, formState: { isSubmitting } } = methods;
 
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = { ...data };
-  
-  //     if (data.question_type === 'Yes/No') {
-  //       payload.options = ['Yes', 'No']; // Yes/No has fixed options
-  //     } else if (
-  //       data.question_type === 'Single Choice' ||
-  //       data.question_type === 'Multiple Choice'
-  //     ) {
-  //       payload.options = Array.isArray(data.options)
-  //         ? data.options.filter((option) => option !== '') // Ensure it's an array
-  //         : []; // Default to empty array
-  //     } else {
-  //       payload.options = []; // For 'Text' type
-  //     }
-  
-  //     const response = await CreateSurveyQuestion(payload, surveyId);
-  
-  //     if (response?.success) {
-  //       enqueueSnackbar('Create success!', { variant: 'success' });
-  //       router.push(paths.dashboard.survey?.root || '/dashboard/survey');
-  //       reset();
-  //     } else {
-  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //   }
-  // });
+
+
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -110,12 +81,12 @@ export default function SurveyQuestionEditForm({ surveyId }) {
   
       console.log('API Response:', response); // Debugging
   
-      if (response?.success || response?.status === 200) {
+      if (response?.success || response?.status === 200 || response?.status === 'success') {
         enqueueSnackbar('Create success!', { variant: 'success' });
         router.push(paths.dashboard.survey?.root || '/dashboard/survey');
         reset();
       } else {
-        const errorMessage = response?.message || response?.error || 'Operation failed';
+        const errorMessage = response?.message || response?.error || JSON.stringify(response) || 'Unexpected API response';
         enqueueSnackbar(errorMessage, { variant: 'error' });
       }
     } catch (error) {

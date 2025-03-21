@@ -130,6 +130,11 @@ const WordListPage = lazy(()=> import('src/pages/dashboard/word/list'));
 const WordCreatePage = lazy(() => import('src/pages/dashboard/word/new'));
 const WordEditPage = lazy(()=> import('src/pages/dashboard/word/edit'));
 
+const CompetitionListPage = lazy(()=> import('src/pages/dashboard/competition/list'));
+const CompetitionCreatePage = lazy(()=> import('src/pages/dashboard/competition/new'));
+const CompetitionEditPage = lazy(()=> import('src/pages/dashboard/competition/edit'));
+const CompetitionWordsViewPage = lazy(()=> import('src/pages/dashboard/competition/words'));
+
 
 
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
@@ -1088,6 +1093,44 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <WordEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: 'competition',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/competition_words',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionWordsViewPage />
               </PermissionBasedGuard>
             ),
           },

@@ -115,7 +115,8 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       }
 
       // Display API error message in a red toast
-      const errorMessage = response?.error || 'Operation failed';
+      const errorMessage = response?.description || 'Operation failed';
+      console.log(response, "decription error")
       enqueueSnackbar(errorMessage, { variant: 'error' });
       return response;
     } catch (error) {

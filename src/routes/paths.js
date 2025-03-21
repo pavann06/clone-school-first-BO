@@ -236,6 +236,26 @@ export const paths = {
           new: `${ROOTS.DASHBOARD}/word/new`,
           edit: (id) => `${ROOTS.DASHBOARD}/word/${id}/edit`,
         },
+
+        
+        // competition: {
+        //   root: `${ROOTS.DASHBOARD}/competition`,
+        //   new: `${ROOTS.DASHBOARD}/competition/new`,
+        //   edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
+        // },
+
+        competition: {
+          root: `${ROOTS.DASHBOARD}/competition`,
+          new: `${ROOTS.DASHBOARD}/competition/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
+          view: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`,
+          competition_words: {
+            root: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`, 
+            // new: (id) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/new`,
+            // edit: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/edit`,
+            // view: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/view`,
+          },
+        },
     
     
 
