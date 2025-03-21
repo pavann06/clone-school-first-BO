@@ -114,9 +114,19 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         return response;
       }
 
-      // Display API error message in a red toast
-      const errorMessage = response?.description || 'Operation failed';
-      console.log(response, "decription error")
+
+      let errorMessage = 'Operation failed';
+
+      if (response?.data) {
+      
+        const errors = Object.values(response.data).flat(); 
+        errorMessage = errors.join(', '); 
+      } else if (response?.description) {
+        errorMessage = response.description; 
+      }
+  
+  
+      console.log('API Error:', errorMessage);
       enqueueSnackbar(errorMessage, { variant: 'error' });
       return response;
     } catch (error) {
@@ -127,56 +137,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
     }
   });
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       image: data.image || null,
-  //       video: data.video || null,
-  //       youtube_video: data.youtube_video || null,
-  //     };
-  
-  //     if (!currentEdutainment) {
-  //       payload.status = 'Pending';
-  //     }
-  
-  //     const response = currentEdutainment
-  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-  //       : await CreateEdutainment(payload);
-  
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
-  //         variant: 'success',
-  //       });
-  //       router.push(paths.dashboard.edutainment.root);
-  //       reset();
-  //       return response;
-  //     }
-  
-  //     // Extract error message properly
-  //     const errorMessage = 
-  //       response?.error || 
-  //       response?.message || 
-  //       response?.data?.message || 
-  //       (Array.isArray(response?.errors) ? response.errors.join(', ') : 'Operation failed');
-  
-  //     enqueueSnackbar(errorMessage, { variant: 'error' });
-  //     return response;
-  //   } catch (error) {
-  //     // Handle unexpected errors (Axios, Network issues, etc.)
-  //     console.error('Error:', error);
-  
-  //     let errorMessage = 'Unexpected error occurred';
-  //     if (error.response) {
-  //       errorMessage = error.response.data?.message || 'Server error';
-  //     } else if (error.message) {
-  //       errorMessage = error.message;
-  //     }
-  
-  //     enqueueSnackbar(errorMessage, { variant: 'error' });
-  //     return null;
-  //   }
-  // });
+ 
   
 
   const handleUpload = useCallback(
