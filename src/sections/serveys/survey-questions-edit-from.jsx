@@ -265,6 +265,7 @@ export default function CompetitionNewEditForm({ currentCompetition, surveyId })
     question_type: currentCompetition?.question_type || 'Text',
     question: currentCompetition?.question || '',
     options: currentCompetition?.options || (['Yes/No'].includes(currentCompetition?.question_type) ? ['Yes', 'No'] : []),
+    surveyId,
   };
 
   const methods = useForm({
