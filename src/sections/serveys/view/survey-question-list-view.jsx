@@ -114,6 +114,12 @@ export default function SurveyQuestionListView() {
                           ...row,
                           serial_no: (pagination.page - 1) * pagination.page_size + index + 1,
                         }}
+                        // onEditRow={() => handleEditRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        // onViewRow={() => {
+                        //   console.log('Row ID:', row.id); // Debugging log
+                        //   handleViewRow(row.id);
+                        // }}
                       />
                     ))}
                 {!isLoading && data?.data?.length === 0 && <TableNoData />}
