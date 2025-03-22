@@ -1,9 +1,7 @@
-
-
 // import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import {
   Box,
@@ -31,21 +29,17 @@ import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 import NewsTableRow from '../news-table-row';
 
-
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'title', label: 'Title' },
   { id: 'description', label: 'Description' },
   { id: 'language', label: 'Language' },
 
- 
   { id: 'categories', label: 'Categories ' },
 
   { id: 'images', label: 'Images' },
 
-
-
-  {id: 'status' , label : 'Status'},
+  { id: 'status', label: 'Status' },
   { id: 'actions ', label: 'Actions' },
 ];
 
@@ -65,32 +59,30 @@ export default function NewsListView() {
   //     ),
   //   keepPreviousData: true,
   // });
- 
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const { data, isLoading, error } = useQuery({
-  queryKey: ['edutainment', pagination.page, pagination.page_size],
-  queryFn: async () => {
-    try {
-      const response = await request.get(
-        `backoffice/news?page=${pagination.page}&page_size=${pagination.page_size}`
-      );
-      return response;
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        console.error('Unauthorized! Redirecting to login...');
-        navigate('/auth/login?returnTo=%2Fdashboard'); // Redirect user to login page
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['edutainment', pagination.page, pagination.page_size],
+    queryFn: async () => {
+      try {
+        const response = await request.get(
+          `backoffice/news?page=${pagination.page}&page_size=${pagination.page_size}`
+        );
+        return response;
+      } catch (err) {
+        if (err.response && err.response.status === 401) {
+          console.error('Unauthorized! Redirecting to login...');
+          navigate('/auth/login?returnTo=%2Fdashboard'); // Redirect user to login page
+        }
+        throw err;
       }
-      throw err;
-    }
-  },
-  keepPreviousData: true,
-  onError: (err) => {
-    console.error('Query error:', err);
-  },
-});
-
+    },
+    keepPreviousData: true,
+    onError: (err) => {
+      console.error('Query error:', err);
+    },
+  });
 
   // Set data when fetched successfully
   useEffect(() => {
@@ -150,7 +142,7 @@ const { data, isLoading, error } = useQuery({
             { name: 'List' },
           ]}
         />
-              <Button
+        <Button
           component={RouterLink}
           href={paths.dashboard.news.new}
           variant="contained"
