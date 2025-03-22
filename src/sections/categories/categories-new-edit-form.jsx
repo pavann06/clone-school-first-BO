@@ -67,6 +67,9 @@ export default function CategoriesNewEditForm({ currentCategory }) {
 
 
 
+
+
+
   // const onSubmit = handleSubmit(async (data) => {
   //   try {
   //     const payload = {
@@ -85,27 +88,34 @@ export default function CategoriesNewEditForm({ currentCategory }) {
   //       return response;
   //     }
 
-  //     // Debugging: Log API response
-  //     console.log('API Response:', response);
+  //     console.log('API Error Response:', response);
 
-  //     // Extract error messages dynamically
+  //     // Extract error message from API response
   //     let errorMessage = 'Operation failed';
 
-  //     if (response?.data && typeof response.data === 'object') {
-  //       const errors = Object.values(response.data).flat(); // Flatten nested error arrays
-  //       if (errors.length > 0) {
-  //         errorMessage = errors.join(', '); // Join multiple error messages
-  //       }
-  //     } else if (response?.description) {
-  //       errorMessage = response.description; // Fallback to description if available
+  //     if (response?.data?.description) {
+  //       errorMessage = response.data.description;
+  //     } else if (response?.data) {
+  //       errorMessage = JSON.stringify(response.data);
   //     }
 
   //     enqueueSnackbar(errorMessage, { variant: 'error' });
 
   //     return response;
   //   } catch (error) {
-  //     console.error('Error:', error);
-  //     enqueueSnackbar('Operation failed', { variant: 'error' });
+  //     console.error('Axios Error:', error);
+
+  //     let errorMessage = 'Operation failed';
+
+  //     if (error.response?.data?.description) {
+  //       errorMessage = error.response.data.description;
+  //     } else if (error.response?.data) {
+  //       errorMessage = JSON.stringify(error.response.data);
+  //     } else if (error.message) {
+  //       errorMessage = error.message;
+  //     }
+
+  //     enqueueSnackbar(errorMessage, { variant: 'error' });
   //     return null;
   //   }
   // });
@@ -129,38 +139,35 @@ export default function CategoriesNewEditForm({ currentCategory }) {
         return response;
       }
   
-      console.log('API Error Response:', response);
+      console.error('API Error Response:', response);
   
-      // Extract error message from API response
-      let errorMessage = 'Operation failed';
-  
-      if (response?.data?.description) {
-        errorMessage = response.data.description;
-      } else if (response?.data) {
-        errorMessage = JSON.stringify(response.data);
-      }
+      const errorMessage = response?.data?.description || response?.data?.message || 'Operation failed';
   
       enqueueSnackbar(errorMessage, { variant: 'error' });
   
       return response;
     } catch (error) {
-      console.error('Axios Error:', error);
-  
-      let errorMessage = 'Operation failed';
-  
-      if (error.response?.data?.description) {
-        errorMessage = error.response.data.description;
-      } else if (error.response?.data) {
-        errorMessage = JSON.stringify(error.response.data);
-      } else if (error.message) {
-        errorMessage = error.message;
+      console.error('🔥 ERROR CAUGHT! 🔥'); // Check if this prints in the console
+      console.error('Full Axios Error Object:', error); // Full error object
+      
+      const errorMessages = 'Operation failed';
+    
+      if (error.response) {
+        console.error('Axios Error Response:', error.response); 
+        console.error('Error Data:', error.response.data); 
+        console.error('Error Status:', error.response.status); 
+        console.error('Error Headers:', error.response.headers);
+      } else {
+        console.error('❌ No response from server. Possible network error.');
       }
-  
-      enqueueSnackbar(errorMessage, { variant: 'error' });
+    
+      enqueueSnackbar(errorMessages, { variant: 'error' });
       return null;
     }
+    
   });
   
+
 
   const handleUpload = useCallback(
     async (file) => {
