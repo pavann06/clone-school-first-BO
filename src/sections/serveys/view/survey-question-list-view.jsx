@@ -36,7 +36,7 @@ const TABLE_HEAD = [
 ];
 
 export default function SurveyQuestionListView() {
-
+  const { enqueueSnackbar } = useSnackbar();
   const { id: survey_id } = useParams();
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
@@ -57,19 +57,19 @@ export default function SurveyQuestionListView() {
     setPagination({ page: 1, page_size: parseInt(event.target.value, 10) });
   };
 
-  // const handleDeleteRow = async (id) => {
-  //   const response = await request.delete(`backoffice/survey/${id}`);
+  const handleDeleteRow = async (id) => {
+    const response = await request.delete(`backoffice/survey/question/${id}`);
 
-  //   const { success } = response;
+    const { success } = response;
 
-  //   // contact creation success
-  //   if (success) {
-  //     enqueueSnackbar('Deleted successfully');
+    // contact creation success
+    if (success) {
+      enqueueSnackbar('Deleted successfully');
 
-  //     // refetch the data
-  //     setPagination((prev) => ({ ...prev, page: 1 }));
-  //   }
-  // };
+      // refetch the data
+      setPagination((prev) => ({ ...prev, page: 1 }));
+    }
+  };
 
 
 
