@@ -208,7 +208,8 @@ export default function NewsNewEditForm({ currentNews }) {
 
 
               <FormControl fullWidth>
-                <InputLabel id="categories-label">Categories</InputLabel>
+                {/* <InputLabel id="categories-label">Categories</InputLabel> */}
+                <Typography variant="subtitle2">Categories</Typography>
                 <Controller
                   name="categories"
                   control={methods.control}
