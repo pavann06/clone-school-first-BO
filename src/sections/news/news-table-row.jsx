@@ -63,7 +63,7 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
   </Typography>
 </TableCell>
 
-        <TableCell>{language}</TableCell>
+        
 
      
 

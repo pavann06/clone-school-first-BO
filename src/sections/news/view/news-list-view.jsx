@@ -33,7 +33,7 @@ const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'title', label: 'Title' },
   { id: 'description', label: 'Description' },
-  { id: 'language', label: 'Language' },
+  
 
   { id: 'categories', label: 'Categories ' },
 
