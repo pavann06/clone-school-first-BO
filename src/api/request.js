@@ -27,8 +27,8 @@ function getYear() {
 function handleAuthError(error) {
   if (error.response && error.response.status === 401) {
     console.error('Unauthorized! Clearing auth and redirecting to login...');
-    localStorage.removeItem('auth_info'); // Clear stored auth info
-    window.location.href = '/login'; // Redirect to login page
+    localStorage.removeItem('auth_info'); 
+    window.location.href = '/login'; 
   }
 }
 

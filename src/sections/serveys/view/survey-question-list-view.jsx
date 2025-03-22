@@ -116,10 +116,7 @@ export default function SurveyQuestionListView() {
                         }}
                         // onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        // onViewRow={() => {
-                        //   console.log('Row ID:', row.id); // Debugging log
-                        //   handleViewRow(row.id);
-                        // }}
+                       
                       />
                     ))}
                 {!isLoading && data?.data?.length === 0 && <TableNoData />}

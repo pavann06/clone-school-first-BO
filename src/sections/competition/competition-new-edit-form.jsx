@@ -1,5 +1,3 @@
-
-
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -87,26 +85,28 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
     name: 'words',
   });
 
-
   useEffect(() => {
     const totalWordsValue = Number(totalWords) || 0;
     const currentWords = watch('words') || [];
-  
+
     if (totalWordsValue !== currentWords.length) {
       setValue(
         'words',
-        Array.from({ length: totalWordsValue }, (_, i) => currentWords[i] || {
-          word: '',
-          points: '',
-          parts_of_speech: '',
-          usage: '',
-          definition: '',
-          origin: '',
-        })
+        Array.from(
+          { length: totalWordsValue },
+          (_, i) =>
+            currentWords[i] || {
+              word: '',
+              points: '',
+              parts_of_speech: '',
+              usage: '',
+              definition: '',
+              origin: '',
+            }
+        )
       );
     }
   }, [totalWords, setValue, watch]);
-  
 
   // Handle Form Submission
   const onSubmit = handleSubmit(async (data) => {
@@ -154,21 +154,13 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
 
               <RHFTextField name="prize_pool" label="Prize Pool" type="number" />
 
-              {/* <Box>
-              <Typography variant="subtitle2">Select Schools</Typography>
-              <SchoolsDropdown
-                value={values.school_ids}
-                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
-              />
-            </Box> */}
-
-<Box>
-              <Typography variant="subtitle2">Select Schools</Typography>
-              <SchoolsDropdown
-                value={values.school_ids}
-                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
-              />
-            </Box>
+              <Box>
+                <Typography variant="subtitle2">Select Schools</Typography>
+                <SchoolsDropdown
+                  value={values.school_ids}
+                  onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+                />
+              </Box>
 
               {/* Dynamic Search Words */}
               {fields.map((item, index) => (
