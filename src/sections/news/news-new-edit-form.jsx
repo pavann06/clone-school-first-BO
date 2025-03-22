@@ -43,10 +43,7 @@ export default function NewsNewEditForm({ currentNews }) {
     remarks: Yup.string(),
     status: Yup.string(),
     school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
-    
   });
-
-
 
   const defaultValues = useMemo(
     () => ({
@@ -71,7 +68,6 @@ export default function NewsNewEditForm({ currentNews }) {
     }),
     [currentNews]
   );
-  
 
   const methods = useForm({
     resolver: yupResolver(NewsSchema),
@@ -89,6 +85,7 @@ export default function NewsNewEditForm({ currentNews }) {
   const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log("Submitting Data:", data);
     try {
       const payload = {
         ...data,
@@ -97,10 +94,9 @@ export default function NewsNewEditForm({ currentNews }) {
           ? data.categories.map((item) => item.trim())
           : data.categories.split(',').map((item) => item.trim()),
 
-          tags: Array.isArray(data.tags)
+        tags: Array.isArray(data.tags)
           ? data.tags.map((item) => item.trim())
           : data.tags.split(',').map((item) => item.trim()),
-        
 
         target_groups: Array.isArray(data.target_groups)
           ? data.target_groups.map((item) => item.trim())
@@ -127,7 +123,7 @@ export default function NewsNewEditForm({ currentNews }) {
         router.push('/dashboard/news');
         reset();
       } else {
-        enqueueSnackbar(response?.error , { variant: 'error' });
+        enqueueSnackbar(response?.error, { variant: 'error' });
       }
     } catch (error) {
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
@@ -199,17 +195,16 @@ export default function NewsNewEditForm({ currentNews }) {
               <RHFTextField name="tags" label="Tags" />
 
               {currentNews && (
-  <RHFSelect name="status" label="Status">
-    <MenuItem value="Approved">Approved</MenuItem>
-    <MenuItem value="Rejected">Rejected</MenuItem>
-    <MenuItem value="Pending">Pending</MenuItem>
-  </RHFSelect>
-)}
-
+                <RHFSelect name="status" label="Status">
+                  <MenuItem value="Approved">Approved</MenuItem>
+                  <MenuItem value="Rejected">Rejected</MenuItem>
+                  <MenuItem value="Pending">Pending</MenuItem>
+                </RHFSelect>
+              )}
 
               <FormControl fullWidth>
-                {/* <InputLabel id="categories-label">Categories</InputLabel> */}
-                <Typography variant="subtitle2">Categories</Typography>
+                <InputLabel id="categories-label">Categories</InputLabel>
+               
                 <Controller
                   name="categories"
                   control={methods.control}
@@ -225,12 +220,12 @@ export default function NewsNewEditForm({ currentNews }) {
               </FormControl>
 
               <Box>
-              <Typography variant="subtitle2">Select Schools</Typography>
-              <SchoolsDropdown
-                value={values.school_ids}
-                onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
-              />
-            </Box>
+                <Typography variant="subtitle2">Select Schools</Typography>
+                <SchoolsDropdown
+                  value={values.school_ids}
+                  onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+                />
+              </Box>
 
               <RHFSelect name="target_groups" label="Target Groups">
                 <MenuItem value="All">All</MenuItem>
@@ -240,82 +235,81 @@ export default function NewsNewEditForm({ currentNews }) {
                 <MenuItem value="Grand Parents">Grand Parents</MenuItem>
               </RHFSelect>
 
-
               <RHFTextField name="description" label="Description" multiline rows={4} />
 
               <Stack spacing={1.5}>
-  <Typography variant="subtitle2">Images</Typography>
-  <RHFUpload
-    name="images"
-    label="Images"
-    multiple
-    onDrop={handleDrop}
-    isLoading={isUploading}
-  />
-  <Stack direction="row" spacing={1} flexWrap="wrap">
-    {values.images.map((url, index) => (
-      <Box key={index} sx={{ position: 'relative', display: 'inline-block' }}>
-        <img src={url} alt={`Uploaded ${index}`} width="100" height="100" style={{ borderRadius: 8 }} />
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 5,
-            right: 5,
-            background: 'rgba(0,0,0,0.6)',
-            borderRadius: '50%',
-            cursor: 'pointer',
-            padding: '2px',
-          }}
-          onClick={() => {
-            const updatedImages = values.images.filter((_, i) => i !== index);
-            setValue('images', updatedImages);
-          }}
-        >
-          ❌
-        </Box>
-      </Box>
-    ))}
-  </Stack>
-</Stack>
+                <Typography variant="subtitle2">Images</Typography>
+                <RHFUpload
+                  name="images"
+                  label="Images"
+                  multiple
+                  onDrop={handleDrop}
+                  isLoading={isUploading}
+                />
+                <Stack direction="row" spacing={1} flexWrap="wrap">
+                  {values.images.map((url, index) => (
+                    <Box key={index} sx={{ position: 'relative', display: 'inline-block' }}>
+                      <img
+                        src={url}
+                        alt={`Uploaded ${index}`}
+                        width="100"
+                        height="100"
+                        style={{ borderRadius: 8 }}
+                      />
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 5,
+                          right: 5,
+                          background: 'rgba(0,0,0,0.6)',
+                          borderRadius: '50%',
+                          cursor: 'pointer',
+                          padding: '2px',
+                        }}
+                        onClick={() => {
+                          const updatedImages = values.images.filter((_, i) => i !== index);
+                          setValue('images', updatedImages);
+                        }}
+                      >
+                        ❌
+                      </Box>
+                    </Box>
+                  ))}
+                </Stack>
+              </Stack>
 
-
-
-            
-<Stack spacing={1.5}>
-  <Typography variant="subtitle2">Video</Typography>
-  <RHFUpload
-    name="videos"
-    label="Video"
-    onDrop={(files) => handleVideoUpload(files[0])}
-    isLoading={isUploading}
-    accept="video/*"
-  />
-{values.videos.length > 0 && (
-  <Box sx={{ position: 'relative', display: 'inline-block' }}>
-    <video src={values.videos[0]} width="100" controls style={{ borderRadius: 8 }}>
-      <track kind="captions" src="" label="No captions available" default />
-      Your browser does not support the video tag.
-    </video>
-    <Box
-      sx={{
-        position: 'absolute',
-        top: 5,
-        right: 5,
-        background: 'rgba(0,0,0,0.6)',
-        borderRadius: '50%',
-        cursor: 'pointer',
-        padding: '2px',
-      }}
-      onClick={() => setValue('videos', [])} // Clear video
-    >
-      ❌
-    </Box>
-  </Box>
-)}
-
-</Stack>
-
-
+              <Stack spacing={1.5}>
+                <Typography variant="subtitle2">Video</Typography>
+                <RHFUpload
+                  name="videos"
+                  label="Video"
+                  onDrop={(files) => handleVideoUpload(files[0])}
+                  isLoading={isUploading}
+                  accept="video/*"
+                />
+                {values.videos.length > 0 && (
+                  <Box sx={{ position: 'relative', display: 'inline-block' }}>
+                    <video src={values.videos[0]} width="100" controls style={{ borderRadius: 8 }}>
+                      <track kind="captions" src="" label="No captions available" default />
+                      Your browser does not support the video tag.
+                    </video>
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 5,
+                        right: 5,
+                        background: 'rgba(0,0,0,0.6)',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                        padding: '2px',
+                      }}
+                      onClick={() => setValue('videos', [])} // Clear video
+                    >
+                      ❌
+                    </Box>
+                  </Box>
+                )}
+              </Stack>
 
               <RHFTextField name="youtube_urls" label="YouTube URLs" />
               <RHFTextField name="remarks" label="Remarks" multiline rows={3} />
