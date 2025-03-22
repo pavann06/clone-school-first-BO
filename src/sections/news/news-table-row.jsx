@@ -52,16 +52,16 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
         <TableCell>{title}</TableCell>
 
         {/* Description */}
-        <TableCell>
-          <Typography variant="body2">
-            {truncatedDescription}{' '}
-            {description.length > 100 && (
-              <Button size="small" onClick={handleOpenDialog}>
-                Read More
-              </Button>
-            )}
-          </Typography>
-        </TableCell>
+        <TableCell sx={{ minWidth: 300 }}>
+  <Typography variant="body2">
+    {truncatedDescription}{' '}
+    {description.length > 100 && (
+      <Button size="small" onClick={handleOpenDialog}>
+        Read More
+      </Button>
+    )}
+  </Typography>
+</TableCell>
 
         <TableCell>{language}</TableCell>
 
