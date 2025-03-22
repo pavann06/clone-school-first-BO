@@ -41,7 +41,7 @@ export default function CategoriesNewEditForm({ currentCategory }) {
   const CategorySchema = Yup.object().shape({
     display_name: Yup.string().required('Prompt is required'),
 
-    icon_url: Yup.mixed(),
+    icon_url: Yup.mixed().required('Upload Icon '),
   });
 
   const defaultValues = useMemo(
@@ -65,11 +65,13 @@ export default function CategoriesNewEditForm({ currentCategory }) {
     formState: { isSubmitting },
   } = methods;
 
+
+
   // const onSubmit = handleSubmit(async (data) => {
   //   try {
   //     const payload = {
   //       ...data,
-  //       icon_url: data.icon_url || null,
+  //       image: data.image || null,
   //     };
 
   //     const response = currentCategory
@@ -83,28 +85,31 @@ export default function CategoriesNewEditForm({ currentCategory }) {
   //       return response;
   //     }
 
-  //    // Extract error messages from response.data
-  //    let errorMessage = "Operation failed";
-  //    if (response?.data && typeof response.data === "object") {
-  //     const errors = Object.values(response.data)
-  //       .filter((msg) => Array.isArray(msg)) // Ensure it's an array
-  //       .flat() // Flatten multiple error messages
-  //       .join(", "); // Convert to a single string
+  //     // Debugging: Log API response
+  //     console.log('API Response:', response);
 
-  //     if (errors) {
-  //       errorMessage = errors; // Assign extracted errors
+  //     // Extract error messages dynamically
+  //     let errorMessage = 'Operation failed';
+
+  //     if (response?.data && typeof response.data === 'object') {
+  //       const errors = Object.values(response.data).flat(); // Flatten nested error arrays
+  //       if (errors.length > 0) {
+  //         errorMessage = errors.join(', '); // Join multiple error messages
+  //       }
+  //     } else if (response?.description) {
+  //       errorMessage = response.description; // Fallback to description if available
   //     }
-  //   }
 
-  //   enqueueSnackbar(errorMessage, { variant: "error" });
+  //     enqueueSnackbar(errorMessage, { variant: 'error' });
 
   //     return response;
   //   } catch (error) {
   //     console.error('Error:', error);
-  //     enqueueSnackbar('Operation failed');
+  //     enqueueSnackbar('Operation failed', { variant: 'error' });
   //     return null;
   //   }
   // });
+
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -118,32 +123,40 @@ export default function CategoriesNewEditForm({ currentCategory }) {
         : await CreateCategory(payload);
   
       if (response?.success) {
-        enqueueSnackbar(currentCategory ? "Update success!" : "Create success!");
+        enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!');
         router.push(paths.dashboard.categories.root);
         reset();
         return response;
       }
   
-      // Debugging: Log API response
-      console.log("API Response:", response);
+      console.log('API Error Response:', response);
   
-      // Extract error messages
-      let errorMessage = "Operation failed";
+      // Extract error message from API response
+      let errorMessage = 'Operation failed';
   
-      if (response?.data && typeof response.data === "object") {
-        const errors = Object.values(response.data).flat(); // Flatten nested error arrays
-  
-        if (errors.length > 0) {
-          errorMessage = errors.join(", "); // Combine error messages
-        }
+      if (response?.data?.description) {
+        errorMessage = response.data.description;
+      } else if (response?.data) {
+        errorMessage = JSON.stringify(response.data);
       }
   
-      enqueueSnackbar(errorMessage, { variant: "error" });
+      enqueueSnackbar(errorMessage, { variant: 'error' });
   
       return response;
     } catch (error) {
-      console.error("Error:", error);
-      enqueueSnackbar("Operation failed", { variant: "error" });
+      console.error('Axios Error:', error);
+  
+      let errorMessage = 'Operation failed';
+  
+      if (error.response?.data?.description) {
+        errorMessage = error.response.data.description;
+      } else if (error.response?.data) {
+        errorMessage = JSON.stringify(error.response.data);
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+  
+      enqueueSnackbar(errorMessage, { variant: 'error' });
       return null;
     }
   });

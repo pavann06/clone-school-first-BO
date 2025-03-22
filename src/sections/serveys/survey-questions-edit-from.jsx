@@ -20,14 +20,12 @@ import { paths } from 'src/routes/paths';
 import { CreateSurveyQuestion } from 'src/api/servey-questions';
 import FormProvider, { RHFTextField, RHFSelect } from 'src/components/hook-form';
 
-export default function SurveyQuestionEditForm({ surveyId }) {
+export default function SurveyQuestionEditForm({ surveyId , currentQuestion }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
   const [questionType, setQuestionType] = useState('');
   const [options, setOptions] = useState([]);
-
-
 
   const SurveyQuestionSchema = Yup.object().shape({
     question_type: Yup.string().required('Question Type is required'),
@@ -39,31 +37,34 @@ export default function SurveyQuestionEditForm({ surveyId }) {
       return schema.strip(); // Removes the field when not needed
     }),
   });
-  
 
-  const defaultValues = useMemo(() => ({
-    question_type: '',
-    question: '',
-    options: [''],
-    surveyId,  // Add this if required
-  }), [surveyId]);
-  
+  const defaultValues = useMemo(
+    () => ({
+      question_type: currentQuestion.question_type || '',
+      question: currentQuestion.question || '',
+      options: currentQuestion.options || [''],
+      surveyId,
+    }),
+    [currentQuestion.question_type, currentQuestion.question, currentQuestion.options, surveyId ]
+  );
 
   const methods = useForm({
     resolver: yupResolver(SurveyQuestionSchema),
     defaultValues,
   });
 
-  const { reset, setValue,watch , handleSubmit, formState: { isSubmitting } } = methods;
-
-
-
-
+  const {
+    reset,
+    setValue,
+    watch,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = { ...data };
-  
+
       if (data.question_type === 'Yes/No') {
         payload.options = ['Yes', 'No']; // Yes/No has fixed options
       } else if (
@@ -76,26 +77,24 @@ export default function SurveyQuestionEditForm({ surveyId }) {
       } else {
         payload.options = []; // For 'Text' type
       }
-  
+
       const response = await CreateSurveyQuestion(payload, surveyId);
-  
-      console.log('API Response:', response); // Debugging
-  
-      if (response?.success || response?.status === 200 || response?.status === 'success') {
-        enqueueSnackbar('Create success!', { variant: 'success' });
-        router.push(paths.dashboard.survey?.root || '/dashboard/survey');
+
+    if (response?.success) {
+        enqueueSnackbar(currentQuestion ? 'Update success!' : 'Create success!', { variant: 'success' });
+        router.push(paths.dashboard.survey.root);
         reset();
-      } else {
-        const errorMessage = response?.message || response?.error || JSON.stringify(response) || 'Unexpected API response';
-        enqueueSnackbar(errorMessage, { variant: 'error' });
+        return response;
       }
+
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+      return response;
     } catch (error) {
       console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+      return null;
     }
   });
-  
-  
 
   const handleQuestionTypeChange = (e) => {
     const selectedType = e.target.value;
@@ -200,4 +199,5 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
 SurveyQuestionEditForm.propTypes = {
   surveyId: PropTypes.string.isRequired,
+  currentQuestion : PropTypes.any,
 };

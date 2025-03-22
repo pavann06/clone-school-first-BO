@@ -57,6 +57,24 @@ export default function SurveyQuestionListView() {
     setPagination({ page: 1, page_size: parseInt(event.target.value, 10) });
   };
 
+  // const handleDeleteRow = async (id) => {
+  //   const response = await request.delete(`backoffice/survey/${id}`);
+
+  //   const { success } = response;
+
+  //   // contact creation success
+  //   if (success) {
+  //     enqueueSnackbar('Deleted successfully');
+
+  //     // refetch the data
+  //     setPagination((prev) => ({ ...prev, page: 1 }));
+  //   }
+  // };
+
+
+
+
+
   return (
     <Container maxWidth="lg">
       <Box sx={{ position: 'relative', mb: { xs: 3, md: 5 } }}>
