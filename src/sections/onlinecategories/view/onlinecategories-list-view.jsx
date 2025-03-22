@@ -86,7 +86,7 @@ export default function OnlineCategoriesListView() {
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+    const response = await request.delete(`backoffice/onlinestore/categories/${id}`);
 
     const { success } = response;
 

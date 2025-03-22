@@ -119,7 +119,7 @@ export default function NewsListView() {
 
     const { success } = response;
 
-    // contact creation success
+    
     if (success) {
       enqueueSnackbar('Deleted successfully');
 
