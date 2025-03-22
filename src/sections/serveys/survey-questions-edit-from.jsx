@@ -205,7 +205,6 @@
 //   surveyId: PropTypes.string.isRequired,
 // };
 
-
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -221,6 +220,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // Internal Utilities
 import { paths } from 'src/routes/paths';
@@ -230,24 +231,33 @@ import { CreateCompetition, UpdateCompetition } from 'src/api/competition';
 // Form Components
 import FormProvider, { RHFTextField, RHFSelect } from 'src/components/hook-form';
 
-export default function SurveyQuestionEditForm({ currentCompetition, surveyId }) {
+export default function CompetitionNewEditForm({ currentCompetition, surveyId }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
   const CompetitionSchema = Yup.object().shape({
     question_type: Yup.string().required('Question type is required'),
     question: Yup.string().required('Question is required'),
-    options: Yup.array().when('question_type', {
-      is: (type) => ['Single Choice', 'Multiple Choice', 'Yes/No'].includes(type),
-      then: (schema) => schema.of(Yup.string().required('Option is required')).min(2, 'At least two options are required'),
-      otherwise: Yup.array().notRequired(),
-    }),
+    options: Yup.array()
+      .test('options-required', 'At least two options are required', (value, context) => {
+        const type = context.parent.question_type;
+        if (['Single Choice', 'Multiple Choice'].includes(type)) {
+          return value && value.length >= 2;
+        }
+        if (type === 'Yes/No') {
+          return value && value.length === 2;
+        }
+        return true;
+      })
+      .of(Yup.string().required('Option is required')),
   });
+  
+  
 
   const defaultValues = {
     question_type: currentCompetition?.question_type || 'Text',
     question: currentCompetition?.question || '',
-    options: currentCompetition?.options || [],
+    options: currentCompetition?.options || (['Yes/No'].includes(currentCompetition?.question_type) ? ['Yes', 'No'] : []),
   };
 
   const methods = useForm({
@@ -258,6 +268,14 @@ export default function SurveyQuestionEditForm({ currentCompetition, surveyId })
   const { control, watch, handleSubmit, setValue, formState: { isSubmitting } } = methods;
   const questionType = watch('question_type');
   const { fields, append, remove } = useFieldArray({ control, name: 'options' });
+
+  React.useEffect(() => {
+    if (questionType === 'Yes/No') {
+      setValue('options', ['Yes', 'No']);
+    } else if (['Single Choice', 'Multiple Choice'].includes(questionType) && fields.length === 0) {
+      setValue('options', ['', '']);
+    }
+  }, [questionType, setValue, fields.length]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -296,8 +314,18 @@ export default function SurveyQuestionEditForm({ currentCompetition, surveyId })
                   {fields.map((item, index) => (
                     <Stack key={item.id} direction="row" spacing={2} alignItems="center">
                       <RHFTextField name={`options[${index}]`} label={`Option ${index + 1}`} />
+                      {questionType !== 'Yes/No' && (
+                        <IconButton onClick={() => remove(index)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
                     </Stack>
                   ))}
+                  {['Single Choice', 'Multiple Choice'].includes(questionType) && (
+                    <LoadingButton onClick={() => append('')} variant="outlined" sx={{ mt: 1 }}>
+                      Add Option
+                    </LoadingButton>
+                  )}
                 </Box>
               )}
               <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
@@ -311,8 +339,7 @@ export default function SurveyQuestionEditForm({ currentCompetition, surveyId })
   );
 }
 
-SurveyQuestionEditForm.propTypes = {
+CompetitionNewEditForm.propTypes = {
   currentCompetition: PropTypes.any,
   surveyId: PropTypes.string.isRequired,
 };
-
