@@ -38,12 +38,12 @@ const TABLE_HEAD = [
   { id: 'description', label: 'Description' },
   { id: 'language', label: 'Language' },
 
-  { id: 'tags', label: 'Tags ' },
+ 
   { id: 'categories', label: 'Categories ' },
 
   { id: 'images', label: 'Images' },
 
-  { id: 'likes_count', label: 'Likes ' },
+
 
   {id: 'status' , label : 'Status'},
   { id: 'actions ', label: 'Actions' },

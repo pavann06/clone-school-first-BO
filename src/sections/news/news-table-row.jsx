@@ -23,8 +23,8 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
     title,
     description,
     categories,
-    tags,
-    likes_count,
+   
+    
 
     heading,
 
@@ -65,21 +65,11 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
 
         <TableCell>{language}</TableCell>
 
-        <TableCell>
-          <Box>
-            {Array.isArray(tags)
-              ? tags.map((tag, index) => (
-                  <Typography key={index} variant="body2">
-                    {tag}
-                  </Typography>
-                ))
-              : tags}
-          </Box>
-        </TableCell>
+     
 
         <TableCell>
           <Box>
-            {Array.isArray(tags) ? (
+            {Array.isArray(categories) ? (
               <ul>
                 {categories.map((category, index) => (
                   <li key={index}>
@@ -88,7 +78,7 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
                 ))}
               </ul>
             ) : (
-              tags
+              categories
             )}
           </Box>
         </TableCell>
@@ -107,7 +97,7 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
 
         {/* Interactions */}
-        <TableCell>{likes_count}</TableCell>
+       
 
         {/* Language */}
 
