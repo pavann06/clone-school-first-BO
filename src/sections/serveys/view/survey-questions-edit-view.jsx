@@ -39,7 +39,7 @@ export default function SurveyQuestionEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <SurveyNewEditForm currentEdutainment={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <SurveyNewEditForm currentQuestion={data?.data} />}
     </Container>
   );
 }

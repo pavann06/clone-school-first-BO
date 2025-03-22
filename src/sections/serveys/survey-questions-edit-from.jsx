@@ -205,6 +205,13 @@
 //   surveyId: PropTypes.string.isRequired,
 // };
 
+
+
+
+
+
+
+
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -280,6 +287,7 @@ export default function CompetitionNewEditForm({ currentCompetition, surveyId })
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = { ...data, surveyId };
+      console.log("Submitting with surveyId:", surveyId); // Debugging step
       const response = currentCompetition
         ? await UpdateSurveyQuestion({ ...payload, id: currentCompetition.id })
         : await CreateSurveyQuestion(payload);
