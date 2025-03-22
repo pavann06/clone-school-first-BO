@@ -226,7 +226,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 // Internal Utilities
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
-import { CreateCompetition, UpdateCompetition } from 'src/api/competition';
+import { CreateSurveyQuestion, UpdateSurveyQuestion } from 'src/api/servey-questions';
 
 // Form Components
 import FormProvider, { RHFTextField, RHFSelect } from 'src/components/hook-form';
@@ -281,8 +281,8 @@ export default function CompetitionNewEditForm({ currentCompetition, surveyId })
     try {
       const payload = { ...data, surveyId };
       const response = currentCompetition
-        ? await UpdateCompetition({ ...payload, id: currentCompetition.id })
-        : await CreateCompetition(payload);
+        ? await UpdateSurveyQuestion({ ...payload, id: currentCompetition.id })
+        : await CreateSurveyQuestion(payload);
 
       if (response?.success) {
         enqueueSnackbar(currentCompetition ? 'Update success!' : 'Create success!', { variant: 'success' });
