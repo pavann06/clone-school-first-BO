@@ -94,15 +94,18 @@ export default function CalenderListView() {
     [router]
   );
 
+
   const handleDeleteRow = async (id) => {
-    const response = await request.delete('backoffice/broadcast/calendar/', { id });
+    const response = await request.delete(`backoffice/broadcast/calendar/${id}`);
 
     const { success } = response;
 
+    // contact creation success
     if (success) {
       enqueueSnackbar('Deleted successfully');
-      queryClient.invalidateQueries(['backoffice/calendar']);
-      router.push(paths.dashboard.calender.root);
+
+      // refetch the data
+      setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
 

@@ -84,7 +84,7 @@ export default function BusinessCategoriesListView() {
 
   const handleDeleteRow = async (id) => {
     try {
-      const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+      const response = await request.delete(`backoffice/business/categories/${id}`);
       if (response.success) {
         enqueueSnackbar('Deleted successfully');
         setPagination((prev) => ({ ...prev, page: 1 }));

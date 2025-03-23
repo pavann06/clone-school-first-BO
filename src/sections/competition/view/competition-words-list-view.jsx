@@ -100,7 +100,7 @@ export default function CompetionWordsListView({competitionId}) {
 //   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/forum/feeds/${id}`);
+    const response = await request.delete(`backoffice/contestword/${id}`);
 
     const { success } = response;
 

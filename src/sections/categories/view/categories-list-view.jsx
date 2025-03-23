@@ -93,17 +93,30 @@ export default function CategoryListView() {
     [router]
   );
 
-  const handleDeleteRow = async (id) => {
-    const response = await request.delete('backoffice/news/categories/', { id });
+  // const handleDeleteRow = async (id) => {
+  //   const response = await request.delete('backoffice/news/categories/', { id });
 
-    const { success } = response;
+  //   const { success } = response;
 
-    if (success) {
-      enqueueSnackbar('Deleted successfully');
-      queryClient.invalidateQueries(['backoffice/calendar']);
-      router.push(paths.dashboard.categories.root);
-    }
-  };
+  //   if (success) {
+  //     enqueueSnackbar('Deleted successfully');
+  //     queryClient.invalidateQueries(['backoffice/calendar']);
+  //     router.push(paths.dashboard.categories.root);
+  //   }
+  // };
+    const handleDeleteRow = async (id) => {
+      const response = await request.delete(`backoffice/news/categories/${id}`);
+  
+      const { success } = response;
+  
+      // contact creation success
+      if (success) {
+        enqueueSnackbar('Deleted successfully');
+  
+        // refetch the data
+        setPagination((prev) => ({ ...prev, page: 1 }));
+      }
+    };
 
   return (
     <Container maxWidth="lg">

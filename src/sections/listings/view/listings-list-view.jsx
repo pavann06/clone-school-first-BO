@@ -100,7 +100,7 @@ export default function ListingsListView() {
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/business/categories/${id}`);
+    const response = await request.delete(`backoffice/business/listings/${id}`);
 
     const { success } = response;
 

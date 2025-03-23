@@ -97,7 +97,7 @@ export default function CompetitionListView() {
     );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+    const response = await request.delete(`backoffice/contest/${id}`);
 
     const { success } = response;
 

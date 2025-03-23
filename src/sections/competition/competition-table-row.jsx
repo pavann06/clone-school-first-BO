@@ -113,7 +113,7 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
                   {/* <AppointmentListPage /> */}
                   Words
                 </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             onDeleteRow();
             popover.onClose();
@@ -121,7 +121,7 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         >
           <Iconify icon="material-symbols:delete" />
           Delete
-        </MenuItem>
+        </MenuItem> */}
       </CustomPopover>
     </>
   );
