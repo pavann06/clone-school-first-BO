@@ -24,13 +24,13 @@ function getYear() {
 }
 
 
-function handleAuthError(error) {
-  if (error.response && error.response.status === 401) {
-    console.error('Unauthorized! Clearing auth and redirecting to login...');
-    localStorage.removeItem('auth_info'); 
-    window.location.href = '/login'; 
-  }
-}
+// function handleAuthError(error) {
+//   if (error.response && error.response.status === 401) {
+//     console.error('Unauthorized! Clearing auth and redirecting to login...');
+//     localStorage.removeItem('auth_info'); 
+//     window.location.href = '/login'; 
+//   }
+// }
 
 const request = {
   get: async (endPoint, options = {}) => {

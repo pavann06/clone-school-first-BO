@@ -85,7 +85,7 @@ export default function NewsNewEditForm({ currentNews }) {
   const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log("Submitting Data:", data);
+    console.log('Submitting Data:', data);
     try {
       const payload = {
         ...data,
@@ -210,14 +210,31 @@ export default function NewsNewEditForm({ currentNews }) {
                   control={methods.control}
                   render={({ field }) => (
                     <CategoriesDropdown
-                      {...field}
-                      value={field.value || []}
-                      onChange={(value) => field.onChange(value)}
+                      value={values.categories}
+                      onChange={(selectedCategories) => setValue('categories', selectedCategories)}
                       label="Categories"
                     />
+                  
                   )}
                 />
               </FormControl>
+{/* <FormControl fullWidth>
+  <InputLabel id="categories-label">Categories</InputLabel>
+  <Controller
+    name="categories"
+    control={methods.control}
+    defaultValue={[]} // ✅ Ensure it's an array by default
+    render={({ field }) => (
+      <CategoriesDropdown
+        value={Array.isArray(field.value) ? field.value : []} // ✅ Always an array
+        onChange={(selectedCategories) => field.onChange(selectedCategories || [])} // ✅ Prevent null issues
+        label="Categories"
+      />
+    )}
+  />
+</FormControl> */}
+
+
 
               <Box>
                 <Typography variant="subtitle2">Select Schools</Typography>
