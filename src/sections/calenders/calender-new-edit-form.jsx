@@ -1,35 +1,31 @@
-
-
 import * as Yup from 'yup';
+// Import date-fns for formatting
+import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import React, { useMemo, useState, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQueryClient } from '@tanstack/react-query';
+import React, { useMemo, useState, useCallback } from 'react';
 
 // UI Components (Material-UI)
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import { Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import LoadingButton from '@mui/lab/LoadingButton';
 import { DatePicker } from '@mui/x-date-pickers';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // Internal Utilities
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import request from 'src/api/request';
-
 import { CreateCalender, UpdateCalender } from 'src/api/calender-module';
 
 import { useSnackbar } from 'src/components/snackbar';
 // Form Components
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
-import { Typography } from '@mui/material';
-
-// Import date-fns for formatting
-import { format } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
@@ -95,6 +91,19 @@ export default function CalenderNewEditForm({ currentCalender }) {
         router.push(paths.dashboard.calender.root);
         reset();
         return response;
+      }
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0],
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
       }
 
       enqueueSnackbar('Operation failed');

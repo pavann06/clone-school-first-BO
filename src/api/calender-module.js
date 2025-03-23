@@ -44,7 +44,7 @@ export const CreateCalender = async (form_data) => {
     return resp;
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 };
 
@@ -67,8 +67,8 @@ export const UpdateCalender = async (form_data) => {
     return resp;
   } catch (error) {
     console.error(error);
+    throw error;
   }
-  return null;
 };
 
 
