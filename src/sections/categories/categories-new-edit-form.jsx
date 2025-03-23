@@ -139,29 +139,25 @@ export default function CategoriesNewEditForm({ currentCategory }) {
         return response;
       }
   
-      console.error('API Error Response:', response);
-  
-      const errorMessage = response?.data?.description || response?.data?.message || 'Operation failed';
-  
-      enqueueSnackbar(errorMessage, { variant: 'error' });
-  
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0],
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+
+      enqueueSnackbar('Operation failed');
       return response;
     } catch (error) {
-      console.error('🔥 ERROR CAUGHT! 🔥'); // Check if this prints in the console
-      console.error('Full Axios Error Object:', error); // Full error object
-      
-      const errorMessages = 'Operation failed';
-    
-      if (error.response) {
-        console.error('Axios Error Response:', error.response); 
-        console.error('Error Data:', error.response.data); 
-        console.error('Error Status:', error.response.status); 
-        console.error('Error Headers:', error.response.headers);
-      } else {
-        console.error('❌ No response from server. Possible network error.');
-      }
-    
-      enqueueSnackbar(errorMessages, { variant: 'error' });
+      console.error('Error:', error);
+      enqueueSnackbar('Operation failed');
       return null;
     }
     

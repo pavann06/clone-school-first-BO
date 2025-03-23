@@ -84,51 +84,10 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const values = watch();
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       // school_ids: data.school_ids || [],
-  //       image: data.image || null,
-  //       video: data.video || null,
-  //       youtube_video: data.youtube_video || null,
-  //     };
-  //     if (!currentEdutainment) {
-  //       payload.status = 'Pending';
-  //     }
 
-  //     const response = currentEdutainment
-  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-  //       : await CreateEdutainment(payload);
 
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
-  //         variant: 'success',
-  //       });
-  //       router.push(paths.dashboard.edutainment.root);
-  //       reset();
-  //       return response;
-  //     }
 
-  //     let errorMessage = 'Operation failed';
 
-  //     if (response?.data) {
-  //       const errors = Object.values(response.data).flat();
-  //       errorMessage = errors.join(', ');
-  //     } else if (response?.description) {
-  //       errorMessage = response.description;
-  //     }
-
-  //     console.log('API Error:', errorMessage);
-  //     enqueueSnackbar(errorMessage, { variant: 'error' });
-  //     return response;
-  //   } catch (error) {
-  //     // Handle unexpected errors (e.g., network issues)
-  //     console.error('Error:', error);
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //     return null;
-  //   }
-  // });
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -158,43 +117,25 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         return response;
       }
   
-      // Extract error message dynamically
-      let errorMessage = 'Operation failed';
-  
-      if (response?.description) {
-        errorMessage = response.description; // Check if 'description' exists
-      } else if (response?.message) {
-        errorMessage = response.message; // Check if 'message' exists
-      } else if (response?.error) {
-        errorMessage = response.error; // Check if 'error' exists
-      } else if (response?.data) {
-        const errors = Object.values(response.data).flat();
-        errorMessage = errors.join(', '); // Join multiple errors into a single string
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0],
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
       }
-  
-      console.log('API Error:', errorMessage);
-      enqueueSnackbar(errorMessage, { variant: 'error' });
-  
+
+      enqueueSnackbar('Operation failed');
       return response;
     } catch (error) {
       console.error('Error:', error);
-      console.log("Error Response:", error.response); // Debug full error response
-  
-      let errorMessage = "Unexpected error occurred";
-  
-      if (error.response) {
-        if (error.response.data) {
-          errorMessage = error.response.data.description || 
-                         error.response.data.message || 
-                         JSON.stringify(error.response.data); // Extract any possible error message
-        } else {
-          errorMessage = `Request failed with status code ${error.response.status}`;
-        }
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-  
-      enqueueSnackbar(errorMessage, { variant: 'error' });
+      enqueueSnackbar('Operation failed');
       return null;
     }
   });
