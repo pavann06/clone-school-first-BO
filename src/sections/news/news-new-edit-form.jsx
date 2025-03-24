@@ -122,7 +122,8 @@ export default function NewsNewEditForm({ currentNews }) {
         });
         router.push('/dashboard/news');
         reset();
-      } else {
+      }
+       else {
         enqueueSnackbar(response?.error, { variant: 'error' });
       }
     } catch (error) {
