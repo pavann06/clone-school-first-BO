@@ -202,39 +202,11 @@ export default function NewsNewEditForm({ currentNews }) {
                 </RHFSelect>
               )}
 
-              <FormControl fullWidth>
-                <InputLabel id="categories-label">Categories</InputLabel>
-               
-                <Controller
-                  name="categories"
-                  control={methods.control}
-                  render={({ field }) => (
-                    <CategoriesDropdown
-                      value={values.categories}
-                      onChange={(selectedCategories) => setValue('categories', selectedCategories)}
-                      label="Categories"
-                    />
-                  
-                  )}
-                />
-              </FormControl>
-{/* <FormControl fullWidth>
-  <InputLabel id="categories-label">Categories</InputLabel>
-  <Controller
-    name="categories"
-    control={methods.control}
-    defaultValue={[]} // ✅ Ensure it's an array by default
-    render={({ field }) => (
-      <CategoriesDropdown
-        value={Array.isArray(field.value) ? field.value : []} // ✅ Always an array
-        onChange={(selectedCategories) => field.onChange(selectedCategories || [])} // ✅ Prevent null issues
-        label="Categories"
-      />
-    )}
-  />
-</FormControl> */}
-
-
+              <CategoriesDropdown
+                value={values.categories}
+                onChange={(selectedCategories) => setValue('categories', selectedCategories)}
+                label="Categories"
+              />
 
               <Box>
                 <Typography variant="subtitle2">Select Schools</Typography>
