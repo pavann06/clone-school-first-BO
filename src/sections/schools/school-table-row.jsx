@@ -101,32 +101,10 @@ export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
 <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
   <DialogContent sx={{ position: 'relative', p: 3 }}>
     {/* Watermark */}
-    <Typography
-      variant="h1"
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        color: 'rgba(0, 0, 0, 0.1)',
-        fontSize: '5rem',
-        fontWeight: 'bold',
-        pointerEvents: 'none', // Prevent interaction
-        userSelect: 'none',   // Prevent selection
-      }}
-    >
-      FamiliFirst
-    </Typography>
+   
 
     {/* Title */}
-    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-      Full Description
-    </Typography>
 
-    {/* Description */}
-    <Typography variant="body1" sx={{ mb: 4 }}>
-      {description}
-    </Typography>
 
     {/* Close Button */}
     <Button

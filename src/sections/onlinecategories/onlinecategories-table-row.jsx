@@ -43,7 +43,7 @@ export default function OnlineCategoriesTableRow({ row, onEditRow, onDeleteRow }
   
 
         {/* Image */}
-        <TableCell align="center">
+        <TableCell>
           {thumbnail_image ? (
             <img
               src={thumbnail_image}
@@ -59,7 +59,7 @@ export default function OnlineCategoriesTableRow({ row, onEditRow, onDeleteRow }
        
 
         {/* Image */}
-        <TableCell align="center">
+        <TableCell>
           {icon ? (
             <img
               src={icon}

@@ -34,9 +34,9 @@ export default function OnlineStoreProductsTableRow({ row, onEditRow, onDeleteRo
   const handleCloseDialog = () => setOpenDialog(false);
 
   const truncatedDescription =
-    item_description.length > 100
-      ? `${item_description.slice(0, 100)}...`
-      : item_description || 'No description available';
+  item_description && item_description.length > 100
+    ? `${item_description.slice(0, 100)}...`
+    : item_description || 'No description available';
 
 
   const popover = usePopover();
@@ -61,7 +61,7 @@ export default function OnlineStoreProductsTableRow({ row, onEditRow, onDeleteRo
         </TableCell>
 
         {/* Image */}
-        <TableCell align="center">
+        <TableCell >
           {thumbnail_image ? (
             <img
               src={thumbnail_image}

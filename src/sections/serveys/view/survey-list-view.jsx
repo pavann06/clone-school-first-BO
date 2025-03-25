@@ -31,12 +31,11 @@ const TABLE_HEAD = [
   { id: 'title', label: 'Title' },
   { id: 'description', label: 'Description' },
   { id: 'duration', label: 'Duration (mins)' },
-  { id: 'image', label: 'Image' },
-  { id: 'survey_type', label: 'Survey Type' },
-  { id: 'target_group', label: 'Target Group' },
+ 
+
   { id: 'status', label: 'Status' },
   { id: 'closing_date', label: 'Closing Date' },
-  { id: 'total_responses', label: 'Total Responses' },
+  
   { id: 'number_of_questions', label: 'Number of Questions' },
   { id: 'actions', label: 'Actions' },
 ];

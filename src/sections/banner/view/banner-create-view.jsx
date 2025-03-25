@@ -22,10 +22,10 @@ export default function BannerCreateView() {
             href: paths.dashboard.root,
           },
           {
-            name: 'Edutainment',
+            name: 'Banner',
             href: paths.dashboard.banner.root,
           },
-          { name: 'New Edutainment' },
+          { name: 'New banner' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },

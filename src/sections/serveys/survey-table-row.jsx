@@ -65,23 +65,10 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow ,onViewRow 
         <TableCell>{duration} mins</TableCell>
 
         {/* Image */}
-        <TableCell align="center">
-          {image ? (
-            <img
-              src={image}
-              alt={`Thumbnail for ${title}`}
-              style={{ maxWidth: 100, maxHeight: 50 }}
-            />
-          ) : (
-            'No Image'
-          )}
-        </TableCell>
+     
 
         {/* Survey Type */}
-        <TableCell>{survey_type}</TableCell>
-
-        {/* Target Group */}
-        <TableCell>{target_group.join(', ')}</TableCell>
+      
 
         {/* Status */}
         <TableCell>{status}</TableCell>
@@ -90,7 +77,7 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow ,onViewRow 
         <TableCell>{new Date(closing_date).toLocaleDateString()}</TableCell>
 
         {/* Total Responses */}
-        <TableCell>{total_responses}</TableCell>
+       
 
         {/* Number of Questions */}
         <TableCell>{number_of_questions}</TableCell>
