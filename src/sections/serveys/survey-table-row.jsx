@@ -178,7 +178,7 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow ,onViewRow 
         >
           <Iconify icon="carbon:view" />
           {/* <AppointmentListPage /> */}
-          View
+          Questions
         </MenuItem>
       </CustomPopover>
     </>

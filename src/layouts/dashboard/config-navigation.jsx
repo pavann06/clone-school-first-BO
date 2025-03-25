@@ -146,45 +146,93 @@ export function useNavData() {
           },
 
 
+          // {
+          //   title: 'news',
+          //   path: paths.dashboard.news.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.news.root },
+          //      { title: 'create', path: paths.dashboard.news.new },
+          //   ],
+          // },
+
+          // {
+          //   title: 'news categories',
+          //   path: paths.dashboard.categories.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.categories.root },
+          //      { title: 'create', path: paths.dashboard.categories.new },
+          //   ],
+          // },
           {
-            title: 'news',
+            title: 'News',
             path: paths.dashboard.news.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.news.root },
-               { title: 'create', path: paths.dashboard.news.new },
+              {
+                title: 'News',
+                path: paths.dashboard.news.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.news.root },
+                  { title: 'Create', path: paths.dashboard.news.new },
+                ],
+              },
+              {
+                title: 'News Categories',
+                path: paths.dashboard.categories.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.categories.root },
+                  { title: 'Create', path: paths.dashboard.categories.new },
+                ],
+              },
             ],
           },
+          
 
-          {
-            title: 'news categories',
-            path: paths.dashboard.categories.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.categories.root },
-               { title: 'create', path: paths.dashboard.categories.new },
-            ],
-          },
+          // {
+          //   title: 'listings',
+          //   path: paths.dashboard.listings.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.listings.root },
+          //      { title: 'create', path: paths.dashboard.listings.new },
+          //   ],
+          // },
 
+          // {
+          //   title: 'Business Categories',
+          //   path: paths.dashboard.business_categories.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.business_categories.root },
+          //      { title: 'create', path: paths.dashboard.business_categories.new },
+          //   ],
+          // },
           {
-            title: 'listings',
+            title: 'Business',
             path: paths.dashboard.listings.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.listings.root },
-               { title: 'create', path: paths.dashboard.listings.new },
+              {
+                title: 'Listings',
+                path: paths.dashboard.listings.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.listings.root },
+                  { title: 'Create', path: paths.dashboard.listings.new },
+                ],
+              },
+              {
+                title: 'Business Categories',
+                path: paths.dashboard.listings.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.business_categories.root },
+                  { title: 'Create', path: paths.dashboard.business_categories.new },
+                ],
+              },
             ],
           },
-
-          {
-            title: 'Business Categories',
-            path: paths.dashboard.business_categories.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.business_categories.root },
-               { title: 'create', path: paths.dashboard.business_categories.new },
-            ],
-          },
+          
 
           {
             title: 'forums',
