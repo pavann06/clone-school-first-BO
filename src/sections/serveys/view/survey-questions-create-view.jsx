@@ -26,7 +26,7 @@ export default function SurveyQuestionsCreateView({ surveyId }) {
             href: paths.dashboard.root,
           },
           {
-            name: 'Servey',
+            name: 'Survey',
             href: paths.dashboard.survey.root,
           },
           { name: 'New Servey' },
