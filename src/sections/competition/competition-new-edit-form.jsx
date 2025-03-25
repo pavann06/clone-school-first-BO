@@ -31,6 +31,7 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
   const CompetitionSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
+    start_time: Yup.string().required('Start time is required'),
     total_words: Yup.number().min(1, 'Must be at least 1').required('Total words are required'),
     school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
     prize_pool: Yup.number()
@@ -54,6 +55,7 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
       name: currentCompetition?.name || '',
       description: currentCompetition?.description || '',
       total_words: currentCompetition?.total_words || 0,
+      start_time: currentCompetition?.start_time || '',
       prize_pool: currentCompetition?.prize_pool || 0,
       words: currentCompetition?.words || [],
       school_ids: currentCompetition?.school_ids || [],
@@ -157,13 +159,10 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
             <Stack spacing={3} sx={{ p: 3 }}>
               <RHFTextField name="name" label="Competition Name" />
               <RHFTextField name="description" label="Description" multiline rows={4} />
-              <RHFTextField
-                name="total_words"
-                label="Total Words"
-                type="number"
-                onChange={(e) => setValue('total_words', Math.max(1, Number(e.target.value) || 1))}
-                onWheel={(e) => e.target.blur()} // Prevents changing value on scroll
-              />
+              <Box>
+                <Typography>Start Time</Typography>
+                <RHFTextField name="start_time" label="" type="datetime-local" />
+              </Box>
 
               <RHFTextField name="prize_pool" label="Prize Pool" type="number" />
 
@@ -174,6 +173,14 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
                   onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
                 />
               </Box>
+
+              <RHFTextField
+                name="total_words"
+                label="Total Words"
+                type="number"
+                onChange={(e) => setValue('total_words', Math.max(1, Number(e.target.value) || 1))}
+                onWheel={(e) => e.target.blur()} // Prevents changing value on scroll
+              />
 
               {/* Dynamic Search Words */}
               {fields.map((item, index) => (

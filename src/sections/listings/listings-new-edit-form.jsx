@@ -248,25 +248,7 @@ export default function ListingsNewEditForm({ currentListing }) {
               <RHFTextField name="whatsapp" label="WhatsApp" />
               <RHFTextField name="email" label="Email" />
               <RHFTextField name="maps_link" label="Maps link" />
-{/* 
-              <Stack spacing={1.5}>
-                <Typography variant="subtitle2">Valid Till</Typography>
-                <Controller
-                  name="valid_till"
-                  control={methods.control}
-                  render={({ field }) => (
-                    <DatePicker
-                      {...field}
-                      label="Valid Till"
-                      inputFormat="yyyy-MM-dd"
-                      onChange={(date) => {
-                        field.onChange(date ? date.format('YYYY-MM-DD') : ''); // Ensure the format is yyyy-MM-dd
-                      }}
-                      renderInput={(params) => <RHFTextField {...params} />}
-                    />
-                  )}
-                />
-              </Stack> */}
+
               <RHFTextField name='valid_till' label='valid till' />
 
               <Stack spacing={1.5}>

@@ -93,17 +93,7 @@ export default function CategoryListView() {
     [router]
   );
 
-  // const handleDeleteRow = async (id) => {
-  //   const response = await request.delete('backoffice/news/categories/', { id });
 
-  //   const { success } = response;
-
-  //   if (success) {
-  //     enqueueSnackbar('Deleted successfully');
-  //     queryClient.invalidateQueries(['backoffice/calendar']);
-  //     router.push(paths.dashboard.categories.root);
-  //   }
-  // };
     const handleDeleteRow = async (id) => {
       const response = await request.delete(`backoffice/news/categories/${id}`);
   
