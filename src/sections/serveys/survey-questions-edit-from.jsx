@@ -177,12 +177,36 @@ export default function SurveyQuestionEditForm({ surveyId }) {
                           value={option}
                           onChange={(e) => handleOptionChange(index, e.target.value)}
                         />
-                        <button type="button" onClick={() => handleRemoveOption(index)}>
+                        <button
+                          style={{
+                            backgroundColor: "#db5f12",
+                            color: "white",
+                            border: "none",
+                            padding: "10px 20px",
+                            fontSize: "16px",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            transition: "background-color 0.3s ease, transform 0.2s ease",
+                          }}
+                         type="button" onClick={() => handleRemoveOption(index)}>
                           Remove
                         </button>
                       </Box>
                     ))}
-                    <button type="button" onClick={handleAddOption}>
+                    <button
+                      style={{
+                        backgroundColor: '#46c263',
+                        color: 'white',
+                        border: 'none',
+                        padding: '10px 20px',
+                        fontSize: '16px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        transition: 'background-color 0.3s ease, transform 0.2s ease',
+                      }}
+                      type="button"
+                      onClick={handleAddOption}
+                    >
                       Add Option
                     </button>
                   </Stack>
