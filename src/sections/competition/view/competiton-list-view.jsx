@@ -31,12 +31,14 @@ import { TableNoData, TableHeadCustom } from 'src/components/table';
 import CompetitionTableRow from '../competition-table-row';
 
 
+
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'contest_name', label: 'Name' },
   { id: 'contest_description', label: 'Description' },
   { id: 'total_words', label: 'Total Words ' },
   { id: 'prize_pool', label: 'Prize Pool' },
+  { id: 'start_time' , label: 'Start Time'},
 
   { id: 'actions ', label: 'Actions' },
 ];

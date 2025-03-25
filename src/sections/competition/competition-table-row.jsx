@@ -15,6 +15,7 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
     contest_description,
     total_words,
     prize_pool,
+    start_time,
     likes_count,
     comments_count,
     whatsapp_share_count,
@@ -61,6 +62,21 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         <TableCell>
         {prize_pool}
         </TableCell>
+
+        <TableCell>
+  <div>{new Date(start_time).toLocaleDateString('en-US', {  
+    year: 'numeric',  
+    month: 'short',  
+    day: '2-digit'  
+  })}</div>
+  <div>{new Date(start_time).toLocaleTimeString('en-US', {  
+    hour: '2-digit',  
+    minute: '2-digit',  
+    hour12: true  
+  })}</div>
+</TableCell>
+
+
 
        
 
