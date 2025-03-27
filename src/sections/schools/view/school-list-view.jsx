@@ -34,11 +34,11 @@ import EdutainmentTableRow from '../school-table-row';
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'school_name', label: 'School Name' },
-  { id: 'profile_image', label: 'Image' },
+  { id: 'profile_image', label: 'Contact' },
   { id: 'school_address', label: 'Address ' },
-  { id: 'email', label: 'email' },
-  { id: 'contact_number', label: 'Contact Number ' },
-  { id: 'website', label: 'website' },
+  // { id: 'email', label: 'email' },
+  // { id: 'contact_number', label: 'Contact Number ' },
+  // { id: 'website', label: 'website' },
 
   { id: 'actions ', label: 'Actions' },
 ];

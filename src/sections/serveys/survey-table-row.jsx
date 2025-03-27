@@ -15,7 +15,7 @@ import {
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function ServeyTableRow({ row, onEditRow, onDeleteRow ,onViewRow }) {
+export default function ServeyTableRow({ row, onEditRow, onDeleteRow, onViewRow }) {
   const {
     serial_no,
     title,
@@ -65,10 +65,8 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow ,onViewRow 
         <TableCell>{duration} mins</TableCell>
 
         {/* Image */}
-     
 
         {/* Survey Type */}
-      
 
         {/* Status */}
         <TableCell>{status}</TableCell>
@@ -77,7 +75,6 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow ,onViewRow 
         <TableCell>{new Date(closing_date).toLocaleDateString()}</TableCell>
 
         {/* Total Responses */}
-       
 
         {/* Number of Questions */}
         <TableCell>{number_of_questions}</TableCell>
@@ -157,7 +154,7 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow ,onViewRow 
           Delete
         </MenuItem>
 
-                 <MenuItem
+        <MenuItem
           onClick={() => {
             onViewRow();
             popover.onClose();

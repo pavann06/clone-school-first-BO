@@ -15,17 +15,17 @@ export default function SchoolCreateView() {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Edutainment"
+        heading="Create a New School"
         links={[
           {
             name: 'Dashboard',
             href: paths.dashboard.root,
           },
           {
-            name: 'Edutainment',
-            href: paths.dashboard.banner.root,
+            name: 'School',
+            href: paths.dashboard.schools.root,
           },
-          { name: 'New Banner' },
+          { name: 'New school' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
