@@ -66,7 +66,8 @@ export default function SurveyNewEditForm({ currentSurvey }) {
       duration: currentSurvey?.duration || 0,
       image: currentSurvey?.image || '',
       survey_type: currentSurvey?.survey_type || 'General',
-      target_group: currentSurvey?.target_group || ['All'], // Ensure default value is always an array
+      // target_group: currentSurvey?.target_group || ['All'], // Ensure default value is always an array
+      target_group: currentSurvey?.target_group || [],
       status: currentSurvey?.status || 'Closed',
       closing_date: currentSurvey?.closing_date || '',
       // total_responses: currentSurvey?.total_responses || 0,
@@ -95,6 +96,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
     try {
       const payload = {
         ...data,
+        target_group: Array.isArray(data.target_group) ? data.target_group : [], 
         image: data.image || null,
       };
       if (!currentSurvey) {
