@@ -377,7 +377,29 @@ export function useNavData() {
                 ],
               },
             ],
-          }
+          },
+
+          
+          {
+            title: 'Offline Courses',
+            path: paths.dashboard.offlinecourse.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.offlinecourse.root },
+               { title: 'create', path: paths.dashboard.offlinecourse.new },
+            ],
+          },
+
+
+          {
+            title: 'Host',
+            path: paths.dashboard.host.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.host.root },
+               { title: 'create', path: paths.dashboard.host.new },
+            ],
+          },
           
 
           

@@ -135,6 +135,14 @@ const CompetitionCreatePage = lazy(()=> import('src/pages/dashboard/competition/
 const CompetitionEditPage = lazy(()=> import('src/pages/dashboard/competition/edit'));
 const CompetitionWordsViewPage = lazy(()=> import('src/pages/dashboard/competition/words'));
 
+const OfflineCourseListPage = lazy(() => import('src/pages/dashboard/offlinecourse/list'));
+const OfflineCourseCreatePage = lazy(() => import('src/pages/dashboard/offlinecourse/new'));
+const OfflineCourseEditPage = lazy(() => import('src/pages/dashboard/offlinecourse/edit'));
+
+const HostListPage = lazy(()=> import('src/pages/dashboard/host/list'));
+const HostCreatePage = lazy(() => import('src/pages/dashboard/host/new'));
+const HostEditPage = lazy(() => import('src/pages/dashboard/host/edit'));
+
 
 
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
@@ -1131,6 +1139,67 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <CompetitionWordsViewPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+      {
+        path: 'offlinecourse',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCourseListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCourseCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCourseEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: 'host',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <HostListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <HostCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <HostEditPage />
               </PermissionBasedGuard>
             ),
           },

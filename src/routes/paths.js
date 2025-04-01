@@ -256,6 +256,18 @@ export const paths = {
             // view: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/view`,
           },
         },
+
+        offlinecourse: {
+          root: `${ROOTS.DASHBOARD}/offlinecourse`,
+          new: `${ROOTS.DASHBOARD}/offlinecourse/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/offlinecourse/${id}/edit`,
+        },
+
+        host: {
+          root: `${ROOTS.DASHBOARD}/host`,
+          new: `${ROOTS.DASHBOARD}/host/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/host/${id}/edit`,
+        },
     
     
 
