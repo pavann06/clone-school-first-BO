@@ -209,7 +209,7 @@ export default function HostNewEditForm({ currentCalender }) {
                 loading={isSubmitting}
                 sx={{ alignSelf: 'flex-end' }}
               >
-                {!currentCalender ? 'Create Calendar' : 'Save Changes'}
+                {!currentCalender ? 'Create Host' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

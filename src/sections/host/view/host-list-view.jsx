@@ -287,15 +287,15 @@ export default function HostListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Edutainment',
-              href: paths.dashboard.edutainment.root,
+              name: 'Host',
+              href: paths.dashboard.host.root,
             },
             { name: 'List' },
           ]}
         />
               <Button
           component={RouterLink}
-          href={paths.dashboard.edutainment.new}
+          href={paths.dashboard.host.new}
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
