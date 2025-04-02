@@ -400,6 +400,16 @@ export function useNavData() {
                { title: 'create', path: paths.dashboard.host.new },
             ],
           },
+
+          {
+            title: 'Webinar',
+            path: paths.dashboard.webinar.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.webinar.root },
+               { title: 'create', path: paths.dashboard.webinar.new },
+            ],
+          },
           
 
           

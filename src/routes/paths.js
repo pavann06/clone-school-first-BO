@@ -268,6 +268,12 @@ export const paths = {
           new: `${ROOTS.DASHBOARD}/host/new`,
           edit: (id) => `${ROOTS.DASHBOARD}/host/${id}/edit`,
         },
+
+        webinar: {
+          root: `${ROOTS.DASHBOARD}/webinar`,
+          new: `${ROOTS.DASHBOARD}/webinar/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/webinar/${id}/edit`,
+        },
     
     
 

@@ -5,34 +5,34 @@ import { paths } from 'src/routes/paths';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import OfflineCourseNewEditForm from '../offline-course-new-edit-form';
+import WebinarNewEditForm from '../webinar-new-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function OfflineCourseCreateView() {
+export default function WebinarCreateView() {
   const settings = useSettingsContext();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Course"
+        heading="Create a New Webinar"
         links={[
           {
             name: 'Dashboard',
             href: paths.dashboard.root,
           },
           {
-            name: 'Offline Course',
-            href: paths.dashboard.listings.root,
+            name: 'Webinar',
+            href: paths.dashboard.webinar.root,
           },
-          { name: 'New Course' },
+          { name: 'New Webinar' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
 
-      <OfflineCourseNewEditForm />
+      <WebinarNewEditForm />
     </Container>
   );
 }

@@ -11,16 +11,16 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import SurveyNewEditForm from '../survey-new-edit-form';
+import WebinarNewEditForm from '../webinar-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function SurveyEditView({ id }) {
+export default function WebinarEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['servey', id],
-    queryFn: () => request.get(`backoffice/survey/${id}`),
+    queryKey: ['edutainment', id],
+    queryFn: () => request.get(`backoffice/webinar/${id}`),
   });
 
   return (
@@ -30,8 +30,8 @@ export default function SurveyEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Survey',
-            href: paths.dashboard.survey.root,
+            name: 'Webinar',
+            href: paths.dashboard.webinar.root,
           },
           { name: data?.data?.heading },
         ]}
@@ -39,11 +39,11 @@ export default function SurveyEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <SurveyNewEditForm currentSurvey={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <WebinarNewEditForm currentListing={data?.data} />}
     </Container>
   );
 }
 
-SurveyEditView.propTypes = {
+WebinarEditView.propTypes = {
   id: PropTypes.string,
 };

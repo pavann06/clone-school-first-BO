@@ -9,7 +9,8 @@ import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import { Typography, MenuItem } from '@mui/material';
+
+import { Typography ,MenuItem} from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
@@ -20,11 +21,12 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 import request from 'src/api/request';
-import FormProvider, { RHFUpload, RHFTextField, RHFSelect } from 'src/components/hook-form';
-import { CreateCourse, UpdateCourse } from 'src/api/offline-course';
+import FormProvider, { RHFUpload, RHFTextField , RHFSelect } from 'src/components/hook-form';
+
+import { CreateWebinar , UpdateWebinar } from 'src/api/webinar';
 import { Description } from '@mui/icons-material';
 
-export default function OfflineCourseNewEditForm({ currentListing }) {
+export default function WebinarNewEditForm({ currentListing }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [isUploading, setIsUploading] = useState(false);
@@ -32,13 +34,12 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
   const ListingsSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
-    venue: Yup.string().required('Venue is required'),
+    webinar_link: Yup.string().required('webinar link is required'),
     audience: Yup.string().required('Audience is required'),
-    venue_location_link: Yup.string().url('Invalid URL'),
-    venue_full_address: Yup.string().required('Full venue address is required'),
     total_slots: Yup.number().required('Total slots are required').positive().integer(),
     entry_fee: Yup.number().required('Entry fee is required').min(0),
     language: Yup.string().required('Language is required'),
+    duration: Yup.number().required('Duration is required'),
     total_enrolled: Yup.number().required('Total enrolled is required').min(0),
     date: Yup.date().required('Date is required'),
     thumbnail_image: Yup.mixed().required('Thumbnail is required'),
@@ -53,10 +54,9 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
       images: currentListing?.images || [],
       name: currentListing?.name || '',
       description: currentListing?.description || '',
-      venue: currentListing?.venue || '',
+      webinar_link: currentListing?.webinar_link || '',
       audience: currentListing?.audience || '',
-      venue_location_link: currentListing?.venue_location_link || '',
-      venue_full_address: currentListing?.venue_full_address || '',
+      duration: currentListing?.duration || '',
       total_slots: currentListing?.total_slots || '',
       entry_fee: currentListing?.entry_fee || '',
       language: currentListing?.language || '',
@@ -92,14 +92,14 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
       };
 
       const response = currentListing
-        ? await UpdateCourse({ ...payload, id: currentListing.id })
-        : await CreateCourse(payload);
+        ? await UpdateWebinar({ ...payload, id: currentListing.id })
+        : await CreateWebinar(payload);
 
       if (response?.success) {
         enqueueSnackbar(currentListing ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-        router.push('/dashboard/offlinecourse');
+        router.push('/dashboard/webinar');
         reset();
       } else {
         enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
@@ -176,51 +176,38 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
           <Card>
             <Stack spacing={3} sx={{ p: 3 }}>
               <RHFTextField name="name" label="Name" />
-              <RHFTextField name="description" label="Description"  multiline rows={4} />
+              <RHFTextField name="description" label="Description"   multiline rows={4} />
 
               <Grid container spacing={2}>
-          <Grid xs={12} md={6}>
-            <RHFTextField name="venue" label="Venue" />
-          </Grid>
-          <Grid xs={12} md={6}>
-            <RHFTextField name="audience" label="Audience" />
-          </Grid>
-          
-          <Grid xs={12} md={6}>
-            <RHFTextField name="venue_location_link" label="Venue Location Link" />
-          </Grid>
-          <Grid xs={12} md={6}>
-            <RHFTextField name="venue_full_address" label="Full Venue Address" />
-          </Grid>
-          
-          <Grid xs={12} md={6}>
-            <RHFTextField name="total_slots" label="Total Slots" type="number" />
-          </Grid>
-          <Grid xs={12} md={6}>
-            <RHFTextField name="entry_fee" label="Entry Fee" type="number" />
-          </Grid>
-          
-          <Grid xs={12} md={6}>
-            <RHFSelect name="language" label="Language">
-              <MenuItem value="Telugu">Telugu</MenuItem>
-              <MenuItem value="Hindi">Hindi</MenuItem>
-              <MenuItem value="English">English</MenuItem>
-            </RHFSelect>
-          </Grid>
-          <Grid xs={12} md={6}>
-            <RHFTextField name="total_enrolled" label="Total Enrolled" type="number" />
-          </Grid>
-          
-          <Grid xs={12} md={6}>
-            <RHFTextField 
-              name="date" 
-              label="Date" 
-              type="date" 
-              InputLabelProps={{ shrink: true }} 
-            />
-          </Grid>
-        </Grid>
-
+              <Grid xs={12} sm={6}>
+                <RHFTextField name="webinar_link" label="Webinar Link" />
+              </Grid>
+              <Grid xs={12} sm={6}>
+                <RHFTextField name="audience" label="Audience" />
+              </Grid>
+              <Grid xs={12} sm={6}>
+                <RHFTextField name="duration" label="Duration" type="number" />
+              </Grid>
+              <Grid xs={12} sm={6}>
+                <RHFTextField name="total_slots" label="Total Slots" type="number" />
+              </Grid>
+              <Grid xs={12} sm={6}>
+                <RHFTextField name="entry_fee" label="Entry Fee" type="number" />
+              </Grid>
+              <Grid xs={12} sm={6}>
+                <RHFSelect name="language" label="Language">
+                  <MenuItem value="Telugu">Telugu</MenuItem>
+                  <MenuItem value="Hindi">Hindi</MenuItem>
+                  <MenuItem value="English">English</MenuItem>
+                </RHFSelect>
+              </Grid>
+              <Grid xs={12} sm={6}>
+                <RHFTextField name="total_enrolled" label="Total Enrolled" type="number" />
+              </Grid>
+              <Grid xs={12} sm={6}>
+                <RHFTextField name="date" label="Date" type="date" InputLabelProps={{ shrink: true }} />
+              </Grid>
+            </Grid>
 
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Thumbnail</Typography>
@@ -262,7 +249,7 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
                 size="large"
                 loading={isSubmitting || isUploading}
               >
-                {currentListing ? 'Save Changes' : 'Create Course'}
+                {currentListing ? 'Save Changes' : 'Create Webinar'}
               </LoadingButton>
             </Stack>
           </Card>
@@ -272,6 +259,6 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
   );
 }
 
-OfflineCourseNewEditForm.propTypes = {
+WebinarNewEditForm.propTypes = {
   currentListing: PropTypes.object,
 };

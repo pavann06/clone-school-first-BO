@@ -143,6 +143,10 @@ const HostListPage = lazy(()=> import('src/pages/dashboard/host/list'));
 const HostCreatePage = lazy(() => import('src/pages/dashboard/host/new'));
 const HostEditPage = lazy(() => import('src/pages/dashboard/host/edit'));
 
+const WebinarListPage = lazy(() => import('src/pages/dashboard/webinar/list'));
+const WebinarCreatePage = lazy(() => import('src/pages/dashboard/webinar/new'));
+const WebinarEditPage = lazy(() => import('src/pages/dashboard/webinar/edit'));
+
 
 
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
@@ -1205,6 +1209,37 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+      {
+        path: 'webinar',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WebinarListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WebinarCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WebinarEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
 
 
 
