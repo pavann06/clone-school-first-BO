@@ -32,7 +32,7 @@ export default function BusinessCategoriesTableRow({ row, onEditRow, onDeleteRow
         <TableCell>{category_description}</TableCell>
 
         {/* Image */}
-        <TableCell align="center">
+        <TableCell>
           {category_image ? (
             <img
               src={category_image}

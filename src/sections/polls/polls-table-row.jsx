@@ -26,14 +26,7 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
 
         {/* Question */}
         <TableCell>
-          <ListItemText
-            disableTypography
-            primary={
-              <Link noWrap color="inherit" variant="subtitle2" sx={{ cursor: 'pointer' }}>
-                {question}
-              </Link>
-            }
-          />
+         {question}
         </TableCell>
 
         {/* Options */}

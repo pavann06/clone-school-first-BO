@@ -67,8 +67,8 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
 
      
 
-        <TableCell>
-          <Box>
+        <TableCell >
+          <Box >
             {Array.isArray(categories) ? (
               <ul>
                 {categories.map((category, index) => (
@@ -84,7 +84,7 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
 
         {/* Image */}
-        <TableCell align="center">
+        <TableCell>
           {images ? (
             <img
               src={images}

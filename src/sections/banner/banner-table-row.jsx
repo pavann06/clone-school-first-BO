@@ -22,7 +22,7 @@ export default function BannerTableRow({ row, onEditRow, onDeleteRow }) {
         <TableCell>{serial_no}</TableCell>
 
         {/* Banner Image */}
-        <TableCell align="center">
+        <TableCell >
           {banner_image ? (
             <img
               src={banner_image}

@@ -40,7 +40,7 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow, onViewRow 
 
         <TableCell>{name}</TableCell>
         {/* Image */}
-        <TableCell align="center">
+        <TableCell>
           {profile_image ? (
             <img
               src={profile_image}
@@ -53,7 +53,7 @@ export default function GroupsTableRow({ row, onEditRow, onDeleteRow, onViewRow 
         </TableCell>
 
         {/* Image */}
-        <TableCell align="center">
+        <TableCell>
           {logo ? (
             <img
               src={logo}
