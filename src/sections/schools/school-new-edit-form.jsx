@@ -52,23 +52,63 @@ export default function SchoolNewEditForm({ currentSchool }) {
   const methods = useForm({ resolver: yupResolver(SchoolSchema), defaultValues });
   const { reset, setValue, handleSubmit, formState: { isSubmitting } } = methods;
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const response = currentSchool
+  //       ? await UpdateSchool({ ...data, id: currentSchool.id })
+  //       : await CreateSchool(data);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentSchool ? 'Update success!' : 'Create success!', { variant: 'success' });
+  //       router.push(paths.dashboard.schools.root);
+  //       reset();
+  //     } else {
+  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //   }
+  // });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const response = currentSchool
         ? await UpdateSchool({ ...data, id: currentSchool.id })
         : await CreateSchool(data);
-
+  
+      console.log("Full API Response:", response); // Debugging
+  
       if (response?.success) {
         enqueueSnackbar(currentSchool ? 'Update success!' : 'Create success!', { variant: 'success' });
         router.push(paths.dashboard.schools.root);
         reset();
-      } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        return response;
       }
+  
+      // Handle field-specific errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+  
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+      return response;
     } catch (error) {
+      console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+      return null;
     }
   });
+  
 
   const handleUpload = useCallback(async (file) => {
     try {

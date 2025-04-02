@@ -84,6 +84,33 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
   const { reset, watch, setValue, control, handleSubmit, formState: { isSubmitting } } = methods;
   const values = watch();
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = { 
+  //       ...data,
+  //       specification: data.specification.split(',').map((s) => s.trim()), 
+  //       highlights: data.highlights.split(',').map((h) => h.trim()), 
+  //       variants: {
+  //         color: data.variants.color.split(',').map((c) => c.trim()),
+  //         storage: data.variants.storage.split(',').map((s) => s.trim()),
+  //       },
+  //     };
+  
+  //     const response = currentItem 
+  //       ? await UpdateStoreProduct({ ...payload, id: currentItem.id }) 
+  //       : await CreateStoreProduct(payload);
+      
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentItem ? 'Update success!' : 'Create success!', { variant: 'success' });
+  //       router.push('/dashboard/onlinestoreproducts');
+  //       reset();
+  //     } else {
+  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //   }
+  // });
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = { 
@@ -99,18 +126,40 @@ export default function OnlineStoreProductsNewEditForm({ currentItem }) {
       const response = currentItem 
         ? await UpdateStoreProduct({ ...payload, id: currentItem.id }) 
         : await CreateStoreProduct(payload);
-      
+  
+      console.log("Full API Response:", response); // Debugging
+  
       if (response?.success) {
         enqueueSnackbar(currentItem ? 'Update success!' : 'Create success!', { variant: 'success' });
         router.push('/dashboard/onlinestoreproducts');
         reset();
-      } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        return response;
       }
+  
+      // Handle field-specific errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+  
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+      return response;
     } catch (error) {
+      console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+      return null;
     }
   });
+  
   
 
   const handleUpload = useCallback(async (file) => {

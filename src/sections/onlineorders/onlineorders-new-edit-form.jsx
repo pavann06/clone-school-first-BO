@@ -47,13 +47,19 @@ export default function OnlineOrdersNewEditForm({ currentCategory }) {
 
   const { reset, handleSubmit, setValue, formState: { isSubmitting } } = methods;
 
+
+
   // const onSubmit = handleSubmit(async (data) => {
   //   try {
-  //     const payload = { ...data };
+  //     const payload = {
+  //       ...data,
+  //       remarks: { note: data.remarks }, // Ensure remarks follows the required format
+  //     };
+  
   //     const response = currentCategory
   //       ? await UpdateOlineOrder({ ...payload, id: currentCategory.id })
   //       : await CreateOnlineOrder(payload);
-
+  
   //     if (response?.success) {
   //       enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!', { variant: 'success' });
   //       router.push(paths.dashboard.onlineorders.root);
@@ -71,25 +77,46 @@ export default function OnlineOrdersNewEditForm({ currentCategory }) {
     try {
       const payload = {
         ...data,
-        remarks: { note: data.remarks }, // Ensure remarks follows the required format
+        remarks: { note: data.remarks }, // Ensure remarks follow the required format
       };
   
       const response = currentCategory
         ? await UpdateOlineOrder({ ...payload, id: currentCategory.id })
         : await CreateOnlineOrder(payload);
   
+      console.log("Full API Response:", response); // Debugging
+  
       if (response?.success) {
         enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!', { variant: 'success' });
         router.push(paths.dashboard.onlineorders.root);
         reset();
-      } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        return response;
       }
+  
+      // Handle field-specific errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+  
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+      return response;
     } catch (error) {
       console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+      return null;
     }
   });
+  
   
 
   return (

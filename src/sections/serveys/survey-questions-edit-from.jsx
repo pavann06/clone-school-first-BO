@@ -58,10 +58,62 @@ export default function SurveyQuestionEditForm({ surveyId }) {
 
   const options = watch('options', []);
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = { ...data };
+
+  //     if (data.question_type === 'Yes/No') {
+  //       payload.options = ['Yes', 'No'];
+  //     } else if (
+  //       data.question_type === 'Single Choice' ||
+  //       data.question_type === 'Multiple Choice'
+  //     ) {
+  //       payload.options = Array.isArray(data.options)
+  //         ? data.options.filter((option) => option.trim() !== '')
+  //         : [];
+  //     } else {
+  //       payload.options = [];
+  //     }
+
+  //     const response = await CreateSurveyQuestion(payload, surveyId);
+
+  //     console.log('Full API Response:', response); // Debugging
+
+  //     // ✅ Handle empty responses properly
+  //     if (!response || Object.keys(response).length === 0) {
+  //       enqueueSnackbar('Survey question created successfully!', { variant: 'success' });
+  //       reset(); // ✅ Reset form fields
+  //       setQuestionType(''); // ✅ Reset question type dropdown
+  //       setOptions([]); // ✅ Clear options array
+  //       return;
+  //     }
+
+  //     // ✅ Handle normal success
+  //     if (response?.success || response?.status === 200 || response?.status === 'success') {
+  //       enqueueSnackbar(response.message || 'Survey question created successfully!', {
+  //         variant: 'success',
+  //       });
+  //       reset(); // ✅ Reset form fields
+  //       setQuestionType(''); // ✅ Reset question type dropdown
+  //       setOptions([]); // ✅ Clear options array
+  //     } else {
+  //       const errorMessage = response?.message || response?.error || 'Unexpected API response';
+  //       enqueueSnackbar(errorMessage, { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error Object:', error);
+  //     console.error('Error Response:', error.response?.data);
+
+  //     enqueueSnackbar(
+  //       error.response?.data?.message || error.message || 'Unexpected error occurred',
+  //       { variant: 'error' }
+  //     );
+  //   }
+  // });
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = { ...data };
-
+  
       if (data.question_type === 'Yes/No') {
         payload.options = ['Yes', 'No'];
       } else if (
@@ -74,11 +126,11 @@ export default function SurveyQuestionEditForm({ surveyId }) {
       } else {
         payload.options = [];
       }
-
+  
       const response = await CreateSurveyQuestion(payload, surveyId);
-
+  
       console.log('Full API Response:', response); // Debugging
-
+  
       // ✅ Handle empty responses properly
       if (!response || Object.keys(response).length === 0) {
         enqueueSnackbar('Survey question created successfully!', { variant: 'success' });
@@ -87,7 +139,7 @@ export default function SurveyQuestionEditForm({ surveyId }) {
         setOptions([]); // ✅ Clear options array
         return;
       }
-
+  
       // ✅ Handle normal success
       if (response?.success || response?.status === 200 || response?.status === 'success') {
         enqueueSnackbar(response.message || 'Survey question created successfully!', {
@@ -96,20 +148,37 @@ export default function SurveyQuestionEditForm({ surveyId }) {
         reset(); // ✅ Reset form fields
         setQuestionType(''); // ✅ Reset question type dropdown
         setOptions([]); // ✅ Clear options array
-      } else {
-        const errorMessage = response?.message || response?.error || 'Unexpected API response';
-        enqueueSnackbar(errorMessage, { variant: 'error' });
+        return;
       }
+  
+      // ✅ Handle field-specific errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return;
+      }
+  
+      const errorMessage = response?.message || response?.error || 'Unexpected API response';
+      enqueueSnackbar(errorMessage, { variant: 'error' });
     } catch (error) {
       console.error('Error Object:', error);
       console.error('Error Response:', error.response?.data);
-
+  
       enqueueSnackbar(
         error.response?.data?.message || error.message || 'Unexpected error occurred',
         { variant: 'error' }
       );
     }
   });
+  
 
   const handleQuestionTypeChange = (e) => {
     const selectedType = e.target.value;

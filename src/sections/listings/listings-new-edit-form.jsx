@@ -86,6 +86,38 @@ export default function ListingsNewEditForm({ currentListing }) {
 
   const values = watch();
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = {
+  //       ...data,
+  //       services: Array.isArray(data.services) ? data.services.map((item) => item.trim()) : [],
+  //       tags: Array.isArray(data.tags)
+  //         ? data.tags.map((item) => item.trim())
+  //         : data.tags.split(',').map((item) => item.trim()),
+  //       images: data.images || [],
+  //       thumbnail: data.thumbnail || null,
+  //     };
+
+  //     const response = currentListing
+  //       ? await UpdateListing({ ...payload, id: currentListing.id })
+  //       : await CreateListing(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentListing ? 'Update success!' : 'Create success!', {
+  //         variant: 'success',
+  //       });
+  //       router.push('/dashboard/listings');
+  //       reset();
+  //     }
+  //      else {
+  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //   }
+  // });
+
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
@@ -97,24 +129,46 @@ export default function ListingsNewEditForm({ currentListing }) {
         images: data.images || [],
         thumbnail: data.thumbnail || null,
       };
-
+  
       const response = currentListing
         ? await UpdateListing({ ...payload, id: currentListing.id })
         : await CreateListing(payload);
-
+  
+      console.log("Full API Response:", response); // Debugging
+  
       if (response?.success) {
         enqueueSnackbar(currentListing ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
         router.push('/dashboard/listings');
         reset();
-      } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        return response;
       }
+  
+      // Handle API validation errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+  
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+      return response;
     } catch (error) {
+      console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+      return null;
     }
   });
+  
 
   const handleUpload = useCallback(
     async (file) => {

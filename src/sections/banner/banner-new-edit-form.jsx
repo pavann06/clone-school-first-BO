@@ -91,8 +91,21 @@ export default function BannerNewEditForm({ currentBanner }) {
         return response;
       }
 
-      const errorMessage = response?.error || 'Operation failed';
-      enqueueSnackbar(errorMessage, { variant: 'error' });
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0],
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+
+      enqueueSnackbar('Operation failed');
       return response;
     } catch (error) {
       console.error('Error:', error);

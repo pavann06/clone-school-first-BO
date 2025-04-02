@@ -81,6 +81,33 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
 
   const values = watch();
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = {
+  //       ...data,
+  //       date: dayjs(data.date).format('YYYY-MM-DD'), // Safely format
+  //       images: data.images || [],
+  //       thumbnail_image: data.thumbnail_image || null,
+  //       logo: data.logo || null,
+  //     };
+
+  //     const response = currentListing
+  //       ? await UpdateCourse({ ...payload, id: currentListing.id })
+  //       : await CreateCourse(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentListing ? 'Update success!' : 'Create success!', {
+  //         variant: 'success',
+  //       });
+  //       router.push('/dashboard/offlinecourse');
+  //       reset();
+  //     } else {
+  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //   }
+  // });
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
@@ -90,24 +117,46 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
         thumbnail_image: data.thumbnail_image || null,
         logo: data.logo || null,
       };
-
+  
       const response = currentListing
         ? await UpdateCourse({ ...payload, id: currentListing.id })
         : await CreateCourse(payload);
-
+  
+      console.log("Full API Response:", response); // Debugging
+  
       if (response?.success) {
         enqueueSnackbar(currentListing ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
         router.push('/dashboard/offlinecourse');
         reset();
-      } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        return response;
       }
+  
+      // Handle field-specific errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+  
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+      return response;
     } catch (error) {
+      console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+      return null;
     }
   });
+  
 
   const handleUpload = useCallback(
     async (file) => {

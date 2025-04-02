@@ -97,6 +97,44 @@ export default function PollsNewEditForm({ currentPoll }) {
 
   const values = watch();
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const formattedOptions = {};
+  //     data.options.forEach((option, index) => {
+  //       const labelKey = String.fromCharCode(65 + index); // Converts 0 to 'A', 1 to 'B', etc.
+  //       formattedOptions[labelKey] = option.label; // Use 'label' or other fields as needed
+  //     });
+
+  //     const selectedAnswerKey = Object.keys(formattedOptions).find(
+  //       (key) => formattedOptions[key] === data.answer
+  //     );
+
+  //     const payload = {
+  //       ...data,
+  //       options: formattedOptions,
+  //       answer: selectedAnswerKey, // Replace array with formatted object
+  //     };
+
+  //     const response = currentPoll
+  //       ? await UpdatePoll({ ...payload, id: currentPoll.id })
+  //       : await CreatePoll(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentPoll ? 'Update success!' : 'Create success!');
+  //       router.push(paths.dashboard.polls.root);
+  //       reset();
+  //       return response;
+  //     }
+
+  //     enqueueSnackbar('Operation failed');
+  //     return response;
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     enqueueSnackbar('Operation failed');
+  //     return null;
+  //   }
+  // });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const formattedOptions = {};
@@ -104,36 +142,54 @@ export default function PollsNewEditForm({ currentPoll }) {
         const labelKey = String.fromCharCode(65 + index); // Converts 0 to 'A', 1 to 'B', etc.
         formattedOptions[labelKey] = option.label; // Use 'label' or other fields as needed
       });
-
+  
       const selectedAnswerKey = Object.keys(formattedOptions).find(
         (key) => formattedOptions[key] === data.answer
       );
-
+  
       const payload = {
         ...data,
         options: formattedOptions,
         answer: selectedAnswerKey, // Replace array with formatted object
       };
-
+  
       const response = currentPoll
         ? await UpdatePoll({ ...payload, id: currentPoll.id })
         : await CreatePoll(payload);
-
+  
+      console.log("Full API Response:", response); // Debugging
+  
       if (response?.success) {
-        enqueueSnackbar(currentPoll ? 'Update success!' : 'Create success!');
+        enqueueSnackbar(currentPoll ? 'Update success!' : 'Create success!', { variant: 'success' });
         router.push(paths.dashboard.polls.root);
         reset();
         return response;
       }
-
-      enqueueSnackbar('Operation failed');
+  
+      // Handle field-specific errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+  
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
       return response;
     } catch (error) {
       console.error('Error:', error);
-      enqueueSnackbar('Operation failed');
+      enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
       return null;
     }
   });
+  
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>

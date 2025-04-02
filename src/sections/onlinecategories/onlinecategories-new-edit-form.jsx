@@ -57,25 +57,66 @@ export default function OnlineCategoriesNewEditForm({ currentCategory }) {
 
   const { reset, setValue, handleSubmit, formState: { isSubmitting } } = methods;
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = { ...data };
+  //     const response = currentCategory
+  //       ? await UpdateStoreCategory({ ...payload, id: currentCategory.id })
+  //       : await CreateStoreCategory(payload);
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!', { variant: 'success' });
+  //       router.push(paths.dashboard.onlinecategories.root);
+  //       reset();
+  //     } else {
+  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  //   }
+  // });
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = { ...data };
       const response = currentCategory
         ? await UpdateStoreCategory({ ...payload, id: currentCategory.id })
         : await CreateStoreCategory(payload);
-
+  
+      console.log("Full API Response:", response); // Debugging
+  
       if (response?.success) {
         enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!', { variant: 'success' });
         router.push(paths.dashboard.onlinecategories.root);
         reset();
-      } else {
-        enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+        return response;
       }
+  
+      // Handle field-specific errors
+      const errors = response?.response?.data?.data;
+      if (errors) {
+        Object.entries(errors).forEach(([field, messages]) => {
+          if (methods.setError) {
+            methods.setError(field, {
+              type: 'server',
+              message: messages[0], // First error message
+            });
+          }
+        });
+        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+        return null;
+      }
+  
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
+      return response;
     } catch (error) {
       console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+      return null;
     }
   });
+  
 
   const handleUpload = useCallback(async (file) => {
     try {
