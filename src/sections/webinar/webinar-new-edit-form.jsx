@@ -33,7 +33,7 @@ export default function WebinarNewEditForm({ currentListing }) {
 
   const ListingsSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
+    description: Yup.string(),
     webinar_link: Yup.string().required('webinar link is required'),
     audience: Yup.string().required('Audience is required'),
     total_slots: Yup.number().required('Total slots are required').positive().integer(),

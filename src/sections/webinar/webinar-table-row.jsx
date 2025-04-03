@@ -32,7 +32,12 @@ export default function WebinarTableRow({ row, onEditRow, onDeleteRow }) {
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => setOpenDialog(false);
 
-  const truncatedDescription = description.length > 100 ? `${description.slice(0, 100)}...` : description;
+  let truncatedDescription = "No description available";
+  if (typeof description === "string" && description.length > 0) {
+    truncatedDescription = description.length > 100 ? `${description.slice(0, 100)}...` : description;
+  }
+ 
+
 
   const popover = usePopover();
 
@@ -46,26 +51,16 @@ export default function WebinarTableRow({ row, onEditRow, onDeleteRow }) {
        {name}
         </TableCell>
 
-        {/* Description */}
-        {/* <TableCell>
-          <Typography variant="body2">
-            {truncatedDescription}{' '}
-            {description.length > 100 && (
-              <Button size="small" onClick={handleOpenDialog}>
-                Read More
-              </Button>
-            )}
-          </Typography>
-        </TableCell> */}
-        {/* Description */}
+    
 <TableCell>
   <Typography variant="body2" sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 200 }}>
     {truncatedDescription}{' '}
-    {description.length > 100 && (
-      <Button size="small" onClick={handleOpenDialog}>
-        Read More
-      </Button>
-    )}
+    {typeof description === 'string' && description.length > 100 && (
+  <Button size="small" onClick={handleOpenDialog}>
+    Read More
+  </Button>
+)}
+
   </Typography>
 </TableCell>
 
