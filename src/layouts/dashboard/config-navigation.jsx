@@ -380,36 +380,67 @@ export function useNavData() {
           },
 
           
+          // {
+          //   title: 'Offline Courses',
+          //   path: paths.dashboard.offlinecourse.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.offlinecourse.root },
+          //      { title: 'create', path: paths.dashboard.offlinecourse.new },
+          //   ],
+          // },
+          // {
+          //   title: 'Host',
+          //   path: paths.dashboard.host.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.host.root },
+          //      { title: 'create', path: paths.dashboard.host.new },
+          //   ],
+          // },
+
+          // {
+          //   title: 'Webinar',
+          //   path: paths.dashboard.webinar.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     { title: 'list', path: paths.dashboard.webinar.root },
+          //      { title: 'create', path: paths.dashboard.webinar.new },
+          //   ],
+          // },
+
           {
-            title: 'Offline Courses',
+            title: 'Courses',
             path: paths.dashboard.offlinecourse.root,
             icon: ICONS.contact,
             children: [
-              { title: 'list', path: paths.dashboard.offlinecourse.root },
-               { title: 'create', path: paths.dashboard.offlinecourse.new },
+              {
+                title: 'Offline Courses',
+                path: paths.dashboard.offlinecourse.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.offlinecourse.root },
+                  { title: 'Create', path: paths.dashboard.offlinecourse.new },
+                ],
+              },
+              {
+                title: 'Host',
+                path: paths.dashboard.host.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.host.root },
+                  { title: 'Create', path: paths.dashboard.host.new },
+                ],
+              },
+              {
+                title: 'Webinar',
+                path: paths.dashboard.webinar.root,
+                children: [
+                  { title: 'List', path: paths.dashboard.webinar.root },
+                  { title: 'Create', path: paths.dashboard.webinar.new },
+                ],
+              },
             ],
           },
-
-
-          {
-            title: 'Host',
-            path: paths.dashboard.host.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.host.root },
-               { title: 'create', path: paths.dashboard.host.new },
-            ],
-          },
-
-          {
-            title: 'Webinar',
-            path: paths.dashboard.webinar.root,
-            icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.webinar.root },
-               { title: 'create', path: paths.dashboard.webinar.new },
-            ],
-          },
+          
           
 
           

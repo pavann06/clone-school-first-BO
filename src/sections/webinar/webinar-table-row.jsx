@@ -47,7 +47,7 @@ export default function WebinarTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
 
         {/* Description */}
-        <TableCell>
+        {/* <TableCell>
           <Typography variant="body2">
             {truncatedDescription}{' '}
             {description.length > 100 && (
@@ -56,7 +56,19 @@ export default function WebinarTableRow({ row, onEditRow, onDeleteRow }) {
               </Button>
             )}
           </Typography>
-        </TableCell>
+        </TableCell> */}
+        {/* Description */}
+<TableCell>
+  <Typography variant="body2" sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 200 }}>
+    {truncatedDescription}{' '}
+    {description.length > 100 && (
+      <Button size="small" onClick={handleOpenDialog}>
+        Read More
+      </Button>
+    )}
+  </Typography>
+</TableCell>
+
 
         {/* Approved Info */}
         <TableCell>
@@ -85,7 +97,7 @@ export default function WebinarTableRow({ row, onEditRow, onDeleteRow }) {
       </TableRow>
 
     
-<Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
   <DialogContent sx={{ position: 'relative', p: 3 }}>
     {/* Watermark */}
     <Typography
@@ -95,23 +107,24 @@ export default function WebinarTableRow({ row, onEditRow, onDeleteRow }) {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        color: 'rgba(0, 0, 0, 0.1)',
-        fontSize: '5rem',
+        color: 'rgba(0, 0, 0, 0.05)',
+        fontSize: { xs: '3rem', sm: '5rem' },
         fontWeight: 'bold',
-        pointerEvents: 'none', // Prevent interaction
-        userSelect: 'none',   // Prevent selection
+        textAlign: 'center',
+        pointerEvents: 'none',
+        userSelect: 'none',
       }}
     >
-      FamiliFirst
+      FamilyFirst
     </Typography>
 
     {/* Title */}
-    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-      Full Description
+    <Typography variant="h5" gutterBottom sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}>
+      Webinar Description
     </Typography>
 
     {/* Description */}
-    <Typography variant="body1" sx={{ mb: 4 }}>
+    <Typography variant="body1" sx={{ mb: 4, textAlign: 'justify', lineHeight: 1.6 }}>
       {description}
     </Typography>
 
@@ -119,12 +132,19 @@ export default function WebinarTableRow({ row, onEditRow, onDeleteRow }) {
     <Button
       onClick={handleCloseDialog}
       variant="contained"
-      sx={{ display: 'block', ml: 'auto', mr: 'auto', p: 1 }}
+      sx={{
+        display: 'block',
+        ml: 'auto',
+        mr: 'auto',
+        p: 1,
+        width: '120px',
+      }}
     >
       Close
     </Button>
   </DialogContent>
 </Dialog>
+
 
 
       {/* Custom Popover */}
