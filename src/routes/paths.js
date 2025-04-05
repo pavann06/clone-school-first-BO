@@ -274,7 +274,34 @@ export const paths = {
           new: `${ROOTS.DASHBOARD}/webinar/new`,
           edit: (id) => `${ROOTS.DASHBOARD}/webinar/${id}/edit`,
         },
-    
+
+        onlinecourses: {
+          root: `${ROOTS.DASHBOARD}/onlinecourses`,
+          new: `${ROOTS.DASHBOARD}/onlinecourses/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/onlinecourses/${id}/edit`,
+        },
+          
+
+        lessons: {
+          root: `${ROOTS.DASHBOARD}/lessons`,
+          new: `${ROOTS.DASHBOARD}/lessons/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/edit`,
+        },
+
+        chapters: {
+          root: `${ROOTS.DASHBOARD}/chapters`,
+          new: `${ROOTS.DASHBOARD}/chapters/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/chapters/${id}/edit`,
+        },
+
+        mcqs: {
+          root: `${ROOTS.DASHBOARD}/mcqs`,
+          new: `${ROOTS.DASHBOARD}/mcqs/new`,
+          edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
+        },
+
+       
+     
     
 
     contact: {

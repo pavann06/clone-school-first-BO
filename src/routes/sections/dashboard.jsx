@@ -135,9 +135,9 @@ const CompetitionCreatePage = lazy(()=> import('src/pages/dashboard/competition/
 const CompetitionEditPage = lazy(()=> import('src/pages/dashboard/competition/edit'));
 const CompetitionWordsViewPage = lazy(()=> import('src/pages/dashboard/competition/words'));
 
-const OfflineCourseListPage = lazy(() => import('src/pages/dashboard/offlinecourse/list'));
-const OfflineCourseCreatePage = lazy(() => import('src/pages/dashboard/offlinecourse/new'));
-const OfflineCourseEditPage = lazy(() => import('src/pages/dashboard/offlinecourse/edit'));
+const OfflineCourseListPage = lazy(() => import('src/pages/dashboard/offline-course/list'));
+const OfflineCourseCreatePage = lazy(() => import('src/pages/dashboard/offline-course/new'));
+const OfflineCourseEditPage = lazy(() => import('src/pages/dashboard/offline-course/edit'));
 
 const HostListPage = lazy(()=> import('src/pages/dashboard/host/list'));
 const HostCreatePage = lazy(() => import('src/pages/dashboard/host/new'));
@@ -146,6 +146,26 @@ const HostEditPage = lazy(() => import('src/pages/dashboard/host/edit'));
 const WebinarListPage = lazy(() => import('src/pages/dashboard/webinar/list'));
 const WebinarCreatePage = lazy(() => import('src/pages/dashboard/webinar/new'));
 const WebinarEditPage = lazy(() => import('src/pages/dashboard/webinar/edit'));
+
+const LessonsListPage = lazy(() => import('src/pages/dashboard/lessons/list'));
+const LessonsCreatePage = lazy(() => import('src/pages/dashboard/lessons/new')); 
+const LessonsEditPage = lazy(() => import('src/pages/dashboard/lessons/edit'));
+
+const OfflineCoursesListPage = lazy(() => import('src/pages/dashboard/offlinecourses/list'));
+const OfflineCoursesCreatePage = lazy(() => import('src/pages/dashboard/offlinecourses/new'));
+const OfflineCoursesEditPage = lazy(() => import('src/pages/dashboard/offlinecourses/edit'));
+
+
+const ChaptersListPage = lazy(() => import('src/pages/dashboard/chapters/list'));
+const ChaptersCreatePage = lazy(() => import('src/pages/dashboard/chapters/new'));
+const ChaptersEditPage = lazy(() => import('src/pages/dashboard/chapters/edit'));
+
+const McqListPage = lazy(() => import('src/pages/dashboard/mcq/list'));
+const McqCreatePage = lazy(() => import('src/pages/dashboard/mcq/new'));
+const McqEditPage = lazy(() => import('src/pages/dashboard/mcq/edit'));
+
+
+
 
 
 
@@ -1239,6 +1259,136 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+      
+      {
+        path: 'lessons',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <LessonsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <LessonsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <LessonsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: 'onlinecourses',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCoursesListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCoursesCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCoursesEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      
+      {
+        path: 'chapters',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ChaptersListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ChaptersCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <ChaptersEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: 'mcqs',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <McqListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <McqCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <McqEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+
+      
+
+  
+
+  
 
 
 

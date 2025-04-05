@@ -440,6 +440,54 @@ export function useNavData() {
               },
             ],
           },
+
+          
+
+          {
+            title: 'Lessons',
+            path: paths.dashboard.lessons.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.lessons.root },
+               { title: 'create', path: paths.dashboard.lessons.new },
+            ],
+          },
+
+          {
+            title: 'Online Courses',
+            path: paths.dashboard.onlinecourses.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.onlinecourses.root },
+               { title: 'create', path: paths.dashboard.onlinecourses.new },
+            ],
+          },
+
+          {
+            title: 'Chapters',
+            path: paths.dashboard.chapters.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.chapters.root },
+               { title: 'create', path: paths.dashboard.chapters.new },
+            ],
+          },
+
+          
+          {
+            title: 'MCQs',
+            path: paths.dashboard.mcqs.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.mcqs.root },
+               { title: 'create', path: paths.dashboard.mcqs.new },
+            ],
+          },
+
+
+        
+
+        
           
           
 

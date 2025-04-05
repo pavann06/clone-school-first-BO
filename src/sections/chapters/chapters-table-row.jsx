@@ -1,30 +1,29 @@
-
-
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItemText from '@mui/material/ListItemText';
-import { Link, TableRow, MenuItem, TableCell, IconButton, Dialog, DialogContent, Typography, Button } from '@mui/material';
+import {
+  Link,
+  TableRow,
+  MenuItem,
+  TableCell,
+  IconButton,
+  Dialog,
+  DialogContent,
+  Typography,
+  Button,
+} from '@mui/material';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
+export default function ChaptersTableRow({ row, onEditRow, onDeleteRow }) {
   const {
     serial_no,
-    language,
-    word,
-    definition,
-    parts_of_speech,
-    usage,
-    origin,
-    points,
-    likes_count,
-    comments_count,
-    whatsapp_share_count,
-    posting_date,
-    approved_by,
-    approved_time,
-    image,
-    status,
+    chapter_name,
+    chapter_number,
+    number_of_lessons,
+    mcq_count,
+    total_marks,
+  
   } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -32,7 +31,7 @@ export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => setOpenDialog(false);
 
-  // const truncatedDescription = description.length > 100 ? `${description.slice(0, 100)}...` : description;
+
 
   const popover = usePopover();
 
@@ -42,37 +41,28 @@ export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
         {/* ID */}
         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>
-       {word}
-        </TableCell>
+        <TableCell>{chapter_name}</TableCell>
 
         {/* Description */}
-      <TableCell>
-        {definition}
-      </TableCell>
         <TableCell>
-          {parts_of_speech}
-         
+          {chapter_number}
         </TableCell>
 
-     
+        {/* Approved Info */}
+        <TableCell>
+          {number_of_lessons}
+        </TableCell>
+
+        {/* Image */}
+        <TableCell>
+         {mcq_count}
+        </TableCell>
 
         {/* Interactions */}
         <TableCell>
-          {usage}
+        {total_marks}
         </TableCell>
 
-        {/* Language */}
-        <TableCell>
-         {origin}
-        </TableCell>
-
-        <TableCell>
-          {points}
-        </TableCell>
-
-        {/* Status */}
-        <TableCell>{status}</TableCell>
 
         {/* Actions */}
         <TableCell align="center">
@@ -82,8 +72,8 @@ export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
       </TableRow>
 
-    
- 
+   
+
       {/* Custom Popover */}
       <CustomPopover
         open={popover.open}
@@ -114,7 +104,7 @@ export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
   );
 }
 
-WordTableRow.propTypes = {
+ChaptersTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
   row: PropTypes.object,
