@@ -473,6 +473,16 @@ export function useNavData() {
             ],
           },
 
+          {
+            title: 'MCQs',
+            path: paths.dashboard.mcqs.root,
+            icon: ICONS.contact,
+            children: [
+              { title: 'list', path: paths.dashboard.mcqs.root },
+               { title: 'create', path: paths.dashboard.mcqs.new },
+            ],
+          },
+
           
      
 
