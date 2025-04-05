@@ -160,9 +160,6 @@ const ChaptersListPage = lazy(() => import('src/pages/dashboard/chapters/list'))
 const ChaptersCreatePage = lazy(() => import('src/pages/dashboard/chapters/new'));
 const ChaptersEditPage = lazy(() => import('src/pages/dashboard/chapters/edit'));
 
-const McqListPage = lazy(() => import('src/pages/dashboard/mcq/list'));
-const McqCreatePage = lazy(() => import('src/pages/dashboard/mcq/new'));
-const McqEditPage = lazy(() => import('src/pages/dashboard/mcq/edit'));
 
 
 
@@ -1352,37 +1349,7 @@ export const dashboardRoutes = [
         ],
       },
 
-      {
-        path: 'mcqs',
-        children: [
-          {
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <McqListPage />
-              </PermissionBasedGuard>
-            ),
-            index: true,
-          },
-          {
-            path: 'new',
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <McqCreatePage />
-              </PermissionBasedGuard>
-            ),
-          },
-          {
-            path: ':id/edit',
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <McqEditPage />
-              </PermissionBasedGuard>
-            ),
-          },
-        ],
-      },
-
-
+     
 
       
 

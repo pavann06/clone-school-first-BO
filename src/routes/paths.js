@@ -294,12 +294,7 @@ export const paths = {
           edit: (id) => `${ROOTS.DASHBOARD}/chapters/${id}/edit`,
         },
 
-        mcqs: {
-          root: `${ROOTS.DASHBOARD}/mcqs`,
-          new: `${ROOTS.DASHBOARD}/mcqs/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
-        },
-
+      
        
      
     
