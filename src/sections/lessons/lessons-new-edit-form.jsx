@@ -236,6 +236,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
                 </Box>
 
                 <RHFTextField name="lesson_type" label="Lesson Type" />
+
                 <RHFTextField name="lesson_number" label="Lesson Number" type="number" />
                 <RHFTextField name="chapter_number" label="Chapter Number" type="number" />
 

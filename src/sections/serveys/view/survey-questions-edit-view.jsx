@@ -11,7 +11,7 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import SurveyNewEditForm from '../survey-new-edit-form';
+import SurveyQuestionEditForm from '../survey-questions-edit-from';
 
 // ------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ export default function SurveyQuestionEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['servey', id],
-    queryFn: () => request.get(`backoffice/edutain/feeds/${id}`),
+    queryFn: () => request.get(`backoffice/survey/questions/${id}`),
   });
 
   return (
@@ -39,7 +39,7 @@ export default function SurveyQuestionEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <SurveyNewEditForm currentQuestion={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <SurveyQuestionEditForm currentQuestion={data?.data} />}
     </Container>
   );
 }
