@@ -69,7 +69,7 @@ export default function ServeyQuestionsTableRow({ row, onEditRow, onDeleteRow })
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        {/* <MenuItem
+        <MenuItem
           onClick={() => {
             onEditRow();
             popover.onClose();
@@ -77,7 +77,7 @@ export default function ServeyQuestionsTableRow({ row, onEditRow, onDeleteRow })
         >
           <Iconify icon="solar:pen-bold" />
           Edit
-        </MenuItem> */}
+        </MenuItem>
         <MenuItem
           onClick={() => {
             onDeleteRow();

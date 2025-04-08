@@ -20,7 +20,7 @@ export default function SurveyQuestionEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['servey', id],
-    queryFn: () => request.get(`backoffice/survey/questions/${id}`),
+    queryFn: () => request.get(`backoffice/survey/question/${id}`),
   });
 
   return (
