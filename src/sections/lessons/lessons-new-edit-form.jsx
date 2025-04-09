@@ -28,6 +28,7 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 
 import { CreateLesson, UpdateLesson } from 'src/api/lessons';
 import OnlineCourseDropdown from './online-courses-dropdown';
+import ChapterDropdown from './chapters-dropdown';
 
 // API and Services
 
@@ -58,6 +59,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
 
     description: Yup.string().required('Description is required'),
     course_id: Yup.string(),
+    chapter_id: Yup.string(),
   });
 
   const defaultValues = useMemo(
@@ -76,6 +78,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
       mcq: currentEdutainment?.single_video || false,
       mcq_count: currentEdutainment?.mcq_count || '',
       course_id: currentEdutainment?.course_id || '',
+      chapter_id: currentEdutainment?.chapter_id || "",
     }),
     [currentEdutainment]
   );
@@ -331,6 +334,27 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
                   )}
                 />
               </Box>
+
+              <Box>
+  <Typography variant="subtitle2" gutterBottom>
+    Select Chapter
+  </Typography>
+  <Controller
+    name="chapter_id"
+    control={methods.control}
+    render={({ field, fieldState: { error } }) => (
+      <>
+        <ChapterDropdown value={field.value} onChange={field.onChange} />
+        {error && (
+          <Typography variant="caption" color="error">
+            {error.message}
+          </Typography>
+        )}
+      </>
+    )}
+  />
+</Box>
+
 
               <LoadingButton
                 type="submit"

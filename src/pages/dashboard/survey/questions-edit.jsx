@@ -9,7 +9,8 @@ import { SurveyQuestionEditView } from 'src/sections/serveys/view';
 export default function SurveyQuestionEditPage() {
   const params = useParams();
 
-  const { id } = params;
+  const { id , questionId } = params; 
+
 
   return (
     <>
@@ -17,7 +18,7 @@ export default function SurveyQuestionEditPage() {
         <title> Question Edit</title>
       </Helmet>
 
-      <SurveyQuestionEditView id={`${id}`} />
+      <SurveyQuestionEditView id={id} questionId={questionId} />  
     </>
   );
 }

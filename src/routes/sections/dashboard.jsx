@@ -423,6 +423,7 @@ export const dashboardRoutes = [
               </PermissionBasedGuard>
             ),
           },
+       
           {
             path: ':id/edit',
             element: (
@@ -440,13 +441,14 @@ export const dashboardRoutes = [
             ),
           },
           {
-            path: ':id/questions_edit',
+            path: ':id/questions_edit/:questionId', // chnaged 
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <SurveyQuestionEditPage />
               </PermissionBasedGuard>
             ),
           },
+     
           {
             path: ':id/questions',
             element: (

@@ -15,12 +15,12 @@ import SurveyQuestionEditForm from '../survey-questions-edit-from';
 
 // ------------------------------------------------------------------------
 
-export default function SurveyQuestionEditView({ id }) {
+export default function SurveyQuestionEditView({ questionId ,id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['servey', id],
-    queryFn: () => request.get(`backoffice/survey/question/${id}`),
+    queryKey: ['servey', questionId],
+    queryFn: () => request.get(`backoffice/survey/question/${questionId}`),
   });
 
   return (
@@ -30,8 +30,8 @@ export default function SurveyQuestionEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Servey',
-            href: paths.dashboard.servey.root,
+            name: 'Question',
+            href: paths.dashboard.survey.root,
           },
           { name: data?.data?.heading },
         ]}
@@ -39,11 +39,12 @@ export default function SurveyQuestionEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <SurveyQuestionEditForm currentQuestion={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <SurveyQuestionEditForm surveyId={id} questionId={questionId} currentQuestion={data?.data} />}
     </Container>
   );
 }
 
 SurveyQuestionEditView.propTypes = {
   id: PropTypes.string,
+  questionId: PropTypes.string,
 };

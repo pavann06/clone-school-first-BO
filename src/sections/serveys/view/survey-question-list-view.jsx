@@ -20,6 +20,7 @@ import { RouterLink } from 'src/routes/components';
 import { useSnackbar } from 'src/components/snackbar';
 
 import request from 'src/api/request';
+import { useRouter } from 'src/routes/hooks';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -37,6 +38,7 @@ const TABLE_HEAD = [
 ];
 
 export default function SurveyQuestionListView() {
+  const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { id: survey_id } = useParams();
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
@@ -71,9 +73,10 @@ export default function SurveyQuestionListView() {
       setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
-
-  
-
+  const handleEditRow = (questionId) => {
+    router.push(paths.dashboard.survey.questions_edit(survey_id, questionId));
+    
+  };
 
 
 
@@ -117,6 +120,7 @@ export default function SurveyQuestionListView() {
                           serial_no: (pagination.page - 1) * pagination.page_size + index + 1,
                         }}
                         // onEditRow={() => handleEditRow(row.id)}
+                        onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                        
                       />

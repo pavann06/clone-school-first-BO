@@ -117,23 +117,38 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/survey/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/survey/${id}/edit`,
       questions: (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions`,
-      questions_new: (surveyId) => `${ROOTS.DASHBOARD}/survey/${surveyId}/questions_new`,
-      questions_edit : (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions_edit`,
-    },
-
-    surveys:{
-      root: `${ROOTS.DASHBOARD}/surveys`,
-      new: `${ROOTS.DASHBOARD}/surveys/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/edit`,
-      view: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions`,
-      questions: {
-        root: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions`, 
-        new: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/new`,
-        edit: (id, questionId) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/${questionId}/edit`,
-        view: (id, questionId) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/${questionId}/view`,
-      },
+      questions_new: (id) => `${ROOTS.DASHBOARD}/survey/${id}/questions_new`,
+      questions_edit: (id, questionId) => `${ROOTS.DASHBOARD}/survey/${id}/questions_edit/${questionId}`,
 
     },
+
+
+
+
+
+
+
+
+
+
+
+
+    // surveys: {
+    //   root: `${ROOTS.DASHBOARD}/surveys`,
+    //   new: `${ROOTS.DASHBOARD}/surveys/new`,
+    //   edit: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/edit`,
+    //   view: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions`,
+    //   questions: {
+    //     root: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions`,
+    //     new: (id) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/new`,
+    //     // questions_edit: (id, questionId) =>
+    //     //   `${ROOTS.DASHBOARD}/survey/${id}/questions_edit/${questionId}`,
+    //     questions_edit: (surveyId, questionId) => `${ROOTS.DASHBOARD}/survey/${surveyId}/questions_edit/${questionId}`,
+
+
+    //     view: (id, questionId) => `${ROOTS.DASHBOARD}/surveys/${id}/questions/${questionId}/view`,
+    //   },
+    // },
 
     banner: {
       root: `${ROOTS.DASHBOARD}/banner`,
@@ -177,133 +192,123 @@ export const paths = {
 
     // forum_feeds: {
     //   root: `${ROOTS.DASHBOARD}/forum_feeds`,
-      
+
     //   new: (groupId)=> `${ROOTS.DASHBOARD}/forum_feeds/${groupId}/new`,
     //   edit: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/edit`,
-    //   view: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/view`, 
+    //   view: (id) => `${ROOTS.DASHBOARD}/forum_feeds/${id}/view`,
     // },
-  
-        groups: {
-          root: `${ROOTS.DASHBOARD}/groups`,
-          new: `${ROOTS.DASHBOARD}/groups/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
-          view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds`,
-          forumFeeds: {
-            root: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds`, 
-            new: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/new`,
-            edit: (id, feedId) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/${feedId}/edit`,
-            view: (id, feedId) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/${feedId}/view`,
-          },
-        },
 
+    groups: {
+      root: `${ROOTS.DASHBOARD}/groups`,
+      new: `${ROOTS.DASHBOARD}/groups/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/groups/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds`,
+      forumFeeds: {
+        root: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds`,
+        new: (id) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/new`,
+        edit: (id, feedId) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/${feedId}/edit`,
+        view: (id, feedId) => `${ROOTS.DASHBOARD}/groups/${id}/feeds/${feedId}/view`,
+      },
+    },
 
-        schools: {
-          root: `${ROOTS.DASHBOARD}/schools`,
-          new: `${ROOTS.DASHBOARD}/schools/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/schools/${id}/edit`,
-          view: (id) => `${ROOTS.DASHBOARD}/schools/${id}/view`,
-        },
-      
+    schools: {
+      root: `${ROOTS.DASHBOARD}/schools`,
+      new: `${ROOTS.DASHBOARD}/schools/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/schools/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/schools/${id}/view`,
+    },
 
-        
-        students: {
-          root: `${ROOTS.DASHBOARD}/students`,
-          new: `${ROOTS.DASHBOARD}/students/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/students/${id}/edit`,
-          view: (id) => `${ROOTS.DASHBOARD}/students/${id}/view`,
-        },
+    students: {
+      root: `${ROOTS.DASHBOARD}/students`,
+      new: `${ROOTS.DASHBOARD}/students/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/students/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/students/${id}/view`,
+    },
 
-        onlinecategories: {
-          root: `${ROOTS.DASHBOARD}/onlinecategories`,
-          new: `${ROOTS.DASHBOARD}/onlinecategories/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/onlinecategories/${id}/edit`,
-        },
+    onlinecategories: {
+      root: `${ROOTS.DASHBOARD}/onlinecategories`,
+      new: `${ROOTS.DASHBOARD}/onlinecategories/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/onlinecategories/${id}/edit`,
+    },
 
-        onlinestoreproducts: {
-          root: `${ROOTS.DASHBOARD}/onlinestoreproducts`,
-          new: `${ROOTS.DASHBOARD}/onlinestoreproducts/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/onlinestoreproducts/${id}/edit`,
-        },
+    onlinestoreproducts: {
+      root: `${ROOTS.DASHBOARD}/onlinestoreproducts`,
+      new: `${ROOTS.DASHBOARD}/onlinestoreproducts/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/onlinestoreproducts/${id}/edit`,
+    },
 
-        onlineorders: {
-          root: `${ROOTS.DASHBOARD}/onlineorders`,
-          new: `${ROOTS.DASHBOARD}/onlineorders/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/onlineorders/${id}/edit`,
-        },
+    onlineorders: {
+      root: `${ROOTS.DASHBOARD}/onlineorders`,
+      new: `${ROOTS.DASHBOARD}/onlineorders/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/onlineorders/${id}/edit`,
+    },
 
-        word: {
-          root: `${ROOTS.DASHBOARD}/word`,
-          new: `${ROOTS.DASHBOARD}/word/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/word/${id}/edit`,
-        },
+    word: {
+      root: `${ROOTS.DASHBOARD}/word`,
+      new: `${ROOTS.DASHBOARD}/word/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/word/${id}/edit`,
+    },
 
-        
-        // competition: {
-        //   root: `${ROOTS.DASHBOARD}/competition`,
-        //   new: `${ROOTS.DASHBOARD}/competition/new`,
-        //   edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
-        // },
+    // competition: {
+    //   root: `${ROOTS.DASHBOARD}/competition`,
+    //   new: `${ROOTS.DASHBOARD}/competition/new`,
+    //   edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
+    // },
 
-        competition: {
-          root: `${ROOTS.DASHBOARD}/competition`,
-          new: `${ROOTS.DASHBOARD}/competition/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
-          view: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`,
-          competition_words: {
-            root: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`, 
-            // new: (id) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/new`,
-            // edit: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/edit`,
-            // view: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/view`,
-          },
-        },
+    competition: {
+      root: `${ROOTS.DASHBOARD}/competition`,
+      new: `${ROOTS.DASHBOARD}/competition/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`,
+      competition_words: {
+        root: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`,
+        // new: (id) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/new`,
+        // edit: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/edit`,
+        // view: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/view`,
+      },
+    },
 
-        offlinecourse: {
-          root: `${ROOTS.DASHBOARD}/offlinecourse`,
-          new: `${ROOTS.DASHBOARD}/offlinecourse/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/offlinecourse/${id}/edit`,
-        },
+    offlinecourse: {
+      root: `${ROOTS.DASHBOARD}/offlinecourse`,
+      new: `${ROOTS.DASHBOARD}/offlinecourse/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/offlinecourse/${id}/edit`,
+    },
 
-        host: {
-          root: `${ROOTS.DASHBOARD}/host`,
-          new: `${ROOTS.DASHBOARD}/host/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/host/${id}/edit`,
-        },
+    host: {
+      root: `${ROOTS.DASHBOARD}/host`,
+      new: `${ROOTS.DASHBOARD}/host/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/host/${id}/edit`,
+    },
 
-        webinar: {
-          root: `${ROOTS.DASHBOARD}/webinar`,
-          new: `${ROOTS.DASHBOARD}/webinar/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/webinar/${id}/edit`,
-        },
+    webinar: {
+      root: `${ROOTS.DASHBOARD}/webinar`,
+      new: `${ROOTS.DASHBOARD}/webinar/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/webinar/${id}/edit`,
+    },
 
-        onlinecourses: {
-          root: `${ROOTS.DASHBOARD}/onlinecourses`,
-          new: `${ROOTS.DASHBOARD}/onlinecourses/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/onlinecourses/${id}/edit`,
-        },
-          
+    onlinecourses: {
+      root: `${ROOTS.DASHBOARD}/onlinecourses`,
+      new: `${ROOTS.DASHBOARD}/onlinecourses/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/onlinecourses/${id}/edit`,
+    },
 
-        lessons: {
-          root: `${ROOTS.DASHBOARD}/lessons`,
-          new: `${ROOTS.DASHBOARD}/lessons/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/edit`,
-        },
+    lessons: {
+      root: `${ROOTS.DASHBOARD}/lessons`,
+      new: `${ROOTS.DASHBOARD}/lessons/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/edit`,
+    },
 
-        chapters: {
-          root: `${ROOTS.DASHBOARD}/chapters`,
-          new: `${ROOTS.DASHBOARD}/chapters/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/chapters/${id}/edit`,
-        },
+    chapters: {
+      root: `${ROOTS.DASHBOARD}/chapters`,
+      new: `${ROOTS.DASHBOARD}/chapters/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/chapters/${id}/edit`,
+    },
 
-        mcqs: {
-          root: `${ROOTS.DASHBOARD}/mcqs`,
-          new: `${ROOTS.DASHBOARD}/mcqs/new`,
-          edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
-        },
-
-      
-       
-     
-    
+    mcqs: {
+      root: `${ROOTS.DASHBOARD}/mcqs`,
+      new: `${ROOTS.DASHBOARD}/mcqs/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
+    },
 
     contact: {
       root: `${ROOTS.DASHBOARD}/contact`,
