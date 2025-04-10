@@ -78,7 +78,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
       mcq: currentEdutainment?.single_video || false,
       mcq_count: currentEdutainment?.mcq_count || '',
       course_id: currentEdutainment?.course_id || '',
-      chapter_id: currentEdutainment?.chapter_id || "",
+      chapter_id: currentEdutainment?.chapter_id || '',
     }),
     [currentEdutainment]
   );
@@ -336,25 +336,24 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
               </Box>
 
               <Box>
-  <Typography variant="subtitle2" gutterBottom>
-    Select Chapter
-  </Typography>
-  <Controller
-    name="chapter_id"
-    control={methods.control}
-    render={({ field, fieldState: { error } }) => (
-      <>
-        <ChapterDropdown value={field.value} onChange={field.onChange} />
-        {error && (
-          <Typography variant="caption" color="error">
-            {error.message}
-          </Typography>
-        )}
-      </>
-    )}
-  />
-</Box>
-
+                <Typography variant="subtitle2" gutterBottom>
+                  Select Chapter
+                </Typography>
+                <Controller
+                  name="chapter_id"
+                  control={methods.control}
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <ChapterDropdown value={field.value} onChange={field.onChange} />
+                      {error && (
+                        <Typography variant="caption" color="error">
+                          {error.message}
+                        </Typography>
+                      )}
+                    </>
+                  )}
+                />
+              </Box>
 
               <LoadingButton
                 type="submit"
@@ -363,7 +362,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
                 loading={isSubmitting || isUploading}
                 sx={{ alignSelf: 'flex-end' }}
               >
-                {!currentEdutainment ? 'Create Edutainment' : 'Save Changes'}
+                {!currentEdutainment ? 'Create Lesson' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

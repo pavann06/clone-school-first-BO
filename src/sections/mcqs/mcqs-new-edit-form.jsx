@@ -89,7 +89,7 @@
 //     try {
 //       const payload = {
 //         ...data,
-        
+
 //       };
 
 //       if (!currentEdutainment) {
@@ -333,6 +333,7 @@ import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components
 
 import OnlineCourseDropdown from './online-courses-dropdown';
 import LessonsDropdown from './lessons-dropdown';
+import ChapterDropdown from './chapters-dropdown';
 
 export default function McqsNewEditForm({ currentEdutainment }) {
   const router = useRouter();
@@ -351,6 +352,7 @@ export default function McqsNewEditForm({ currentEdutainment }) {
     correct_answer: Yup.string().required('Please select the correct answer'),
     course_id: Yup.string().required('Select a Course'),
     lesson_id: Yup.string().required('Select a Lesson'),
+    chapter_id: Yup.string().required('Select a Chapter'),
   });
 
   const defaultValues = useMemo(() => {
@@ -374,6 +376,7 @@ export default function McqsNewEditForm({ currentEdutainment }) {
       correct_answer: currentEdutainment?.correct_answer || '',
       course_id: currentEdutainment?.course_id || '',
       lesson_id: currentEdutainment?.lesson_id || '',
+      chapter_id: currentEdutainment?.chapter_id || '',
     };
   }, [currentEdutainment]);
 
@@ -392,12 +395,10 @@ export default function McqsNewEditForm({ currentEdutainment }) {
 
   const values = watch();
 
- 
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
         ...data,
-        
       };
 
       if (!currentEdutainment) {
@@ -442,49 +443,54 @@ export default function McqsNewEditForm({ currentEdutainment }) {
     }
   });
 
-
-  const handleUpload = useCallback(async (file) => {
-    try {
-      setIsUploading(true);
-      const response = await request.UploadFiles({ files: file });
-      if (response.success) {
-        return response.data[0].file_url;
-      }
-      throw new Error('Upload failed');
-    } catch (error) {
-      enqueueSnackbar('File upload failed', { variant: 'error' });
-      return null;
-    } finally {
-      setIsUploading(false);
-    }
-  }, [enqueueSnackbar]);
-
-  const handleDrop = useCallback(async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      const fileWithPreview = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-
-      if (file.type.startsWith('image/')) {
-        setValue('image', fileWithPreview);
-        const uploadedUrl = await handleUpload(file);
-        if (uploadedUrl) {
-          setValue('image', uploadedUrl);
-          enqueueSnackbar('Image uploaded successfully', { variant: 'success' });
+  const handleUpload = useCallback(
+    async (file) => {
+      try {
+        setIsUploading(true);
+        const response = await request.UploadFiles({ files: file });
+        if (response.success) {
+          return response.data[0].file_url;
         }
-      } else if (file.type.startsWith('video/')) {
-        setValue('video', fileWithPreview);
-        const uploadedUrl = await handleUpload(file);
-        if (uploadedUrl) {
-          setValue('video', uploadedUrl);
-          enqueueSnackbar('Video uploaded successfully', { variant: 'success' });
-        }
-      } else {
-        enqueueSnackbar('Unsupported file type', { variant: 'error' });
+        throw new Error('Upload failed');
+      } catch (error) {
+        enqueueSnackbar('File upload failed', { variant: 'error' });
+        return null;
+      } finally {
+        setIsUploading(false);
       }
-    }
-  }, [setValue, enqueueSnackbar, handleUpload]);
+    },
+    [enqueueSnackbar]
+  );
+
+  const handleDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const fileWithPreview = Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        });
+
+        if (file.type.startsWith('image/')) {
+          setValue('image', fileWithPreview);
+          const uploadedUrl = await handleUpload(file);
+          if (uploadedUrl) {
+            setValue('image', uploadedUrl);
+            enqueueSnackbar('Image uploaded successfully', { variant: 'success' });
+          }
+        } else if (file.type.startsWith('video/')) {
+          setValue('video', fileWithPreview);
+          const uploadedUrl = await handleUpload(file);
+          if (uploadedUrl) {
+            setValue('video', uploadedUrl);
+            enqueueSnackbar('Video uploaded successfully', { variant: 'success' });
+          }
+        } else {
+          enqueueSnackbar('Unsupported file type', { variant: 'error' });
+        }
+      }
+    },
+    [setValue, enqueueSnackbar, handleUpload]
+  );
 
   const handleRemoveFile = useCallback(() => setValue('image', null), [setValue]);
   const handleRemoveAllFiles = useCallback(() => setValue('image', null), [setValue]);
@@ -572,6 +578,26 @@ export default function McqsNewEditForm({ currentEdutainment }) {
                   render={({ field, fieldState: { error } }) => (
                     <>
                       <LessonsDropdown value={field.value} onChange={field.onChange} />
+                      {error && (
+                        <Typography variant="caption" color="error">
+                          {error.message}
+                        </Typography>
+                      )}
+                    </>
+                  )}
+                />
+              </Box>
+
+              <Box>
+                <Typography variant="subtitle2" gutterBottom>
+                  Select Chapter
+                </Typography>
+                <Controller
+                  name="chapter_id"
+                  control={methods.control}
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <ChapterDropdown value={field.value} onChange={field.onChange} />
                       {error && (
                         <Typography variant="caption" color="error">
                           {error.message}
