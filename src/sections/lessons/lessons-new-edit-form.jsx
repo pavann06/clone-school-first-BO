@@ -140,7 +140,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
         return null;
       }
 
-      enqueueSnackbar('Operation failed');
+      enqueueSnackbar('Operation failed', { variant: 'error' });
       return response;
     } catch (error) {
       console.error('Error:', error);
@@ -259,8 +259,8 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
                   </Stack>
                 </Box>
 
-                <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                  {/* Video Field */}
+                {/* <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+                
                   <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Video</Typography>
                     <RHFUpload
@@ -273,6 +273,34 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
                       isLoading={isUploading}
                       accept="video/*" // Allows only video files
                     />
+                  </Stack>
+                </Box> */}
+                <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2">Video</Typography>
+
+                    <RHFUpload
+                      thumbnail
+                      name="video"
+                      maxSize={3145728} // 3MB
+                      onDrop={handleDrop}
+                      onRemove={handleRemoveFile}
+                      onRemoveAll={handleRemoveAllFiles}
+                      isLoading={isUploading}
+                      accept="video/*"
+                    />
+
+                    {/* Video Preview */}
+                    {typeof watch('video') === 'string' && watch('video').endsWith('.mp4') && (
+                      <Box sx={{ mt: 1 }}>
+                        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                        <video
+                          src={watch('video')}
+                          controls
+                          style={{ borderRadius: 8, width: '50%', height: '10%' }}
+                        />
+                      </Box>
+                    )}
                   </Stack>
                 </Box>
 

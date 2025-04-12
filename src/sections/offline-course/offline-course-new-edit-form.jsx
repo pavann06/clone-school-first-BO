@@ -20,9 +20,10 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 import request from 'src/api/request';
-import FormProvider, { RHFUpload, RHFTextField, RHFSelect } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField, RHFSelect,RHFCheckbox  } from 'src/components/hook-form';
 import { CreateCourse, UpdateCourse } from 'src/api/offline-course';
 import { Description } from '@mui/icons-material';
+import HostsDropdown from './hosts-dropdown';
 
 export default function OfflineCourseNewEditForm({ currentListing }) {
   const router = useRouter();
@@ -44,6 +45,10 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
     thumbnail_image: Yup.mixed().required('Thumbnail is required'),
     logo: Yup.mixed().required('Logo is required'),
     images: Yup.array().nullable(),
+    trending: Yup.boolean().required('Trending status is required'),
+    hosts: Yup.array().of(Yup.string().required()).min(1, 'At least one host is required'),
+
+
   });
 
   const defaultValues = useMemo(
@@ -62,6 +67,10 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
       language: currentListing?.language || '',
       total_enrolled: currentListing?.total_enrolled || '',
       date: currentListing?.date || '',
+      trending: currentListing?.trending ?? false,
+      hosts: currentListing?.hosts || [],
+
+
     }),
     [currentListing]
   );
@@ -81,33 +90,7 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
 
   const values = watch();
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       date: dayjs(data.date).format('YYYY-MM-DD'), // Safely format
-  //       images: data.images || [],
-  //       thumbnail_image: data.thumbnail_image || null,
-  //       logo: data.logo || null,
-  //     };
 
-  //     const response = currentListing
-  //       ? await UpdateCourse({ ...payload, id: currentListing.id })
-  //       : await CreateCourse(payload);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentListing ? 'Update success!' : 'Create success!', {
-  //         variant: 'success',
-  //       });
-  //       router.push('/dashboard/offlinecourse');
-  //       reset();
-  //     } else {
-  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
-  //     }
-  //   } catch (error) {
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //   }
-  // });
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = {
@@ -269,6 +252,25 @@ export default function OfflineCourseNewEditForm({ currentListing }) {
             />
           </Grid>
         </Grid>
+
+        <Grid xs={12}>
+  <RHFCheckbox name="trending" label="Trending" />
+</Grid>
+
+
+<Box>
+  <Typography>Select Hosts</Typography>
+
+<Grid xs={12} md={6}>
+  <Controller
+    name="hosts"
+    control={methods.control}
+    render={({ field }) => (
+      <HostsDropdown value={field.value} onChange={field.onChange} />
+    )}
+  />
+</Grid>
+</Box>
 
 
               <Stack spacing={1.5}>

@@ -21,10 +21,11 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 import request from 'src/api/request';
-import FormProvider, { RHFUpload, RHFTextField , RHFSelect } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField , RHFSelect,RHFCheckbox } from 'src/components/hook-form';
 
 import { CreateWebinar , UpdateWebinar } from 'src/api/webinar';
 import { Description } from '@mui/icons-material';
+import HostsDropdown from './hosts-dropdown';
 
 export default function WebinarNewEditForm({ currentListing }) {
   const router = useRouter();
@@ -45,6 +46,8 @@ export default function WebinarNewEditForm({ currentListing }) {
     thumbnail_image: Yup.mixed().required('Thumbnail is required'),
     logo: Yup.mixed().required('Logo is required'),
     images: Yup.array().nullable(),
+    trending: Yup.boolean().required('Trending status is required'),
+    hosts: Yup.array().of(Yup.string().required()).min(1, 'At least one host is required'),
   });
 
   const defaultValues = useMemo(
@@ -62,6 +65,8 @@ export default function WebinarNewEditForm({ currentListing }) {
       language: currentListing?.language || '',
       total_enrolled: currentListing?.total_enrolled || '',
       date: currentListing?.date || '',
+      trending: currentListing?.trending ?? false,
+      hosts: currentListing?.hosts || [],
     }),
     [currentListing]
   );
@@ -258,6 +263,24 @@ export default function WebinarNewEditForm({ currentListing }) {
                 <RHFTextField name="date" label="Date" type="date" InputLabelProps={{ shrink: true }} />
               </Grid>
             </Grid>
+
+            <Grid xs={12}>
+  <RHFCheckbox name="trending" label="Trending" />
+</Grid>
+
+<Box>
+  <Typography>Select Hosts</Typography>
+
+<Grid xs={12} md={6}>
+  <Controller
+    name="hosts"
+    control={methods.control}
+    render={({ field }) => (
+      <HostsDropdown value={field.value} onChange={field.onChange} />
+    )}
+  />
+</Grid>
+</Box>
 
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Thumbnail</Typography>

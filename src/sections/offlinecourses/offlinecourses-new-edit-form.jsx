@@ -15,6 +15,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 
+
   
 
 
@@ -25,9 +26,10 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 import request from 'src/api/request';
-import FormProvider, { RHFUpload, RHFTextField, RHFSelect } from 'src/components/hook-form';
+import FormProvider, { RHFUpload, RHFTextField, RHFSelect, RHFCheckbox } from 'src/components/hook-form';
 import { CreateOnlineCourse , UpdateOnlineCourse } from 'src/api/onlinecourses';
 import { Description } from '@mui/icons-material';
+import HostsDropdown from './hosts-dropdown';
 
 export default function OfflineCoursesNewEditForm({ currentListing }) {
   const router = useRouter();
@@ -51,6 +53,9 @@ export default function OfflineCoursesNewEditForm({ currentListing }) {
     images: Yup.array().nullable(),
 
     single_video: Yup.boolean().required('Single video is required'),
+    trending: Yup.boolean().required('Trending status is required'),
+    hosts: Yup.array().of(Yup.string().required()).min(1, 'At least one host is required'),
+    
 
   });
 
@@ -241,6 +246,25 @@ export default function OfflineCoursesNewEditForm({ currentListing }) {
               <MenuItem value="English">English</MenuItem>
             </RHFSelect>
           </Grid>
+
+          <Grid xs={12}>
+  <RHFCheckbox name="trending" label="Trending" />
+</Grid>
+
+
+<Box>
+  <Typography>Select Hosts</Typography>
+
+<Grid xs={12} md={6}>
+  <Controller
+    name="hosts"
+    control={methods.control}
+    render={({ field }) => (
+      <HostsDropdown value={field.value} onChange={field.onChange} />
+    )}
+  />
+</Grid>
+</Box>
          
           
         
