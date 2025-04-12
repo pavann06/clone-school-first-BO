@@ -75,6 +75,8 @@ export default function OfflineCoursesNewEditForm({ currentListing }) {
       language: currentListing?.language || '',
       number_of_lessons: currentListing?.number_of_lessons || '',
       single_video: currentListing?.single_video || false,
+      trending: currentListing?.trending ?? false,
+      hosts: currentListing?.hosts || [],
 
       
     }),
