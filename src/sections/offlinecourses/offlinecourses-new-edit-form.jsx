@@ -49,7 +49,7 @@ export default function OfflineCoursesNewEditForm({ currentListing }) {
     number_of_lessons: Yup.number().required('Total enrolled is required').min(0),
     
     thumbnail_image: Yup.mixed().required('Thumbnail is required'),
-    logo: Yup.mixed().required('Logo is required'),
+    profile_image: Yup.mixed().required('Logo is required'),
     images: Yup.array().nullable(),
 
     single_video: Yup.boolean().required('Single video is required'),
@@ -62,7 +62,7 @@ export default function OfflineCoursesNewEditForm({ currentListing }) {
   const defaultValues = useMemo(
     () => ({
       thumbnail_image: currentListing?.thumbnail_image || null,
-      logo: currentListing?.logo || null,
+      profile_image: currentListing?.profile_image || null,
       images: currentListing?.images || [],
       name: currentListing?.name || '',
       description: currentListing?.description || '',
@@ -203,7 +203,7 @@ export default function OfflineCoursesNewEditForm({ currentListing }) {
     async (file) => {
       const uploadedUrl = await handleUpload(file);
       if (uploadedUrl) {
-        setValue('logo', uploadedUrl);
+        setValue('profile_image', uploadedUrl);
         enqueueSnackbar('Logo uploaded successfully', { variant: 'success' });
       }
     },
@@ -299,7 +299,7 @@ export default function OfflineCoursesNewEditForm({ currentListing }) {
               <Stack spacing={1.5}>
                 <Typography variant="subtitle2">Logo</Typography>
                 <RHFUpload
-                  name="logo"
+                  name="profile_image"
                   label="Logo"
                   onDrop={(files) => handleLogoUpload(files[0])}
                   isLoading={isUploading}

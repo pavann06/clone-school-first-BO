@@ -65,11 +65,11 @@ export default function CompetitionWordsTableRow({ row, onEditRow, onDeleteRow,o
    
 
         {/* Actions */}
-        <TableCell align="center">
+        {/* <TableCell align="center">
           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
-        </TableCell>
+        </TableCell> */}
       </TableRow>
 
 <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>

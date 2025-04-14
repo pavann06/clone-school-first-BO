@@ -188,7 +188,7 @@ export default function HostNewEditForm({ currentCalender }) {
              
               
               <Box>
-                  <Stack spacing={1.5}>
+                  {/* <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Image</Typography>
                     <RHFUpload
                       thumbnail
@@ -199,7 +199,19 @@ export default function HostNewEditForm({ currentCalender }) {
                       onRemoveAll={handleRemoveAllFiles}
                       isLoading={isUploading}
                     />
-                  </Stack>
+                  </Stack> */}
+                   <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Image</Typography>
+                      <RHFUpload
+                        thumbnail
+                        name="image"
+                        maxSize={3145728}
+                        onDrop={handleDrop}
+                        onRemove={handleRemoveFile}
+                        onRemoveAll={handleRemoveAllFiles}
+                        isLoading={isUploading}
+                      />
+                    </Stack>
                 </Box>
 
               <LoadingButton

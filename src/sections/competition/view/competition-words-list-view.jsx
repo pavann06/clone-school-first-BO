@@ -41,7 +41,7 @@ const TABLE_HEAD = [
 
   { id: 'usage', label: 'usage' },
 
-  { id: 'actions ', label: 'Actions' },
+  // { id: 'actions ', label: 'Actions' },
 ];
 
 export default function CompetionWordsListView({competitionId}) {
