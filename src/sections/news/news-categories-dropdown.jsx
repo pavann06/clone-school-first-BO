@@ -80,7 +80,7 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
       try {
         let allCategories = [];
         let page = 1;
-        const pageLimit = 100;
+        const pageLimit = 1000;
         let hasMore = true;
   
         /* eslint-disable no-await-in-loop */
