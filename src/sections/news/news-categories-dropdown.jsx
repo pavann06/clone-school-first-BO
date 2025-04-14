@@ -61,7 +61,13 @@
 // export default NewsCategoriesDropdown;
 
 import React, { useState, useEffect } from 'react';
-import { MenuItem, Select, FormControl, InputLabel, CircularProgress } from '@mui/material';
+import {
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  CircularProgress,
+} from '@mui/material';
 import request from 'src/api/request';
 import PropTypes from 'prop-types';
 
@@ -70,19 +76,37 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchAllCategories = async () => {
       try {
-        const response = await request.get('backoffice/news/categories');
-        console.log(response.data); // Debug: Check the actual data
-        setCategories(response.data);
+        let allCategories = [];
+        let page = 1;
+        const pageLimit = 100;
+        let hasMore = true;
+  
+        /* eslint-disable no-await-in-loop */
+        while (hasMore) {
+          const response = await request.get(`backoffice/news/categories?page=${page}&page_size=${pageLimit}`);
+          const data = response.data;
+  
+          const currentPageData = data.results || data;
+          allCategories = [...allCategories, ...currentPageData];
+  
+          hasMore = currentPageData.length === pageLimit;
+          page += 1;
+        }
+        /* eslint-enable no-await-in-loop */
+  
+        setCategories(allCategories);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching categories:', err);
         setLoading(false);
       }
     };
-    fetchCategories();
+  
+    fetchAllCategories();
   }, []);
+  
 
   const handleCategoryChange = (event) => {
     onCategoryChange(event.target.value);
@@ -98,7 +122,7 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
         MenuProps={{
           PaperProps: {
             style: {
-              maxHeight: '500px',
+              maxHeight: 1000,
             },
           },
         }}
@@ -109,7 +133,7 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
           </MenuItem>
         ) : (
           categories
-            .filter(category => category?.display_name)
+            .filter((category) => category?.display_name)
             .map((category) => (
               <MenuItem key={category.display_name} value={category.display_name}>
                 {category.display_name}
