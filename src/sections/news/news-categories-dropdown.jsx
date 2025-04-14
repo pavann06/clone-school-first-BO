@@ -1,69 +1,62 @@
 
 
 
-// import React, { useEffect, useState, forwardRef } from 'react';
-// import PropTypes from 'prop-types';
-// import { useSnackbar } from 'notistack';
-// import Select from '@mui/material/Select';
-// import MenuItem from '@mui/material/MenuItem';
-// import Box from '@mui/material/Box';
+// import React, { useState, useEffect } from 'react';
+// import { MenuItem, Select, FormControl, InputLabel, CircularProgress } from '@mui/material';
 // import request from 'src/api/request';
+// import PropTypes from 'prop-types';
 
-// const NewsCategoriesDropdown = forwardRef(({ value, onChange }, ref) => {
-//   const { enqueueSnackbar } = useSnackbar();
+// const NewsCategoriesDropdown = ({ onCategoryChange }) => {
 //   const [categories, setCategories] = useState([]);
 //   const [loading, setLoading] = useState(true);
 
-//   // Fetch categories from the API
 //   useEffect(() => {
 //     const fetchCategories = async () => {
 //       try {
 //         const response = await request.get('backoffice/news/categories');
-//         if (response?.success && Array.isArray(response.data)) {
-//           setCategories(response.data);
-//         } else {
-//           enqueueSnackbar('Failed to load categories', { variant: 'error' });
-//         }
-//       } catch (error) {
-//         enqueueSnackbar('Error fetching categories', { variant: 'error' });
-//       } finally {
+//         setCategories(response.data);
+//         setLoading(false);
+//       } catch (err) {
+//         console.error('Error fetching categories:', err);
 //         setLoading(false);
 //       }
 //     };
 
 //     fetchCategories();
-//   }, [enqueueSnackbar]);
+//   }, []);
 
-//   let menuContent;
-
-//   if (loading) {
-//     menuContent = <MenuItem disabled>Loading...</MenuItem>;
-//   } else if (categories.length === 0) {
-//     menuContent = <MenuItem disabled>No categories available</MenuItem>;
-//   } else {
-//     menuContent = categories.map((category) => (
-//       <MenuItem key={category.id} value={category.id}>
-//         {category.display_name}
-//       </MenuItem>
-//     ));
-//   }
+//   const handleCategoryChange = (event) => {
+//     onCategoryChange(event.target.value);  // Pass the selected category's display_name to the parent
+//   };
 
 //   return (
-//     <Select
-//       ref={ref}
-//       value={value}
-//       onChange={(event) => onChange(event.target.value)}
-//       fullWidth
-//     >
-//       {menuContent}
-//     </Select>
+//     <FormControl fullWidth>
+//       <InputLabel>Category</InputLabel>
+//       <Select
+//         label="Category"
+//         onChange={handleCategoryChange}
+//         defaultValue=""
+//       >
+//         {loading ? (
+//           <MenuItem disabled>
+//             <CircularProgress size={24} />
+//           </MenuItem>
+//         ) : (
+//           categories.map((category) => (
+//             <MenuItem key={category.display_name} value={category.display_name}>
+//               {category.display_name}
+//             </MenuItem>
+//           ))
+//         )}
+//       </Select>
+//     </FormControl>
 //   );
-// });
+// };
 
 // NewsCategoriesDropdown.propTypes = {
-//   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-//   onChange: PropTypes.func.isRequired,
-// };
+//     onCategoryChange: PropTypes.func.isRequired,  // Ensure it's a function and it's required
+//   };
+  
 
 // export default NewsCategoriesDropdown;
 
@@ -80,6 +73,7 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
     const fetchCategories = async () => {
       try {
         const response = await request.get('backoffice/news/categories');
+        console.log(response.data); // Debug: Check the actual data
         setCategories(response.data);
         setLoading(false);
       } catch (err) {
@@ -87,12 +81,11 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
         setLoading(false);
       }
     };
-
     fetchCategories();
   }, []);
 
   const handleCategoryChange = (event) => {
-    onCategoryChange(event.target.value);  // Pass the selected category's display_name to the parent
+    onCategoryChange(event.target.value);
   };
 
   return (
@@ -102,17 +95,26 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
         label="Category"
         onChange={handleCategoryChange}
         defaultValue=""
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: '500px',
+            },
+          },
+        }}
       >
         {loading ? (
           <MenuItem disabled>
             <CircularProgress size={24} />
           </MenuItem>
         ) : (
-          categories.map((category) => (
-            <MenuItem key={category.display_name} value={category.display_name}>
-              {category.display_name}
-            </MenuItem>
-          ))
+          categories
+            .filter(category => category?.display_name)
+            .map((category) => (
+              <MenuItem key={category.display_name} value={category.display_name}>
+                {category.display_name}
+              </MenuItem>
+            ))
         )}
       </Select>
     </FormControl>
@@ -120,8 +122,7 @@ const NewsCategoriesDropdown = ({ onCategoryChange }) => {
 };
 
 NewsCategoriesDropdown.propTypes = {
-    onCategoryChange: PropTypes.func.isRequired,  // Ensure it's a function and it's required
-  };
-  
+  onCategoryChange: PropTypes.func.isRequired,
+};
 
 export default NewsCategoriesDropdown;
