@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -30,7 +28,6 @@ import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 import EdutainmentTableRow from '../edutainment-table-row';
 
-
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'heading', label: 'Heading' },
@@ -39,7 +36,7 @@ const TABLE_HEAD = [
   { id: 'image', label: 'Image' },
   { id: 'likes_count', label: 'Likes ' },
   { id: 'language', label: 'Language' },
-  {id: 'status' , label : 'Status'},
+  { id: 'status', label: 'Status' },
   { id: 'actions ', label: 'Actions' },
 ];
 
@@ -118,7 +115,7 @@ export default function EdutainmentListView() {
             { name: 'List' },
           ]}
         />
-              <Button
+        <Button
           component={RouterLink}
           href={paths.dashboard.edutainment.new}
           variant="contained"
@@ -171,8 +168,6 @@ export default function EdutainmentListView() {
     </Container>
   );
 }
-
-
 
 // import React, { useState, useEffect, useCallback, useMemo } from 'react';
 // import { useQuery } from '@tanstack/react-query';
@@ -243,7 +238,6 @@ export default function EdutainmentListView() {
 //     () => tableData.filter((post) => post.feed_type === feedType),
 //     [tableData, feedType]
 //   );
-  
 
 //   const paginatedData = useMemo(() => {
 //     const start = (pagination.page - 1) * pagination.page_size;
