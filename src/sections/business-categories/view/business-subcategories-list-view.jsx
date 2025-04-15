@@ -1,7 +1,7 @@
-
-
-import React, { useState, useEffect, useCallback } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import React, { useState, useEffect, useCallback } from 'react';
+
 import {
   Box,
   Card,
@@ -14,29 +14,44 @@ import {
   TablePagination,
 } from '@mui/material';
 
+import PropTypes from 'prop-types';
+
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 import Iconify from 'src/components/iconify';
+
 import request from 'src/api/request';
+import { useParams } from 'react-router-dom';
+
 import Scrollbar from 'src/components/scrollbar';
 import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
-import BusinessCategoriesTableRow from '../business-categories-table-row';
+import { label } from 'yet-another-react-lightbox';
+
+import BusinessSubCategoriesTableRow from '../business-subcategories-table-row';
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'category_name', label: 'Category' },
+  { id: 'feed_type', label: 'Feed Type' },
+  { id: 'heading', label: 'Heading' },
   { id: 'description', label: 'Description' },
- 
+  { id: 'language', label: 'Language' },
+
   { id: 'image', label: 'Image' },
- 
+
+  { id: 'likes_count', label: 'Likes ' },
+
+  // {id: 'trending' , label : 'Trending'},
+  { id: 'comment_type', label: 'Comment Type' },
   { id: 'status', label: 'Status' },
-  { id: 'actions', label: 'Actions' },
+  { id: 'actions ', label: 'Actions' },
 ];
 
-export default function BusinessCategoriesListView() {
+export default function BusinessSubCategoriesListView({categoriesId}) {
+
+
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -44,18 +59,22 @@ export default function BusinessCategoriesListView() {
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
 
+
+
   const { data, isLoading } = useQuery({
-    queryKey: ['business_categories', pagination.page, pagination.page_size],
+    queryKey: ['forum_feeds', categoriesId, pagination.page, pagination.page_size], 
     queryFn: () =>
       request.get(
-        `backoffice/business/categories?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/forum/feeds?group_id=${categoriesId}&page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
 
+  
+
+  // Set data when fetched successfully
   useEffect(() => {
     if (data) {
-      console.log('Fetched Data:', data);
       if (data?.data?.length > 0) {
         setTableData(data.data);
         setTotalCount(data.total);
@@ -70,36 +89,30 @@ export default function BusinessCategoriesListView() {
     setPagination((prev) => ({ ...prev, page: newPage + 1 }));
   };
 
+  // Handle change in number of rows per page
   const handleRowsPerPageChange = (event) => {
     const newPageSize = parseInt(event.target.value, 10);
     setPagination({ page: 1, page_size: newPageSize });
   };
 
+ 
+
   const handleEditRow = useCallback(
-    (id) => {
-      router.push(paths.dashboard.business_categories.edit(id));
+    (subcategoryId) => {
+      router.push(paths.dashboard.groups.forumFeeds.edit(categoriesId, subcategoryId)); 
     },
-    [router]
+    [router, categoriesId]
   );
 
-    const handleViewRow = useCallback(
-      (id) => {
-        const targetPath = paths.dashboard.business_categories.view(id);
-  
-        router.push(targetPath);
-      },
-      [router]
-    );
-
   const handleDeleteRow = async (id) => {
-    try {
-      const response = await request.delete(`backoffice/business/categories/${id}`);
-      if (response.success) {
-        enqueueSnackbar('Deleted successfully');
-        setPagination((prev) => ({ ...prev, page: 1 }));
-      }
-    } catch (error) {
-      enqueueSnackbar('Error deleting the record', { variant: 'error' });
+    const response = await request.delete(`backoffice/forum/feeds/${id}`);
+
+    const { success } = response;
+
+    if (success) {
+      enqueueSnackbar('Deleted successfully');
+
+      setPagination((prev) => ({ ...prev, page: 1 }));
     }
   };
 
@@ -110,17 +123,16 @@ export default function BusinessCategoriesListView() {
           heading="List"
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
-            {
-              name: 'Business Categories',
-              href: paths.dashboard.business_categories.root,
-            },
+          
+            { name: 'Feeds', href: paths.dashboard.groups.forumFeeds.root(categoriesId) }, 
             { name: 'List' },
           ]}
         />
+
         <Button
           component={RouterLink}
-          href={paths.dashboard.business_categories.new}
           variant="contained"
+          href={paths.dashboard.groups.forumFeeds.new(categoriesId)} 
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
             position: 'absolute',
@@ -128,7 +140,7 @@ export default function BusinessCategoriesListView() {
             right: '5px',
           }}
         >
-          New Category
+          New Feed
         </Button>
       </Box>
       <Card>
@@ -142,15 +154,15 @@ export default function BusinessCategoriesListView() {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <BusinessCategoriesTableRow
+                      <BusinessSubCategoriesTableRow
                         key={row.id}
                         row={{
                           ...row,
-                          serial_no: (pagination.page - 1) * pagination.page_size + index + 1,
+                          serial_no: (pagination.page - 1) * pagination.page_size + index + 1, // Updated serial number calculation
                         }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        onViewRow={() => handleDeleteRow(row.id)}
+                        //  onViewRow={()=> handleViewRow(row.id)}
                       />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}
@@ -171,3 +183,7 @@ export default function BusinessCategoriesListView() {
     </Container>
   );
 }
+
+BusinessSubCategoriesListView.propTypes = {
+    categoriesId: PropTypes.string.isRequired,// Ensure groupId is a required string
+};

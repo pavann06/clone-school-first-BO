@@ -87,6 +87,9 @@ const BusinessCategoriesCreatePage = lazy(
 const BusinessCategoriesEditPage = lazy(
   () => import('src/pages/dashboard/business-categories/edit')
 );
+const SubCategoriesViewPage = lazy(
+  () => import('src/pages/dashboard/business-categories/view')
+);
 
 const GroupsListPage = lazy(() => import('src/pages/dashboard/groups/list'));
 const GroupsCreatePage = lazy(() => import('src/pages/dashboard/groups/new'));
@@ -756,6 +759,14 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <BusinessCategoriesEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/view',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SubCategoriesViewPage />
               </PermissionBasedGuard>
             ),
           },

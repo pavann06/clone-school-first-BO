@@ -1,22 +1,23 @@
+
+
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItemText from '@mui/material/ListItemText';
-import {
-  Link,
-  TableRow,
-  MenuItem,
-  TableCell,
-  IconButton,
-  Dialog,
-  DialogContent,
-  Typography,
-  Button,
-} from '@mui/material';
+import { Link, TableRow, MenuItem, TableCell, IconButton, Dialog, DialogContent, Typography, Button } from '@mui/material';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function BusinessCategoriesTableRow({ row, onEditRow, onDeleteRow, onViewRow }) {
-  const { serial_no, category_name, category_description, category_image, status } = row;
+export default function BusinessSubCategoriesTableRow({ row, onEditRow, onDeleteRow , onViewRow }) {
+  const {
+    serial_no,
+    category_name,
+    category_description,
+    category_image,
+    status,
+ 
+  } = row;
+
+
 
   const popover = usePopover();
 
@@ -45,7 +46,16 @@ export default function BusinessCategoriesTableRow({ row, onEditRow, onDeleteRow
 
         <TableCell>{status}</TableCell>
 
+  
+
+      
+
+     
+
+        
+
         {/* Interactions */}
+   
 
         {/* Actions */}
         <TableCell align="center">
@@ -54,6 +64,9 @@ export default function BusinessCategoriesTableRow({ row, onEditRow, onDeleteRow
           </IconButton>
         </TableCell>
       </TableRow>
+
+
+
 
       {/* Custom Popover */}
       <CustomPopover
@@ -71,16 +84,16 @@ export default function BusinessCategoriesTableRow({ row, onEditRow, onDeleteRow
           <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
-        {/* <MenuItem
+           <MenuItem
                   onClick={() => {
                     onViewRow();
                     popover.onClose();
                   }}
                 >
                   <Iconify icon="carbon:view" />
-                 
+                  {/* <AppointmentListPage /> */}
                   Sub categories
-                </MenuItem> */}
+                </MenuItem>
         <MenuItem
           onClick={() => {
             onDeleteRow();
@@ -95,9 +108,9 @@ export default function BusinessCategoriesTableRow({ row, onEditRow, onDeleteRow
   );
 }
 
-BusinessCategoriesTableRow.propTypes = {
+BusinessSubCategoriesTableRow.propTypes = {
   onEditRow: PropTypes.func,
-  onViewRow: PropTypes.func,
+   onViewRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
   row: PropTypes.object,
 };
