@@ -1,38 +1,12 @@
-
-
-import { useState } from 'react';
 import PropTypes from 'prop-types';
-import ListItemText from '@mui/material/ListItemText';
-import { Link, TableRow, MenuItem, TableCell, IconButton, Dialog, DialogContent, Typography, Button } from '@mui/material';
+
+import { TableRow, MenuItem, TableCell, IconButton } from '@mui/material';
+
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
-  const {
-    serial_no,
-    language,
-    word,
-    definition,
-    parts_of_speech,
-    usage,
-    origin,
-    points,
-    likes_count,
-    comments_count,
-    whatsapp_share_count,
-    posting_date,
-    approved_by,
-    approved_time,
-    image,
-    status,
-  } = row;
-
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const handleOpenDialog = () => setOpenDialog(true);
-  const handleCloseDialog = () => setOpenDialog(false);
-
-  // const truncatedDescription = description.length > 100 ? `${description.slice(0, 100)}...` : description;
+  const { serial_no, word, definition, parts_of_speech, usage, origin, points, status } = row;
 
   const popover = usePopover();
 
@@ -42,34 +16,19 @@ export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
         {/* ID */}
         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>
-       {word}
-        </TableCell>
+        <TableCell>{word}</TableCell>
 
         {/* Description */}
-      <TableCell>
-        {definition}
-      </TableCell>
-        <TableCell>
-          {parts_of_speech}
-         
-        </TableCell>
-
-     
+        <TableCell>{definition}</TableCell>
+        <TableCell>{parts_of_speech}</TableCell>
 
         {/* Interactions */}
-        <TableCell>
-          {usage}
-        </TableCell>
+        <TableCell>{usage}</TableCell>
 
         {/* Language */}
-        <TableCell>
-         {origin}
-        </TableCell>
+        <TableCell>{origin}</TableCell>
 
-        <TableCell>
-          {points}
-        </TableCell>
+        <TableCell>{points}</TableCell>
 
         {/* Status */}
         <TableCell>{status}</TableCell>
@@ -82,8 +41,6 @@ export default function WordTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
       </TableRow>
 
-    
- 
       {/* Custom Popover */}
       <CustomPopover
         open={popover.open}
