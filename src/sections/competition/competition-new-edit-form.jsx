@@ -32,6 +32,8 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
     start_time: Yup.string().required('Start time is required'),
+    max_slots: Yup.string().required('Max is required'),
+    filled_slots: Yup.string().required('Filled slots is required'), 
     total_words: Yup.number().min(1, 'Must be at least 1').required('Total words are required'),
     school_ids: Yup.array().of(Yup.string()).min(1, 'At least one school is required'),
     prize_pool: Yup.number()
@@ -56,6 +58,8 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
       description: currentCompetition?.description || '',
       total_words: currentCompetition?.total_words || 0,
       start_time: currentCompetition?.start_time || '',
+      max_slots:  currentCompetition?.max_slots || '',
+      filled_slots:  currentCompetition?.filled_slots || '',
       prize_pool: currentCompetition?.prize_pool || 0,
       words: currentCompetition?.words || [],
       school_ids: currentCompetition?.school_ids || [],
@@ -173,6 +177,9 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
                   onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
                 />
               </Box>
+
+               <RHFTextField name="max_slots" label="Max slots" type="number" />
+               <RHFTextField name="filled_slots" label="Filled slots" type="number" />
 
               <RHFTextField
                 name="total_words"
