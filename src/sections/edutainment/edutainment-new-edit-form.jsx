@@ -43,7 +43,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const EdutainmentSchema = Yup.object().shape({
     feed_type: Yup.string().required('Type is required'),
-    heading: Yup.string(),
+    heading: Yup.string().required('Please upload Image'),
     image: Yup.mixed(),
     video: Yup.mixed(),
     youtube_video: Yup.mixed(),
@@ -86,10 +86,74 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
 
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     const payload = {
+  //       ...data,
+  //       image: data.image || null,
+  //       video: data.video || null,
+  //       youtube_video: data.youtube_video || null,
+  //     };
 
+  //     if (!currentEdutainment) {
+  //       payload.status = 'Pending';
+  //     }
 
+  //     const response = currentEdutainment
+  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
+  //       : await CreateEdutainment(payload);
+
+  //     console.log('Full API Response:', response); // Debugging
+
+  //     if (response?.success) {
+  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
+  //         variant: 'success',
+  //       });
+  //       router.push(paths.dashboard.edutainment.root);
+  //       reset();
+  //       return response;
+  //     }
+
+  //     const errors = response?.response?.data?.data;
+  //     if (errors) {
+  //       Object.entries(errors).forEach(([field, messages]) => {
+  //         if (methods.setError) {
+  //           methods.setError(field, {
+  //             type: 'server',
+  //             message: messages[0],
+  //           });
+  //         }
+  //       });
+  //       enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
+  //       return null;
+  //     }
+
+  //     enqueueSnackbar('Operation failed');
+  //     return response;
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     enqueueSnackbar('Operation failed');
+  //     return null;
+  //   }
+  // });
 
   const onSubmit = handleSubmit(async (data) => {
+    // Conditional validation
+    if (data.feed_type === 'Image' && !data.image) {
+      enqueueSnackbar('Image is required when feed type is Image', { variant: 'error' });
+      return;
+    }
+  
+    if (data.feed_type === 'Video' && !data.video) {
+      enqueueSnackbar('Video is required when feed type is Video', { variant: 'error' });
+      return;
+    }
+  
+    if (data.feed_type === 'Youtube video' && !data.youtube_video) {
+      enqueueSnackbar('YouTube video link is required when feed type is Youtube video', { variant: 'error' });
+      return;
+    }
+  
     try {
       const payload = {
         ...data,
@@ -98,6 +162,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         youtube_video: data.youtube_video || null,
       };
   
+      // Only set status if it's a new record
       if (!currentEdutainment) {
         payload.status = 'Pending';
       }
@@ -106,37 +171,18 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
         : await CreateEdutainment(payload);
   
-      console.log("Full API Response:", response); // Debugging
-  
       if (response?.success) {
-        enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
+        enqueueSnackbar(currentEdutainment ? 'Edutainment updated successfully!' : 'Edutainment created successfully!', {
           variant: 'success',
         });
         router.push(paths.dashboard.edutainment.root);
         reset();
-        return response;
+      } else {
+        enqueueSnackbar('Operation failed. Please try again.', { variant: 'error' });
       }
-  
-      const errors = response?.response?.data?.data;
-      if (errors) {
-        Object.entries(errors).forEach(([field, messages]) => {
-          if (methods.setError) {
-            methods.setError(field, {
-              type: 'server',
-              message: messages[0],
-            });
-          }
-        });
-        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
-        return null;
-      }
-
-      enqueueSnackbar('Operation failed');
-      return response;
     } catch (error) {
-      console.error('Error:', error);
-      enqueueSnackbar('Operation failed');
-      return null;
+      console.error('Error while submitting:', error);
+      enqueueSnackbar('Something went wrong. Please check your inputs.', { variant: 'error' });
     }
   });
   
@@ -279,7 +325,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       <RHFUpload
                         thumbnail
                         name="image"
-                         maxSize={345728}
+                        maxSize={345728}
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}
