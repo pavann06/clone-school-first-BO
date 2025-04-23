@@ -26,8 +26,6 @@ import request from 'src/api/request';
 
 import { CreateSurvey, UpdateSurvey } from 'src/api/survey';
 
-
-
 // Form Components
 import FormProvider, {
   RHFUpload,
@@ -96,7 +94,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
     try {
       const payload = {
         ...data,
-        target_group: Array.isArray(data.target_group) ? data.target_group : [], 
+        target_group: Array.isArray(data.target_group) ? data.target_group : [],
         image: data.image || null,
       };
       if (!currentSurvey) {
@@ -111,12 +109,8 @@ export default function SurveyNewEditForm({ currentSurvey }) {
         enqueueSnackbar(currentSurvey ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-
-        // Navigate to the "add questions" form with the survey ID
-        const surveyId = response.data?.id || currentSurvey.id;
-        if (surveyId) {
-          router.push(paths.dashboard.survey);
-        }
+         router.push(paths.dashboard.survey.root);
+          
 
         reset();
         return response;
@@ -239,7 +233,6 @@ export default function SurveyNewEditForm({ currentSurvey }) {
                   <MenuItem value="Deleted">Deleted</MenuItem>
                 </RHFSelect>
 
-
                 {/* Closing Date Picker */}
                 <RHFTextField
                   name="closing_date"
@@ -294,14 +287,12 @@ export default function SurveyNewEditForm({ currentSurvey }) {
                 />
               </Box>
               <Typography sx={{ marginBottom: '4px', fontWeight: 'bold' }}>School</Typography>
-<Box 
-  sx={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px' }}
->
-  <SchoolsDropdown
-    value={methods.watch('school_ids')}
-    onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
-  />
-</Box>
+              <Box sx={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px' }}>
+                <SchoolsDropdown
+                  value={methods.watch('school_ids')}
+                  onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
+                />
+              </Box>
 
               <LoadingButton
                 type="submit"
