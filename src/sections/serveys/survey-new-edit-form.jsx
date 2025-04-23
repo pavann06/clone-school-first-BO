@@ -109,8 +109,7 @@ export default function SurveyNewEditForm({ currentSurvey }) {
         enqueueSnackbar(currentSurvey ? 'Update success!' : 'Create success!', {
           variant: 'success',
         });
-         router.push(paths.dashboard.survey.root);
-          
+        router.push(paths.dashboard.survey.root);
 
         reset();
         return response;
