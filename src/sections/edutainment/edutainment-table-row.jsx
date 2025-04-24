@@ -62,11 +62,22 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
 
         {/* Approved Info */}
-        <TableCell>
+        {/* <TableCell>
           <div>Posted: {posting_date}</div>
-          {/* <div>Approved By: {approved_by}</div> */}
-          <div>Approved At: {new Date(approved_time).toLocaleDateString()}</div>
-        </TableCell>
+          
+          <div>Approved At: {approved_time}</div>
+        </TableCell> */}
+        <TableCell>
+  <div><strong>Posted:</strong> {new Date(posting_date).toLocaleString()}</div>
+
+  <div>
+   <strong>Approved At:</strong> {' '}
+    {approved_time
+      ? new Date(approved_time).toLocaleString()
+      : 'Pending Approval'}
+  </div>
+</TableCell>
+
 
         {/* Image */}
         <TableCell align="center">
