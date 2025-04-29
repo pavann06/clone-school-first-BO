@@ -9,7 +9,7 @@ export default function OverviewBookingPage() {
         <title> Dashboard</title>
       </Helmet>
      
-      welcome to dashboard
+      welcome to dashboard 
     </>
   );
 }
