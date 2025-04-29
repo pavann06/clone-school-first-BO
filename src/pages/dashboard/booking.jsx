@@ -8,8 +8,9 @@ export default function OverviewBookingPage() {
       <Helmet>
         <title> Dashboard</title>
       </Helmet>
-      {/* <OverviewBankingView /> */}
+     
       welcome to dashboard
     </>
   );
 }
+
