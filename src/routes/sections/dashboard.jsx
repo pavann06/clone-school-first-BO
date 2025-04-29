@@ -167,6 +167,8 @@ const McqsListPage = lazy(() => import('src/pages/dashboard/mcqs/list'));
 const McqsCreatePage =  lazy(() => import('src/pages/dashboard/mcqs/new'));
 const McqsEditPage = lazy(() => import('src/pages/dashboard/mcqs/edit'));
 
+const DashboardListPage = lazy(() => import('src/pages/dashboard/dashboard/home-demo'));
+
 
 
 
@@ -194,6 +196,7 @@ export const dashboardRoutes = [
         <DashboardLayout>
           <Suspense fallback={<LoadingScreen />}>
             <Outlet />
+           
           </Suspense>
         </DashboardLayout>
       </AuthGuard>
