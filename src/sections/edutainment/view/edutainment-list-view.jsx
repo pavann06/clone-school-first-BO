@@ -169,11 +169,21 @@
 //   );
 // }
 
-
-
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Card, Table, Skeleton, Button, Container, TableBody, TableContainer, TablePagination, Tabs, Tab } from '@mui/material';
+import {
+  Box,
+  Card,
+  Table,
+  Skeleton,
+  Button,
+  Container,
+  TableBody,
+  TableContainer,
+  TablePagination,
+  Tabs,
+  Tab,
+} from '@mui/material';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
@@ -200,20 +210,18 @@ const TABLE_HEAD = [
 export default function EdutainmentListView() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  
+
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
-  const [selectedTab, setSelectedTab] = useState('Approved');
+  const [selectedTab, setSelectedTab] = useState('Pending'); // Set default to Pending
 
   const { data, isLoading } = useQuery({
     queryKey: ['edutainment', pagination.page, pagination.page_size, selectedTab],
-    queryFn: () => {
-      const statusQuery = selectedTab === 'All' ? '' : `&status=${selectedTab}`;
-      return request.get(
-        `backoffice/edutain/feeds?page=${pagination.page}&page_size=${pagination.page_size}${statusQuery}`
-      );
-    },
+    queryFn: () =>
+      request.get(
+        `backoffice/edutain/feeds?page=${pagination.page}&page_size=${pagination.page_size}&status=${selectedTab}`
+      ),
     keepPreviousData: true,
   });
 
@@ -284,12 +292,14 @@ export default function EdutainmentListView() {
           New Feed
         </Button>
       </Box>
+
+      {/* Only show Pending, Approved, and Rejected */}
       <Tabs value={selectedTab} onChange={handleTabChange} variant="fullWidth">
-        <Tab label="All" value="All" />
-        <Tab label="Approved" value="Approved" />
         <Tab label="Pending" value="Pending" />
+        <Tab label="Approved" value="Approved" />
         <Tab label="Rejected" value="Rejected" />
       </Tabs>
+
       <Card>
         <TableContainer>
           <Scrollbar>

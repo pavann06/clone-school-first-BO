@@ -10,6 +10,7 @@ export default function WelcomePage() {
       <Helmet>
         <title> Dashboard: Welcome</title>
       </Helmet>
+      <h1>Hai how are you </h1>
 
       <WelcomeView />
     </>
