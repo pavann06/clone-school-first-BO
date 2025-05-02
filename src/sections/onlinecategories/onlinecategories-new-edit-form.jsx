@@ -159,7 +159,7 @@ export default function OnlineCategoriesNewEditForm({ currentCategory }) {
                 <Typography variant="subtitle2">Thumbnail Image</Typography>
                 <RHFUpload
                   name="thumbnail_image"
-                  maxSize={10485760}
+                  // maxSize={10485760}
                   onDrop={(files) => handleDrop(files, 'thumbnail_image')}
                   isLoading={isUploading}
                 />
@@ -169,7 +169,7 @@ export default function OnlineCategoriesNewEditForm({ currentCategory }) {
                 <Typography variant="subtitle2">Icon</Typography>
                 <RHFUpload
                   name="icon"
-                  maxSize={10485760}
+                  // maxSize={10485760}
                   onDrop={(files) => handleDrop(files, 'icon')}
                   isLoading={isUploading}
                 />

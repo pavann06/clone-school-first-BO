@@ -200,7 +200,7 @@ export default function CalenderNewEditForm({ currentCalender }) {
                     <RHFUpload
                       thumbnail
                       name="image"
-                      maxSize={3145728}
+                      // maxSize={3145728}
                       onDrop={handleDrop}
                       onRemove={handleRemoveFile}
                       onRemoveAll={handleRemoveAllFiles}

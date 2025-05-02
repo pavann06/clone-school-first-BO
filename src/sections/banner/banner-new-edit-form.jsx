@@ -218,7 +218,7 @@ export default function BannerNewEditForm({ currentBanner }) {
                     <RHFUpload
                       thumbnail
                       name="banner_image"
-                      maxSize={3145728}
+                      // maxSize={3145728}
                       onDrop={handleDrop}
                       onRemove={handleRemoveFile}
                       onRemoveAll={handleRemoveAllFiles}

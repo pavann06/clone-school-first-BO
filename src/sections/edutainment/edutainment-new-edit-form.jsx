@@ -325,8 +325,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       <RHFUpload
                         thumbnail
                         name="image"
-                         maxSize={10 * 1024 * 1024} 
-                        // maxSize={545728}
+                        //  maxSize={10 * 1024 * 1024} 
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}
@@ -344,7 +343,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       <RHFUpload
                         thumbnail
                         name="video"
-                        maxSize={15 * 1024 * 1024}// Adjust the max size as per your requirement
+                        // maxSize={15 * 1024 * 1024}// Adjust the max size as per your requirement
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}

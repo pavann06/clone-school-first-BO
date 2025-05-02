@@ -199,7 +199,7 @@ export default function BusinessCategoriesNewEditForm({ currentBusinessCategory 
                   <RHFUpload
                     thumbnail
                     name="category_image"
-                    maxSize={3145728}
+                    // maxSize={3145728}
                     onDrop={handleDrop}
                     onRemove={handleRemoveFile}
                     isLoading={isUploading}

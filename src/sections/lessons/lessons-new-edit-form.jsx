@@ -250,7 +250,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
                     <RHFUpload
                       thumbnail
                       name="lesson_image"
-                      maxSize={3145728}
+                      // maxSize={3145728}
                       onDrop={handleDrop}
                       onRemove={handleRemoveFile}
                       onRemoveAll={handleRemoveAllFiles}
@@ -282,7 +282,7 @@ export default function LessonsNewEditForm({ currentEdutainment }) {
                     <RHFUpload
                       thumbnail
                       name="video"
-                      maxSize={3145728} // 3MB
+                      // maxSize={3145728} // 3MB
                       onDrop={handleDrop}
                       onRemove={handleRemoveFile}
                       onRemoveAll={handleRemoveAllFiles}

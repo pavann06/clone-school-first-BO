@@ -258,7 +258,7 @@ export default function FerumFeedsNewEditForm({ currentFeed,  groupId , }) {
                       <RHFUpload
                         thumbnail
                         name="image"
-                        maxSize={3145728}
+                        // maxSize={3145728}
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}
@@ -279,7 +279,7 @@ export default function FerumFeedsNewEditForm({ currentFeed,  groupId , }) {
                       <RHFUpload
                         thumbnail
                         name="video"
-                        maxSize={3145728} // Adjust the max size as per your requirement
+                        // maxSize={3145728} // Adjust the max size as per your requirement
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}

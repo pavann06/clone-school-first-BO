@@ -239,7 +239,7 @@ export default function CategoriesNewEditForm({ currentCategory }) {
                   <RHFUpload
                     thumbnail
                     name="icon_url"
-                    maxSize={3145728}
+                    // maxSize={3145728}
                     onDrop={handleDrop}
                     onRemove={handleRemoveFile}
                     onRemoveAll={handleRemoveAllFiles}
