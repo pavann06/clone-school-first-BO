@@ -76,10 +76,10 @@ export function useNavData() {
             title: 'edutainment',
             path: paths.dashboard.edutainment.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.edutainment.root },
-              { title: 'create', path: paths.dashboard.edutainment.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.edutainment.root },
+            //   { title: 'create', path: paths.dashboard.edutainment.new },
+            // ],
           },
         
 
@@ -89,30 +89,30 @@ export function useNavData() {
             title: 'calender',
             path: paths.dashboard.calender.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.calender.root },
-              { title: 'create', path: paths.dashboard.calender.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.calender.root },
+            //   { title: 'create', path: paths.dashboard.calender.new },
+            // ],
           },
 
           {
             title: 'polls',
             path: paths.dashboard.polls.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.polls.root },
-              { title: 'create', path: paths.dashboard.polls.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.polls.root },
+            //   { title: 'create', path: paths.dashboard.polls.new },
+            // ],
           },
 
           {
             title: 'survey',
             path: paths.dashboard.survey.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.survey.root },
-              { title: 'create', path: paths.dashboard.survey.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.survey.root },
+            //   { title: 'create', path: paths.dashboard.survey.new },
+            // ],
           },
           // {
           //   title: 'subscribed Users',
@@ -139,10 +139,10 @@ export function useNavData() {
             title: 'banner',
             path: paths.dashboard.banner.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.banner.root },
-               { title: 'create', path: paths.dashboard.banner.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.banner.root },
+            //    { title: 'create', path: paths.dashboard.banner.new },
+            // ],
           },
 
 
@@ -173,42 +173,24 @@ export function useNavData() {
               {
                 title: 'News',
                 path: paths.dashboard.news.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.news.root },
-                  { title: 'Create', path: paths.dashboard.news.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.news.root },
+                //   { title: 'Create', path: paths.dashboard.news.new },
+                // ],
               },
               {
                 title: 'News Categories',
                 path: paths.dashboard.categories.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.categories.root },
-                  { title: 'Create', path: paths.dashboard.categories.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.categories.root },
+                //   { title: 'Create', path: paths.dashboard.categories.new },
+                // ],
               },
             ],
           },
           
 
-          // {
-          //   title: 'listings',
-          //   path: paths.dashboard.listings.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.listings.root },
-          //      { title: 'create', path: paths.dashboard.listings.new },
-          //   ],
-          // },
-
-          // {
-          //   title: 'Business Categories',
-          //   path: paths.dashboard.business_categories.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.business_categories.root },
-          //      { title: 'create', path: paths.dashboard.business_categories.new },
-          //   ],
-          // },
+         
           {
             title: 'Business',
             path: paths.dashboard.listings.root,
@@ -217,18 +199,18 @@ export function useNavData() {
               {
                 title: 'Listings',
                 path: paths.dashboard.listings.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.listings.root },
-                  { title: 'Create', path: paths.dashboard.listings.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.listings.root },
+                //   { title: 'Create', path: paths.dashboard.listings.new },
+                // ],
               },
               {
                 title: 'Business Categories',
-                path: paths.dashboard.listings.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.business_categories.root },
-                  { title: 'Create', path: paths.dashboard.business_categories.new },
-                ],
+                path: paths.dashboard.business_categories.root,
+                // children: [
+                //   { title: 'List', path: paths.dashboard.business_categories.root },
+                //   { title: 'Create', path: paths.dashboard.business_categories.new },
+                // ],
               },
             ],
           },
@@ -238,10 +220,10 @@ export function useNavData() {
             title: 'forums',
             path: paths.dashboard.groups.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.groups.root },
-               { title: 'create', path: paths.dashboard.groups.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.groups.root },
+            //    { title: 'create', path: paths.dashboard.groups.new },
+            // ],
           },
 
           // {
@@ -258,10 +240,10 @@ export function useNavData() {
             title: 'schools',
             path: paths.dashboard.schools.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.schools.root },
-               { title: 'create', path: paths.dashboard.schools.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.schools.root },
+            //    { title: 'create', path: paths.dashboard.schools.new },
+            // ],
           },
 
 
@@ -269,43 +251,16 @@ export function useNavData() {
             title: 'Students',
             path: paths.dashboard.students.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.students.root },
-               { title: 'create', path: paths.dashboard.students.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.students.root },
+            //    { title: 'create', path: paths.dashboard.students.new },
+            // ],
           },
 
 
 
-          // {
-          //   title: 'Online Store Categories',
-          //   path: paths.dashboard.onlinecategories.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.onlinecategories.root },
-          //      { title: 'create', path: paths.dashboard.onlinecategories.new },
-          //   ],
-          // },
 
-          // {
-          //   title: 'Online Store Products',
-          //   path: paths.dashboard.onlinestoreproducts.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.onlinestoreproducts.root },
-          //      { title: 'create', path: paths.dashboard.onlinestoreproducts.new },
-          //   ],
-          // },
-
-          // {
-          //   title: 'Online Orders',
-          //   path: paths.dashboard.onlineorders.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.onlineorders.root },
-          //     //  { title: 'create', path: paths.dashboard.onlineorders.new },
-          //   ],
-          // },
+         
 
           {
             title: 'Online',
@@ -315,25 +270,25 @@ export function useNavData() {
               {
                 title: 'Store Categories',
                 path: paths.dashboard.onlinecategories.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.onlinecategories.root },
-                  { title: 'Create', path: paths.dashboard.onlinecategories.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.onlinecategories.root },
+                //   { title: 'Create', path: paths.dashboard.onlinecategories.new },
+                // ],
               },
               {
                 title: 'Store Products',
                 path: paths.dashboard.onlinestoreproducts.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.onlinestoreproducts.root },
-                  { title: 'Create', path: paths.dashboard.onlinestoreproducts.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.onlinestoreproducts.root },
+                //   { title: 'Create', path: paths.dashboard.onlinestoreproducts.new },
+                // ],
               },
               {
                 title: 'Orders',
                 path: paths.dashboard.onlineorders.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.onlineorders.root },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.onlineorders.root },
+                // ],
               },
             ],
           },
@@ -342,15 +297,7 @@ export function useNavData() {
 
 
 
-          // {
-          //   title: 'Vocabee',
-          //   path: paths.dashboard.word.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.word.root },
-          //      { title: 'create', path: paths.dashboard.word.new },
-          //   ],
-          // },
+        
 
 
           {
@@ -361,53 +308,26 @@ export function useNavData() {
               {
                 title: 'Word',
                 path: paths.dashboard.word.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.word.root },
-                  { title: 'Create', path: paths.dashboard.word.new },
+                // children: [
+                //   { title: 'List', path: paths.dashboard.word.root },
+                //   { title: 'Create', path: paths.dashboard.word.new },
                   
-                ],
+                // ],
               },
               {
                 title: 'Competition',
                 path: paths.dashboard.competition.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.competition.root },
-                  { title: 'Create', path: paths.dashboard.competition.new },
+                // children: [
+                //   { title: 'List', path: paths.dashboard.competition.root },
+                //   { title: 'Create', path: paths.dashboard.competition.new },
                  
-                ],
+                // ],
               },
             ],
           },
 
           
-          // {
-          //   title: 'Offline Courses',
-          //   path: paths.dashboard.offlinecourse.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.offlinecourse.root },
-          //      { title: 'create', path: paths.dashboard.offlinecourse.new },
-          //   ],
-          // },
-          // {
-          //   title: 'Host',
-          //   path: paths.dashboard.host.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.host.root },
-          //      { title: 'create', path: paths.dashboard.host.new },
-          //   ],
-          // },
-
-          // {
-          //   title: 'Webinar',
-          //   path: paths.dashboard.webinar.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.webinar.root },
-          //      { title: 'create', path: paths.dashboard.webinar.new },
-          //   ],
-          // },
+        
 
           {
             title: 'Courses',
@@ -417,26 +337,26 @@ export function useNavData() {
               {
                 title: 'Offline Courses',
                 path: paths.dashboard.offlinecourse.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.offlinecourse.root },
-                  { title: 'Create', path: paths.dashboard.offlinecourse.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.offlinecourse.root },
+                //   { title: 'Create', path: paths.dashboard.offlinecourse.new },
+                // ],
               },
               {
                 title: 'Host',
                 path: paths.dashboard.host.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.host.root },
-                  { title: 'Create', path: paths.dashboard.host.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.host.root },
+                //   { title: 'Create', path: paths.dashboard.host.new },
+                // ],
               },
               {
                 title: 'Webinar',
                 path: paths.dashboard.webinar.root,
-                children: [
-                  { title: 'List', path: paths.dashboard.webinar.root },
-                  { title: 'Create', path: paths.dashboard.webinar.new },
-                ],
+                // children: [
+                //   { title: 'List', path: paths.dashboard.webinar.root },
+                //   { title: 'Create', path: paths.dashboard.webinar.new },
+                // ],
               },
             ],
           },
@@ -447,40 +367,40 @@ export function useNavData() {
             title: 'Lessons',
             path: paths.dashboard.lessons.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.lessons.root },
-               { title: 'create', path: paths.dashboard.lessons.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.lessons.root },
+            //    { title: 'create', path: paths.dashboard.lessons.new },
+            // ],
           },
 
           {
             title: 'Online Courses',
             path: paths.dashboard.onlinecourses.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.onlinecourses.root },
-               { title: 'create', path: paths.dashboard.onlinecourses.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.onlinecourses.root },
+            //    { title: 'create', path: paths.dashboard.onlinecourses.new },
+            // ],
           },
 
           {
             title: 'Chapters',
             path: paths.dashboard.chapters.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.chapters.root },
-               { title: 'create', path: paths.dashboard.chapters.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.chapters.root },
+            //    { title: 'create', path: paths.dashboard.chapters.new },
+            // ],
           },
 
           {
             title: 'MCQs',
             path: paths.dashboard.mcqs.root,
             icon: ICONS.contact,
-            children: [
-              { title: 'list', path: paths.dashboard.mcqs.root },
-               { title: 'create', path: paths.dashboard.mcqs.new },
-            ],
+            // children: [
+            //   { title: 'list', path: paths.dashboard.mcqs.root },
+            //    { title: 'create', path: paths.dashboard.mcqs.new },
+            // ],
           },
 
           
