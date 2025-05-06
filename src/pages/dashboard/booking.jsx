@@ -280,10 +280,11 @@ import request from 'src/api/request';
 
 // Define the card properties
 const cardData = [
+  { key: 'feed_count', label: 'Edutain Feeds', bgColor: '#9b59b6' },
   { key: 'news_count', label: 'News', bgColor: '#3498db' },
   { key: 'survey_count', label: 'Survey', bgColor: '#f1c40f' },
   { key: 'poll_count', label: 'Polls', bgColor: '#2ecc71' },
-  { key: 'feed_count', label: 'Edutain Feeds', bgColor: '#9b59b6' },
+ 
 
 ];
 
