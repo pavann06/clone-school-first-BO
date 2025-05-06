@@ -57,25 +57,7 @@ export default function OnlineCategoriesNewEditForm({ currentCategory }) {
 
   const { reset, setValue, handleSubmit, formState: { isSubmitting } } = methods;
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = { ...data };
-  //     const response = currentCategory
-  //       ? await UpdateStoreCategory({ ...payload, id: currentCategory.id })
-  //       : await CreateStoreCategory(payload);
 
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!', { variant: 'success' });
-  //       router.push(paths.dashboard.onlinecategories.root);
-  //       reset();
-  //     } else {
-  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //   }
-  // });
 
   const onSubmit = handleSubmit(async (data) => {
     try {
