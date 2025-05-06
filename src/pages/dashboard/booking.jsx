@@ -265,19 +265,26 @@
 // }
 
 
-
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Grid, Container, Card, CardContent, Typography, Box, CircularProgress } from '@mui/material';
+import {
+  Grid,
+  Container,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  CircularProgress,
+} from '@mui/material';
 import request from 'src/api/request';
 
-// Define card content info
+// Define the card properties
 const cardData = [
   { key: 'news_count', label: 'News', bgColor: '#3498db' },
   { key: 'survey_count', label: 'Survey', bgColor: '#f1c40f' },
   { key: 'poll_count', label: 'Polls', bgColor: '#2ecc71' },
-  { key: 'feed_count', label: 'Feeds', bgColor: '#9b59b6' },
-  { key: 'schools_count', label: 'Schools', bgColor: '#e67e22' },
+  { key: 'feed_count', label: 'Edutain Feeds', bgColor: '#9b59b6' },
+
 ];
 
 export default function OverviewBookingPage() {
@@ -290,7 +297,7 @@ export default function OverviewBookingPage() {
         const response = await request.get('backoffice/stats');
         setCounts(response.data);
       } catch (error) {
-        console.error('Failed to fetch counts:', error);
+        console.error('Failed to fetch stats:', error);
       } finally {
         setLoading(false);
       }
@@ -302,11 +309,15 @@ export default function OverviewBookingPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | FamiliFirst </title>
+        <title>Dashboard | FamiliFirst</title>
       </Helmet>
 
       <Container maxWidth="xl">
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, color: '#2c3e50', mb: 4 }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ fontWeight: 600, color: '#2c3e50', mb: 4 }}
+        >
           Hi, Welcome back
         </Typography>
 
@@ -320,31 +331,34 @@ export default function OverviewBookingPage() {
               <Grid key={item.key} item xs={12} sm={6} md={4} lg={2.4}>
                 <Card
                   sx={{
-                    borderRadius: 2,
+                    borderRadius: 3,
                     height: 160,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                     display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    background: `${item.bgColor}22`,
+                    alignItems: 'center',
+                    px: 3,
+                    background: `${item.bgColor}15`,
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                     '&:hover': {
                       transform: 'translateY(-4px)',
-                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.12)',
+                      boxShadow: '0 8px 16px rgba(0,0,0,0.12)',
                     },
                   }}
                 >
-                  <CardContent sx={{ px: 3 }}>
+                  <Box>
                     <Typography
                       variant="subtitle2"
-                      sx={{ color: item.bgColor, opacity: 0.75, fontWeight: 600, mb: 1 }}
+                      sx={{ color: item.bgColor, fontWeight: 600, mb: 0.5 }}
                     >
                       {item.label}
                     </Typography>
-                    <Typography variant="h4" sx={{ color: item.bgColor, fontWeight: 700 }}>
+                    <Typography
+                      variant="h4"
+                      sx={{ color: item.bgColor, fontWeight: 700 }}
+                    >
                       {counts[item.key] ?? 0}
                     </Typography>
-                  </CardContent>
+                  </Box>
                 </Card>
               </Grid>
             ))}
@@ -354,6 +368,7 @@ export default function OverviewBookingPage() {
     </>
   );
 }
+
 
 
 // -----------thirs one =----------------------------------------
