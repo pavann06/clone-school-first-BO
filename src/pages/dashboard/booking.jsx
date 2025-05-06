@@ -264,11 +264,14 @@
 //   );
 // }
 
+
+
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Grid, Card, CardContent, Typography, Box, CircularProgress } from '@mui/material';
+import { Grid, Container, Card, CardContent, Typography, Box, CircularProgress } from '@mui/material';
 import request from 'src/api/request';
 
+// Define card content info
 const cardData = [
   { key: 'news_count', label: 'News', bgColor: '#3498db' },
   { key: 'survey_count', label: 'Survey', bgColor: '#f1c40f' },
@@ -296,62 +299,33 @@ export default function OverviewBookingPage() {
     fetchCounts();
   }, []);
 
-  const total = cardData.reduce((sum, item) => sum + (counts[item.key] ?? 0), 0);
-  const maxValue = Math.max(...cardData.map((item) => counts[item.key] ?? 0)) || 1;
-
-  let currentAngle = 0;
-  const radius = 70;
-  const pieSlices = cardData.map((item) => {
-    const value = counts[item.key] ?? 0;
-    const sliceAngle = (value / total) * 360;
-    const startAngle = currentAngle;
-    const endAngle = currentAngle + sliceAngle;
-    currentAngle = endAngle;
-
-    const largeArcFlag = sliceAngle > 180 ? 1 : 0;
-
-    const x1 = radius + radius * Math.cos((startAngle * Math.PI) / 180);
-    const y1 = radius + radius * Math.sin((startAngle * Math.PI) / 180);
-    const x2 = radius + radius * Math.cos((endAngle * Math.PI) / 180);
-    const y2 = radius + radius * Math.sin((endAngle * Math.PI) / 180);
-
-    const d = `
-      M ${radius},${radius}
-      L ${x1},${y1}
-      A ${radius},${radius} 0 ${largeArcFlag} 1 ${x2},${y2}
-      Z
-    `;
-
-    return <path key={item.key} d={d} fill={item.bgColor} />;
-  });
-
   return (
     <>
       <Helmet>
-        <title>Dashboard</title>
+        <title> Dashboard | FamiliFirst </title>
       </Helmet>
 
-      <Typography variant="h4" gutterBottom sx={{ mb: 4, fontWeight: 600, color: '#2c3e50' }}>
-        Hi, Welcome back
-      </Typography>
+      <Container maxWidth="xl">
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, color: '#2c3e50', mb: 4 }}>
+          Hi, Welcome back
+        </Typography>
 
-      {loading ? (
-        <Box display="flex" justifyContent="center" mt={4}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          {/* Cards */}
-          <Grid container spacing={3} sx={{ mb: 4 }}>
+        {loading ? (
+          <Box display="flex" justifyContent="center" mt={4}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Grid container spacing={3}>
             {cardData.map((item) => (
-              <Grid item xs={12} sm={6} md={4} lg={2.4} key={item.key}>
+              <Grid key={item.key} item xs={12} sm={6} md={4} lg={2.4}>
                 <Card
                   sx={{
                     borderRadius: 2,
+                    height: 160,
                     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
-                    height: 160, // Increased height
                     display: 'flex',
                     flexDirection: 'column',
+                    justifyContent: 'center',
                     background: `${item.bgColor}22`,
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                     '&:hover': {
@@ -360,27 +334,14 @@ export default function OverviewBookingPage() {
                     },
                   }}
                 >
-                  <CardContent sx={{ p: 3, flexGrow: 1 }}>
+                  <CardContent sx={{ px: 3 }}>
                     <Typography
                       variant="subtitle2"
-                      sx={{
-                        color: item.bgColor,
-                        mb: 1,
-                        fontSize: '0.875rem',
-                        opacity: 0.8,
-                        fontWeight: 500,
-                      }}
+                      sx={{ color: item.bgColor, opacity: 0.75, fontWeight: 600, mb: 1 }}
                     >
                       {item.label}
                     </Typography>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        fontWeight: 700,
-                        mb: 1,
-                        color: item.bgColor,
-                      }}
-                    >
+                    <Typography variant="h4" sx={{ color: item.bgColor, fontWeight: 700 }}>
                       {counts[item.key] ?? 0}
                     </Typography>
                   </CardContent>
@@ -388,88 +349,12 @@ export default function OverviewBookingPage() {
               </Grid>
             ))}
           </Grid>
-
-          {/* Charts */}
-          <Grid container spacing={3}>
-            {/* Pie Chart */}
-            {/* <Grid item xs={12} md={4}>
-              <Card sx={{ p: 5, textAlign: 'center' }}>
-                <Typography variant="h6" gutterBottom>
-                  Pie Chart View
-                </Typography>
-                <svg width="140" height="140" viewBox="0 0 140 140">
-                  {pieSlices}
-                </svg>
-                <Box mt={2} display="flex" justifyContent="center" flexWrap="wrap" gap={2}>
-                  {cardData.map((item) => (
-                    <Box key={item.key} display="flex" alignItems="center" gap={1}>
-                      <Box sx={{ width: 12, height: 12, background: item.bgColor }} />
-                      <Typography variant="caption">{item.label}</Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Card>
-            </Grid> */}
-
-            {/* Bar Chart */}
-            {/* Bar Chart */}
-            {/* <Grid item xs={12} md={9}>
-              <Card sx={{ p: 5 }}>
-                <Typography variant="h6" gutterBottom textAlign="center">
-                  Bar Chart View
-                </Typography>
-                <Box display="flex" justifyContent="center">
-                  <svg width="100%" height="350">
-                    {cardData.map((item, index) => {
-                      const value = counts[item.key] ?? 0;
-                      const barHeight = (value / maxValue) * 280;
-                      const barWidth = 40;
-                      const gap = 35;
-                      const x = index * (barWidth + gap) + 50;
-                      const y = 300 - barHeight;
-
-                      return (
-                        <g key={item.key}>
-                          <rect
-                            x={x}
-                            y={y}
-                            width={barWidth}
-                            height={barHeight}
-                            fill={item.bgColor}
-                            rx={6}
-                          />
-                          <text
-                            x={x + barWidth / 2}
-                            y={310}
-                            fontSize="11"
-                            textAnchor="middle"
-                            fill="#333"
-                          >
-                            {item.label}
-                          </text>
-                          <text
-                            x={x + barWidth / 2}
-                            y={y - 8}
-                            fontSize="11"
-                            textAnchor="middle"
-                            fill="#333"
-                          >
-                            {value}
-                          </text>
-                        </g>
-                      );
-                    })}
-                  </svg>
-                </Box>
-              </Card>
-            </Grid>
-             */}
-          </Grid>
-        </>
-      )}
+        )}
+      </Container>
     </>
   );
 }
+
 
 // -----------thirs one =----------------------------------------
 

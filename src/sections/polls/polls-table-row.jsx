@@ -14,6 +14,7 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
     options,    // Options
     answer,     // Answer
     description, // Description
+    total_responses,
   } = row;
 
   const popover = usePopover();
@@ -49,6 +50,8 @@ export default function PollsTableRow({ row, onEditRow, onDeleteRow }) {
 
         {/* Description */}
         <TableCell>{description}</TableCell>
+
+        <TableCell>{total_responses}</TableCell>
 
         {/* Actions */}
         <TableCell align="center">

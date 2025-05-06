@@ -29,12 +29,14 @@ import { TableNoData, TableHeadCustom } from 'src/components/table';
 
 import PollsTableRow from '../polls-table-row';
 
+
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'question', label: 'Question' },
   { id: 'options', label: 'Options' },
   { id: 'answer', label: 'Answer ' },
   { id: 'description', label: 'Description ' },
+  { id: 'total_responses' , label:'Total Responses'},
   { id: 'actions ', label: 'Actions' },
 ];
 
