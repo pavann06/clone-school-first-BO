@@ -26,6 +26,7 @@ import { paths } from 'src/routes/paths';
 import SurveyTableRow from '../survey-table-row';
 
 
+
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'title', label: 'Title' },
@@ -34,6 +35,7 @@ const TABLE_HEAD = [
  
 
   { id: 'status', label: 'Status' },
+  { id: 'total_responses' , label: 'Total Response'},
   { id: 'closing_date', label: 'Closing Date' },
   
   { id: 'number_of_questions', label: 'Number of Questions' },

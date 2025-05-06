@@ -21,6 +21,7 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow, onViewRow 
     title,
     description,
     duration,
+    
     image,
     survey_type,
     target_group,
@@ -70,6 +71,8 @@ export default function ServeyTableRow({ row, onEditRow, onDeleteRow, onViewRow 
 
         {/* Status */}
         <TableCell>{status}</TableCell>
+
+        <TableCell>{total_responses}</TableCell>
 
         {/* Closing Date */}
         <TableCell>{new Date(closing_date).toLocaleDateString()}</TableCell>
