@@ -36,19 +36,25 @@ export default function ServeyQuestionsTableRow({ row, onEditRow, onDeleteRow })
         </TableCell>
 
         {/* Description */}
-        <TableCell>
-          {options && typeof options === 'object' ? (
-            <ul style={{ margin: 0, paddingLeft: '1rem' }}>
-              {Object.entries(options).map(([key, value], idx) => (
-                <li key={`option-${key}-${idx}`}>
-                  {key.toUpperCase()}: {typeof value === 'object' ? JSON.stringify(value) : value}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            'No options available'
-          )}
-        </TableCell>
+    
+<TableCell>
+  {Array.isArray(options) && options.length > 0 ? (
+    <div style={{ whiteSpace: 'pre-line' }}>
+      {options.map((value, idx) => (
+        <div key={`option-${idx}`}>
+          {idx + 1}: {value}
+        </div>
+      ))}
+    </div>
+  ) : (
+    'No options available'
+  )}
+</TableCell>
+
+
+
+
+
 
         <TableCell>{question_type}</TableCell>
 
