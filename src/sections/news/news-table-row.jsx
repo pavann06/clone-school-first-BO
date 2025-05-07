@@ -12,34 +12,37 @@ import {
   DialogContent,
   Typography,
   Button,
+  DialogTitle,
 } from '@mui/material';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
-  const {
-    serial_no,
-    language,
-    title,
-    description,
-    categories,
-   
-    
-
-    heading,
-
-    images,
-    status,
-  } = row;
+  const { serial_no, language, title, description, categories, heading, images, status } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => setOpenDialog(false);
 
-  const truncatedDescription =
-  description?.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
+  // 🆕 At the top inside your component:
+const [openImageDialog, setOpenImageDialog] = useState(false);
+const [selectedImage, setSelectedImage] = useState(null);
 
+// 🆕 Handlers
+const handleOpenImageDialog = (imageUrl) => {
+  setSelectedImage(imageUrl);
+  setOpenImageDialog(true);
+};
+
+const handleCloseImageDialog = () => {
+  setOpenImageDialog(false);
+  setSelectedImage(null);
+};
+
+
+  const truncatedDescription =
+    description?.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
 
   const popover = usePopover();
 
@@ -53,22 +56,18 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
 
         {/* Description */}
         <TableCell sx={{ minWidth: 300 }}>
-  <Typography variant="body2">
-    {truncatedDescription}{' '}
-    {description.length > 100 && (
-      <Button size="small" onClick={handleOpenDialog}>
-        Read More
-      </Button>
-    )}
-  </Typography>
-</TableCell>
+          <Typography variant="body2">
+            {truncatedDescription}{' '}
+            {description.length > 100 && (
+              <Button size="small" onClick={handleOpenDialog}>
+                Read More
+              </Button>
+            )}
+          </Typography>
+        </TableCell>
 
-        
-
-     
-
-        <TableCell >
-          <Box >
+        <TableCell>
+          <Box>
             {Array.isArray(categories) ? (
               <ul>
                 {categories.map((category, index) => (
@@ -84,22 +83,51 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
 
         {/* Image */}
-        <TableCell>
+        {/* <TableCell>
+  {images ? (
+    <img
+      src={images}
+      alt={`Thumbnail for ${heading}`}
+      style={{ maxWidth: 100, maxHeight: 50, cursor: 'pointer' }}
+      onClick={() => handleOpenImageDialog(images)} // Open dialog on click
+      role="button" // Role button for accessibility
+      tabIndex="0" // Make the image focusable
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') { // Handle keyboard events
+          handleOpenImageDialog(images);
+        }
+      }}
+    />
+  ) : (
+    'No Image'
+  )}
+</TableCell> */}
+   <TableCell align="center">
           {images ? (
-            <img
-              src={images}
-              alt={`Thumbnail for ${heading}`}
-              style={{ maxWidth: 100, maxHeight: 50 }}
-            />
+            <Box
+              role="button"
+              tabIndex={0}
+              onClick={() => handleOpenImageDialog(images)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handleOpenImageDialog(images);
+                }
+              }}
+              sx={{ display: 'inline-block', cursor: 'pointer', outline: 'none' }}
+              aria-label={`View image for ${heading}`}
+            >
+              <img
+                src={images}
+                alt={`Thumbnail for ${heading}`}
+                style={{ maxWidth: 100, maxHeight: 50 }}
+              />
+            </Box>
           ) : (
             'No Image'
           )}
         </TableCell>
 
-        {/* Interactions */}
-       
 
-        {/* Language */}
 
         {/* Status */}
         <TableCell>{status}</TableCell>
@@ -152,6 +180,34 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
           </Button>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={openImageDialog} onClose={handleCloseImageDialog} maxWidth="md" fullWidth>
+        <DialogTitle>
+          Image Preview
+          <IconButton
+            onClick={handleCloseImageDialog}
+            sx={{ position: 'absolute', top: 8, right: 8 }}
+          >
+            <Iconify icon="eva:close-fill" />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent sx={{ p: 3 }}>
+          {selectedImage && (
+            <Box
+              component="img"
+              src={selectedImage}
+              alt="Full preview"
+              sx={{
+                width: '90%',
+                maxHeight: '60vh',
+                objectFit: 'contain',
+                borderRadius: 2,
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
 
       {/* Custom Popover */}
       <CustomPopover
