@@ -268,174 +268,47 @@
 
 
 
-import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import {
-  Grid,
-  Container,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  CircularProgress,
-} from '@mui/material';
-import request from 'src/api/request';
-
-// Define the card properties
-const cardData = [
-  { key: 'feed_count', label: 'Edutain Feeds', bgColor: '#9b59b6' },
-  { key: 'news_count', label: 'News', bgColor: '#3498db' },
-  { key: 'survey_count', label: 'Survey', bgColor: '#f1c40f' },
-  { key: 'poll_count', label: 'Polls', bgColor: '#2ecc71' },
- 
-
-];
-
-export default function OverviewBookingPage() {
-  const [counts, setCounts] = useState({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCounts = async () => {
-      try {
-        const response = await request.get('backoffice/stats');
-        setCounts(response.data);
-      } catch (error) {
-        console.error('Failed to fetch stats:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCounts();
-  }, []);
-
-  return (
-    <>
-      <Helmet>
-        <title>Dashboard | FamiliFirst</title>
-      </Helmet>
-
-      <Container maxWidth="xl">
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: 600, color: '#2c3e50', mb: 4 }}
-        >
-          Hi, Welcome back
-        </Typography>
-
-        {loading ? (
-          <Box display="flex" justifyContent="center" mt={4}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <Grid container spacing={3}>
-            {cardData.map((item) => (
-              <Grid key={item.key} item xs={12} sm={6} md={4} lg={2.4}>
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    height: 160,
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    px: 3,
-                    background: `${item.bgColor}15`,
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-4px)',
-                      boxShadow: '0 8px 16px rgba(0,0,0,0.12)',
-                    },
-                  }}
-                >
-                  <Box>
-                    <Typography
-                      variant="subtitle2"
-                      sx={{ color: item.bgColor, fontWeight: 600, mb: 0.5 }}
-                    >
-                      {item.label}
-                    </Typography>
-                    <Typography
-                      variant="h4"
-                      sx={{ color: item.bgColor, fontWeight: 700 }}
-                    >
-                      {counts[item.key] ?? 0}
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        )}
-      </Container>
-    </>
-  );
-}
-
-
-
-
-// import { useEffect, useState, useCallback } from 'react';
+// import { useEffect, useState } from 'react';
 // import { Helmet } from 'react-helmet-async';
 // import {
 //   Grid,
 //   Container,
 //   Card,
+//   CardContent,
 //   Typography,
 //   Box,
 //   CircularProgress,
-//   TextField,
-//   Button,
 // } from '@mui/material';
 // import request from 'src/api/request';
 
+// // Define the card properties
 // const cardData = [
 //   { key: 'feed_count', label: 'Edutain Feeds', bgColor: '#9b59b6' },
 //   { key: 'news_count', label: 'News', bgColor: '#3498db' },
 //   { key: 'survey_count', label: 'Survey', bgColor: '#f1c40f' },
 //   { key: 'poll_count', label: 'Polls', bgColor: '#2ecc71' },
+ 
+
 // ];
 
 // export default function OverviewBookingPage() {
 //   const [counts, setCounts] = useState({});
 //   const [loading, setLoading] = useState(true);
-//   const [startDate, setStartDate] = useState('');
-//   const [endDate, setEndDate] = useState('');
-
-//   const fetchCounts = useCallback(async () => {
-//     setLoading(true);
-//     try {
-//       const params = {}; // initialize params object
-//       if (startDate) params.start_date = startDate; // add start_date to params if present
-//       if (endDate) params.end_date = endDate; // add end_date to params if present
-
-//       console.log("API Request Params: ", params); // Check the params
-
-//       const response = await request.get('backoffice/stats', { params }); // Pass params as an object
-
-//       console.log("API Response: ", response); // Check the response
-//       setCounts(response); // Set the response data to counts
-//     } catch (error) {
-//       console.error('Failed to fetch stats:', error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   }, [startDate, endDate]);
 
 //   useEffect(() => {
-//     fetchCounts(); // Fetch the counts on component mount or when dates change
-//   }, [fetchCounts]);
+//     const fetchCounts = async () => {
+//       try {
+//         const response = await request.get('backoffice/stats');
+//         setCounts(response.data);
+//       } catch (error) {
+//         console.error('Failed to fetch stats:', error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
 
-//   const handleFilter = () => {
-//     fetchCounts(); // Trigger the fetch when the filter is applied
-//   };
-
-//   const handleClear = () => {
-//     setStartDate(''); // Reset start date
-//     setEndDate(''); // Reset end date
-//     setTimeout(() => fetchCounts(), 0); // Fetch without filters (empty params)
-//   };
+//     fetchCounts();
+//   }, []);
 
 //   return (
 //     <>
@@ -451,30 +324,6 @@ export default function OverviewBookingPage() {
 //         >
 //           Hi, Welcome back
 //         </Typography>
-
-//         {/* Date Filters */}
-//         <Box display="flex" alignItems="center" gap={2} mb={4}>
-//           <TextField
-//             type="date"
-//             label="Start Date"
-//             value={startDate}
-//             onChange={(e) => setStartDate(e.target.value)}
-//             InputLabelProps={{ shrink: true }}
-//           />
-//           <TextField
-//             type="date"
-//             label="End Date"
-//             value={endDate}
-//             onChange={(e) => setEndDate(e.target.value)}
-//             InputLabelProps={{ shrink: true }}
-//           />
-//           <Button variant="contained" onClick={handleFilter}>
-//             Filter
-//           </Button>
-//           <Button variant="outlined" onClick={handleClear}>
-//             Clear
-//           </Button>
-//         </Box>
 
 //         {loading ? (
 //           <Box display="flex" justifyContent="center" mt={4}>
@@ -523,3 +372,144 @@ export default function OverviewBookingPage() {
 //     </>
 //   );
 // }
+
+
+
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Grid, Container, Card, Typography, Box, CircularProgress, TextField } from '@mui/material';
+import request from 'src/api/request';
+
+// Define the card properties
+const cardData = [
+  { key: 'feed_count', label: 'Edutain Feeds', bgColor: '#9b59b6' },
+  { key: 'news_count', label: 'News', bgColor: '#3498db' },
+  { key: 'survey_count', label: 'Survey', bgColor: '#f1c40f' },
+  { key: 'poll_count', label: 'Polls', bgColor: '#2ecc71' },
+];
+
+export default function OverviewBookingPage() {
+  const [counts, setCounts] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [startDate, setStartDate] = useState(getTodayDate());  // Initially set to today's date
+  const [endDate, setEndDate] = useState(getTodayDate());  // Initially set to today's date
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        // Format dates as strings for the request
+        const formattedStartDate = startDate; // No need for conversion, it's already in YYYY-MM-DD format
+        const formattedEndDate = endDate;  // No need for conversion, it's already in YYYY-MM-DD format
+
+        // Construct the query string manually (without 'created_by')
+        const queryParams = new URLSearchParams({
+          start_date: formattedStartDate,
+          end_date: formattedEndDate,
+        });
+
+        // Send the request with the correctly formatted query string
+        const response = await request.get(`backoffice/stats?${queryParams.toString()}`);
+
+        setCounts(response.data);
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCounts();
+  }, [startDate, endDate]);  // Re-fetch when start or end date changes
+
+  // Helper function to get today's date in YYYY-MM-DD format
+  function getTodayDate() {
+    const today = new Date();
+    return today.toISOString().split('T')[0];  // Return date as YYYY-MM-DD
+  }
+
+  return (
+    <>
+      <Helmet>
+        <title>Dashboard | FamiliFirst</title>
+      </Helmet>
+
+      <Container maxWidth="xl">
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ fontWeight: 600, color: '#2c3e50', mb: 4 }}
+        >
+          Hi, Welcome back
+        </Typography>
+
+        {/* Date Pickers for selecting the range */}
+        <Box display="flex"  mb={6}>
+          <TextField
+            label="Start Date"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{ width: '38%',mr: 2 }}
+          />
+          <TextField
+            label="End Date"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{ width: '38%' }}
+          />
+        </Box>
+
+        {loading ? (
+          <Box display="flex" justifyContent="center" mt={4}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Grid container spacing={3}>
+            {cardData.map((item) => (
+              <Grid key={item.key} item xs={12} sm={6} md={4} lg={2.4}>
+                <Card
+                  sx={{
+                    borderRadius: 3,
+                    height: 160,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    px: 3,
+                    background: `${item.bgColor}15`,
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 8px 16px rgba(0,0,0,0.12)',
+                    },
+                  }}
+                >
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ color: item.bgColor, fontWeight: 600, mb: 0.5 }}
+                    >
+                      {item.label}
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      sx={{ color: item.bgColor, fontWeight: 700 }}
+                    >
+                      {counts[item.key] ?? 0}
+                    </Typography>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Container>
+    </>
+  );
+}
