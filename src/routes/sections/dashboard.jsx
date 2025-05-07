@@ -175,6 +175,9 @@ const DashboardListPage = lazy(() => import('src/pages/dashboard/dashboard/home-
 
 
 
+
+
+
 const SurveyListPage = lazy(() => import('src/pages/dashboard/survey/list'));
 const SurveyCreatePage = lazy(() => import('src/pages/dashboard/survey/new'));
 const SurveyEditPage = lazy(() => import('src/pages/dashboard/survey/edit'));
@@ -1398,6 +1401,10 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+
+
 
      
 

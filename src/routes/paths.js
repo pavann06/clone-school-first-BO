@@ -310,6 +310,12 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
     },
 
+
+  
+
+
+
+
     contact: {
       root: `${ROOTS.DASHBOARD}/contact`,
       new: `${ROOTS.DASHBOARD}/contact/new`,
