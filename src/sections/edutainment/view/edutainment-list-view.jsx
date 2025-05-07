@@ -297,11 +297,28 @@ export default function EdutainmentListView() {
       </Box>
 
       {/* Only show Pending, Approved, and Rejected */}
-      <Tabs value={selectedTab} onChange={handleTabChange} variant="fullWidth">
-        <Tab label="Pending" value="Pending" />
-        <Tab label="Approved" value="Approved" />
-        <Tab label="Rejected" value="Rejected" />
-      </Tabs>
+      <Tabs
+  value={selectedTab}
+  onChange={handleTabChange}
+ 
+  sx={{
+    minHeight: 36, // reduces overall height
+    '& .MuiTab-root': {
+      minHeight: 36,
+      paddingY: 1.5,
+      paddingX: 1.5,
+      fontSize: 13,
+    },
+    '& .MuiTabs-indicator': {
+      height: 2,
+    },
+  }}
+>
+  <Tab label="Pending" value="Pending" />
+  <Tab label="Approved" value="Approved" />
+  <Tab label="Rejected" value="Rejected" />
+</Tabs>
+
 
       <Card>
         <TableContainer>
