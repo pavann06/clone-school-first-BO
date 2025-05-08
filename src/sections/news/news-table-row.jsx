@@ -26,20 +26,19 @@ export default function NewsTableRow({ row, onEditRow, onDeleteRow }) {
   const handleCloseDialog = () => setOpenDialog(false);
 
   // 🆕 At the top inside your component:
-const [openImageDialog, setOpenImageDialog] = useState(false);
-const [selectedImage, setSelectedImage] = useState(null);
+  const [openImageDialog, setOpenImageDialog] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-// 🆕 Handlers
-const handleOpenImageDialog = (imageUrl) => {
-  setSelectedImage(imageUrl);
-  setOpenImageDialog(true);
-};
+  // 🆕 Handlers
+  const handleOpenImageDialog = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setOpenImageDialog(true);
+  };
 
-const handleCloseImageDialog = () => {
-  setOpenImageDialog(false);
-  setSelectedImage(null);
-};
-
+  const handleCloseImageDialog = () => {
+    setOpenImageDialog(false);
+    setSelectedImage(null);
+  };
 
   const truncatedDescription =
     description?.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
@@ -82,8 +81,7 @@ const handleCloseImageDialog = () => {
           </Box>
         </TableCell>
 
-
-   <TableCell align="center">
+        <TableCell align="center">
           {images ? (
             <Box
               role="button"
@@ -107,8 +105,6 @@ const handleCloseImageDialog = () => {
             'No Image'
           )}
         </TableCell>
-
-
 
         {/* Status */}
         <TableCell>{status}</TableCell>
@@ -189,7 +185,6 @@ const handleCloseImageDialog = () => {
         </DialogContent>
       </Dialog>
 
-
       {/* Custom Popover */}
       <CustomPopover
         open={popover.open}
@@ -226,11 +221,7 @@ NewsTableRow.propTypes = {
   row: PropTypes.object,
 };
 
-
-
-
 // important ==========statys without refresjhhh=============================
-
 
 // import { useState } from 'react';
 // import PropTypes from 'prop-types';
@@ -262,8 +253,6 @@ NewsTableRow.propTypes = {
 //   const [selectedImage, setSelectedImage] = useState(null);
 //   const [currentStatus, setCurrentStatus] = useState(status);
 
-
-
 //   const popover = usePopover();
 
 //   const truncatedDescription =
@@ -290,14 +279,12 @@ NewsTableRow.propTypes = {
 //     // Make PUT request to update status
 //     request
 //       .put(`backoffice/news/${id}`, { status: newStatus })
-    
-      
+
 //       .catch((error) => {
 //         console.error('Error updating status:', error);
 //         alert('Failed to update status.');
 //       });
 //   };
-
 
 //   return (
 //     <>
@@ -472,21 +459,7 @@ NewsTableRow.propTypes = {
 //   onDeleteRow: PropTypes.func,
 // };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // with status and refresh ===================
-
 
 // import { useState } from 'react';
 // import PropTypes from 'prop-types';
@@ -653,7 +626,7 @@ NewsTableRow.propTypes = {
 // }
 
 // NewsTableRow.propTypes = {
- 
+
 //  onEditRow: PropTypes.func,
 //   onDeleteRow: PropTypes.func,
 //   row: PropTypes.object.isRequired,
