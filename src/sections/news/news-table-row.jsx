@@ -461,6 +461,9 @@
 
 // with status and refresh ===================
 
+
+
+
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItemText from '@mui/material/ListItemText';
@@ -559,10 +562,11 @@ export default function NewsTableRow({ row, refetch,onEditRow, onDeleteRow  }) {
               aria-label={`View image for ${title}`}
             >
               <img
-                src={images}
-                alt={`Thumbnail for ${title}`}
-                style={{ maxWidth: 100, maxHeight: 50 }}
-              />
+  src={Array.isArray(images) ? images[0] : images}
+  alt={`Thumbnail for ${title}`}
+  style={{ maxWidth: 100, maxHeight: 50 }}
+/>
+
             </Box>
           ) : (
             'No Image'
