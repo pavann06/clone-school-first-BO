@@ -258,6 +258,32 @@ const request = {
     }
   },
 
+  patch: async (endPoint, jsonData, withUpload = false) => {
+    try {
+      let config = {};
+      if (withUpload) {
+        config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+      }
+  
+      const token = getToken();
+      if (token) {
+        axios.defaults.headers.common.Authorization = token;
+      }
+  
+      const response = await axios.patch(endPoint, jsonData, config); // ✅ Use patch here
+      return response.data;
+    } catch (error) {
+      handleAuthError(error);
+      console.error('error in patch api', error); // Optional: update message for clarity
+      return error;
+    }
+  },
+  
+
   delete: async (endPoint, jsonData) => {
     try {
       let url = endPoint;

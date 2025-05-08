@@ -500,22 +500,47 @@ export default function NewsTableRow({ row, refetch,onEditRow, onDeleteRow  }) {
   };
 
   // Handle status change and make PUT request
-  const handleStatusChange = (event) => {
+  // const handleStatusChange = (event) => {
+  //   const newStatus = event.target.value;
+  //   setCurrentStatus(newStatus);
+  
+  //   request
+  //     .put(`backoffice/news/${id}`, { status: newStatus })
+  //     .then(() => {
+  //       enqueueSnackbar('Status updated successfully', { variant: 'success' });
+  //       refetch(); // Refresh the data after update
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error updating status:', error);
+  //       enqueueSnackbar('Failed to update status', { variant: 'error' });
+  //     });
+  // };
+  const handleStatusChange = async (event) => {
     const newStatus = event.target.value;
     setCurrentStatus(newStatus);
-
-    // Make PUT request to update status
-    request
-      .put(`backoffice/news/${id}`, { status: newStatus })
-      .then(() => {
-        enqueueSnackbar('Status updated successfully', { variant: 'success' });
-        refetch(); // Trigger the parent component to refetch and update the table
-      })
-      .catch((error) => {
-        console.error('Error updating status:', error);
-        enqueueSnackbar('Failed to update status', { variant: 'error' });
-      });
+  
+    try {
+      // Fetch existing data
+      const existingData = await request.get(`backoffice/news/${id}`);
+      console.log("this is the data of the row",existingData )
+  
+      // Prepare updated data
+      const updatedData = {
+        ...existingData,
+        status: newStatus,
+      };
+  
+      await request.put(`backoffice/news/${id}`, updatedData);
+      enqueueSnackbar('Status updated successfully', { variant: 'success' });
+      refetch();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      enqueueSnackbar('Failed to update status', { variant: 'error' });
+    }
   };
+  
+  
+  
 
   return (
     <>
