@@ -473,6 +473,21 @@
 // };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItemText from '@mui/material/ListItemText';
@@ -482,7 +497,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import request from 'src/api/request';
 import { useSnackbar } from 'src/components/snackbar';
 
-export default function NewsTableRow({ row, refetch }) {
+export default function NewsTableRow({ row, refetch,onEditRow, onDeleteRow  }) {
   const { id, serial_no, title, description, categories, images, status } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -613,11 +628,34 @@ export default function NewsTableRow({ row, refetch }) {
         </DialogContent>
         <Button onClick={handleCloseDialog}>Close</Button>
       </Dialog>
+            <CustomPopover open={popover.open} onClose={popover.onClose} arrow="right-top" sx={{ width: 140 }}>
+      <MenuItem
+          onClick={() => {
+            onEditRow();
+            popover.onClose();
+          }}
+        >
+          <Iconify icon="solar:pen-bold" />
+          Edit
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onDeleteRow();
+            popover.onClose();
+          }}
+        >
+          <Iconify icon="material-symbols:delete" />
+          Delete
+        </MenuItem>
+      </CustomPopover>
     </>
   );
 }
 
 NewsTableRow.propTypes = {
+ 
+ onEditRow: PropTypes.func,
+  onDeleteRow: PropTypes.func,
   row: PropTypes.object.isRequired,
   refetch: PropTypes.func.isRequired,
 };
