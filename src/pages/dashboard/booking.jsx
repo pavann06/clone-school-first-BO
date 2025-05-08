@@ -380,7 +380,7 @@ import { Helmet } from 'react-helmet-async';
 import { Grid, Container, Card, Typography, Box, CircularProgress, TextField } from '@mui/material';
 import request from 'src/api/request';
 
-// Define the card properties
+
 const cardData = [
   { key: 'feed_count', label: 'Edutain Feeds', bgColor: '#9b59b6' },
   { key: 'news_count', label: 'News', bgColor: '#3498db' },
@@ -391,23 +391,23 @@ const cardData = [
 export default function OverviewBookingPage() {
   const [counts, setCounts] = useState({});
   const [loading, setLoading] = useState(true);
-  const [startDate, setStartDate] = useState(getTodayDate());  // Initially set to today's date
-  const [endDate, setEndDate] = useState(getTodayDate());  // Initially set to today's date
+  const [startDate, setStartDate] = useState(getTodayDate());  
+  const [endDate, setEndDate] = useState(getTodayDate());  
 
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        // Format dates as strings for the request
-        const formattedStartDate = startDate; // No need for conversion, it's already in YYYY-MM-DD format
-        const formattedEndDate = endDate;  // No need for conversion, it's already in YYYY-MM-DD format
+        
+        const formattedStartDate = startDate; 
+        const formattedEndDate = endDate;  
 
-        // Construct the query string manually (without 'created_by')
+       
         const queryParams = new URLSearchParams({
           start_date: formattedStartDate,
           end_date: formattedEndDate,
         });
 
-        // Send the request with the correctly formatted query string
+      
         const response = await request.get(`backoffice/stats?${queryParams.toString()}`);
 
         setCounts(response.data);
@@ -419,12 +419,12 @@ export default function OverviewBookingPage() {
     };
 
     fetchCounts();
-  }, [startDate, endDate]);  // Re-fetch when start or end date changes
+  }, [startDate, endDate]);  
 
-  // Helper function to get today's date in YYYY-MM-DD format
+  
   function getTodayDate() {
     const today = new Date();
-    return today.toISOString().split('T')[0];  // Return date as YYYY-MM-DD
+    return today.toISOString().split('T')[0];  
   }
 
   return (
