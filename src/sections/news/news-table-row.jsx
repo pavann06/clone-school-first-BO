@@ -515,29 +515,21 @@ export default function NewsTableRow({ row, refetch,onEditRow, onDeleteRow  }) {
   //       enqueueSnackbar('Failed to update status', { variant: 'error' });
   //     });
   // };
-  const handleStatusChange = async (event) => {
-    const newStatus = event.target.value;
-    setCurrentStatus(newStatus);
   
-    try {
-      // Fetch existing data
-      const existingData = await request.get(`backoffice/news/${id}`);
-      console.log("this is the data of the row",existingData )
-  
-      // Prepare updated data
-      const updatedData = {
-        ...existingData,
-        status: newStatus,
-      };
-  
-      await request.put(`backoffice/news/${id}`, updatedData);
-      enqueueSnackbar('Status updated successfully', { variant: 'success' });
-      refetch();
-    } catch (error) {
-      console.error('Error updating status:', error);
-      enqueueSnackbar('Failed to update status', { variant: 'error' });
-    }
-  };
+const handleStatusChange = async (event) => {
+  const newStatus = event.target.value;
+  setCurrentStatus(newStatus);
+
+  try {
+    await request.put(`backoffice/news/${id}`, { status: newStatus });
+    enqueueSnackbar('Status updated successfully', { variant: 'success' });
+    refetch();
+  } catch (error) {
+    console.error('Error updating status:', error);
+    enqueueSnackbar('Failed to update status', { variant: 'error' });
+  }
+};
+
   
   
   

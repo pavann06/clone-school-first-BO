@@ -34,7 +34,6 @@
 //   { id: 'index', label: 'Serial No' },
 //   { id: 'title', label: 'Title' },
 //   { id: 'description', label: 'Description' },
-  
 
 //   { id: 'categories', label: 'Categories ' },
 
@@ -51,8 +50,6 @@
 //   const [tableData, setTableData] = useState([]);
 //   const [totalCount, setTotalCount] = useState(0);
 //   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
-
-
 
 //   const navigate = useNavigate();
 
@@ -113,7 +110,6 @@
 
 //     const { success } = response;
 
-    
 //     if (success) {
 //       enqueueSnackbar('Deleted successfully');
 
@@ -190,9 +186,7 @@
 //   );
 // }
 
-
 // with all=============================================================================
-
 
 // import React, { useState, useEffect, useCallback } from 'react';
 // import { useQuery } from '@tanstack/react-query';
@@ -406,11 +400,7 @@
 //   );
 // }
 
-
-
 // imprtant =------------------status withoutrefresh -----------------------------------------
-
-
 
 // import React, { useState, useEffect, useCallback } from 'react';
 // import { useQuery } from '@tanstack/react-query';
@@ -623,13 +613,9 @@
 //   );
 // }
 
-
-
-
 // this staus and refres ========================================
 
-
-import React, { useState , useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'src/routes/hooks';
@@ -719,7 +705,7 @@ export default function NewsListView() {
     }));
   };
 
-    const handleEditRow = useCallback(
+  const handleEditRow = useCallback(
     (id) => {
       router.push(paths.dashboard.news.edit(id));
     },
@@ -789,31 +775,29 @@ export default function NewsListView() {
             <Table>
               <TableHeadCustom headLabel={TABLE_HEAD} />
               <TableBody>
-  {isLoading && (
-    [...Array(currentPagination.page_size)].map((_, index) => (
-      <Skeleton key={index} variant="rectangular" height={40} />
-    ))
-  )}
+                {isLoading &&
+                  [...Array(currentPagination.page_size)].map((_, index) => (
+                    <Skeleton key={index} variant="rectangular" height={40} />
+                  ))}
 
-  {!isLoading && tableData.length > 0 && (
-    tableData.map((row, index) => (
-      <NewsTableRow
-        key={row.id}
-        row={{
-          ...row,
-          serial_no:
-            (currentPagination.page - 1) * currentPagination.page_size + index + 1,
-        }}
-                                onEditRow={() => handleEditRow(row.id)}
-                         onDeleteRow={() => handleDeleteRow(row.id)}
-        refetch={refetch} // Pass refetch to the row component
-      />
-    ))
-  )}
+                {!isLoading &&
+                  tableData.length > 0 &&
+                  tableData.map((row, index) => (
+                    <NewsTableRow
+                      key={row.id}
+                      row={{
+                        ...row,
+                        serial_no:
+                          (currentPagination.page - 1) * currentPagination.page_size + index + 1,
+                      }}
+                      onEditRow={() => handleEditRow(row.id)}
+                      onDeleteRow={() => handleDeleteRow(row.id)}
+                      refetch={refetch} // Pass refetch to the row component
+                    />
+                  ))}
 
-  {!isLoading && tableData.length === 0 && <TableNoData />}
-</TableBody>
-
+                {!isLoading && tableData.length === 0 && <TableNoData />}
+              </TableBody>
             </Table>
           </Scrollbar>
         </TableContainer>

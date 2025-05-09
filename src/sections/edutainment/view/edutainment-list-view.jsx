@@ -219,7 +219,7 @@ export default function EdutainmentListView() {
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
   const [selectedTab, setSelectedTab] = useState('Pending'); // Set default to Pending
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading , refetch } = useQuery({
     queryKey: ['edutainment', pagination.page, pagination.page_size, selectedTab],
     queryFn: () =>
       request.get(
@@ -256,12 +256,23 @@ export default function EdutainmentListView() {
     [router]
   );
 
+  // const handleDeleteRow = async (id) => {
+  //   const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+  //   const { success } = response;
+  //   if (success) {
+  //     enqueueSnackbar('Deleted successfully');
+  //     setPagination((prev) => ({ ...prev, page: 1 }));
+  //   }
+  // };
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/edutain/feeds/${id}`);
-    const { success } = response;
-    if (success) {
-      enqueueSnackbar('Deleted successfully');
-      setPagination((prev) => ({ ...prev, page: 1 }));
+    try {
+      const response = await request.delete(`backoffice/edutain/feeds/${id}`);
+      if (response.success) {
+        enqueueSnackbar('Deleted successfully');
+        refetch();
+      }
+    } catch (error) {
+      enqueueSnackbar('Failed to delete', { variant: 'error' });
     }
   };
 
@@ -339,6 +350,7 @@ export default function EdutainmentListView() {
                         }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
+                        refetch={refetch} 
                       />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}

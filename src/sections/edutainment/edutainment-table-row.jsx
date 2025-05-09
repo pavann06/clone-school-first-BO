@@ -196,12 +196,16 @@ import {
   Button,
   Box,
   DialogTitle,
+  Select,
 } from '@mui/material';
+import request from 'src/api/request';
 import Iconify from 'src/components/iconify';
+import { useSnackbar } from 'src/components/snackbar';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
+export default function EdutainmentTableRow({ row,refetch, onEditRow, onDeleteRow }) {
   const {
+    id,
     serial_no,
     language,
     heading,
@@ -222,6 +226,8 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => setOpenDialog(false);
+  const [currentStatus, setCurrentStatus] = useState(status);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpenImageDialog = (img) => {
     setSelectedImage(img);
@@ -237,6 +243,44 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
     description.length > 100 ? `${description.slice(0, 100)}...` : description;
 
   const popover = usePopover();
+
+  // const handleStatusChange = async (event) => {
+  //   const newStatus = event.target.value;
+  //   setCurrentStatus(newStatus);
+  
+  //   try {
+  //     // Fetch existing data
+  //     const existingData = await request.get(`backoffice/edutain/feeds/${id}`);
+  //     console.log("this is the data of the row",existingData )
+  
+  //     // Prepare updated data
+  //     const updatedData = {
+  //       ...existingData,
+  //       status: newStatus,
+  //     };
+  
+  //     await request.put(`backoffice/edutain/feeds/${id}`, updatedData);
+  //     enqueueSnackbar('Status updated successfully', { variant: 'success' });
+  //     refetch();
+  //   } catch (error) {
+  //     console.error('Error updating status:', error);
+  //     enqueueSnackbar('Failed to update status', { variant: 'error' });
+  //   }
+  // };
+
+  const handleStatusChange = async (event) => {
+    const newStatus = event.target.value;
+    setCurrentStatus(newStatus);
+  
+    try {
+      await request.put(`backoffice/edutain/feeds/${id}`, { status: newStatus });
+      enqueueSnackbar('Status updated successfully', { variant: 'success' });
+      refetch();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      enqueueSnackbar('Failed to update status', { variant: 'error' });
+    }
+  };
 
   return (
     <>
@@ -301,7 +345,13 @@ export default function EdutainmentTableRow({ row, onEditRow, onDeleteRow }) {
 
         <TableCell>{language}</TableCell>
 
-        <TableCell>{status}</TableCell>
+        <TableCell>
+          <Select value={currentStatus} onChange={handleStatusChange} fullWidth size="small">
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approved">Approved</MenuItem>
+            <MenuItem value="Rejected">Rejected</MenuItem>
+          </Select>
+        </TableCell>
 
         <TableCell align="center">
           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
@@ -410,4 +460,5 @@ EdutainmentTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
   row: PropTypes.object,
+  refetch: PropTypes.func.isRequired,
 };
