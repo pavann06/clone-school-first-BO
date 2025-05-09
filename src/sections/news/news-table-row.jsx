@@ -467,13 +467,25 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItemText from '@mui/material/ListItemText';
-import { Box, TableRow, MenuItem, TableCell, IconButton, Dialog, DialogContent, Typography, Button, DialogTitle, Select } from '@mui/material';
+import {
+  Box,
+  TableRow,
+  MenuItem,
+  TableCell,
+  IconButton,
+  Dialog,
+  DialogContent,
+  Typography,
+  Button,
+  DialogTitle,
+  Select,
+} from '@mui/material';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import request from 'src/api/request';
 import { useSnackbar } from 'src/components/snackbar';
 
-export default function NewsTableRow({ row, refetch,onEditRow, onDeleteRow  }) {
+export default function NewsTableRow({ row, refetch, onEditRow, onDeleteRow }) {
   const { id, serial_no, title, description, categories, images, status } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -484,7 +496,8 @@ export default function NewsTableRow({ row, refetch,onEditRow, onDeleteRow  }) {
   const { enqueueSnackbar } = useSnackbar();
   const popover = usePopover();
 
-  const truncatedDescription = description?.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
+  const truncatedDescription =
+    description?.length > 100 ? `${description.slice(0, 100)}...` : description || 'No Description';
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => setOpenDialog(false);
@@ -499,40 +512,19 @@ export default function NewsTableRow({ row, refetch,onEditRow, onDeleteRow  }) {
     setSelectedImage(null);
   };
 
-  // Handle status change and make PUT request
-  // const handleStatusChange = (event) => {
-  //   const newStatus = event.target.value;
-  //   setCurrentStatus(newStatus);
-  
-  //   request
-  //     .put(`backoffice/news/${id}`, { status: newStatus })
-  //     .then(() => {
-  //       enqueueSnackbar('Status updated successfully', { variant: 'success' });
-  //       refetch(); // Refresh the data after update
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error updating status:', error);
-  //       enqueueSnackbar('Failed to update status', { variant: 'error' });
-  //     });
-  // };
-  
-const handleStatusChange = async (event) => {
-  const newStatus = event.target.value;
-  setCurrentStatus(newStatus);
+  const handleStatusChange = async (event) => {
+    const newStatus = event.target.value;
+    setCurrentStatus(newStatus);
 
-  try {
-    await request.put(`backoffice/news/${id}`, { status: newStatus });
-    enqueueSnackbar('Status updated successfully', { variant: 'success' });
-    refetch();
-  } catch (error) {
-    console.error('Error updating status:', error);
-    enqueueSnackbar('Failed to update status', { variant: 'error' });
-  }
-};
-
-  
-  
-  
+    try {
+      await request.put(`backoffice/news/${id}`, { status: newStatus });
+      enqueueSnackbar('Status updated successfully', { variant: 'success' });
+      refetch();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      enqueueSnackbar('Failed to update status', { variant: 'error' });
+    }
+  };
 
   return (
     <>
@@ -579,11 +571,10 @@ const handleStatusChange = async (event) => {
               aria-label={`View image for ${title}`}
             >
               <img
-  src={Array.isArray(images) ? images[0] : images}
-  alt={`Thumbnail for ${title}`}
-  style={{ maxWidth: 100, maxHeight: 50 }}
-/>
-
+                src={Array.isArray(images) ? images[0] : images}
+                alt={`Thumbnail for ${title}`}
+                style={{ maxWidth: 100, maxHeight: 50 }}
+              />
             </Box>
           ) : (
             'No Image'
@@ -622,8 +613,13 @@ const handleStatusChange = async (event) => {
         </DialogContent>
         <Button onClick={handleCloseDialog}>Close</Button>
       </Dialog>
-            <CustomPopover open={popover.open} onClose={popover.onClose} arrow="right-top" sx={{ width: 140 }}>
-      <MenuItem
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        arrow="right-top"
+        sx={{ width: 140 }}
+      >
+        <MenuItem
           onClick={() => {
             onEditRow();
             popover.onClose();
@@ -647,8 +643,7 @@ const handleStatusChange = async (event) => {
 }
 
 NewsTableRow.propTypes = {
-
- onEditRow: PropTypes.func,
+  onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
   row: PropTypes.object.isRequired,
   refetch: PropTypes.func.isRequired,

@@ -86,57 +86,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
 
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       image: data.image || null,
-  //       video: data.video || null,
-  //       youtube_video: data.youtube_video || null,
-  //     };
-
-  //     if (!currentEdutainment) {
-  //       payload.status = 'Pending';
-  //     }
-
-  //     const response = currentEdutainment
-  //       ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
-  //       : await CreateEdutainment(payload);
-
-  //     console.log('Full API Response:', response); // Debugging
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentEdutainment ? 'Update success!' : 'Create success!', {
-  //         variant: 'success',
-  //       });
-  //       router.push(paths.dashboard.edutainment.root);
-  //       reset();
-  //       return response;
-  //     }
-
-  //     const errors = response?.response?.data?.data;
-  //     if (errors) {
-  //       Object.entries(errors).forEach(([field, messages]) => {
-  //         if (methods.setError) {
-  //           methods.setError(field, {
-  //             type: 'server',
-  //             message: messages[0],
-  //           });
-  //         }
-  //       });
-  //       enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
-  //       return null;
-  //     }
-
-  //     enqueueSnackbar('Operation failed');
-  //     return response;
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     enqueueSnackbar('Operation failed');
-  //     return null;
-  //   }
-  // });
-
   const onSubmit = handleSubmit(async (data) => {
     // Conditional validation
     if (data.feed_type === 'Image' && !data.image) {
@@ -338,7 +287,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 {values.feed_type === 'Video' && (
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     {/* Video Field */}
-                    <Stack spacing={1.5}>
+                    {/* <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Video</Typography>
                       <RHFUpload
                         thumbnail
@@ -350,7 +299,32 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                         isLoading={isUploading}
                         accept="video/*" // Allows only video files
                       />
-                    </Stack>
+                    </Stack> */}
+<Stack spacing={1.5}>
+  <Typography variant="subtitle2">Video</Typography>
+  <RHFUpload
+    thumbnail
+    name="video"
+    onDrop={handleDrop}
+    onRemove={handleRemoveFile}
+    onRemoveAll={handleRemoveAllFiles}
+    isLoading={isUploading}
+    accept="video/*"
+  />
+  {values.video && typeof values.video === 'string' && (
+    <Box mt={1}>
+      <video
+        src={values.video}
+        controls
+        style={{ maxWidth: '100%', maxHeight: 300 }}
+      >
+        <track kind="captions" srcLang="en" label="English captions" />
+      </video>
+    </Box>
+  )}
+</Stack>
+
+
                   </Box>
                 )}
 
