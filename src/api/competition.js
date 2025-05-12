@@ -26,7 +26,7 @@ export const UpdateCompetition = async (form_data) => {
       }
     });
 
-    const resp = await request.put(`backoffice/competition/${form_data.id}`, form_data);
+    const resp = await request.put(`backoffice/contest/${form_data.id}`, form_data);
 
     return resp;
   } catch (error) {

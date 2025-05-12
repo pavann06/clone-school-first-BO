@@ -20,7 +20,7 @@ export default function CompetitionEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/edutain/feeds/${id}`),
+    queryFn: () => request.get(`backoffice/contest/${id}`),
   });
 
   return (
@@ -28,7 +28,7 @@ export default function CompetitionEditView({ id }) {
       <CustomBreadcrumbs
         heading="Edit"
         links={[
-          { name: 'Dashboard', href: paths.competition.root },
+          { name: 'Dashboard', href: paths.dashboard.root },
           {
             name: 'Competition',
             href: paths.dashboard.competition.root,

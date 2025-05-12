@@ -258,8 +258,8 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
 
   // Validation Schema
   const CompetitionSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
+    contest_name: Yup.string().required('Name is required'),
+    contest_description: Yup.string().required('Description is required'),
     start_time: Yup.string().required('Start time is required'),
     end_time: Yup.string().required('End time is required'),
     max_slots: Yup.string().required('Max is required'),
@@ -286,8 +286,8 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
   // Default Values
   const defaultValues = useMemo(
     () => ({
-      name: currentCompetition?.name || '',
-      description: currentCompetition?.description || '',
+      contest_name: currentCompetition?.contest_name || '',
+      contest_description: currentCompetition?.contest_description || '',
       total_words: currentCompetition?.total_words || 0,
       start_time: currentCompetition?.start_time || '',
       end_time: currentCompetition?.end_time || '',
@@ -396,8 +396,8 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
         <Grid xs={12} md={8}>
           <Card>
             <Stack spacing={3} sx={{ p: 3 }}>
-              <RHFTextField name="name" label="Competition Name" />
-              <RHFTextField name="description" label="Description" multiline rows={4} />
+              <RHFTextField name="contest_name" label="Competition Name" />
+              <RHFTextField name="contest_description" label="Description" multiline rows={4} />
               <Box>
                 <Typography>Start Time</Typography>
                 <RHFTextField name="start_time" label="" type="datetime-local" />

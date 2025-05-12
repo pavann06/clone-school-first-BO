@@ -62,27 +62,7 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         <TableCell>
         {prize_pool}
         </TableCell>
-{/* 
-        <TableCell>
-  <div>{new Date(start_time).toLocaleDateString('en-US', {  
-    year: 'numeric',  
-    month: 'short',  
-    day: '2-digit'  
-  })}</div>
-  <div>{new Date(start_time).toLocaleTimeString('en-US', {  
-    hour: '2-digit',  
-    minute: '2-digit',  
-    hour12: true  
-  })}</div>
-</TableCell> */}
 
-{/* <TableCell>
-  {new Date(start_time).toLocaleString('en-US', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'UTC',
-  })} 
-</TableCell> */}
 
 <TableCell>
   <div>
@@ -156,6 +136,16 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
                   {/* <AppointmentListPage /> */}
                   Words
                 </MenuItem>
+
+                 <MenuItem
+                          onClick={() => {
+                            onEditRow();
+                            popover.onClose();
+                          }}
+                        >
+                          <Iconify icon="solar:pen-bold" />
+                          Edit
+                        </MenuItem>
         {/* <MenuItem
           onClick={() => {
             onDeleteRow();
