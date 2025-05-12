@@ -366,6 +366,7 @@ export default function CompetitionListView() {
                             index +
                             1,
                         }}
+                        parentStatus={status}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                         onViewRow={() => handleViewRow(row.id)}

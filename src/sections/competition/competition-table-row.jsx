@@ -1,13 +1,21 @@
-
-
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItemText from '@mui/material/ListItemText';
-import { Link, TableRow, MenuItem, TableCell, IconButton, Dialog, DialogContent, Typography, Button } from '@mui/material';
+import {
+  Link,
+  TableRow,
+  MenuItem,
+  TableCell,
+  IconButton,
+  Dialog,
+  DialogContent,
+  Typography,
+  Button,
+} from '@mui/material';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onViewRow }) {
+export default function CompetitionTableRow({ row, onEditRow, onDeleteRow, onViewRow,parentStatus  }) {
   const {
     serial_no,
     language,
@@ -23,15 +31,13 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
     approved_by,
     approved_time,
     image,
-    status,
+    contest_status,
   } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => setOpenDialog(false);
-
- 
 
   const popover = usePopover();
 
@@ -41,53 +47,34 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         {/* ID */}
         <TableCell>{serial_no}</TableCell>
 
-        <TableCell>
-       {contest_name}
-        </TableCell>
+        <TableCell>{contest_name}</TableCell>
 
         {/* Description */}
-      
 
         {/* Approved Info */}
-        <TableCell>
-         {contest_description}
-        </TableCell>
+        <TableCell>{contest_description}</TableCell>
 
         {/* Image */}
-        <TableCell>
-        {total_words}
-        </TableCell>
+        <TableCell>{total_words}</TableCell>
 
         {/* Interactions */}
+        <TableCell>{prize_pool}</TableCell>
+
         <TableCell>
-        {prize_pool}
+          <div>
+            {new Date(start_time).toLocaleDateString('en-US', {
+              dateStyle: 'medium',
+              timeZone: 'UTC',
+            })}
+            <br />
+            {new Date(start_time).toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true,
+              timeZone: 'UTC',
+            })}
+          </div>
         </TableCell>
-
-
-<TableCell>
-  <div>
-    {new Date(start_time).toLocaleDateString('en-US', {
-      dateStyle: 'medium',
-      timeZone: 'UTC',
-    })}
-    <br />
-    {new Date(start_time).toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-      timeZone: 'UTC',
-    })} 
-  </div>
-</TableCell>
-
-
-
-
-
-
-       
-
-   
 
         {/* Actions */}
         <TableCell align="center">
@@ -97,26 +84,18 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         </TableCell>
       </TableRow>
 
-<Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-  <DialogContent sx={{ position: 'relative', p: 3 }}>
-   
-    
-
-  
-
-  
-
-    {/* Close Button */}
-    <Button
-      onClick={handleCloseDialog}
-      variant="contained"
-      sx={{ display: 'block', ml: 'auto', mr: 'auto', p: 1 }}
-    >
-      Close
-    </Button>
-  </DialogContent>
-</Dialog>
-
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
+        <DialogContent sx={{ position: 'relative', p: 3 }}>
+          {/* Close Button */}
+          <Button
+            onClick={handleCloseDialog}
+            variant="contained"
+            sx={{ display: 'block', ml: 'auto', mr: 'auto', p: 1 }}
+          >
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
 
       {/* Custom Popover */}
       <CustomPopover
@@ -125,27 +104,29 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         arrow="right-top"
         sx={{ width: 140 }}
       >
-      
-         <MenuItem
-                  onClick={() => {
-                    onViewRow();
-                    popover.onClose();
-                  }}
-                >
-                  <Iconify icon="carbon:view" />
-                  {/* <AppointmentListPage /> */}
-                  Words
-                </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onViewRow();
+            popover.onClose();
+          }}
+        >
+          <Iconify icon="carbon:view" />
+          {/* <AppointmentListPage /> */}
+          Words
+        </MenuItem>
 
-                 <MenuItem
-                          onClick={() => {
-                            onEditRow();
-                            popover.onClose();
-                          }}
-                        >
-                          <Iconify icon="solar:pen-bold" />
-                          Edit
-                        </MenuItem>
+   
+  {contest_status === 'Upcoming' && (
+    <MenuItem
+      onClick={() => {
+        onEditRow();
+        popover.onClose();
+      }}
+    >
+      <Iconify icon="solar:pen-bold" />
+      Edit
+    </MenuItem>
+  )}
         {/* <MenuItem
           onClick={() => {
             onDeleteRow();
@@ -165,4 +146,5 @@ CompetitionTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
   onViewRow: PropTypes.func,
   row: PropTypes.object,
+   parentStatus: PropTypes.string,
 };
