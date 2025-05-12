@@ -62,7 +62,7 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
         <TableCell>
         {prize_pool}
         </TableCell>
-
+{/* 
         <TableCell>
   <div>{new Date(start_time).toLocaleDateString('en-US', {  
     year: 'numeric',  
@@ -74,7 +74,34 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow,onView
     minute: '2-digit',  
     hour12: true  
   })}</div>
+</TableCell> */}
+
+{/* <TableCell>
+  {new Date(start_time).toLocaleString('en-US', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'UTC',
+  })} 
+</TableCell> */}
+
+<TableCell>
+  <div>
+    {new Date(start_time).toLocaleDateString('en-US', {
+      dateStyle: 'medium',
+      timeZone: 'UTC',
+    })}
+    <br />
+    {new Date(start_time).toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: 'UTC',
+    })} 
+  </div>
 </TableCell>
+
+
+
 
 
 
