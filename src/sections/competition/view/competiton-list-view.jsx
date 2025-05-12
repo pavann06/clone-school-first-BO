@@ -225,7 +225,7 @@ const TABLE_HEAD = [
 ];
 
 const STATUS_TABS = [
-  { label: 'Upcoming', value: 'Pending' },
+  { label: 'Upcoming', value: 'Upcoming' },
   { label: 'Ongoing', value: 'Ongoing' },
   { label: 'Completed', value: 'Completed' },
 ];
@@ -238,7 +238,7 @@ export default function CompetitionListView() {
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
-  const [status, setStatus] = useState('Pending'); // Default tab
+  const [status, setStatus] = useState('Upcoming'); // Default tab
 
   const handleChangeStatus = (event, newValue) => {
     setStatus(newValue);

@@ -280,7 +280,7 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
       })
     ),
     buffer_time: Yup.number().min(0, 'Buffer time must be a positive number').required('Buffer time is required'),
-    contest_status: Yup.string().oneOf(['Pending'], 'Contest status must be pending').required('Contest status is required'),
+    contest_status: Yup.string().oneOf(['Upcoming'], 'Contest status must be Upcoming').required('Contest status is required'),
   });
 
   // Default Values
@@ -297,7 +297,7 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
       words: currentCompetition?.words || [],
       school_ids: currentCompetition?.school_ids || [],
       buffer_time: currentCompetition?.buffer_time || 0,
-      contest_status: 'Pending', // Set default contest status as 'pending' (not editable)
+      contest_status: 'Upcoming', // Set default contest status as 'upcoming' (not editable)
     }),
     [currentCompetition]
   );
@@ -431,8 +431,8 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
 
               <RHFTextField name="buffer_time" label="Buffer Time (in seconds)" type="number" />
 
-              {/* Contest Status (Fixed to 'pending') */}
-              <RHFTextField name="contest_status" label="Contest Status" value="Pending" disabled />
+              {/* Contest Status (Fixed to 'upcoming') */}
+              <RHFTextField name="contest_status" label="Contest Status" value="Upcoming" disabled />
 
               {/* Dynamic Search Words */}
               {fields.map((item, index) => (
