@@ -60,7 +60,7 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow, onVie
         {/* Interactions */}
         <TableCell>{prize_pool}</TableCell>
 
-        <TableCell>
+        {/* <TableCell>
           <div>
             {new Date(start_time).toLocaleDateString('en-US', {
               dateStyle: 'medium',
@@ -74,7 +74,21 @@ export default function CompetitionTableRow({ row, onEditRow, onDeleteRow, onVie
               timeZone: 'UTC',
             })}
           </div>
-        </TableCell>
+        </TableCell> */}
+        <TableCell>
+  <div>
+    {new Date(start_time).toLocaleDateString('en-US', {
+      dateStyle: 'medium',
+    })}
+    <br />
+    {new Date(start_time).toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    })}
+  </div>
+</TableCell>
+
 
         {/* Actions */}
         <TableCell align="center">

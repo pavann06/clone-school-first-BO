@@ -606,11 +606,14 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
       contest_description: currentCompetition?.contest_description || '',
       total_words: currentCompetition?.total_words || 0,
       start_time: currentCompetition?.start_time
-      ? new Date(currentCompetition.start_time).toISOString().slice(0, 16)
-      : '',
-    end_time: currentCompetition?.end_time
-      ? new Date(currentCompetition.end_time).toISOString().slice(0, 16)
-      : '',
+  ? new Date(currentCompetition.start_time).toISOString().slice(0, 16)
+  : '',
+end_time: currentCompetition?.end_time
+  ? new Date(currentCompetition.end_time).toISOString().slice(0, 16)
+  : '',
+
+      // start_time: currentCompetition?.start_time || '',
+      // end_time: currentCompetition?.end_time || '',
       max_slots: currentCompetition?.max_slots || '',
       filled_slots: currentCompetition?.filled_slots || '',
       prize_pool: currentCompetition?.prize_pool || 0,
@@ -666,7 +669,12 @@ export default function CompetitionNewEditForm({ currentCompetition }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const payload = { ...data };
+      // const payload = { ...data };
+         const payload = {
+      ...data,
+      start_time: new Date(data.start_time).toISOString(),
+      end_time: new Date(data.end_time).toISOString(),
+    };
       const response = currentCompetition
         ? await UpdateCompetition({ ...payload, id: currentCompetition.id })
         : await CreateCompetition(payload);
