@@ -33,7 +33,7 @@ export default function CompetitionEditView({ id }) {
             name: 'Competition',
             href: paths.dashboard.competition.root,
           },
-          { name: data?.data?.heading },
+          { name: data?.data?.contest_name },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
