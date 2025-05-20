@@ -18,25 +18,25 @@ const cardData = [
     key: 'feed_count',
     label: 'Edutain Feeds',
     bgColor: '#9b59b6',
-    image: 'logo/ffeds-logo-img.png', // <-- Update with actual image paths
+    image: '/logo/ffeds-logo-img.png', // <-- Update with actual image paths
   },
   {
     key: 'news_count',
     label: 'News',
     bgColor: '#3498db',
-    image: 'logo/news-logo-dash.png',
+    image: '/logo/news-logo-dash.png',
   },
   {
     key: 'survey_count',
     label: 'Survey',
     bgColor: '#f1c40f',
-    image: 'logo/survey-imga.png',
+    image: '/logo/survey-imga.png',
   },
   {
     key: 'poll_count',
     label: 'Polls',
     bgColor: '#2ecc71',
-    image: 'logo/polimg.png',
+    image: '/logo/polimg.png',
   },
 ];
 
