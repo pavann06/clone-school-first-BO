@@ -24,7 +24,7 @@ const cardData = [
     key: 'news_count',
     label: 'News',
     bgColor: '#3498db',
-    image: 'logo/news-logo-img.png',
+    image: 'logo/news-logo-dash.png',
   },
   {
     key: 'survey_count',
