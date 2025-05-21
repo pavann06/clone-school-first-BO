@@ -141,20 +141,6 @@ export default function LessonsVideoForm({ currentEdutainment }) {
             <Stack spacing={3}>
               <RHFTextField name="lesson_id" label="Lesson ID" />
 
-              <Box>
-                <Typography variant="subtitle2" gutterBottom>
-                  Video Upload
-                </Typography>
-                <RHFUpload
-                  thumbnail
-                  name="file_name"
-                  onDrop={handleDrop}
-                  isLoading={isUploading}
-                  accept="video/*"
-                />
-                
-              </Box>
-
               <RHFTextField name="file_type" label="File Type" disabled />
 
               <RHFTextField name="require_resolutions" label="Resolutuins" />
