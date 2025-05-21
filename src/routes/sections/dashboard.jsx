@@ -153,6 +153,7 @@ const WebinarEditPage = lazy(() => import('src/pages/dashboard/webinar/edit'));
 const LessonsListPage = lazy(() => import('src/pages/dashboard/lessons/list'));
 const LessonsCreatePage = lazy(() => import('src/pages/dashboard/lessons/new')); 
 const LessonsEditPage = lazy(() => import('src/pages/dashboard/lessons/edit'));
+const LessonVideoPage = lazy(() => import('src/pages/dashboard/lessons/video-view'));
 
 const OfflineCoursesListPage = lazy(() => import('src/pages/dashboard/offlinecourses/list'));
 const OfflineCoursesCreatePage = lazy(() => import('src/pages/dashboard/offlinecourses/new'));
@@ -1305,6 +1306,14 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <LessonsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+            {
+            path: ':id/view',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <LessonVideoPage />
               </PermissionBasedGuard>
             ),
           },

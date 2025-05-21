@@ -88,6 +88,14 @@ export default function LessonsListView() {
     [router]
   );
 
+ const handleViewRow = useCallback(
+    (id) => {
+      const targetPath = paths.dashboard.lessons.view(id);
+
+      router.push(targetPath);
+    },
+    [router]
+  );
   const handleDeleteRow = async (id) => {
     const response = await request.delete(`backoffice/lesson/${id}`);
 
@@ -149,6 +157,7 @@ export default function LessonsListView() {
                         }}
                         onEditRow={() => handleEditRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
+                      onViewRow={() => handleViewRow(row.id)}
                       />
                     ))}
                 {!isLoading && tableData.length === 0 && <TableNoData />}

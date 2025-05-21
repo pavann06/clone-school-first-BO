@@ -15,22 +15,15 @@ import {
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function LessonsTableRow({ row, onEditRow, onDeleteRow }) {
+export default function LessonsTableRow({ row, onEditRow, onDeleteRow, onViewRow }) {
   const {
     serial_no,
-    language,
+   
     lesson_name,
     description,
     lesson_type,
     total_marks,
-    likes_count,
-    comments_count,
-    whatsapp_share_count,
-    posting_date,
-    approved_by,
-    approved_time,
-    image,
-    status,
+  
   } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -143,6 +136,17 @@ export default function LessonsTableRow({ row, onEditRow, onDeleteRow }) {
           <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
+ <MenuItem
+          onClick={() => {
+            onViewRow();
+            popover.onClose();
+          }}
+        >
+          <Iconify icon="carbon:view" />
+          {/* <AppointmentListPage /> */}
+          Video
+        </MenuItem>
+
         <MenuItem
           onClick={() => {
             onDeleteRow();
@@ -160,5 +164,6 @@ export default function LessonsTableRow({ row, onEditRow, onDeleteRow }) {
 LessonsTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
+  onViewRow: PropTypes.func,
   row: PropTypes.object,
 };
