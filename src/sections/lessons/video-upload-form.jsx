@@ -985,6 +985,8 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom'; 
+import { paths } from 'src/routes/paths';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -1009,6 +1011,8 @@ export default function LessonsVideoForm({ currentEdutainment }) {
   const { enqueueSnackbar } = useSnackbar();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedVideoId, setUploadedVideoId] = useState(null);
+
+  const navigate = useNavigate();
 
   const EdutainmentSchema = Yup.object().shape({
     lesson_id: Yup.string().required('Lesson ID is required'),
@@ -1119,6 +1123,8 @@ const uploadedFile = watch('file_name');
       await request.post('/courses/course-video-convert', { id: uploadedVideoId });
 
       enqueueSnackbar('Video conversion started successfully!', { variant: 'success' });
+       navigate(paths.dashboard.lessons.root);
+
     } catch (error) {
       console.error(error);
       enqueueSnackbar('Video conversion failed.', { variant: 'error' });
@@ -1176,18 +1182,7 @@ const uploadedFile = watch('file_name');
                 />
               </Box>
 
-              {/* <Stack spacing={1.5}>
-                <Typography variant="subtitle2">Upload Video</Typography>
-                <RHFUpload
-                  thumbnail
-                  name="file_name"
-                  onDrop={handleDrop}
-                  onRemove={handleRemoveFile}
-                  onRemoveAll={handleRemoveAllFiles}
-                  isLoading={isUploading}
-                  accept="video/*"
-                />
-              </Stack> */}
+          
               <Stack spacing={1.5}>
   <Typography variant="subtitle2">Upload Video</Typography>
   <RHFUpload
