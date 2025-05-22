@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-// Import date-fns for formatting
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
@@ -38,7 +37,7 @@ export default function CalenderNewEditForm({ currentCalender }) {
   // Validation Schema for the form
   const CalenderSchema = Yup.object().shape({
     date: Yup.string().required('Date is required'),
-    prompt: Yup.string().required('Prompt is required'),
+    prompt: Yup.string().required('Prompt is Required'),
     benefit: Yup.string().required('Benefit is required'),
     youtube_video_url: Yup.string()
       .url('Must be a valid URL')
@@ -73,14 +72,10 @@ export default function CalenderNewEditForm({ currentCalender }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-
       const payload = {
         ...data,
         image: data.image || null,
-     
       };
-      
-    
 
       const response = currentCalender
         ? await UpdateCalender({ ...payload, id: currentCalender.id })
@@ -114,6 +109,8 @@ export default function CalenderNewEditForm({ currentCalender }) {
       return null;
     }
   });
+
+  
 
   const handleUpload = useCallback(
     async (file) => {
@@ -181,33 +178,30 @@ export default function CalenderNewEditForm({ currentCalender }) {
                 }}
               >
                 <Box>
-                <RHFTextField name="date" label="Date" />
+                  <RHFTextField name="date" label="Date" />
                 </Box>
 
                 <RHFTextField name="prompt" label="Prompt" />
                 <RHFTextField name="benefit" label="Benefit" />
                 <RHFTextField name="youtube_video_url" label="YouTube Video URL" />
-              
-
-           
               </Box>
               <Box>
-              <RHFTextField name="description" label="Description" multiline rows={4} />
+                <RHFTextField name="description" label="Description" multiline rows={4} />
               </Box>
               <Box>
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Image</Typography>
-                    <RHFUpload
-                      thumbnail
-                      name="image"
-                      // maxSize={3145728}
-                      onDrop={handleDrop}
-                      onRemove={handleRemoveFile}
-                      onRemoveAll={handleRemoveAllFiles}
-                      isLoading={isUploading}
-                    />
-                  </Stack>
-                </Box>
+                <Stack spacing={1.5}>
+                  <Typography variant="subtitle2">Image</Typography>
+                  <RHFUpload
+                    thumbnail
+                    name="image"
+                    // maxSize={3145728}
+                    onDrop={handleDrop}
+                    onRemove={handleRemoveFile}
+                    onRemoveAll={handleRemoveAllFiles}
+                    isLoading={isUploading}
+                  />
+                </Stack>
+              </Box>
 
               <LoadingButton
                 type="submit"

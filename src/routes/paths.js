@@ -296,7 +296,7 @@ export const paths = {
       root: `${ROOTS.DASHBOARD}/lessons`,
       new: `${ROOTS.DASHBOARD}/lessons/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/edit`,
-      view: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/view`,
+      video: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/video`,
     },
 
     chapters: {

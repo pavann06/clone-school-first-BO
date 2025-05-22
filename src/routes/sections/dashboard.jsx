@@ -1310,7 +1310,7 @@ export const dashboardRoutes = [
             ),
           },
             {
-            path: ':id/view',
+            path: ':id/video',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <LessonVideoPage />

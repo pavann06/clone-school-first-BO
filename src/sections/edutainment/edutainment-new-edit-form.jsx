@@ -84,25 +84,25 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
   const values = watch();
 
-
-
   const onSubmit = handleSubmit(async (data) => {
     // Conditional validation
     if (data.feed_type === 'Image' && !data.image) {
       enqueueSnackbar('Image is required when feed type is Image', { variant: 'error' });
       return;
     }
-  
+
     if (data.feed_type === 'Video' && !data.video) {
       enqueueSnackbar('Video is required when feed type is Video', { variant: 'error' });
       return;
     }
-  
+
     if (data.feed_type === 'Youtube video' && !data.youtube_video) {
-      enqueueSnackbar('YouTube video link is required when feed type is Youtube video', { variant: 'error' });
+      enqueueSnackbar('YouTube video link is required when feed type is Youtube video', {
+        variant: 'error',
+      });
       return;
     }
-  
+
     try {
       const payload = {
         ...data,
@@ -110,20 +110,25 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
         video: data.video || null,
         youtube_video: data.youtube_video || null,
       };
-  
+
       // Only set status if it's a new record
       if (!currentEdutainment) {
         payload.status = 'Pending';
       }
-  
+
       const response = currentEdutainment
         ? await UpdateEdutainment({ ...payload, id: currentEdutainment.id })
         : await CreateEdutainment(payload);
-  
+
       if (response?.success) {
-        enqueueSnackbar(currentEdutainment ? 'Edutainment updated successfully!' : 'Edutainment created successfully!', {
-          variant: 'success',
-        });
+        enqueueSnackbar(
+          currentEdutainment
+            ? 'Edutainment updated successfully!'
+            : 'Edutainment created successfully!',
+          {
+            variant: 'success',
+          }
+        );
         router.push(paths.dashboard.edutainment.root);
         reset();
       } else {
@@ -134,7 +139,6 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
       enqueueSnackbar('Something went wrong. Please check your inputs.', { variant: 'error' });
     }
   });
-  
 
   const handleUpload = useCallback(
     async (file) => {
@@ -274,7 +278,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       <RHFUpload
                         thumbnail
                         name="image"
-                        //  maxSize={10 * 1024 * 1024} 
+                        //  maxSize={10 * 1024 * 1024}
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}
@@ -300,31 +304,29 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                         accept="video/*" // Allows only video files
                       />
                     </Stack> */}
-<Stack spacing={1.5}>
-  <Typography variant="subtitle2">Video</Typography>
-  <RHFUpload
-    thumbnail
-    name="video"
-    onDrop={handleDrop}
-    onRemove={handleRemoveFile}
-    onRemoveAll={handleRemoveAllFiles}
-    isLoading={isUploading}
-    accept="video/*"
-  />
-  {values.video && typeof values.video === 'string' && (
-    <Box mt={1}>
-      <video
-        src={values.video}
-        controls
-        style={{ maxWidth: '100%', maxHeight: 300 }}
-      >
-        <track kind="captions" srcLang="en" label="English captions" />
-      </video>
-    </Box>
-  )}
-</Stack>
-
-
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2">Video</Typography>
+                      <RHFUpload
+                        thumbnail
+                        name="video"
+                        onDrop={handleDrop}
+                        onRemove={handleRemoveFile}
+                        onRemoveAll={handleRemoveAllFiles}
+                        isLoading={isUploading}
+                        accept="video/*"
+                      />
+                      {values.video && typeof values.video === 'string' && (
+                        <Box mt={1}>
+                          <video
+                            src={values.video}
+                            controls
+                            style={{ maxWidth: '100%', maxHeight: 300 }}
+                          >
+                            <track kind="captions" srcLang="en" label="English captions" />
+                          </video>
+                        </Box>
+                      )}
+                    </Stack>
                   </Box>
                 )}
 

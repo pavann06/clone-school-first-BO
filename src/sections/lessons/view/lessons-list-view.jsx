@@ -90,7 +90,8 @@ export default function LessonsListView() {
 
  const handleViewRow = useCallback(
     (id) => {
-      const targetPath = paths.dashboard.lessons.view(id);
+      const targetPath = paths.dashboard.lessons.video(id);
+    
 
       router.push(targetPath);
     },

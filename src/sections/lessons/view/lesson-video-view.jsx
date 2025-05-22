@@ -25,20 +25,21 @@ export default function LessonsVideoView({ id }) {
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-      <CustomBreadcrumbs
-        heading="Edit"
-        links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
-          {
-            name: 'Lessons',
-            href: paths.dashboard.lessons.root,
-          },
-          { name: data?.data?.heading },
-        ]}
-        sx={{
-          mb: { xs: 3, md: 5 },
-        }}
-      />
+  
+        <CustomBreadcrumbs
+              heading="Edit"
+              links={[
+                { name: 'Dashboard', href: paths.dashboard.root },
+                {
+                  name: 'Lessons',
+                  href: paths.dashboard.lessons.root,
+                },
+                { name: data?.data?.heading },
+              ]}
+              sx={{
+                mb: { xs: 3, md: 5 },
+              }}
+            />
       {isLoading ? <LoadingScreen /> : <LessonsVideoForm currentEdutainment={data?.data} />}
     </Container>
   );
