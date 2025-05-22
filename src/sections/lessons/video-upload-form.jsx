@@ -1,5 +1,3 @@
-
-
 // import * as Yup from 'yup';
 // import PropTypes from 'prop-types';
 // import { useForm, Controller } from 'react-hook-form';
@@ -136,7 +134,6 @@
 //     [enqueueSnackbar]
 //   );
 
-
 //   const handleDrop = useCallback(
 //   async (acceptedFiles) => {
 //     const file = acceptedFiles[0];
@@ -159,7 +156,6 @@
 //   },
 //   [setValue, enqueueSnackbar, handleUpload]
 // );
-
 
 //   const handleRemoveFile = useCallback(() => {
 //     setValue('file_name', null);
@@ -225,7 +221,6 @@
 
 //                 <RHFTextField name="file_type" label="File Type" disabled />
 
-
 //                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
 //                   <RHFSelect
 //                     fullWidth
@@ -266,7 +261,6 @@
 // };
 
 // second on e==================================================
-
 
 // import * as Yup from 'yup';
 // import PropTypes from 'prop-types';
@@ -360,8 +354,7 @@
 //           chapter_id,
 //           file_name: file.name,
 //           file_type: file.type,
-          
-          
+
 //         });
 
 //         const { presigned_url, video_id } = uploadRes.data;
@@ -404,7 +397,7 @@
 //         chapter_id: data.chapter_id,
 //         file_type: data.file_type,
 //         required_resolutions: data.requires_resolutions,
-        
+
 //       };
 
 //       const res = await request.post('/your-api/lessons/create', payload);
@@ -486,11 +479,7 @@
 //   currentEdutainment: PropTypes.object,
 // };
 
-
-
 // importnt one  ==============================================================================
-
-
 
 // import * as Yup from 'yup';
 // import PropTypes from 'prop-types';
@@ -556,11 +545,6 @@
 //     handleSubmit,
 //     formState: { isSubmitting },
 //   } = methods;
-
-
-
-
-
 
 // const handleDrop = useCallback(
 //   async (acceptedFiles) => {
@@ -631,7 +615,6 @@
 //   },
 //   [setValue, getValues, enqueueSnackbar]
 // );
-
 
 //   const handleRemoveFile = useCallback(() => {
 //     setValue('file_name', null);
@@ -731,9 +714,7 @@
 //   currentEdutainment: PropTypes.object,
 // };
 
-
-// imp two with multiple selection 
-
+// imp two with multiple selection
 
 // import * as Yup from 'yup';
 // import PropTypes from 'prop-types';
@@ -977,6 +958,510 @@
 //   currentEdutainment: PropTypes.object,
 // };
 
+// form to be noted ---------------------------------
+
+// import * as Yup from 'yup';
+// import PropTypes from 'prop-types';
+// import React, { useMemo, useState, useCallback } from 'react';
+// import { useForm, Controller } from 'react-hook-form';
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import { useSnackbar } from 'notistack';
+// import { useNavigate } from 'react-router-dom';
+// import { paths } from 'src/routes/paths';
+
+// import Box from '@mui/material/Box';
+// import Card from '@mui/material/Card';
+// import Stack from '@mui/material/Stack';
+// import Grid from '@mui/material/Unstable_Grid2';
+// import Typography from '@mui/material/Typography';
+// import CardHeader from '@mui/material/CardHeader';
+// import LoadingButton from '@mui/lab/LoadingButton';
+// import MenuItem from '@mui/material/MenuItem';
+// import Select from '@mui/material/Select';
+// import FormHelperText from '@mui/material/FormHelperText';
+// import FormControl from '@mui/material/FormControl';
+// import InputLabel from '@mui/material/InputLabel';
+
+// import { useResponsive } from 'src/hooks/use-responsive';
+
+// import request from 'src/api/request';
+// import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
+
+// export default function LessonsVideoForm({ currentEdutainment }) {
+//   const mdUp = useResponsive('up', 'md');
+//   const { enqueueSnackbar } = useSnackbar();
+//   const [isUploading, setIsUploading] = useState(false);
+//   const [uploadedVideoId, setUploadedVideoId] = useState(null);
+
+//   const navigate = useNavigate();
+
+//   const EdutainmentSchema = Yup.object().shape({
+//     lesson_id: Yup.string().required('Lesson ID is required'),
+//     course_id: Yup.string().required('Course is required'),
+//     chapter_id: Yup.string().required('Chapter is required'),
+//     file_name: Yup.mixed().required('Video file is required'),
+//     file_type: Yup.string().required('File type is required'),
+//     required_resolutions: Yup.array().of(Yup.string()).min(1, 'Select at least one resolution'),
+//   });
+
+//   const defaultValues = useMemo(() => ({
+//     lesson_id: currentEdutainment?.id || '',
+//     course_id: currentEdutainment?.course_id || '',
+//     chapter_id: currentEdutainment?.chapter_id || '',
+//     file_name: currentEdutainment?.file_name || null,
+//     file_type: currentEdutainment?.file_type || '',
+//     required_resolutions: currentEdutainment?.required_resolutions || [],
+//   }), [currentEdutainment]);
+
+//   const methods = useForm({
+//     resolver: yupResolver(EdutainmentSchema),
+//     defaultValues,
+//   });
+
+//   const {
+//     setValue,
+//     getValues,
+//     handleSubmit,
+//     formState: { isSubmitting },
+//   } = methods;
+//   const { watch } = methods;
+// const uploadedFile = watch('file_name');
+
+//   const handleDrop = useCallback(
+//     async (acceptedFiles) => {
+//       const file = acceptedFiles[0];
+
+//       if (!file || !file.type.startsWith('video/')) {
+//         enqueueSnackbar('Please upload a valid video file.', { variant: 'error' });
+//         return;
+//       }
+
+//       // Check required fields before upload
+//       const { lesson_id, course_id, chapter_id, required_resolutions } = getValues();
+//       if (!lesson_id || !course_id || !chapter_id || !required_resolutions?.length) {
+//         enqueueSnackbar('Please fill all fields before uploading the video.', { variant: 'warning' });
+//         return;
+//       }
+
+//       setValue('file_name', Object.assign(file, { preview: URL.createObjectURL(file) }));
+//       setValue('file_type', file.type);
+
+//       try {
+//         setIsUploading(true);
+
+//         // 1) Upload API - get presigned URL
+//         const uploadRes = await request.post('/courses/course-video-upload', {
+//           lesson_id,
+//           course_id,
+//           chapter_id,
+//           file_name: file.name,
+//           file_type: file.type,
+//           required_resolutions,
+//         });
+
+//         const { id, upload_url } = uploadRes.data;
+
+//         console.log(uploadRes, "response of first api ")
+
+//         // 2) Upload the file to presigned URL
+//         await fetch(upload_url, {
+//           method: 'PUT',
+//           headers: { 'Content-Type': file.type },
+//           body: file,
+//         });
+
+//         setUploadedVideoId(id);
+//         enqueueSnackbar('Video uploaded successfully. Now submit to start conversion.', { variant: 'success' });
+//       } catch (error) {
+//         console.error(error);
+//         enqueueSnackbar('Video upload failed.', { variant: 'error' });
+//       } finally {
+//         setIsUploading(false);
+//       }
+//     },
+//     [getValues, setValue, enqueueSnackbar]
+//   );
+
+//   const handleRemoveFile = useCallback(() => {
+//     setValue('file_name', null);
+//     setUploadedVideoId(null);
+//   }, [setValue]);
+
+//   const handleRemoveAllFiles = useCallback(() => {
+//     setValue('file_name', null);
+//     setUploadedVideoId(null);
+//   }, [setValue]);
+
+//   const onSubmit = handleSubmit(async (data) => {
+//     if (!uploadedVideoId) {
+//       enqueueSnackbar('Please upload a video before submitting.', { variant: 'warning' });
+//       return;
+//     }
+
+//     try {
+//       setIsUploading(true);
+
+//       // 3) Call conversion API only
+//       await request.post('/courses/course-video-convert', { id: uploadedVideoId });
+
+//       enqueueSnackbar('Video conversion started successfully!', { variant: 'success' });
+//        navigate(paths.dashboard.lessons.root);
+
+//     } catch (error) {
+//       console.error(error);
+//       enqueueSnackbar('Video conversion failed.', { variant: 'error' });
+//     } finally {
+//       setIsUploading(false);
+//     }
+//   });
+
+//   return (
+//     <FormProvider methods={methods} onSubmit={onSubmit}>
+//       <Grid container spacing={3} justifyContent="center">
+//         <Grid xs={12} md={8}>
+//           <Card>
+//             {!mdUp && <CardHeader title="Upload Lesson Video" />}
+//             <Stack spacing={3} sx={{ p: 3 }}>
+//               <Box
+//                 display="grid"
+//                 rowGap={3}
+//                 columnGap={2}
+//                 gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+//               >
+//                 <RHFTextField name="lesson_id" label="Lesson ID" />
+//                 <RHFTextField name="course_id" label="Course ID" />
+//                 <RHFTextField name="chapter_id" label="Chapter ID" />
+//                 <RHFTextField name="file_type" label="File Type" disabled />
+
+//                 <Controller
+//                   name="required_resolutions"
+//                   control={methods.control}
+//                   rules={{
+//                     required: 'Select at least one resolution',
+//                     validate: (value) =>
+//                       (Array.isArray(value) && value.length > 0) || 'Select at least one resolution',
+//                   }}
+//                   render={({ field, fieldState: { error } }) => (
+//                     <FormControl fullWidth error={!!error}>
+//                       <InputLabel id="required-resolutions-label">Required Resolutions</InputLabel>
+//                       <Select
+//                         {...field}
+//                         labelId="required-resolutions-label"
+//                         multiple
+//                         label="Required Resolutions"
+//                         value={Array.isArray(field.value) ? field.value : []}
+//                         onChange={(e) => field.onChange(e.target.value)}
+//                       >
+//                         {['360p', '480p', '720p', '1080p'].map((option) => (
+//                           <MenuItem key={option} value={option}>
+//                             {option}
+//                           </MenuItem>
+//                         ))}
+//                       </Select>
+//                       {error && <FormHelperText>{error.message}</FormHelperText>}
+//                     </FormControl>
+//                   )}
+//                 />
+//               </Box>
+
+//               <Stack spacing={1.5}>
+//   <Typography variant="subtitle2">Upload Video</Typography>
+//   <RHFUpload
+//     thumbnail
+//     name="file_name"
+//     onDrop={handleDrop}
+//     onRemove={handleRemoveFile}
+//     onRemoveAll={handleRemoveAllFiles}
+//     isLoading={isUploading}
+//     accept="video/*"
+//   />
+
+//   {uploadedFile && uploadedFile.preview && (
+//     <Box sx={{ mt: 2 }}>
+//       <Typography variant="subtitle2">Video Preview</Typography>
+//    <video
+//   src={uploadedFile.preview}
+//   controls
+//   width="100%"
+//   style={{ borderRadius: 8, maxHeight: 400 }}
+// >
+//   <track kind="captions" label="English captions" srcLang="en" src="" default />
+// </video>
+
+//     </Box>
+//   )}
+// </Stack>
+
+//               <LoadingButton
+//                 type="submit"
+//                 variant="contained"
+//                 size="large"
+//                 loading={isSubmitting || isUploading}
+//               >
+//                 Start Conversion
+//               </LoadingButton>
+//             </Stack>
+//           </Card>
+//         </Grid>
+//       </Grid>
+//     </FormProvider>
+//   );
+// }
+
+// LessonsVideoForm.propTypes = {
+//   currentEdutainment: PropTypes.object,
+// };
+
+// tim tin==========================
+
+// import * as Yup from 'yup';
+// import PropTypes from 'prop-types';
+// import React, { useMemo, useState, useCallback } from 'react';
+// import { useForm, Controller } from 'react-hook-form';
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import { useSnackbar } from 'notistack';
+// import { useNavigate } from 'react-router-dom';
+// import { paths } from 'src/routes/paths';
+
+// import Box from '@mui/material/Box';
+// import Card from '@mui/material/Card';
+// import Stack from '@mui/material/Stack';
+// import Grid from '@mui/material/Unstable_Grid2';
+// import Typography from '@mui/material/Typography';
+// import CardHeader from '@mui/material/CardHeader';
+// import LoadingButton from '@mui/lab/LoadingButton';
+// import MenuItem from '@mui/material/MenuItem';
+// import Select from '@mui/material/Select';
+// import FormHelperText from '@mui/material/FormHelperText';
+// import FormControl from '@mui/material/FormControl';
+// import InputLabel from '@mui/material/InputLabel';
+
+// import { useResponsive } from 'src/hooks/use-responsive';
+// import request from 'src/api/request';
+// import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
+
+// export default function LessonsVideoForm({ currentEdutainment }) {
+//   const mdUp = useResponsive('up', 'md');
+//   const { enqueueSnackbar } = useSnackbar();
+//   const [isUploading, setIsUploading] = useState(false);
+//   const [uploadedVideoId, setUploadedVideoId] = useState(null);
+//   const [presignedUploadUrl, setPresignedUploadUrl] = useState(null);
+
+//   const navigate = useNavigate();
+
+//   const EdutainmentSchema = Yup.object().shape({
+//     lesson_id: Yup.string().required('Lesson ID is required'),
+//     course_id: Yup.string().required('Course is required'),
+//     chapter_id: Yup.string().required('Chapter is required'),
+//     file_name: Yup.mixed().required('Video file is required'),
+//     file_type: Yup.string().required('File type is required'),
+//     required_resolutions: Yup.array().of(Yup.string()).min(1, 'Select at least one resolution'),
+//   });
+
+//   const defaultValues = useMemo(() => ({
+//     lesson_id: currentEdutainment?.id || '',
+//     course_id: currentEdutainment?.course_id || '',
+//     chapter_id: currentEdutainment?.chapter_id || '',
+//     file_name: null,
+//     file_type: '',
+//     required_resolutions: [],
+//   }), [currentEdutainment]);
+
+//   const methods = useForm({
+//     resolver: yupResolver(EdutainmentSchema),
+//     defaultValues,
+//   });
+
+//   const {
+//     setValue,
+//     getValues,
+//     handleSubmit,
+//     formState: { isSubmitting },
+//     watch,
+//   } = methods;
+
+//   const uploadedFile = watch('file_name');
+
+//   const handleDrop = useCallback(
+//     async (acceptedFiles) => {
+//       const file = acceptedFiles[0];
+//       if (!file || !file.type.startsWith('video/')) {
+//         enqueueSnackbar('Please upload a valid video file.', { variant: 'error' });
+//         return;
+//       }
+
+//       const { lesson_id, course_id, chapter_id, required_resolutions } = getValues();
+//       if (!lesson_id || !course_id || !chapter_id || !required_resolutions?.length) {
+//         enqueueSnackbar('Please fill all fields before uploading the video.', { variant: 'warning' });
+//         return;
+//       }
+
+//       const previewFile = Object.assign(file, { preview: URL.createObjectURL(file) });
+//       setValue('file_name', previewFile);
+//       setValue('file_type', file.type);
+
+//       try {
+//         setIsUploading(true);
+//         const uploadRes = await request.post('/courses/course-video-upload', {
+//           lesson_id,
+//           course_id,
+//           chapter_id,
+//           file_name: file.name,
+//           file_type: file.type,
+//           required_resolutions,
+//         });
+
+//         const { id, upload_url } = uploadRes.data;
+//         setUploadedVideoId(id);
+//         setPresignedUploadUrl(upload_url);
+//         enqueueSnackbar('Video is ready for upload. Click "Start Conversion" to upload and convert.', { variant: 'info' });
+//       } catch (error) {
+//         console.error(error);
+//         enqueueSnackbar('Failed to get presigned URL.', { variant: 'error' });
+//       } finally {
+//         setIsUploading(false);
+//       }
+//     },
+//     [getValues, setValue, enqueueSnackbar]
+//   );
+
+//   const handleRemoveFile = useCallback(() => {
+//     setValue('file_name', null);
+//     setUploadedVideoId(null);
+//     setPresignedUploadUrl(null);
+//   }, [setValue]);
+
+//   const handleRemoveAllFiles = useCallback(() => {
+//     setValue('file_name', null);
+//     setUploadedVideoId(null);
+//     setPresignedUploadUrl(null);
+//   }, [setValue]);
+
+//   const onSubmit = handleSubmit(async (data) => {
+//     if (!uploadedVideoId || !presignedUploadUrl) {
+//       enqueueSnackbar('Please upload a video before submitting.', { variant: 'warning' });
+//       return;
+//     }
+
+//     try {
+//       setIsUploading(true);
+//       const file = data.file_name;
+
+//       await fetch(presignedUploadUrl, {
+//         method: 'PUT',
+//         // headers: { 'Content-Type': file.type },
+//         body: file,
+//       });
+
+//       enqueueSnackbar('Video uploaded to S3 successfully.', { variant: 'success' });
+
+//       await request.post('courses/course-video-convert', { id: uploadedVideoId });
+//       enqueueSnackbar('Video conversion started successfully!', { variant: 'success' });
+
+//       navigate(paths.dashboard.lessons.root);
+//     } catch (error) {
+//       console.error(error);
+//       enqueueSnackbar('Video upload or conversion failed.', { variant: 'error' });
+//     } finally {
+//       setIsUploading(false);
+//     }
+//   });
+
+//   return (
+//     <FormProvider methods={methods} onSubmit={onSubmit}>
+//       <Grid container spacing={3} justifyContent="center">
+//         <Grid xs={12} md={8}>
+//           <Card>
+//             {!mdUp && <CardHeader title="Upload Lesson Video" />}
+//             <Stack spacing={3} sx={{ p: 3 }}>
+//               <Box
+//                 display="grid"
+//                 rowGap={3}
+//                 columnGap={2}
+//                 gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+//               >
+//                 <RHFTextField name="lesson_id" label="Lesson ID" />
+//                 <RHFTextField name="course_id" label="Course ID" />
+//                 <RHFTextField name="chapter_id" label="Chapter ID" />
+//                 <RHFTextField name="file_type" label="File Type" disabled />
+
+//                 <Controller
+//                   name="required_resolutions"
+//                   control={methods.control}
+//                   render={({ field, fieldState: { error } }) => (
+//                     <FormControl fullWidth error={!!error}>
+//                       <InputLabel id="required-resolutions-label">Required Resolutions</InputLabel>
+//                       <Select
+//                         {...field}
+//                         labelId="required-resolutions-label"
+//                         multiple
+//                         label="Required Resolutions"
+//                         value={Array.isArray(field.value) ? field.value : []}
+//                         onChange={(e) => field.onChange(e.target.value)}
+//                       >
+//                         {['360p', '480p', '720p', '1080p'].map((option) => (
+//                           <MenuItem key={option} value={option}>
+//                             {option}
+//                           </MenuItem>
+//                         ))}
+//                       </Select>
+//                       {error && <FormHelperText>{error.message}</FormHelperText>}
+//                     </FormControl>
+//                   )}
+//                 />
+//               </Box>
+
+//               <Stack spacing={1.5}>
+//                 <Typography variant="subtitle2">Upload Video</Typography>
+//                 <RHFUpload
+//                   thumbnail
+//                   name="file_name"
+//                   onDrop={handleDrop}
+//                   onRemove={handleRemoveFile}
+//                   onRemoveAll={handleRemoveAllFiles}
+//                   isLoading={isUploading}
+//                   accept="video/*"
+//                 />
+
+//                 {uploadedFile?.preview && (
+//                   <Box sx={{ mt: 2 }}>
+//                     <Typography variant="subtitle2">Video Preview</Typography>
+//                     <video
+//                       src={uploadedFile.preview}
+//                       controls
+//                       width="100%"
+//                       style={{ borderRadius: 8, maxHeight: 400 }}
+//                     >
+//                       <track kind="captions" label="English captions" srcLang="en" src="" default />
+//                     </video>
+//                   </Box>
+//                 )}
+//               </Stack>
+
+//               <LoadingButton
+//                 type="submit"
+//                 variant="contained"
+//                 size="large"
+//                 loading={isSubmitting || isUploading}
+//               >
+//                 Start Conversion
+//               </LoadingButton>
+//             </Stack>
+//           </Card>
+//         </Grid>
+//       </Grid>
+//     </FormProvider>
+//   );
+// }
+
+// LessonsVideoForm.propTypes = {
+//   currentEdutainment: PropTypes.object,
+// };
+
+
+
+
+// alomost working -------------------------------------------
 
 
 import * as Yup from 'yup';
@@ -985,7 +1470,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { paths } from 'src/routes/paths';
 
 import Box from '@mui/material/Box';
@@ -1002,7 +1487,6 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
 import { useResponsive } from 'src/hooks/use-responsive';
-
 import request from 'src/api/request';
 import FormProvider, { RHFUpload, RHFTextField } from 'src/components/hook-form';
 
@@ -1011,6 +1495,8 @@ export default function LessonsVideoForm({ currentEdutainment }) {
   const { enqueueSnackbar } = useSnackbar();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedVideoId, setUploadedVideoId] = useState(null);
+  const [presignedUploadUrl, setPresignedUploadUrl] = useState(null);
+  const [s3Key, setS3Key] = useState(null);
 
   const navigate = useNavigate();
 
@@ -1023,14 +1509,17 @@ export default function LessonsVideoForm({ currentEdutainment }) {
     required_resolutions: Yup.array().of(Yup.string()).min(1, 'Select at least one resolution'),
   });
 
-  const defaultValues = useMemo(() => ({
-    lesson_id: currentEdutainment?.id || '',
-    course_id: currentEdutainment?.course_id || '',
-    chapter_id: currentEdutainment?.chapter_id || '',
-    file_name: currentEdutainment?.file_name || null,
-    file_type: currentEdutainment?.file_type || '',
-    required_resolutions: currentEdutainment?.required_resolutions || [],
-  }), [currentEdutainment]);
+  const defaultValues = useMemo(
+    () => ({
+      lesson_id: currentEdutainment?.id || '',
+      course_id: currentEdutainment?.course_id || '',
+      chapter_id: currentEdutainment?.chapter_id || '',
+      file_name: null,
+      file_type: '',
+      required_resolutions: [],
+    }),
+    [currentEdutainment]
+  );
 
   const methods = useForm({
     resolver: yupResolver(EdutainmentSchema),
@@ -1042,34 +1531,33 @@ export default function LessonsVideoForm({ currentEdutainment }) {
     getValues,
     handleSubmit,
     formState: { isSubmitting },
+    watch,
   } = methods;
-  const { watch } = methods;
-const uploadedFile = watch('file_name');
 
+  const uploadedFile = watch('file_name');
 
   const handleDrop = useCallback(
     async (acceptedFiles) => {
       const file = acceptedFiles[0];
-
       if (!file || !file.type.startsWith('video/')) {
         enqueueSnackbar('Please upload a valid video file.', { variant: 'error' });
         return;
       }
 
-      // Check required fields before upload
       const { lesson_id, course_id, chapter_id, required_resolutions } = getValues();
       if (!lesson_id || !course_id || !chapter_id || !required_resolutions?.length) {
-        enqueueSnackbar('Please fill all fields before uploading the video.', { variant: 'warning' });
+        enqueueSnackbar('Please fill all fields before uploading the video.', {
+          variant: 'warning',
+        });
         return;
       }
 
-      setValue('file_name', Object.assign(file, { preview: URL.createObjectURL(file) }));
+      const previewFile = Object.assign(file, { preview: URL.createObjectURL(file) });
+      setValue('file_name', previewFile);
       setValue('file_type', file.type);
 
       try {
         setIsUploading(true);
-
-        // 1) Upload API - get presigned URL
         const uploadRes = await request.post('/courses/course-video-upload', {
           lesson_id,
           course_id,
@@ -1079,20 +1567,35 @@ const uploadedFile = watch('file_name');
           required_resolutions,
         });
 
-        const { id, upload_url } = uploadRes.data;
+         console.log('Upload API Response:', uploadRes.data); 
 
-        // 2) Upload the file to presigned URL
-        await fetch(upload_url, {
-          method: 'PUT',
-          headers: { 'Content-Type': file.type },
-          body: file,
-        });
+        const { id, upload_url, s3_key } = uploadRes.data;
 
         setUploadedVideoId(id);
-        enqueueSnackbar('Video uploaded successfully. Now submit to start conversion.', { variant: 'success' });
+        setPresignedUploadUrl(upload_url);
+
+        // If backend provides s3_key, use it; else parse from URL
+        if (s3_key) {
+          setS3Key(s3_key);
+        } else if (upload_url) {
+          try {
+            const url = new URL(upload_url);
+            const keyFromUrl = decodeURIComponent(url.pathname.substring(1)); // Remove leading '/'
+            setS3Key(keyFromUrl);
+          } catch {
+            setS3Key(null);
+          }
+        } else {
+          setS3Key(null);
+        }
+
+        enqueueSnackbar(
+          'Video is ready for upload. Click "Start Conversion" to upload and convert.',
+          { variant: 'info' }
+        );
       } catch (error) {
         console.error(error);
-        enqueueSnackbar('Video upload failed.', { variant: 'error' });
+        enqueueSnackbar('Failed to get presigned URL.', { variant: 'error' });
       } finally {
         setIsUploading(false);
       }
@@ -1103,35 +1606,58 @@ const uploadedFile = watch('file_name');
   const handleRemoveFile = useCallback(() => {
     setValue('file_name', null);
     setUploadedVideoId(null);
+    setPresignedUploadUrl(null);
+    setS3Key(null);
   }, [setValue]);
 
   const handleRemoveAllFiles = useCallback(() => {
     setValue('file_name', null);
     setUploadedVideoId(null);
+    setPresignedUploadUrl(null);
+    setS3Key(null);
   }, [setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!uploadedVideoId) {
-      enqueueSnackbar('Please upload a video before submitting.', { variant: 'warning' });
-      return;
-    }
+  if (!uploadedVideoId || !presignedUploadUrl) {
+    enqueueSnackbar('Please upload a video before submitting.', { variant: 'warning' });
+    return;
+  }
 
-    try {
-      setIsUploading(true);
+try {
+  setIsUploading(true);
+  const file = data.file_name;
 
-      // 3) Call conversion API only
-      await request.post('/courses/course-video-convert', { id: uploadedVideoId });
-
-      enqueueSnackbar('Video conversion started successfully!', { variant: 'success' });
-       navigate(paths.dashboard.lessons.root);
-
-    } catch (error) {
-      console.error(error);
-      enqueueSnackbar('Video conversion failed.', { variant: 'error' });
-    } finally {
-      setIsUploading(false);
-    }
+  const uploadResult = await fetch(presignedUploadUrl, {
+    method: 'PUT',
+    body: file,
   });
+
+  console.log('S3 Upload Response:', uploadResult); // ✅
+
+  if (!uploadResult.ok) {
+    throw new Error('S3 upload failed');
+  }
+
+  enqueueSnackbar('Video uploaded to S3 successfully.', { variant: 'success' });
+
+  console.log('Sending Video ID to Convert API:', uploadedVideoId); // ✅
+
+  await request.post('/courses/course-video-convert', {
+    id: uploadedVideoId,
+  });
+
+  enqueueSnackbar('Video processing started successfully!', { variant: 'success' });
+
+  navigate(paths.dashboard.lessons.root);
+} catch (error) {
+  console.error(error);
+  enqueueSnackbar('Video upload or conversion failed.', { variant: 'error' });
+}
+
+  finally {
+    setIsUploading(false);
+  }
+});
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -1154,11 +1680,6 @@ const uploadedFile = watch('file_name');
                 <Controller
                   name="required_resolutions"
                   control={methods.control}
-                  rules={{
-                    required: 'Select at least one resolution',
-                    validate: (value) =>
-                      (Array.isArray(value) && value.length > 0) || 'Select at least one resolution',
-                  }}
                   render={({ field, fieldState: { error } }) => (
                     <FormControl fullWidth error={!!error}>
                       <InputLabel id="required-resolutions-label">Required Resolutions</InputLabel>
@@ -1182,35 +1703,32 @@ const uploadedFile = watch('file_name');
                 />
               </Box>
 
-          
               <Stack spacing={1.5}>
-  <Typography variant="subtitle2">Upload Video</Typography>
-  <RHFUpload
-    thumbnail
-    name="file_name"
-    onDrop={handleDrop}
-    onRemove={handleRemoveFile}
-    onRemoveAll={handleRemoveAllFiles}
-    isLoading={isUploading}
-    accept="video/*"
-  />
+                <Typography variant="subtitle2">Upload Video</Typography>
+                <RHFUpload
+                  thumbnail
+                  name="file_name"
+                  onDrop={handleDrop}
+                  onRemove={handleRemoveFile}
+                  onRemoveAll={handleRemoveAllFiles}
+                  isLoading={isUploading}
+                  accept="video/*"
+                />
 
-  {uploadedFile && uploadedFile.preview && (
-    <Box sx={{ mt: 2 }}>
-      <Typography variant="subtitle2">Video Preview</Typography>
-   <video
-  src={uploadedFile.preview}
-  controls
-  width="100%"
-  style={{ borderRadius: 8, maxHeight: 400 }}
->
-  <track kind="captions" label="English captions" srcLang="en" src="" default />
-</video>
-
-    </Box>
-  )}
-</Stack>
-
+                {uploadedFile?.preview && (
+                  <Box sx={{ mt: 2 }}>
+                    <Typography variant="subtitle2">Video Preview</Typography>
+                    <video
+                      src={uploadedFile.preview}
+                      controls
+                      width="100%"
+                      style={{ borderRadius: 8, maxHeight: 400 }}
+                    >
+                      <track kind="captions" label="English captions" srcLang="en" src="" default />
+                    </video>
+                  </Box>
+                )}
+              </Stack>
 
               <LoadingButton
                 type="submit"
