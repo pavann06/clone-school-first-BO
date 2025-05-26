@@ -182,10 +182,10 @@ export default function FeelsTableRow({ row, onEditRow, onDeleteRow }) {
           )}
         </TableCell>
 
-        <TableCell>{likes_count}</TableCell>
+        {/* <TableCell>{likes_count}</TableCell>
         <TableCell>{share_count}</TableCell>
         <TableCell>{views_count}</TableCell>
-        <TableCell>{score}</TableCell>
+        <TableCell>{score}</TableCell> */}
 
         {/* Actions */}
         <TableCell align="center">

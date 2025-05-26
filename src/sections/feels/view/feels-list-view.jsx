@@ -32,13 +32,13 @@ const TABLE_HEAD = [
   { id: 'title', label: 'Title' },
   { id: 'description', label: 'Description' },
     { id: 'video', label: 'Video' },
-  { id: 'likes_count', label: 'Likes Count' },
-  { id: 'share_count', label: 'Share Count ' },
+  // { id: 'likes_count', label: 'Likes Count' },
+  // { id: 'share_count', label: 'Share Count ' },
 
-  { id: 'views_count', label: 'Views Count ' },
-  // { id: 'admins' , label : 'Admins'},
+  // { id: 'views_count', label: 'Views Count ' },
+  // // { id: 'admins' , label : 'Admins'},
 
-  { id: 'score', label: 'Score' },
+  // { id: 'score', label: 'Score' },
   { id: 'actions ', label: 'Actions' },
 ];
 
