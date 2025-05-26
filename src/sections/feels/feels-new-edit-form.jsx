@@ -124,44 +124,11 @@ export default function FeelsNewEditForm({ currentNews }) {
           <Card>
             <Stack spacing={3} sx={{ p: 3 }}>
               <RHFTextField name="title" label="Title" />
-              <RHFTextField name="description" label="Description" multiline rows={3} />
-              <RHFTextField name="likes_count" label="Likes Count" type="number" />
-              <RHFTextField name="share_count" label="Share Count" type="number" />
-              <RHFTextField name="views_count" label="Views Count" type="number" />
-              <RHFTextField name="score" label="Score" type="number" />
+              <RHFTextField name="description" label="Description" multiline rows={4} />
+              
+              <RHFTextField name="video" label="Youtube Video Link" />
 
-              <Stack spacing={1.5}>
-                <Typography variant="subtitle2">Video</Typography>
-                <RHFUpload
-                  name="video"
-                  label="Video"
-                  onDrop={(files) => handleVideoUpload(files[0])}
-                  isLoading={isUploading}
-                  accept="video/*"
-                />
-                {values.video && (
-                  <Box sx={{ position: 'relative', display: 'inline-block' }}>
-                    <video src={values.video} width="100" controls style={{ borderRadius: 8 }}>
-                      <track kind="captions" />
-                      Your browser does not support the video tag.
-                    </video>
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        top: 5,
-                        right: 5,
-                        background: 'rgba(0,0,0,0.6)',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        padding: '2px',
-                      }}
-                      onClick={() => setValue('video', '')}
-                    >
-                      ❌
-                    </Box>
-                  </Box>
-                )}
-              </Stack>
+             
 
               <LoadingButton
                 type="submit"

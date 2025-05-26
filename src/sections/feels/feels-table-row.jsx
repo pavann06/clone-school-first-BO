@@ -1,6 +1,3 @@
-
-
-
 // import { useState } from 'react';
 // import PropTypes from 'prop-types';
 // import ListItemText from '@mui/material/ListItemText';
@@ -29,11 +26,8 @@
 //   const [openImageDialog, setOpenImageDialog] = useState(false);
 //   const [selectedImage, setSelectedImage] = useState(null);
 
-
 //   const { enqueueSnackbar } = useSnackbar();
 //   const popover = usePopover();
-
-
 
 //   const handleOpenDialog = () => setOpenDialog(true);
 //   const handleCloseDialog = () => setOpenDialog(false);
@@ -48,14 +42,12 @@
 //     setSelectedImage(null);
 //   };
 
-
-
 //   return (
 //     <>
 //       <TableRow hover>
 //         <TableCell>{serial_no}</TableCell>
 //         <TableCell>{title}</TableCell>
-     
+
 //         <TableCell>
 //          {description}
 //         </TableCell>
@@ -63,7 +55,6 @@
 //         <TableCell>
 //           {video}
 //         </TableCell>
-
 
 //         <TableCell>
 //           {likes_count}
@@ -80,8 +71,7 @@
 //         <TableCell>
 //           {score}
 //         </TableCell>
-      
-       
+
 //         {/* Actions */}
 //         <TableCell align="center">
 //           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
@@ -90,10 +80,8 @@
 //         </TableCell>
 //       </TableRow>
 
-    
-
 //       {/* Dialog for read more */}
-  
+
 //       <CustomPopover
 //         open={popover.open}
 //         onClose={popover.onClose}
@@ -132,6 +120,7 @@
 
 
 
+
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItemText from '@mui/material/ListItemText';
@@ -146,6 +135,7 @@ import {
   Typography,
   Button,
   DialogTitle,
+  Link,
   Select,
 } from '@mui/material';
 import Iconify from 'src/components/iconify';
@@ -153,17 +143,8 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { useSnackbar } from 'src/components/snackbar';
 
 export default function FeelsTableRow({ row, onEditRow, onDeleteRow }) {
-  const {
-    id,
-    serial_no,
-    title,
-    description,
-    likes_count,
-    share_count,
-    views_count,
-    score,
-    video,
-  } = row;
+  const { id, serial_no, title, description, likes_count, share_count, views_count, score, video } =
+    row;
 
   const [openDescDialog, setOpenDescDialog] = useState(false);
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
@@ -172,9 +153,7 @@ export default function FeelsTableRow({ row, onEditRow, onDeleteRow }) {
   const popover = usePopover();
 
   const isLongDescription = description.length > 100;
-  const truncatedDescription = isLongDescription
-    ? `${description.slice(0, 100)}...`
-    : description;
+  const truncatedDescription = isLongDescription ? `${description.slice(0, 100)}...` : description;
 
   return (
     <>
@@ -193,11 +172,13 @@ export default function FeelsTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
 
         {/* Video Cell */}
-        <TableCell>
-          {video && (
-            <Button size="small" onClick={() => setOpenVideoDialog(true)}>
-              Play Video
-            </Button>
+          <TableCell >
+          {row.video ? (
+            <Link href={row.video} target="_blank" rel="noopener noreferrer">
+              {row.video}
+            </Link>
+          ) : (
+            'No URL'
           )}
         </TableCell>
 
@@ -242,7 +223,12 @@ export default function FeelsTableRow({ row, onEditRow, onDeleteRow }) {
       </CustomPopover>
 
       {/* Description Dialog */}
-      <Dialog open={openDescDialog} onClose={() => setOpenDescDialog(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openDescDialog}
+        onClose={() => setOpenDescDialog(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Description</DialogTitle>
         <DialogContent>
           <Typography>{description}</Typography>
@@ -250,33 +236,7 @@ export default function FeelsTableRow({ row, onEditRow, onDeleteRow }) {
       </Dialog>
 
       {/* Video Dialog */}
-      <Dialog open={openVideoDialog} onClose={() => setOpenVideoDialog(false)} maxWidth="md" fullWidth>
-        <DialogTitle>Video</DialogTitle>
-        <DialogContent>
-          <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
-            <video
-  src={video}
-  controls
-  style={{
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-  }}
->
-  <track
-    kind="captions"
-    src="path-to-captions.vtt"
-    srcLang="en"
-    label="English"
-    default
-  />
-</video>
-
-          </Box>
-        </DialogContent>
-      </Dialog>
+      
     </>
   );
 }
