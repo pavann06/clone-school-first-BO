@@ -388,6 +388,13 @@ export function useNavData() {
             
           },
 
+           {
+            title: 'Feels',
+            path: paths.dashboard.feels.root,
+            icon: ICONS.contact,
+           
+          },
+
 
           
      

@@ -301,7 +301,7 @@ export default function LessonsTableRow({ row, onEditRow, onDeleteRow, onViewRow
           Edit
         </MenuItem>
 
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             onViewRow(id, course_id, chapter_id); // ✅ Pass required data
             popover.onClose();
@@ -309,7 +309,7 @@ export default function LessonsTableRow({ row, onEditRow, onDeleteRow, onViewRow
         >
           <Iconify icon="carbon:view" />
           Video
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem
           onClick={() => {

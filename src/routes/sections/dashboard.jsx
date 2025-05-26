@@ -168,6 +168,10 @@ const McqsListPage = lazy(() => import('src/pages/dashboard/mcqs/list'));
 const McqsCreatePage =  lazy(() => import('src/pages/dashboard/mcqs/new'));
 const McqsEditPage = lazy(() => import('src/pages/dashboard/mcqs/edit'));
 
+const FeelsListPage = lazy(() => import('src/pages/dashboard/feels/list'));
+const FeelsCreatePage = lazy(() => import('src/pages/dashboard/feels/new'));
+const FeelsEditPage = lazy(() => import('src/pages/dashboard/feels/edit'));
+
 const DashboardListPage = lazy(() => import('src/pages/dashboard/dashboard/home-demo'));
 
 
@@ -1410,6 +1414,38 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+      {
+        path: 'feels',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <FeelsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <FeelsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <FeelsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
 
 
 

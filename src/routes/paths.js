@@ -311,6 +311,12 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
     },
 
+      feels: {
+      root: `${ROOTS.DASHBOARD}/feels`,
+      new: `${ROOTS.DASHBOARD}/feels/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/feels/${id}/edit`,
+    },
+
 
   
 
