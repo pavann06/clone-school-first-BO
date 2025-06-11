@@ -47,9 +47,7 @@ const SalesAnalyticsPage = lazy(() => import('src/pages/dashboard/sales/analytic
 // BLANK PAGE
 const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
 
-const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
-const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
-const EdutainmentEditPage = lazy(() => import('src/pages/dashboard/edutainment/edit'));
+
 
 // const OnlineStoresListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
 // const OnlineStoresCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
@@ -272,36 +270,7 @@ export const dashboardRoutes = [
           },
         ],
       },
-      {
-        path: 'edutainment',
-        children: [
-          {
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <EdutainmentListPage />
-              </PermissionBasedGuard>
-            ),
-            index: true,
-          },
-          {
-            path: 'new',
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <EdutainmentCreatePage />
-              </PermissionBasedGuard>
-            ),
-          },
-          {
-            path: ':id/edit',
-            element: (
-              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <EdutainmentEditPage />
-              </PermissionBasedGuard>
-            ),
-          },
-        ],
-      },
-
+     
       {
         path: 'subscribedusers',
         children: [
