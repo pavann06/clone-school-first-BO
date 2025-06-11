@@ -2,11 +2,11 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-export const CreateEdutainment = async (form_data) => {
+export const CreateGrade = async (form_data) => {
   try {
     console.info('FEED-CREATE-FORM-DATA', form_data);
 
-    const resp = await request.post('backoffice/edutain/feeds', form_data);
+    const resp = await request.post('backoffice/grade', form_data);
 
     return resp;
   } catch (error) {
@@ -15,7 +15,7 @@ export const CreateEdutainment = async (form_data) => {
   }
 };
 
-export const UpdateEdutainment = async (form_data) => {
+export const UpdateGrade = async (form_data) => {
   try {
     console.info('FEED-CREATE-FORM-DATA', form_data);
 
@@ -26,7 +26,7 @@ export const UpdateEdutainment = async (form_data) => {
       }
     });
 
-    const resp = await request.put(`backoffice/edutain/feeds/${form_data.id}`, form_data);
+    const resp = await request.put(`backoffice/grade/${form_data.id}`, form_data);
 
     return resp;
   } catch (error) {

@@ -72,97 +72,108 @@ export function useNavData() {
         items: [
        
 
-          {
-            title: 'edutainment',
-            path: paths.dashboard.edutainment.root,
-            icon: ICONS.contact,
-            // children: [
-            //   { title: 'list', path: paths.dashboard.edutainment.root },
-            //   { title: 'create', path: paths.dashboard.edutainment.new },
-            // ],
-          },
+          // {
+          //   title: 'edutainment',
+          //   path: paths.dashboard.edutainment.root,
+          //   icon: ICONS.contact,
+          //   // children: [
+          //   //   { title: 'list', path: paths.dashboard.edutainment.root },
+          //   //   { title: 'create', path: paths.dashboard.edutainment.new },
+          //   // ],
+          // },
         
 
 
-          {
-            title: 'polls',
-            path: paths.dashboard.polls.root,
-            icon: ICONS.contact,
-            // children: [
-            //   { title: 'list', path: paths.dashboard.polls.root },
-            //   { title: 'create', path: paths.dashboard.polls.new },
-            // ],
-          },
+          // {
+          //   title: 'polls',
+          //   path: paths.dashboard.polls.root,
+          //   icon: ICONS.contact,
+          //   // children: [
+          //   //   { title: 'list', path: paths.dashboard.polls.root },
+          //   //   { title: 'create', path: paths.dashboard.polls.new },
+          //   // ],
+          // },
 
          
 
-          {
-            title: 'banner',
-            path: paths.dashboard.banner.root,
-            icon: ICONS.contact,
-            // children: [
-            //   { title: 'list', path: paths.dashboard.banner.root },
-            //    { title: 'create', path: paths.dashboard.banner.new },
-            // ],
-          },
+          // {
+          //   title: 'banner',
+          //   path: paths.dashboard.banner.root,
+          //   icon: ICONS.contact,
+          //   // children: [
+          //   //   { title: 'list', path: paths.dashboard.banner.root },
+          //   //    { title: 'create', path: paths.dashboard.banner.new },
+          //   // ],
+          // },
 
 
           
-          {
-            title: 'News',
-            path: paths.dashboard.news.root,
-            icon: ICONS.contact,
-            children: [
-              {
-                title: 'News',
-                path: paths.dashboard.news.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.news.root },
-                //   { title: 'Create', path: paths.dashboard.news.new },
-                // ],
-              },
-              {
-                title: 'News Categories',
-                path: paths.dashboard.categories.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.categories.root },
-                //   { title: 'Create', path: paths.dashboard.categories.new },
-                // ],
-              },
-            ],
-          },
+          // {
+          //   title: 'News',
+          //   path: paths.dashboard.news.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     {
+          //       title: 'News',
+          //       path: paths.dashboard.news.root,
+          //       // children: [
+          //       //   { title: 'List', path: paths.dashboard.news.root },
+          //       //   { title: 'Create', path: paths.dashboard.news.new },
+          //       // ],
+          //     },
+          //     {
+          //       title: 'News Categories',
+          //       path: paths.dashboard.categories.root,
+          //       // children: [
+          //       //   { title: 'List', path: paths.dashboard.categories.root },
+          //       //   { title: 'Create', path: paths.dashboard.categories.new },
+          //       // ],
+          //     },
+          //   ],
+          // },
           
 
          
-          {
-            title: 'Business',
-            path: paths.dashboard.listings.root,
-            icon: ICONS.contact,
-            children: [
-              {
-                title: 'Listings',
-                path: paths.dashboard.listings.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.listings.root },
-                //   { title: 'Create', path: paths.dashboard.listings.new },
-                // ],
-              },
-              {
-                title: 'Business Categories',
-                path: paths.dashboard.business_categories.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.business_categories.root },
-                //   { title: 'Create', path: paths.dashboard.business_categories.new },
-                // ],
-              },
-            ],
-          },
+          // {
+          //   title: 'Business',
+          //   path: paths.dashboard.listings.root,
+          //   icon: ICONS.contact,
+          //   children: [
+          //     {
+          //       title: 'Listings',
+          //       path: paths.dashboard.listings.root,
+          //       // children: [
+          //       //   { title: 'List', path: paths.dashboard.listings.root },
+          //       //   { title: 'Create', path: paths.dashboard.listings.new },
+          //       // ],
+          //     },
+          //     {
+          //       title: 'Business Categories',
+          //       path: paths.dashboard.business_categories.root,
+          //       // children: [
+          //       //   { title: 'List', path: paths.dashboard.business_categories.root },
+          //       //   { title: 'Create', path: paths.dashboard.business_categories.new },
+          //       // ],
+          //     },
+          //   ],
+          // },
           
 
           
           {
             title: 'schools',
             path: paths.dashboard.schools.root,
+            icon: ICONS.contact,
+            // children: [
+            //   { title: 'list', path: paths.dashboard.schools.root },
+            //    { title: 'create', path: paths.dashboard.schools.new },
+            // ],
+          },
+
+           
+          {
+            title: 'Grade',
+            path: paths.dashboard.grade.root,
             icon: ICONS.contact,
             // children: [
             //   { title: 'list', path: paths.dashboard.schools.root },
@@ -198,13 +209,6 @@ export function useNavData() {
        
 
           
-
-          {
-            title: 'Lessons',
-            path: paths.dashboard.lessons.root,
-            icon: ICONS.contact,
-           
-          },
 
 
          

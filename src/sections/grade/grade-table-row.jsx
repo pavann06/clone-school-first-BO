@@ -15,9 +15,9 @@ import {
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
+export default function GradeTableRow({ row, onEditRow, onDeleteRow }) {
   const {
-    serial_no, name, small_logo,address, phone_number, poc_name, status,
+    serial_no, name, school_id, sections,
   } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -30,26 +30,26 @@ export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
   return (
     <>
       <TableRow hover>
-        <TableCell sx={{ width: 50 }}>{serial_no}</TableCell>
-        <TableCell sx={{ width: 200 }}>{name}</TableCell>
-        <TableCell align="center" sx={{ width: 120 }}>
-          {small_logo ? (
-            <img
-              src={small_logo}
-              alt={`Thumbnail for ${name}`}
-              style={{ maxWidth: 100, maxHeight: 50 }}
-            />
-          ) : (
-            'No Image'
-          )}
+        <TableCell >{serial_no}</TableCell>
+        <TableCell >{name}</TableCell>
+        <TableCell>
+         {school_id}
         </TableCell>
         <TableCell>
-          {address}
-         
-        </TableCell>
-        <TableCell >{phone_number}</TableCell>
-        <TableCell >{poc_name}</TableCell>
-        <TableCell >{status}</TableCell>
+  {sections && sections.length > 0 ? (
+    sections.map((sec, index) => (
+      <Typography key={index} variant="body2">
+        Section {sec.section_name} - {sec.teacher_name}
+      </Typography>
+    ))
+  ) : (
+    <Typography variant="body2" color="text.secondary">
+      No sections
+    </Typography>
+  )}
+</TableCell>
+
+       
         <TableCell align="center" sx={{ width: 80 }}>
           <IconButton color={popover.open ? 'primary' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -93,7 +93,7 @@ export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
   );
 }
 
-SchoolTableRow.propTypes = {
+GradeTableRow.propTypes = {
   onEditRow: PropTypes.func,
   onDeleteRow: PropTypes.func,
   row: PropTypes.object,

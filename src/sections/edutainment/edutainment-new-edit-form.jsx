@@ -24,7 +24,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import request from 'src/api/request';
-import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
+import { CreateEdutainment, UpdateEdutainment } from 'src/api/grade';
 
 // API and Services
 

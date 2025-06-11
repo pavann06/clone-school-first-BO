@@ -24,67 +24,59 @@ export default function SchoolNewEditForm({ currentSchool }) {
   const [isUploading, setIsUploading] = useState(false);
 
   const SchoolSchema = Yup.object().shape({
-    school_name: Yup.string().required('School Name is required'),
-    school_address: Yup.object().shape({
-      mandal: Yup.string().required('Mandal is required'),
-      district: Yup.string().required('District is required'),
-      state: Yup.string().required('State is required'),
-    }),
-    profile_image: Yup.mixed(),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    contact_number: Yup.string().required('Contact number is required'),
-    website: Yup.string().url('Invalid website URL'),
+    name: Yup.string().required('Name is required'),
+    phone_number: Yup.string().required('Phone number is required'),
+    address: Yup.string().required('Address is required'),
+    district: Yup.string().required('District is required'),
+    state: Yup.string().required('State is required'),
+    poc_name: Yup.string().required('POC Name is required'),
+    status: Yup.string().required('Status is required'),
+    expiry_date: Yup.date().required('Expiry Date is required'),
+    small_logo: Yup.mixed(),
+    full_logo: Yup.mixed(),
   });
 
-  const defaultValues = useMemo(() => ({
-    school_name: currentSchool?.school_name || '',
-    school_address: {
-      mandal: currentSchool?.school_address?.mandal || '',
-      district: currentSchool?.school_address?.district || '',
-      state: currentSchool?.school_address?.state || '',
-    },
-    profile_image: currentSchool?.profile_image || '',
-    email: currentSchool?.email || '',
-    contact_number: currentSchool?.contact_number || '',
-    website: currentSchool?.website || '',
-  }), [currentSchool]);
+  const defaultValues = useMemo(
+    () => ({
+      name: currentSchool?.name || '',
+      phone_number: currentSchool?.phone_number || '',
+      address: currentSchool?.address || '',
+      district: currentSchool?.district || '',
+      state: currentSchool?.state || '',
+      poc_name: currentSchool?.poc_name || '',
+      status: currentSchool?.status || '',
+      expiry_date: currentSchool?.expiry_date || '',
+      small_logo: currentSchool?.small_logo || '',
+      full_logo: currentSchool?.full_logo || '',
+    }),
+    [currentSchool]
+  );
 
   const methods = useForm({ resolver: yupResolver(SchoolSchema), defaultValues });
-  const { reset, setValue, handleSubmit, formState: { isSubmitting } } = methods;
-
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const response = currentSchool
-  //       ? await UpdateSchool({ ...data, id: currentSchool.id })
-  //       : await CreateSchool(data);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentSchool ? 'Update success!' : 'Create success!', { variant: 'success' });
-  //       router.push(paths.dashboard.schools.root);
-  //       reset();
-  //     } else {
-  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
-  //     }
-  //   } catch (error) {
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //   }
-  // });
+  const {
+    reset,
+    setValue,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       const response = currentSchool
         ? await UpdateSchool({ ...data, id: currentSchool.id })
         : await CreateSchool(data);
-  
-      console.log("Full API Response:", response); // Debugging
-  
+
+      console.log('Full API Response:', response); // Debugging
+
       if (response?.success) {
-        enqueueSnackbar(currentSchool ? 'Update success!' : 'Create success!', { variant: 'success' });
+        enqueueSnackbar(currentSchool ? 'Update success!' : 'Create success!', {
+          variant: 'success',
+        });
         router.push(paths.dashboard.schools.root);
         reset();
         return response;
       }
-  
+
       // Handle field-specific errors
       const errors = response?.response?.data?.data;
       if (errors) {
@@ -99,7 +91,7 @@ export default function SchoolNewEditForm({ currentSchool }) {
         enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
         return null;
       }
-  
+
       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
       return response;
     } catch (error) {
@@ -108,30 +100,35 @@ export default function SchoolNewEditForm({ currentSchool }) {
       return null;
     }
   });
-  
 
-  const handleUpload = useCallback(async (file) => {
-    try {
-      setIsUploading(true);
-      const response = await request.UploadFiles({ files: file });
-      if (response.success) return response.data[0].file_url;
-      throw new Error('Upload failed');
-    } catch {
-      enqueueSnackbar('File upload failed', { variant: 'error' });
-      return null;
-    } finally {
-      setIsUploading(false);
-    }
-  }, [enqueueSnackbar]);
+  const handleUpload = useCallback(
+    async (file) => {
+      try {
+        setIsUploading(true);
+        const response = await request.UploadFiles({ files: file });
+        if (response.success) return response.data[0].file_url;
+        throw new Error('Upload failed');
+      } catch {
+        enqueueSnackbar('File upload failed', { variant: 'error' });
+        return null;
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [enqueueSnackbar]
+  );
 
-  const handleDrop = useCallback(async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      setValue('profile_image', file);
-      const uploadedUrl = await handleUpload(file);
-      if (uploadedUrl) setValue('profile_image', uploadedUrl);
-    }
-  }, [setValue, handleUpload]);
+  const handleDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        setValue('profile_image', file);
+        const uploadedUrl = await handleUpload(file);
+        if (uploadedUrl) setValue('profile_image', uploadedUrl);
+      }
+    },
+    [setValue, handleUpload]
+  );
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -140,22 +137,48 @@ export default function SchoolNewEditForm({ currentSchool }) {
           <Card>
             <CardHeader title="School Details" />
             <Stack spacing={3} sx={{ p: 3 }}>
-              <RHFTextField name="school_name" label="School Name" />
-              <Stack spacing={1.5}>
-                <Typography variant="subtitle2">Address</Typography>
-                <RHFTextField name="school_address.mandal" label="Mandal" />
-                <RHFTextField name="school_address.district" label="District" />
-                <RHFTextField name="school_address.state" label="State" />
-              </Stack>
-              <RHFTextField name="email" label="Email" />
-              <RHFTextField name="contact_number" label="Contact Number" />
-              <RHFTextField name="website" label="Website" />
+              <RHFTextField name="name" label="Name" />
+              <RHFTextField name="phone_number" label="Phone Number" />
+              <RHFTextField name="address" label="Address" />
+              <RHFTextField name="district" label="District" />
+              <RHFTextField name="state" label="State" />
+              <RHFTextField name="poc_name" label="POC Name" />
+              <RHFTextField name="status" label="Status" />
+              <RHFTextField
+                name="expiry_date"
+                label="Expiry Date"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+              />
+
               <RHFUpload
-                name="profile_image"
-                label="Upload Profile Image"
-                onDrop={handleDrop}
+                name="small_logo"
+                label="Upload Small Logo"
+                onDrop={async (files) => {
+                  const file = files[0];
+                  if (file) {
+                    setValue('small_logo', file);
+                    const uploadedUrl = await handleUpload(file);
+                    if (uploadedUrl) setValue('small_logo', uploadedUrl);
+                  }
+                }}
                 isLoading={isUploading}
               />
+
+              <RHFUpload
+                name="full_logo"
+                label="Upload Full Logo"
+                onDrop={async (files) => {
+                  const file = files[0];
+                  if (file) {
+                    setValue('full_logo', file);
+                    const uploadedUrl = await handleUpload(file);
+                    if (uploadedUrl) setValue('full_logo', uploadedUrl);
+                  }
+                }}
+                isLoading={isUploading}
+              />
+
               <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
                 {currentSchool ? 'Save Changes' : 'Create School'}
               </LoadingButton>

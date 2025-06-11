@@ -28,21 +28,19 @@ import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
-import EdutainmentTableRow from '../school-table-row';
+import GradeTableRow from '../grade-table-row';
 
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'name', label: 'School Name' },
-  { id: 'small_logo', label: 'Logo' },
-  { id: 'address', label: 'Address ' },
-  { id: 'phone_number', label: 'Number' },
-  { id: 'poc_name', label: 'POC ' },
-  { id: 'status', label: 'Status' },
+  { id: 'name', label: 'Grade Name' },
+  { id: 'school_id', label: 'School ID' },
+  { id: 'sections', label: 'Sections ' },
+
   { id: 'actions ', label: 'Actions' },
 ];
 
-export default function SchoolListView() {
+export default function GradeListView() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -54,7 +52,7 @@ export default function SchoolListView() {
     queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `backoffice/school?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/grade?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
@@ -84,13 +82,13 @@ export default function SchoolListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.schools.edit(id));
+      router.push(paths.dashboard.grade.edit(id));
     },
     [router]
   );
 
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/school/${id}`);
+    const response = await request.delete(`backoffice/grade/${id}`);
 
     const { success } = response;
 
@@ -111,15 +109,15 @@ export default function SchoolListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Schools',
-              href: paths.dashboard.schools.root,
+              name: 'Grades',
+              href: paths.dashboard.grade.root,
             },
             { name: 'List' },
           ]}
         />
               <Button
           component={RouterLink}
-          href={paths.dashboard.schools.new}
+          href={paths.dashboard.grade.new}
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
@@ -142,7 +140,7 @@ export default function SchoolListView() {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <EdutainmentTableRow
+                      <GradeTableRow
                         key={row.id}
                         row={{
                           ...row,

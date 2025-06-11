@@ -172,6 +172,10 @@ const LessonVideoPage = lazy(() => import('src/pages/dashboard/lessons/video-vie
 // const FeelsCreatePage = lazy(() => import('src/pages/dashboard/feels/new'));
 // const FeelsEditPage = lazy(() => import('src/pages/dashboard/feels/edit'));
 
+const GradeListPage = lazy(() => import('src/pages/dashboard/grade/list'));
+const GradeCreatePage = lazy(() => import('src/pages/dashboard/grade/new'));
+const GradeEditPage = lazy(() => import('src/pages/dashboard/grade/edit'));
+
 const DashboardListPage = lazy(() => import('src/pages/dashboard/dashboard/home-demo'));
 
 
@@ -737,6 +741,38 @@ export const dashboardRoutes = [
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
                 <LessonVideoPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+
+       {
+        path: 'grade',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <GradeListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <GradeCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <GradeEditPage />
               </PermissionBasedGuard>
             ),
           },
