@@ -83,17 +83,6 @@ export function useNavData() {
           },
         
 
-         
-
-          {
-            title: 'calender',
-            path: paths.dashboard.calender.root,
-            icon: ICONS.contact,
-            // children: [
-            //   { title: 'list', path: paths.dashboard.calender.root },
-            //   { title: 'create', path: paths.dashboard.calender.new },
-            // ],
-          },
 
           {
             title: 'polls',
@@ -105,35 +94,7 @@ export function useNavData() {
             // ],
           },
 
-          {
-            title: 'survey',
-            path: paths.dashboard.survey.root,
-            icon: ICONS.contact,
-            // children: [
-            //   { title: 'list', path: paths.dashboard.survey.root },
-            //   { title: 'create', path: paths.dashboard.survey.new },
-            // ],
-          },
-          // {
-          //   title: 'subscribed Users',
-          //   path: paths.dashboard.subscribedusers.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.subscribedusers.root },
-          //     // { title: 'create', path: paths.dashboard.edutainment.new },
-          //   ],
-          // },
-
-          // {
-          //   title: 'Surveys',
-          //   path: paths.dashboard.surveys.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.surveys.root },
-          //      { title: 'create', path: paths.dashboard.surveys.new },
-          //   ],
-          // },
-
+         
 
           {
             title: 'banner',
@@ -146,25 +107,7 @@ export function useNavData() {
           },
 
 
-          // {
-          //   title: 'news',
-          //   path: paths.dashboard.news.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.news.root },
-          //      { title: 'create', path: paths.dashboard.news.new },
-          //   ],
-          // },
-
-          // {
-          //   title: 'news categories',
-          //   path: paths.dashboard.categories.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.categories.root },
-          //      { title: 'create', path: paths.dashboard.categories.new },
-          //   ],
-          // },
+          
           {
             title: 'News',
             path: paths.dashboard.news.root,
@@ -216,26 +159,7 @@ export function useNavData() {
           },
           
 
-          {
-            title: 'forums',
-            path: paths.dashboard.groups.root,
-            icon: ICONS.contact,
-            // children: [
-            //   { title: 'list', path: paths.dashboard.groups.root },
-            //    { title: 'create', path: paths.dashboard.groups.new },
-            // ],
-          },
-
-          // {
-          //   title: 'Forum Feeds',
-          //   path: paths.dashboard.forum_feeds.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.forum_feeds.root },
-          //      { title: 'create', path: paths.dashboard.forum_feeds.new },
-          //   ],
-          // },
-
+          
           {
             title: 'schools',
             path: paths.dashboard.schools.root,
@@ -262,101 +186,16 @@ export function useNavData() {
 
          
 
-          {
-            title: 'Online',
-            path: paths.dashboard.onlinecategories.root,
-            icon: ICONS.contact,
-            children: [
-              {
-                title: 'Store Categories',
-                path: paths.dashboard.onlinecategories.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.onlinecategories.root },
-                //   { title: 'Create', path: paths.dashboard.onlinecategories.new },
-                // ],
-              },
-              {
-                title: 'Store Products',
-                path: paths.dashboard.onlinestoreproducts.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.onlinestoreproducts.root },
-                //   { title: 'Create', path: paths.dashboard.onlinestoreproducts.new },
-                // ],
-              },
-              {
-                title: 'Orders',
-                path: paths.dashboard.onlineorders.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.onlineorders.root },
-                // ],
-              },
-            ],
-          },
-          
-
-
-
 
         
 
 
-          {
-            title: 'Vocabee',
-            path: paths.dashboard.word.root,
-            icon: ICONS.contact,
-            children: [
-              {
-                title: 'Word',
-                path: paths.dashboard.word.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.word.root },
-                //   { title: 'Create', path: paths.dashboard.word.new },
-                  
-                // ],
-              },
-              {
-                title: 'Competition',
-                path: paths.dashboard.competition.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.competition.root },
-                //   { title: 'Create', path: paths.dashboard.competition.new },
-                 
-                // ],
-              },
-            ],
-          },
+       
 
           
         
 
-          {
-            title: 'Courses',
-            path: paths.dashboard.offlinecourse.root,
-            icon: ICONS.contact,
-            children: [
-              {
-                title: 'Offline Courses',
-                path: paths.dashboard.offlinecourse.root,
-                // children: [
-                //   { title: 'List', path: paths.dashboard.offlinecourse.root },
-                //   { title: 'Create', path: paths.dashboard.offlinecourse.new },
-                // ],
-              },
-              {
-                title: 'Host',
-                path: paths.dashboard.host.root,
-              // children: [
-                //   { title: 'List', path: paths.dashboard.host.root },
-                //   { title: 'Create', path: paths.dashboard.host.new },
-                // ],
-              },
-              {
-                title: 'Webinar',
-                path: paths.dashboard.webinar.root,
-                
-              },
-            ],
-          },
+       
 
           
 
@@ -367,33 +206,8 @@ export function useNavData() {
            
           },
 
-          {
-            title: 'Online Courses',
-            path: paths.dashboard.onlinecourses.root,
-            icon: ICONS.contact,
-           
-          },
 
-          {
-            title: 'Chapters',
-            path: paths.dashboard.chapters.root,
-            icon: ICONS.contact,
-          
-          },
-
-          {
-            title: 'MCQs',
-            path: paths.dashboard.mcqs.root,
-            icon: ICONS.contact,
-            
-          },
-
-           {
-            title: 'Feels',
-            path: paths.dashboard.feels.root,
-            icon: ICONS.contact,
-           
-          },
+         
 
 
           
@@ -415,26 +229,7 @@ export function useNavData() {
 
           
 
-          // {
-          //   title: 'appointments',
-          //   path: paths.dashboard.appointments.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.appointments.root, permissions: ['is_superuser'] },
-          //     { title: 'create', path: paths.dashboard.appointments.new, permissions: ['is_superuser'] },
-          //   ],
-          // },
-          // SALES
-          // {
-          //   title: 'sales',
-          //   path: paths.dashboard.sales.root,
-          //   icon: ICONS.sales,
-          //   children: [
-          //     { title: 'list', path: paths.dashboard.sales.root, permissions: ['is_superuser'] },
-          //     { title: 'create', path: paths.dashboard.sales.new, permissions: ['is_superuser']},
-          //     { title: 'analytics', path: paths.dashboard.sales.analytics, permissions: ['is_superuser'] },
-          //   ],
-          // },
+       
         ],
       },
     ];

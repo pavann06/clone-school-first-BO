@@ -1,17 +1,17 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
-import { ChaptersCreateView } from 'src/sections/chapters/view';
+// import { ChaptersCreateView } from 'src/sections/chapters/view';
 
-// ----------------------------------------------------------------------
+// // ----------------------------------------------------------------------
 
-export default function ChaptersCreatePage() {
-  return (
-    <>
-      <Helmet>
-        <title> New Chapter </title>
-      </Helmet>
+// export default function ChaptersCreatePage() {
+//   return (
+//     <>
+//       <Helmet>
+//         <title> New Chapter </title>
+//       </Helmet>
 
-      <ChaptersCreateView />
-    </>
-  );
-}
+//       <ChaptersCreateView />
+//     </>
+//   );
+// }

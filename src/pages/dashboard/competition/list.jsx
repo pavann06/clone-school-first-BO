@@ -1,17 +1,17 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
-import { CompetitionListView } from 'src/sections/competition/view';
+// import { CompetitionListView } from 'src/sections/competition/view';
 
-// ----------------------------------------------------------------------
+// // ----------------------------------------------------------------------
 
-export default function CompetitionListPage() {
-  return (
-    <>
-      <Helmet>
-        <title>Competition List</title>
-      </Helmet>
+// export default function CompetitionListPage() {
+//   return (
+//     <>
+//       <Helmet>
+//         <title>Competition List</title>
+//       </Helmet>
 
-      <CompetitionListView />
-    </>
-  );
-}
+//       <CompetitionListView />
+//     </>
+//   );
+// }

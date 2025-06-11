@@ -1,23 +1,23 @@
-import { Helmet } from 'react-helmet-async';
+// import { Helmet } from 'react-helmet-async';
 
-import { useParams } from 'src/routes/hooks';
+// import { useParams } from 'src/routes/hooks';
 
-import { ChaptersEditView } from 'src/sections/chapters/view';
+// import { ChaptersEditView } from 'src/sections/chapters/view';
 
-// ----------------------------------------------------------------------
+// // ----------------------------------------------------------------------
 
-export default function ChaptersEditPage() {
-  const params = useParams();
+// export default function ChaptersEditPage() {
+//   const params = useParams();
 
-  const { id } = params;
+//   const { id } = params;
 
-  return (
-    <>
-      <Helmet>
-        <title> Chapters Edit</title>
-      </Helmet>
+//   return (
+//     <>
+//       <Helmet>
+//         <title> Chapters Edit</title>
+//       </Helmet>
 
-      <ChaptersEditView id={`${id}`} />
-    </>
-  );
-}
+//       <ChaptersEditView id={`${id}`} />
+//     </>
+//   );
+// }
