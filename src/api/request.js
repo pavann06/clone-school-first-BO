@@ -321,7 +321,7 @@ const request = {
         axios.defaults.headers.common.Authorization = token;
       }
 
-      const response = await axios.post('userservice/storage/upload', jsonData, config);
+      const response = await axios.post('user/storage/upload', jsonData, config);
       return response.data;
     } catch (error) {
       handleAuthError(error);

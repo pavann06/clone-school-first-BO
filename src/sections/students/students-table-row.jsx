@@ -9,21 +9,12 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 export default function StudentsTableRow({ row, onEditRow, onDeleteRow }) {
   const {
     serial_no,
-    language,
-    student_first_name,
-    student_last_name,
-    mobile,
-    school_name,
-    school_address,
-    description,
-    profile_image,
-    comments_count,
-    whatsapp_share_count,
-    posting_date,
-    approved_by,
-    contact_number,
-    email,
-    website,
+  
+    name,
+    father_name,
+    mother_name,
+    dob,
+   
   } = row;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -42,28 +33,26 @@ export default function StudentsTableRow({ row, onEditRow, onDeleteRow }) {
         <TableCell>{serial_no}</TableCell>
 
         <TableCell>
-       {student_first_name}
+       {name}
         </TableCell>
 
         <TableCell>
-          {student_last_name}
+          {father_name}
           
         </TableCell>
 
         <TableCell>
-{school_name}
+{mother_name}
 </TableCell>
+
+<TableCell>{dob}</TableCell>
 
 
 
 
    
 
-        {/* Approved Info */}
-        <TableCell>
-          {mobile}
-        </TableCell>
-
+    
  
        
 
@@ -106,10 +95,7 @@ export default function StudentsTableRow({ row, onEditRow, onDeleteRow }) {
       Full Description
     </Typography>
 
-    {/* Description */}
-    <Typography variant="body1" sx={{ mb: 4 }}>
-      {description}
-    </Typography>
+    
 
     {/* Close Button */}
     <Button

@@ -31,12 +31,14 @@ import { TableNoData, TableHeadCustom } from 'src/components/table';
 import EdutainmentTableRow from '../students-table-row';
 
 
+
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'student_first_name', label: 'Student First Name' },
-  { id: 'student_last_name', label: 'Student Last Name' },
-  { id: 'school_name', label: 'School Name ' },
-  { id: 'mobile', label: 'Mobile' },
+  { id: 'name', label: 'Student  Name' },
+
+  { id: 'father_name', label: 'Father Name ' },
+  { id: 'mother_name', label: 'Mother Name' },
+  { id: 'dob', label: 'Date of birth'},
  
 
   { id: 'actions ', label: 'Actions' },
@@ -54,7 +56,7 @@ export default function StudentsListView() {
     queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `backoffice/students?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/student?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });

@@ -40,23 +40,7 @@ export default function StudentsNewEditForm({ currentStudent }) {
   const methods = useForm({ resolver: yupResolver(StudentSchema), defaultValues });
   const { reset, handleSubmit, formState: { isSubmitting } } = methods;
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const response = currentStudent
-  //       ? await UpdateStudent({ ...data, id: currentStudent.id })
-  //       : await CreateStudent(data);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentStudent ? 'Update success!' : 'Create success!', { variant: 'success' });
-  //       router.push(paths.dashboard.students.root);
-  //       reset();
-  //     } else {
-  //       enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
-  //     }
-  //   } catch (error) {
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //   }
-  // });
+ 
   const onSubmit = handleSubmit(async (data) => {
     try {
       const response = currentStudent

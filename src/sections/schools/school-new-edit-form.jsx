@@ -62,9 +62,18 @@ export default function SchoolNewEditForm({ currentSchool }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const response = currentSchool
-        ? await UpdateSchool({ ...data, id: currentSchool.id })
-        : await CreateSchool(data);
+      // const response = currentSchool
+      //   ? await UpdateSchool({ ...data, id: currentSchool.id })
+      //   : await CreateSchool(data);
+      const formattedData = {
+  ...data,
+  expiry_date: data.expiry_date ? new Date(data.expiry_date).toISOString().split('T')[0] : null,
+};
+
+const response = currentSchool
+  ? await UpdateSchool({ ...formattedData, id: currentSchool.id })
+  : await CreateSchool(formattedData);
+
 
       console.log('Full API Response:', response); // Debugging
 

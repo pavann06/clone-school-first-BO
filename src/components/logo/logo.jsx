@@ -332,7 +332,7 @@ l-33 -44 0 -294 0 -294 -170 0 -170 0 0 793 c0 437 3 797 7 801 4 3 79 5 167
 </svg>
 
 
-      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="50" viewBox="0 0 364 110">
+      {/* <svg xmlns="http://www.w3.org/2000/svg" width="200" height="50" viewBox="0 0 364 110">
         <g id="Group_131411" data-name="Group 131411" transform="translate(-301 -122)">
           <text
             id="Famili_First"
@@ -385,7 +385,7 @@ l-33 -44 0 -294 0 -294 -170 0 -170 0 0 793 c0 437 3 797 7 801 4 3 79 5 167
             />
           </g>
         </g>
-      </svg>
+      </svg> */}
     </Box>
   );
 

@@ -27,6 +27,15 @@ export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
 
   const popover = usePopover();
 
+  const renderAddress = () => {
+  if (typeof address === 'string') return address;
+  if (address && typeof address === 'object') {
+    return `${address.colony || ''}, ${address.street || ''}, ${address.city || ''}, ${address.state || ''} - ${address.pincode || ''}`;
+  }
+  return 'N/A';
+};
+
+
   return (
     <>
       <TableRow hover>
@@ -43,10 +52,9 @@ export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
             'No Image'
           )}
         </TableCell>
-        <TableCell>
-          {address}
-         
-        </TableCell>
+  <TableCell>{renderAddress()}</TableCell>
+
+
         <TableCell >{phone_number}</TableCell>
         <TableCell >{poc_name}</TableCell>
         <TableCell >{status}</TableCell>
