@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { GradeCreateView } from 'src/sections/grade/view';
+import { GradesListView } from 'src/sections/grades/view';
 
 // ----------------------------------------------------------------------
 
-export default function GradeCreatePage() {
+export default function GradesListPage() {
   return (
     <>
       <Helmet>
-        <title> New Grade </title>
+        <title>Grade List</title>
       </Helmet>
 
-      <GradeCreateView />
+      <GradesListView />
     </>
   );
 }

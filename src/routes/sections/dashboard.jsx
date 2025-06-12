@@ -49,12 +49,7 @@ const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
 
 
 
-// const OnlineStoresListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
-// const OnlineStoresCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
 
-// const CalenderListPage = lazy(() => import('src/pages/dashboard/calender/list'));
-// const CalenderCreatePage = lazy(() => import('src/pages/dashboard/calender/new'));
-// const CalenderEditPage = lazy(() => import('src/pages/dashboard/calender/edit'));
 
 const PollsListPage = lazy(() => import('src/pages/dashboard/polls/list'));
 const PollsCreatePage = lazy(() => import('src/pages/dashboard/polls/new'));
@@ -72,10 +67,6 @@ const CategoryListPage = lazy(() => import('src/pages/dashboard/categories/list'
 const CategoryCreatePage = lazy(() => import('src/pages/dashboard/categories/new'));
 const CategoryEditPage = lazy(() => import('src/pages/dashboard/categories/edit'));
 
-// const ListingsListPage = lazy(() => import('src/pages/dashboard/listings/list'));
-// const ListingsCreatePage = lazy(() => import('src/pages/dashboard/listings/new'));
-// const ListingsEditPage = lazy(() => import('src/pages/dashboard/listings/edit'));
-
 const BusinessCategoriesListPage = lazy(
   () => import('src/pages/dashboard/business-categories/list')
 );
@@ -89,23 +80,6 @@ const SubCategoriesViewPage = lazy(
   () => import('src/pages/dashboard/business-categories/view')
 );
 
-// const GroupsListPage = lazy(() => import('src/pages/dashboard/groups/list'));
-// const GroupsCreatePage = lazy(() => import('src/pages/dashboard/groups/new'));
-// const GroupsEditPage = lazy(() => import('src/pages/dashboard/groups/edit'));
-// const GroupsViewPage = lazy(() => import('src/pages/dashboard/groups/view'));
-
-// const ForumFeedsListPage = lazy(() => import('src/pages/dashboard/groups/feeds-list'));
-// const ForumFeedsCreatePage = lazy(() => import('src/pages/dashboard/groups/feeds-new'));
-// const ForumFeedsEditPage = lazy(() => import('src/pages/dashboard/groups/feeds-edit'));
-
-
-
-// const SurveysListPage = lazy(() => import('src/pages/dashboard/surveys/list'));
-// const SurveysCreatePage = lazy(() => import('src/pages/dashboard/surveys/new'));
-// const SurveysEditPage = lazy(() => import('src/pages/dashboard/surveys/edit'));
-// const SurveysQuestionsViewPage = lazy (() => import('src/pages/dashboard/surveys/questions-list'));
-// const SurveysQuestionsCreatePage = lazy(() => import('src/pages/dashboard/surveys/questions-new'));
-// const SurveysQuestionsEditPage = lazy(() => import('src/pages/dashboard/surveys/questions-edit'));
 
 const SchoolListPage = lazy(() => import('src/pages/dashboard/schools/list'));
 const SchoolCreatePage = lazy(() => import('src/pages/dashboard/schools/new'));
@@ -115,30 +89,7 @@ const StudentsListPage = lazy(() => import('src/pages/dashboard/students/list'))
 const StudentsCreatePage = lazy(() => import('src/pages/dashboard/students/new'));
 const StudentsEditPage = lazy(() => import('src/pages/dashboard/students/edit'));
 
-// const OnlineCategoriesListPage = lazy(() => import('src/pages/dashboard/onlinecategories/list'));
-// const OnlineCategoriesCreatePage = lazy(() => import('src/pages/dashboard/onlinecategories/new'));
-// const OnlineCategoriesEditPage = lazy(() => import('src/pages/dashboard/onlinecategories/edit'));
 
-// const OnlineStoreProductsEditPage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/edit'));
-// const OnlineStoreProductsListPage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/list'));
-// const OnlineStoreProductsCreatePage = lazy(() => import('src/pages/dashboard/onlinestoreproducts/new'));
-
-// const OnlineOrdersListPage = lazy(() => import('src/pages/dashboard/onlineorders/list'));
-// const OnlineOrdersCreatePage = lazy(() => import('src/pages/dashboard/onlineorders/new'));
-// const OnlineOrdersEditPage = lazy(() => import('src/pages/dashboard/onlineorders/edit'));
-
-// const WordListPage = lazy(()=> import('src/pages/dashboard/word/list'));
-// const WordCreatePage = lazy(() => import('src/pages/dashboard/word/new'));
-// const WordEditPage = lazy(()=> import('src/pages/dashboard/word/edit'));
-
-// const CompetitionListPage = lazy(()=> import('src/pages/dashboard/competition/list'));
-// const CompetitionCreatePage = lazy(()=> import('src/pages/dashboard/competition/new'));
-// const CompetitionEditPage = lazy(()=> import('src/pages/dashboard/competition/edit'));
-// const CompetitionWordsViewPage = lazy(()=> import('src/pages/dashboard/competition/words'));
-
-// const OfflineCourseListPage = lazy(() => import('src/pages/dashboard/offline-course/list'));
-// const OfflineCourseCreatePage = lazy(() => import('src/pages/dashboard/offline-course/new'));
-// const OfflineCourseEditPage = lazy(() => import('src/pages/dashboard/offline-course/edit'));
 
 const HostListPage = lazy(()=> import('src/pages/dashboard/host/list'));
 const HostCreatePage = lazy(() => import('src/pages/dashboard/host/new'));
@@ -153,26 +104,11 @@ const LessonsCreatePage = lazy(() => import('src/pages/dashboard/lessons/new'));
 const LessonsEditPage = lazy(() => import('src/pages/dashboard/lessons/edit'));
 const LessonVideoPage = lazy(() => import('src/pages/dashboard/lessons/video-view'));
 
-// const OfflineCoursesListPage = lazy(() => import('src/pages/dashboard/offlinecourses/list'));
-// const OfflineCoursesCreatePage = lazy(() => import('src/pages/dashboard/offlinecourses/new'));
-// const OfflineCoursesEditPage = lazy(() => import('src/pages/dashboard/offlinecourses/edit'));
+const GradesListPage = lazy(() => import('src/pages/dashboard/grades/list'));
+const GradesCreatePage = lazy(() => import('src/pages/dashboard/grades/new'));
+const GradesEditPage = lazy(() => import('src/pages/dashboard/grades/edit'));
 
 
-// const ChaptersListPage = lazy(() => import('src/pages/dashboard/chapters/list'));
-// const ChaptersCreatePage = lazy(() => import('src/pages/dashboard/chapters/new'));
-// const ChaptersEditPage = lazy(() => import('src/pages/dashboard/chapters/edit'));
-
-// const McqsListPage = lazy(() => import('src/pages/dashboard/mcqs/list'));
-// const McqsCreatePage =  lazy(() => import('src/pages/dashboard/mcqs/new'));
-// const McqsEditPage = lazy(() => import('src/pages/dashboard/mcqs/edit'));
-
-// const FeelsListPage = lazy(() => import('src/pages/dashboard/feels/list'));
-// const FeelsCreatePage = lazy(() => import('src/pages/dashboard/feels/new'));
-// const FeelsEditPage = lazy(() => import('src/pages/dashboard/feels/edit'));
-
-const GradeListPage = lazy(() => import('src/pages/dashboard/grade/list'));
-const GradeCreatePage = lazy(() => import('src/pages/dashboard/grade/new'));
-const GradeEditPage = lazy(() => import('src/pages/dashboard/grade/edit'));
 
 const DashboardListPage = lazy(() => import('src/pages/dashboard/dashboard/home-demo'));
 
@@ -718,13 +654,13 @@ export const dashboardRoutes = [
 
 
 
-       {
-        path: 'grade',
+        {
+        path: 'grades',
         children: [
           {
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <GradeListPage />
+                <GradesListPage />
               </PermissionBasedGuard>
             ),
             index: true,
@@ -733,7 +669,7 @@ export const dashboardRoutes = [
             path: 'new',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <GradeCreatePage />
+                <GradesCreatePage />
               </PermissionBasedGuard>
             ),
           },
@@ -741,12 +677,16 @@ export const dashboardRoutes = [
             path: ':id/edit',
             element: (
               <PermissionBasedGuard hasContent permissions={['is_superuser']}>
-                <GradeEditPage />
+                <GradesEditPage />
               </PermissionBasedGuard>
             ),
           },
         ],
       },
+
+
+
+     
 
      
 

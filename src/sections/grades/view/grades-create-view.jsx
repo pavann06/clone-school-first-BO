@@ -5,17 +5,17 @@ import { paths } from 'src/routes/paths';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import GradeNewEditForm from '../grade-new-edit-form';
+import GradesNewEditForm from '../grades-new-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function EdutainmentCreateView() {
+export default function GradesCreateView() {
   const settings = useSettingsContext();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Grade"
+        heading="Create a new Grade"
         links={[
           {
             name: 'Dashboard',
@@ -23,7 +23,7 @@ export default function EdutainmentCreateView() {
           },
           {
             name: 'Grades',
-            href: paths.dashboard.grade.root,
+            href: paths.dashboard.grades.root,
           },
           { name: 'New Grade' },
         ]}
@@ -32,7 +32,7 @@ export default function EdutainmentCreateView() {
         }}
       />
 
-      <GradeNewEditForm />
+      <GradesNewEditForm />
     </Container>
   );
 }

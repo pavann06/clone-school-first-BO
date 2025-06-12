@@ -11,16 +11,17 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import GradeNewEditForm from '../grade-new-edit-form';
+import GradesNewEditForm from '../grades-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function GradeEditView({ id }) {
+export default function GradesEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['edutainment', id],
-    queryFn: () => request.get(`backoffice/grade/${id}`),
+    queryKey: ['banners', id],
+    queryFn: () => request.get('/banners', { id }),
+    staleTime: 24 * 60 * 60 * 1000,
   });
 
   return (
@@ -30,20 +31,20 @@ export default function GradeEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Grade',
-            href: paths.dashboard.grade.root,
+            name: 'Banners',
+            href: paths.dashboard.banners.root,
           },
-          { name: data?.data?.name },
+          { name: data?.info?.[0]?.Banner_name },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <GradeNewEditForm currentEdutainment={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <GradesNewEditForm currentBanner={data?.info?.[0]} />}
     </Container>
   );
 }
 
-GradeEditView.propTypes = {
+GradesEditView.propTypes = {
   id: PropTypes.string,
 };

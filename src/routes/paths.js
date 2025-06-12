@@ -77,11 +77,7 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/hospitals/${id}/edit`,
       view: (id) => `${ROOTS.DASHBOARD}/hospitals/${id}/view`,
     },
-    edutainment: {
-      root: `${ROOTS.DASHBOARD}/edutainment`,
-      new: `${ROOTS.DASHBOARD}/edutainment/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
-    },
+    
 
     
 
@@ -92,12 +88,13 @@ export const paths = {
       view: (id) => `${ROOTS.DASHBOARD}/schools/${id}/view`,
     },
 
-      grade: {
-      root: `${ROOTS.DASHBOARD}/grade`,
-      new: `${ROOTS.DASHBOARD}/grade/new`,
-      edit: (id) => `${ROOTS.DASHBOARD}/grade/${id}/edit`,
-      view: (id) => `${ROOTS.DASHBOARD}/grade/${id}/view`,
+        grades: {
+      root: `${ROOTS.DASHBOARD}/grades`,
+      new: `${ROOTS.DASHBOARD}/grades/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/grades/${id}/edit`,
     },
+
+  
 
     students: {
       root: `${ROOTS.DASHBOARD}/students`,

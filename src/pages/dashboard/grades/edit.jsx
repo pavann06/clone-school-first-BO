@@ -2,10 +2,11 @@ import { Helmet } from 'react-helmet-async';
 
 import { useParams } from 'src/routes/hooks';
 
-import { GradeEditView } from 'src/sections/grade/view';
+import { GradesEditView } from 'src/sections/grades/view';
+
 // ----------------------------------------------------------------------
 
-export default function GradeEditPage() {
+export default function GradesEditPage() {
   const params = useParams();
 
   const { id } = params;
@@ -13,10 +14,10 @@ export default function GradeEditPage() {
   return (
     <>
       <Helmet>
-        <title> Grade Edit</title>
+        <title> Grades Edit</title>
       </Helmet>
 
-      <GradeEditView id={`${id}`} />
+      <GradesEditView id={`${id}`} />
     </>
   );
 }
