@@ -21,7 +21,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
-import { CreateBanner, UpdateBanner } from 'src/api/banners';
+import { CreateGrade, UpdateGrade } from 'src/api/grades';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
@@ -81,9 +81,9 @@ export default function GradesNewEditForm({ currentBanner }) {
 
     if (currentBanner) {
       data.id = currentBanner.id;
-      response = await UpdateBanner(data);
+      response = await UpdateGrade(data);
     } else {
-      response = await CreateBanner(data);
+      response = await CreateGrade(data);
     }
 
     const { success, description } = response;

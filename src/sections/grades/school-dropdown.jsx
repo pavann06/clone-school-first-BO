@@ -1,12 +1,16 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+} from '@mui/material';
+
 import request from 'src/api/request';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 
 const SchoolsDropdown = forwardRef(({ value, onChange, label = 'Select School', error, helperText }, ref) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,7 +26,7 @@ const SchoolsDropdown = forwardRef(({ value, onChange, label = 'Select School', 
         } else {
           enqueueSnackbar('Failed to load schools', { variant: 'error' });
         }
-      } catch (error) {
+      } catch (err) {
         enqueueSnackbar('Error fetching schools', { variant: 'error' });
       } finally {
         setLoading(false);
@@ -32,26 +36,29 @@ const SchoolsDropdown = forwardRef(({ value, onChange, label = 'Select School', 
     fetchSchools();
   }, [enqueueSnackbar]);
 
+  let menuItems;
+  if (loading) {
+    menuItems = <MenuItem disabled>Loading...</MenuItem>;
+  } else if (schools.length === 0) {
+    menuItems = <MenuItem disabled>No schools available</MenuItem>;
+  } else {
+    menuItems = schools.map((school) => (
+      <MenuItem key={school.id} value={school.id}>
+        {school.name}
+      </MenuItem>
+    ));
+  }
+
   return (
-    <FormControl fullWidth error={error}>
+    <FormControl fullWidth error={!!error}>
       <InputLabel>{label}</InputLabel>
       <Select
         ref={ref}
-        value={value || ''}
+        value={value}
         label={label}
         onChange={(e) => onChange(e.target.value)}
       >
-        {loading ? (
-          <MenuItem disabled>Loading...</MenuItem>
-        ) : schools.length === 0 ? (
-          <MenuItem disabled>No schools available</MenuItem>
-        ) : (
-          schools.map((school) => (
-            <MenuItem key={school.id} value={school.id}>
-              {school.school_name}
-            </MenuItem>
-          ))
-        )}
+        {menuItems}
       </Select>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
@@ -59,7 +66,7 @@ const SchoolsDropdown = forwardRef(({ value, onChange, label = 'Select School', 
 });
 
 SchoolsDropdown.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   error: PropTypes.bool,
