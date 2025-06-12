@@ -14,6 +14,8 @@ export default function StudentsTableRow({ row, onEditRow, onDeleteRow }) {
     father_name,
     mother_name,
     dob,
+    address, 
+    mobile,
    
   } = row;
 
@@ -46,6 +48,17 @@ export default function StudentsTableRow({ row, onEditRow, onDeleteRow }) {
 </TableCell>
 
 <TableCell>{dob}</TableCell>
+
+<TableCell>
+  {`${address?.street}, ${address?.city}`}<br />
+  {`${address?.state} - ${address?.pincode}`}
+</TableCell>
+
+
+
+<TableCell>
+  {mobile}
+</TableCell>
 
 
 

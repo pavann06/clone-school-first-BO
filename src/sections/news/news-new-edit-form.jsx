@@ -84,52 +84,7 @@ export default function NewsNewEditForm({ currentNews }) {
 
   const values = watch();
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   console.log('Submitting Data:', data);
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       // Check if categories is an array, then map over it
-  //       categories: Array.isArray(data.categories)
-  //         ? data.categories.map((item) => item.trim())
-  //         : data.categories.split(',').map((item) => item.trim()),
-
-  //       tags: Array.isArray(data.tags)
-  //         ? data.tags.map((item) => item.trim())
-  //         : data.tags.split(',').map((item) => item.trim()),
-
-  //       target_groups: Array.isArray(data.target_groups)
-  //         ? data.target_groups.map((item) => item.trim())
-  //         : data.target_groups.split(',').map((item) => item.trim()),
-
-  //       youtube_urls:
-  //         Array.isArray(data.youtube_urls) && data.youtube_urls.length > 0
-  //           ? data.youtube_urls.split(',').map((url) => url.trim())
-  //           : [],
-
-  //       images: data.images || [],
-  //       videos: data.videos || [],
-  //       remarks: data.remarks || null,
-  //     };
-
-  //     const response = currentNews
-  //       ? await UpdateNews({ ...payload, id: currentNews.id })
-  //       : await CreateNews(payload);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentNews ? 'Update success!' : 'Create success!', {
-  //         variant: 'success',
-  //       });
-  //       router.push('/dashboard/news');
-  //       reset();
-  //     }
-  //      else {
-  //       enqueueSnackbar(response?.error, { variant: 'error' });
-  //     }
-  //   } catch (error) {
-  //     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-  //   }
-  // });
+  
 
   const onSubmit = handleSubmit(async (data) => {
     console.log('Submitting Data:', data);

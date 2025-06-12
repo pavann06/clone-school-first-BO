@@ -20,7 +20,7 @@ export default function StudentsEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['school', id],
-    queryFn: () => request.get(`backoffice/students/${id}`),
+    queryFn: () => request.get(`backoffice/student/${id}`),
   });
 
   return (

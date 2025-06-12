@@ -39,6 +39,8 @@ const TABLE_HEAD = [
   { id: 'father_name', label: 'Father Name ' },
   { id: 'mother_name', label: 'Mother Name' },
   { id: 'dob', label: 'Date of birth'},
+   { id: 'address', label: 'address'},
+    { id: 'mobile', label: 'Number'},
  
 
   { id: 'actions ', label: 'Actions' },
