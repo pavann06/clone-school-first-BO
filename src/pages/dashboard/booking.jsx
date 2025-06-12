@@ -60,7 +60,9 @@ export default function OverviewBookingPage() {
         <title>Dashboard | FamiliFirst</title>
       </Helmet>
 
-      <Container maxWidth="xl">
+      <h3> Welcome to Dashboard</h3>
+
+      {/* <Container maxWidth="xl">
         <Typography
           variant="h4"
           gutterBottom
@@ -69,7 +71,7 @@ export default function OverviewBookingPage() {
           Hi, Welcome back
         </Typography>
 
-        {/* Date Pickers for selecting the range */}
+       
         <Box display="flex"  mb={6}>
           <TextField
             label="Start Date"
@@ -142,7 +144,7 @@ export default function OverviewBookingPage() {
             ))}
           </Grid>
         )}
-      </Container>
+      </Container> */}
     </>
   );
 }

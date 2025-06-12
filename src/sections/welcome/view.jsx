@@ -14,7 +14,7 @@ export default function WelcomeView() {
     <Container component={MotionContainer} sx={{ textAlign: 'center' }}>
       <m.div variants={varBounce().in}>
         <Typography variant="h4" sx={{ mb: 2 }}>
-          Welcome to FamiliFirst!
+          Welcome to School First!
         </Typography>
       </m.div>
 

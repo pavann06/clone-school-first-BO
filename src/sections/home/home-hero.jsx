@@ -227,7 +227,7 @@ export default function HomeHero() {
             },
           }}
         >
-          WELCOME TO FAMILI FIRST
+          WELCOME TO SCHOOL FIRST
         </Typography>
 
         {/* Description */}
