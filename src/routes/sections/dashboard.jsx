@@ -106,6 +106,11 @@ const GradesListPage = lazy(() => import('src/pages/dashboard/grades/list'));
 const GradesCreatePage = lazy(() => import('src/pages/dashboard/grades/new'));
 const GradesEditPage = lazy(() => import('src/pages/dashboard/grades/edit'));
 
+const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/list'));
+const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
+const EdutainmentEditPage = lazy(() => import('src/pages/dashboard/edutainment/edit'));
+
+
 
 
 
@@ -655,6 +660,40 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+
+
+       {
+        path: 'edutainment',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EdutainmentListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EdutainmentCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EdutainmentEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
 
 
 

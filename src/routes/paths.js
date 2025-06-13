@@ -103,6 +103,12 @@ export const paths = {
       view: (id) => `${ROOTS.DASHBOARD}/students/${id}/view`,
     },
 
+     edutainment: {
+      root: `${ROOTS.DASHBOARD}/edutainment`,
+      new: `${ROOTS.DASHBOARD}/edutainment/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
+    },
+
    
    
 

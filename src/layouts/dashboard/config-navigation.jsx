@@ -191,6 +191,16 @@ export function useNavData() {
             // ],
           },
 
+             {
+            title: 'edutainment',
+            path: paths.dashboard.edutainment.root,
+            icon: ICONS.contact,
+            // children: [
+            //   { title: 'list', path: paths.dashboard.edutainment.root },
+            //   { title: 'create', path: paths.dashboard.edutainment.new },
+            // ],
+          },
+
 
 
 
