@@ -52,7 +52,7 @@ const SchoolsDropdown = forwardRef(({ value, onChange }, ref) => {
       <MenuItem key="ALL" value="ALL">ALL</MenuItem>,
       ...schools.map((school) => (
         <MenuItem key={school.id} value={school.id}>
-          {school.school_name}
+          {school.name}
         </MenuItem>
       )),
     ];

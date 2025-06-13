@@ -192,7 +192,26 @@ export default function StudentsNewEditForm({ currentStudent }) {
 
  
 
-//   const onSubmit = handleSubmit(async (data) => {
+
+  const fieldStyles = {
+    '& .MuiOutlinedInput-root': {
+      borderRadius: 2,
+      backgroundColor: 'background.paper',
+      '& fieldset': {
+        borderColor: 'grey.300',
+      },
+      '&:hover fieldset': {
+        borderColor: 'grey.400',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'primary.main',
+      },
+    },
+  };
+
+
+
+// const onSubmit = handleSubmit(async (data) => {
 //   try {
 //     if (!isEdit) {
 //       if (!file) {
@@ -225,16 +244,26 @@ export default function StudentsNewEditForm({ currentStudent }) {
 //       };
 
 //       const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
+//       console.log('UpdateStudent Response:', response);
 
-//       if (response && (response.success || response.status === 200)) {
+//       const success =
+//         response?.status === 200 ||
+//         response?.data?.success === true ||
+//         response?.success === true ||
+//         response?.data?.status === 'success';
+
+//       if (success) {
 //         enqueueSnackbar('Student updated successfully!', { variant: 'success' });
 //         router.push(paths.dashboard.students.root);
 //       } else {
 //         const errors = response?.response?.data?.data;
 
-//         if (errors) {
+//         if (errors && typeof errors === 'object') {
 //           Object.entries(errors).forEach(([field, message]) => {
-//             setError(field, { message: message[0], type: 'server' });
+//             setError(field, {
+//               message: Array.isArray(message) ? message[0] : message,
+//               type: 'server',
+//             });
 //           });
 //           enqueueSnackbar('Please correct the form errors', { variant: 'error' });
 //         } else {
@@ -243,9 +272,11 @@ export default function StudentsNewEditForm({ currentStudent }) {
 //       }
 //     }
 //   } catch (error) {
-//     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+//     console.error('Submit Error:', error);
+//     enqueueSnackbar(error?.message || 'Unexpected error occurred', { variant: 'error' });
 //   }
 // });
+
 const onSubmit = handleSubmit(async (data) => {
   try {
     if (!isEdit) {
@@ -256,15 +287,22 @@ const onSubmit = handleSubmit(async (data) => {
 
       const formData = new FormData();
       formData.append('file', file);
+
       const response = await CreateStudent(formData);
 
-      if (response && (response.success || response.status === 200)) {
+      const success =
+        response?.success === true ||
+        response?.status === 200 ||
+        response?.data?.success === true;
+
+      if (success) {
         enqueueSnackbar('Students uploaded successfully!', { variant: 'success' });
         router.push(paths.dashboard.students.root);
         setFile(null);
       } else {
         enqueueSnackbar(response?.error || 'Upload failed', { variant: 'error' });
       }
+
     } else {
       const formattedData = {
         ...data,
@@ -279,33 +317,42 @@ const onSubmit = handleSubmit(async (data) => {
       };
 
       const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
+      console.log('UpdateStudent Response:', response);
 
-      // ✅ Adjusted condition based on Axios or custom response structure
-      if (
+      const success =
+        response?.success === true ||
         response?.status === 200 ||
         response?.data?.success === true ||
-        response?.success === true
-      ) {
+        response?.data?.status === 'success';
+
+      if (success) {
         enqueueSnackbar('Student updated successfully!', { variant: 'success' });
         router.push(paths.dashboard.students.root);
       } else {
+        // Server-side validation error?
         const errors = response?.response?.data?.data;
 
         if (errors && typeof errors === 'object') {
           Object.entries(errors).forEach(([field, message]) => {
-            setError(field, { message: Array.isArray(message) ? message[0] : message, type: 'server' });
+            setError(field, {
+              message: Array.isArray(message) ? message[0] : message,
+              type: 'server',
+            });
           });
           enqueueSnackbar('Please correct the form errors', { variant: 'error' });
         } else {
+          console.error('Update failed response:', response);
           enqueueSnackbar(response?.error || 'Update failed', { variant: 'error' });
         }
       }
     }
   } catch (error) {
     console.error('Submit Error:', error);
-    enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+    enqueueSnackbar(error?.message || 'Unexpected error occurred', { variant: 'error' });
   }
 });
+
+
 
 
   const handleUpload = useCallback(
@@ -386,9 +433,9 @@ const onSubmit = handleSubmit(async (data) => {
                 </>
               ) : (
                 <>
-                  <RHFTextField name="school_id" label="School ID" />
-                  <RHFTextField name="student_id" label="Student ID" />
-                  <RHFTextField name="name" label="Name" />
+                  <RHFTextField name="school_id" label="School ID"  sx={fieldStyles}  />
+                  <RHFTextField name="student_id" label="Student ID"  sx={fieldStyles}  />
+                  <RHFTextField name="name" label="Name"  sx={fieldStyles}  />
 
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     {/* Image Field */}
@@ -397,7 +444,7 @@ const onSubmit = handleSubmit(async (data) => {
                       <RHFUpload
                         thumbnail
                         name="image"
-                        // maxSize={3145728}
+                        
                         onDrop={handleDrop}
                         onRemove={handleRemoveFile}
                         onRemoveAll={handleRemoveAllFiles}
@@ -406,20 +453,20 @@ const onSubmit = handleSubmit(async (data) => {
                     </Stack>
                   </Box>
 
-                  <RHFTextField name="father_name" label="Father's Name" />
-                  <RHFTextField name="mother_name" label="Mother's Name" />
+                  <RHFTextField name="father_name" label="Father's Name"  sx={fieldStyles}  />
+                  <RHFTextField name="mother_name" label="Mother's Name"  sx={fieldStyles}  />
                   <RHFTextField
                     name="dob"
                     label="Date of Birth"
                     type="date"
                     InputLabelProps={{ shrink: true }}
                   />
-                  <RHFTextField name="address.city" label="City" />
-                  <RHFTextField name="address.state" label="State" />
-                  <RHFTextField name="address.street" label="Street" />
-                  <RHFTextField name="address.pincode" label="Pincode" />
-                  <RHFTextField name="mobile" label="Mobile" />
-                  <RHFTextField name="grade" label="Grade" />
+                  <RHFTextField name="address.city" label="City"  sx={fieldStyles}  />
+                  <RHFTextField name="address.state" label="State"  sx={fieldStyles}  />
+                  <RHFTextField name="address.street" label="Street"  sx={fieldStyles}  />
+                  <RHFTextField name="address.pincode" label="Pincode"  sx={fieldStyles}  />
+                  <RHFTextField name="mobile" label="Mobile"  sx={fieldStyles}  />
+                  <RHFTextField name="grade" label="Grade"  sx={fieldStyles}  />
                   <FormControl fullWidth>
                     <InputLabel>Status</InputLabel>
                     <Select native {...methods.register('status')}>

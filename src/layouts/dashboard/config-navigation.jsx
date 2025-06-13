@@ -108,29 +108,7 @@ export function useNavData() {
 
 
           
-          // {
-          //   title: 'News',
-          //   path: paths.dashboard.news.root,
-          //   icon: ICONS.contact,
-          //   children: [
-          //     {
-          //       title: 'News',
-          //       path: paths.dashboard.news.root,
-          //       // children: [
-          //       //   { title: 'List', path: paths.dashboard.news.root },
-          //       //   { title: 'Create', path: paths.dashboard.news.new },
-          //       // ],
-          //     },
-          //     {
-          //       title: 'News Categories',
-          //       path: paths.dashboard.categories.root,
-          //       // children: [
-          //       //   { title: 'List', path: paths.dashboard.categories.root },
-          //       //   { title: 'Create', path: paths.dashboard.categories.new },
-          //       // ],
-          //     },
-          //   ],
-          // },
+     
           
 
          
@@ -199,6 +177,31 @@ export function useNavData() {
             //   { title: 'list', path: paths.dashboard.edutainment.root },
             //   { title: 'create', path: paths.dashboard.edutainment.new },
             // ],
+          },
+
+
+               {
+            title: 'News',
+            path: paths.dashboard.news.root,
+            icon: ICONS.contact,
+            children: [
+              {
+                title: 'News',
+                path: paths.dashboard.news.root,
+                // children: [
+                //   { title: 'List', path: paths.dashboard.news.root },
+                //   { title: 'Create', path: paths.dashboard.news.new },
+                // ],
+              },
+              {
+                title: 'News Categories',
+                path: paths.dashboard.categories.root,
+                // children: [
+                //   { title: 'List', path: paths.dashboard.categories.root },
+                //   { title: 'Create', path: paths.dashboard.categories.new },
+                // ],
+              },
+            ],
           },
 
 

@@ -108,6 +108,17 @@ export const paths = {
       new: `${ROOTS.DASHBOARD}/edutainment/new`,
       edit: (id) => `${ROOTS.DASHBOARD}/edutainment/${id}/edit`,
     },
+       news: {
+      root: `${ROOTS.DASHBOARD}/news`,
+      new: `${ROOTS.DASHBOARD}/news/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/news/${id}/edit`,
+    },
+
+    categories: {
+      root: `${ROOTS.DASHBOARD}/categories`,
+      new: `${ROOTS.DASHBOARD}/categories/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/categories/${id}/edit`,
+    },
 
    
    

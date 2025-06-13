@@ -24,7 +24,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import request from 'src/api/request';
-import { CreateEdutainment, UpdateEdutainment } from 'src/api/edutainment';
+import { CreateEdutainment , UpdateEdutainment } from 'src/api/edutainment';
 
 // API and Services
 
@@ -83,6 +83,22 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
   } = methods;
 
   const values = watch();
+
+    const fieldStyles = {
+    '& .MuiOutlinedInput-root': {
+      borderRadius: 2,
+      backgroundColor: 'background.paper',
+      '& fieldset': {
+        borderColor: 'grey.300',
+      },
+      '&:hover fieldset': {
+        borderColor: 'grey.400',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'primary.main',
+      },
+    },
+  };
 
   const onSubmit = handleSubmit(async (data) => {
     // Conditional validation
@@ -229,7 +245,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                     md: 'repeat(2, 1fr)', // Three columns on medium and up
                   }}
                 >
-                  <RHFSelect name="feed_type" label="Type">
+                  <RHFSelect name="feed_type" label="Type"  sx={fieldStyles}>
                     <MenuItem value="Text">Text</MenuItem>
                     <MenuItem value="Image">Image</MenuItem>
                     <MenuItem value="Video">Video</MenuItem>
@@ -237,7 +253,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   </RHFSelect>
 
                   {currentEdutainment && (
-                    <RHFSelect name="status" label="Status">
+                    <RHFSelect name="status" label="Status"  sx={fieldStyles}>
                       <MenuItem value="Approved">Approved</MenuItem>
                       <MenuItem value="Rejected">Rejected</MenuItem>
                       <MenuItem value="Pending">Pending</MenuItem>
@@ -248,7 +264,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                 {/* Language, Heading, Description */}
                 <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                   <Stack spacing={2}>
-                    <RHFSelect name="language" label="Language">
+                    <RHFSelect name="language" label="Language"  sx={fieldStyles}>
                       <MenuItem value="Telugu">Telugu</MenuItem>
                       <MenuItem value="Hindi">Hindi</MenuItem>
                       <MenuItem value="English">English</MenuItem>
@@ -260,7 +276,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
 
                 {/* Schools Dropdown */}
                 <Box>
-                  <Typography variant="subtitle2">Select Schools</Typography>
+                  <Typography variant="subtitle2" >Select Schools</Typography>
                   <SchoolsDropdown
                     value={values.school_ids}
                     onChange={(selectedSchools) => setValue('school_ids', selectedSchools)}
@@ -334,7 +350,7 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                   <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
                     <Stack spacing={1.5}>
                       <Typography variant="subtitle2">Youtube Video</Typography>
-                      <RHFTextField name="youtube_video" label="Video URL or ID" />
+                      <RHFTextField name="youtube_video" label="Video URL or ID"  sx={fieldStyles} />
                     </Stack>
                   </Box>
                 )}
@@ -345,7 +361,8 @@ export default function EdutainmentNewEditForm({ currentEdutainment }) {
                       name="duration"
                       label="Duration (in seconds)"
                       type="number"
-                      InputProps={{ inputProps: { min: 0 } }} // Restrict to non-negative values
+                      InputProps={{ inputProps: { min: 0 } }} 
+                       sx={fieldStyles}// Restrict to non-negative values
                     />
                   </Box>
                 )}

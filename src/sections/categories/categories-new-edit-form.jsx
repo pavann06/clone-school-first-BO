@@ -70,56 +70,6 @@ export default function CategoriesNewEditForm({ currentCategory }) {
 
 
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     const payload = {
-  //       ...data,
-  //       image: data.image || null,
-  //     };
-
-  //     const response = currentCategory
-  //       ? await UpdateCategory({ ...payload, id: currentCategory.id })
-  //       : await CreateCategory(payload);
-
-  //     if (response?.success) {
-  //       enqueueSnackbar(currentCategory ? 'Update success!' : 'Create success!');
-  //       router.push(paths.dashboard.categories.root);
-  //       reset();
-  //       return response;
-  //     }
-
-  //     console.log('API Error Response:', response);
-
-  //     // Extract error message from API response
-  //     let errorMessage = 'Operation failed';
-
-  //     if (response?.data?.description) {
-  //       errorMessage = response.data.description;
-  //     } else if (response?.data) {
-  //       errorMessage = JSON.stringify(response.data);
-  //     }
-
-  //     enqueueSnackbar(errorMessage, { variant: 'error' });
-
-  //     return response;
-  //   } catch (error) {
-  //     console.error('Axios Error:', error);
-
-  //     let errorMessage = 'Operation failed';
-
-  //     if (error.response?.data?.description) {
-  //       errorMessage = error.response.data.description;
-  //     } else if (error.response?.data) {
-  //       errorMessage = JSON.stringify(error.response.data);
-  //     } else if (error.message) {
-  //       errorMessage = error.message;
-  //     }
-
-  //     enqueueSnackbar(errorMessage, { variant: 'error' });
-  //     return null;
-  //   }
-  // });
-
 
   const onSubmit = handleSubmit(async (data) => {
     try {
