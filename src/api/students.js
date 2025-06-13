@@ -6,7 +6,7 @@ export const CreateStudent = async (form_data) => {
   try {
     console.info('FEED-CREATE-FORM-DATA', form_data);
 
-    const resp = await request.post('backoffice/students', form_data);
+    const resp = await request.post('backoffice/upload/student', form_data);
 
     return resp;
   } catch (error) {
@@ -26,9 +26,9 @@ export const UpdateStudent = async (form_data) => {
       }
     });
 
-    const resp = await request.put(`backoffice/students/${form_data.id}`, form_data);
+    const resp = await request.put(`backoffice/student/${form_data.id}`, form_data);
 
-    return resp;
+    return resp.data;
   } catch (error) {
     console.error(error);
   }

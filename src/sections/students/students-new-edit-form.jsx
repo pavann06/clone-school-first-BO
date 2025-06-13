@@ -1,99 +1,438 @@
+// import React, { useState } from 'react';
+// import PropTypes from 'prop-types';
+// import { useSnackbar } from 'notistack';
+// import Card from '@mui/material/Card';
+// import Stack from '@mui/material/Stack';
+// import Grid from '@mui/material/Unstable_Grid2';
+// import CardHeader from '@mui/material/CardHeader';
+// import LoadingButton from '@mui/lab/LoadingButton';
+// import { useForm } from 'react-hook-form';
+// import FormProvider from 'src/components/hook-form';
+// import { useRouter } from 'src/routes/hooks';
+// import { paths } from 'src/routes/paths';
+// import { CreateStudent, UpdateStudent } from 'src/api/students';
+
+// export default function StudentsNewEditForm() {
+//   const router = useRouter();
+//   const { enqueueSnackbar } = useSnackbar();
+//   const [file, setFile] = useState(null);
+
+//   const methods = useForm();
+//   const { handleSubmit, formState: { isSubmitting }, reset } = methods;
+
+//   const onSubmit = handleSubmit(async () => {
+//     try {
+//       if (!file) {
+//         enqueueSnackbar('Please upload an Excel file', { variant: 'warning' });
+//         return;
+//       }
+
+//       const formData = new FormData();
+//       formData.append('file', file); // The backend expects this key
+
+//       const response = await CreateStudent(formData);
+
+//       console.log('API Response:', response);
+
+//       if (response?.success) {
+//         enqueueSnackbar('Excel uploaded successfully!', { variant: 'success' });
+//         router.push(paths.dashboard.students.root);
+//         reset();
+//         setFile(null);
+//       } else {
+//         const errors = response?.response?.data?.data;
+//         if (errors) {
+//           enqueueSnackbar('Excel upload failed. Check the file format.', { variant: 'error' });
+//         } else {
+//           enqueueSnackbar(response?.error || 'Upload failed', { variant: 'error' });
+//         }
+//       }
+//     } catch (error) {
+//       console.error('Upload error:', error);
+//       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+//     }
+//   });
+
+//   return (
+//     <FormProvider methods={methods} onSubmit={onSubmit}>
+//       <Grid container spacing={3} justifyContent="center" alignItems="center">
+//         <Grid xs={12} md={8}>
+//           <Card>
+//             <CardHeader title="Upload Students Excel Sheet" />
+//             <Stack spacing={3} sx={{ p: 3 }}>
+//               <input
+//                 type="file"
+//                 accept=".xls,.xlsx"
+//                 onChange={(e) => setFile(e.target.files[0])}
+//               />
+//               <LoadingButton
+//                 type="submit"
+//                 variant="contained"
+//                 size="large"
+//                 loading={isSubmitting}
+//               >
+//                 Upload Excel
+//               </LoadingButton>
+//             </Stack>
+//           </Card>
+//         </Grid>
+//       </Grid>
+//     </FormProvider>
+//   );
+// }
+
+// StudentsNewEditForm.propTypes = {
+//   // currentStudent: PropTypes.object,
+// };
+
+
+
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useMemo } from 'react';
+import Typography from '@mui/material/Typography';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useSnackbar } from 'notistack';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
+import {
+  Card,
+  Stack,
+  Box,
+  Grid,
+  CardHeader,
+  TextField,
+  MenuItem,
+  InputLabel,
+  Select,
+  FormControl,
+} from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFUpload } from 'src/components/hook-form';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
+import request from 'src/api/request';
 import { CreateStudent, UpdateStudent } from 'src/api/students';
 
 export default function StudentsNewEditForm({ currentStudent }) {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const isEdit = Boolean(currentStudent);
+  const [file, setFile] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const StudentSchema = Yup.object().shape({
-    student_first_name: Yup.string().required('First name is required'),
-    student_last_name: Yup.string().required('Last name is required'),
-    school_name: Yup.string().required('School name is required'),
-    mobile: Yup.string()
-      .matches(/^\d{10}$/, 'Mobile number must be 10 digits')
-      .required('Mobile number is required'),
-  });
-
-  const defaultValues = useMemo(
-    () => ({
-      student_first_name: currentStudent?.student_first_name || '',
-      student_last_name: currentStudent?.student_last_name || '',
-      school_name: currentStudent?.school_name || '',
-      mobile: currentStudent?.mobile || '',
-    }),
-    [currentStudent]
+  const StudentSchema = Yup.object().shape(
+    isEdit
+      ? {
+          school_id: Yup.string().required(),
+          student_id: Yup.string().required(),
+          name: Yup.string().required(),
+          image: Yup.string().url().nullable(),
+          father_name: Yup.string().required(),
+          mother_name: Yup.string().required(),
+          dob: Yup.string().required(),
+          mobile: Yup.string().required(),
+          grade: Yup.string().required(),
+          status: Yup.string().required(),
+          address: Yup.object().shape({
+            city: Yup.string().required('City is required'),
+            state: Yup.string().required('State is required'),
+            street: Yup.string().required('Street is required'),
+            pincode: Yup.string()
+              .matches(/^\d{6}$/, 'Pincode must be 6 digits')
+              .required('Pincode is required'),
+          }),
+        }
+      : {} // No validation for Excel upload
   );
 
-  const methods = useForm({ resolver: yupResolver(StudentSchema), defaultValues });
-  const { reset, handleSubmit, formState: { isSubmitting } } = methods;
+  const defaultValues = useMemo(
+    () =>
+      isEdit
+        ? {
+            school_id: currentStudent?.school_id || '',
+            student_id: currentStudent?.student_id || '',
+            name: currentStudent?.name || '',
+            image: currentStudent?.image || '',
+            father_name: currentStudent?.father_name || '',
+            mother_name: currentStudent?.mother_name || '',
+            dob: currentStudent?.dob || '',
+            mobile: currentStudent?.mobile || '',
+            grade: currentStudent?.grade || '',
+            status: currentStudent?.status || '',
+            address: {
+              city: currentStudent?.address?.city || '',
+              state: currentStudent?.address?.state || '',
+              street: currentStudent?.address?.street || '',
+              pincode: currentStudent?.address?.pincode || '',
+            },
+          }
+        : {},
+    [currentStudent, isEdit]
+  );
+
+  const methods = useForm({
+    resolver: yupResolver(StudentSchema),
+    defaultValues,
+  });
+
+  const {
+    handleSubmit,
+    reset,
+    setError,
+    setValue,
+    control,
+    formState: { isSubmitting },
+  } = methods;
+
+  useEffect(() => {
+    if (isEdit && currentStudent) {
+      reset(defaultValues);
+    }
+  }, [isEdit, currentStudent, defaultValues, reset]);
 
  
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      const response = currentStudent
-        ? await UpdateStudent({ ...data, id: currentStudent.id })
-        : await CreateStudent(data);
-  
-      console.log("Full API Response:", response); // Debugging
-  
-      if (response?.success) {
-        enqueueSnackbar(currentStudent ? 'Update success!' : 'Create success!', { variant: 'success' });
+
+//   const onSubmit = handleSubmit(async (data) => {
+//   try {
+//     if (!isEdit) {
+//       if (!file) {
+//         enqueueSnackbar('Please upload an Excel file', { variant: 'warning' });
+//         return;
+//       }
+
+//       const formData = new FormData();
+//       formData.append('file', file);
+//       const response = await CreateStudent(formData);
+
+//       if (response && (response.success || response.status === 200)) {
+//         enqueueSnackbar('Students uploaded successfully!', { variant: 'success' });
+//         router.push(paths.dashboard.students.root);
+//         setFile(null);
+//       } else {
+//         enqueueSnackbar(response?.error || 'Upload failed', { variant: 'error' });
+//       }
+//     } else {
+//       const formattedData = {
+//         ...data,
+//         address: [
+//           {
+//             city: data.address.city,
+//             state: data.address.state,
+//             street: data.address.street,
+//             pincode: data.address.pincode,
+//           },
+//         ],
+//       };
+
+//       const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
+
+//       if (response && (response.success || response.status === 200)) {
+//         enqueueSnackbar('Student updated successfully!', { variant: 'success' });
+//         router.push(paths.dashboard.students.root);
+//       } else {
+//         const errors = response?.response?.data?.data;
+
+//         if (errors) {
+//           Object.entries(errors).forEach(([field, message]) => {
+//             setError(field, { message: message[0], type: 'server' });
+//           });
+//           enqueueSnackbar('Please correct the form errors', { variant: 'error' });
+//         } else {
+//           enqueueSnackbar(response?.error || 'Update failed', { variant: 'error' });
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+//   }
+// });
+const onSubmit = handleSubmit(async (data) => {
+  try {
+    if (!isEdit) {
+      if (!file) {
+        enqueueSnackbar('Please upload an Excel file', { variant: 'warning' });
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await CreateStudent(formData);
+
+      if (response && (response.success || response.status === 200)) {
+        enqueueSnackbar('Students uploaded successfully!', { variant: 'success' });
         router.push(paths.dashboard.students.root);
-        reset();
-        return response;
+        setFile(null);
+      } else {
+        enqueueSnackbar(response?.error || 'Upload failed', { variant: 'error' });
       }
-  
-      // Handle field-specific errors
-      const errors = response?.response?.data?.data;
-      if (errors) {
-        Object.entries(errors).forEach(([field, messages]) => {
-          if (methods.setError) {
-            methods.setError(field, {
-              type: 'server',
-              message: messages[0], // First error message
-            });
-          }
-        });
-        enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
-        return null;
+    } else {
+      const formattedData = {
+        ...data,
+        address: [
+          {
+            city: data.address.city,
+            state: data.address.state,
+            street: data.address.street,
+            pincode: data.address.pincode,
+          },
+        ],
+      };
+
+      const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
+
+      // ✅ Adjusted condition based on Axios or custom response structure
+      if (
+        response?.status === 200 ||
+        response?.data?.success === true ||
+        response?.success === true
+      ) {
+        enqueueSnackbar('Student updated successfully!', { variant: 'success' });
+        router.push(paths.dashboard.students.root);
+      } else {
+        const errors = response?.response?.data?.data;
+
+        if (errors && typeof errors === 'object') {
+          Object.entries(errors).forEach(([field, message]) => {
+            setError(field, { message: Array.isArray(message) ? message[0] : message, type: 'server' });
+          });
+          enqueueSnackbar('Please correct the form errors', { variant: 'error' });
+        } else {
+          enqueueSnackbar(response?.error || 'Update failed', { variant: 'error' });
+        }
       }
-  
-      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
-      return response;
-    } catch (error) {
-      console.error('Error:', error);
-      enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
-      return null;
     }
-  });
-  
+  } catch (error) {
+    console.error('Submit Error:', error);
+    enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
+  }
+});
+
+
+  const handleUpload = useCallback(
+    async (uploadFile) => {
+      try {
+        setIsUploading(true);
+        const payload = {
+          files: uploadFile,
+        };
+        const response = await request.UploadFiles(payload);
+
+        if (response.success) {
+          return response.data[0].file_url;
+        }
+        throw new Error('Upload failed');
+      } catch (error) {
+        enqueueSnackbar('File upload failed', { variant: 'error' });
+        return null;
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [enqueueSnackbar]
+  );
+
+  const handleDrop = useCallback(
+    async (acceptedFiles) => {
+      const droppedFile = acceptedFiles[0];
+      if (droppedFile) {
+        const fileWithPreview = Object.assign(droppedFile, {
+          preview: URL.createObjectURL(droppedFile),
+        });
+
+        if (droppedFile.type.startsWith('image/')) {
+          setValue('image', fileWithPreview);
+          const uploadedUrl = await handleUpload(droppedFile);
+          if (uploadedUrl) {
+            setValue('image', uploadedUrl);
+            enqueueSnackbar('Image uploaded successfully', { variant: 'success' });
+          }
+        } else if (droppedFile.type.startsWith('video/')) {
+          setValue('video', fileWithPreview);
+          const uploadedUrl = await handleUpload(droppedFile);
+          if (uploadedUrl) {
+            setValue('video', uploadedUrl);
+            enqueueSnackbar('Video uploaded successfully', { variant: 'success' });
+          }
+        } else {
+          enqueueSnackbar('Unsupported file type', { variant: 'error' });
+        }
+      }
+    },
+    [setValue, enqueueSnackbar, handleUpload]
+  );
+
+  const handleRemoveFile = useCallback(() => {
+    setValue('image', null); // Remove the image
+  }, [setValue]);
+
+  const handleRemoveAllFiles = useCallback(() => {
+    setValue('image', null); // Reset to no image
+  }, [setValue]);
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3} justifyContent="center" alignItems="center">
         <Grid xs={12} md={8}>
           <Card>
-            <CardHeader title="Student Details" />
+            <CardHeader title={isEdit ? 'Edit Student' : 'Upload Students via Excel'} />
             <Stack spacing={3} sx={{ p: 3 }}>
-              <RHFTextField name="student_first_name" label="First Name" />
-              <RHFTextField name="student_last_name" label="Last Name" />
-              <RHFTextField name="school_name" label="School Name" />
-              <RHFTextField name="mobile" label="Mobile Number" />
+              {!isEdit ? (
+                <>
+                  <input
+                    type="file"
+                    accept=".xls,.xlsx"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </>
+              ) : (
+                <>
+                  <RHFTextField name="school_id" label="School ID" />
+                  <RHFTextField name="student_id" label="Student ID" />
+                  <RHFTextField name="name" label="Name" />
+
+                  <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+                    {/* Image Field */}
+                    <Stack spacing={1.5}>
+                      <Typography variant="subtitle2"> Image</Typography>
+                      <RHFUpload
+                        thumbnail
+                        name="image"
+                        // maxSize={3145728}
+                        onDrop={handleDrop}
+                        onRemove={handleRemoveFile}
+                        onRemoveAll={handleRemoveAllFiles}
+                        isLoading={isUploading}
+                      />
+                    </Stack>
+                  </Box>
+
+                  <RHFTextField name="father_name" label="Father's Name" />
+                  <RHFTextField name="mother_name" label="Mother's Name" />
+                  <RHFTextField
+                    name="dob"
+                    label="Date of Birth"
+                    type="date"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                  <RHFTextField name="address.city" label="City" />
+                  <RHFTextField name="address.state" label="State" />
+                  <RHFTextField name="address.street" label="Street" />
+                  <RHFTextField name="address.pincode" label="Pincode" />
+                  <RHFTextField name="mobile" label="Mobile" />
+                  <RHFTextField name="grade" label="Grade" />
+                  <FormControl fullWidth>
+                    <InputLabel>Status</InputLabel>
+                    <Select native {...methods.register('status')}>
+                     
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </Select>
+                  </FormControl>
+                </>
+              )}
+
               <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
-                {currentStudent ? 'Save Changes' : 'Create Student'}
+                {isEdit ? 'Save Changes' : 'Upload Excel'}
               </LoadingButton>
             </Stack>
           </Card>
