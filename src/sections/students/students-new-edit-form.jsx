@@ -211,71 +211,7 @@ export default function StudentsNewEditForm({ currentStudent }) {
 
 
 
-// const onSubmit = handleSubmit(async (data) => {
-//   try {
-//     if (!isEdit) {
-//       if (!file) {
-//         enqueueSnackbar('Please upload an Excel file', { variant: 'warning' });
-//         return;
-//       }
 
-//       const formData = new FormData();
-//       formData.append('file', file);
-//       const response = await CreateStudent(formData);
-
-//       if (response && (response.success || response.status === 200)) {
-//         enqueueSnackbar('Students uploaded successfully!', { variant: 'success' });
-//         router.push(paths.dashboard.students.root);
-//         setFile(null);
-//       } else {
-//         enqueueSnackbar(response?.error || 'Upload failed', { variant: 'error' });
-//       }
-//     } else {
-//       const formattedData = {
-//         ...data,
-//         address: [
-//           {
-//             city: data.address.city,
-//             state: data.address.state,
-//             street: data.address.street,
-//             pincode: data.address.pincode,
-//           },
-//         ],
-//       };
-
-//       const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
-//       console.log('UpdateStudent Response:', response);
-
-//       const success =
-//         response?.status === 200 ||
-//         response?.data?.success === true ||
-//         response?.success === true ||
-//         response?.data?.status === 'success';
-
-//       if (success) {
-//         enqueueSnackbar('Student updated successfully!', { variant: 'success' });
-//         router.push(paths.dashboard.students.root);
-//       } else {
-//         const errors = response?.response?.data?.data;
-
-//         if (errors && typeof errors === 'object') {
-//           Object.entries(errors).forEach(([field, message]) => {
-//             setError(field, {
-//               message: Array.isArray(message) ? message[0] : message,
-//               type: 'server',
-//             });
-//           });
-//           enqueueSnackbar('Please correct the form errors', { variant: 'error' });
-//         } else {
-//           enqueueSnackbar(response?.error || 'Update failed', { variant: 'error' });
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     console.error('Submit Error:', error);
-//     enqueueSnackbar(error?.message || 'Unexpected error occurred', { variant: 'error' });
-//   }
-// });
 
 const onSubmit = handleSubmit(async (data) => {
   try {
@@ -316,35 +252,63 @@ const onSubmit = handleSubmit(async (data) => {
         ],
       };
 
+      // const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
+      // console.log('UpdateStudent Response:', response);
+
+      // const success =
+      //   response?.success === true ||
+      //   response?.status === 200 ||
+      //   response?.data?.success === true ||
+      //   response?.data?.status === 'success';
+
+      // if (success) {
+      //   enqueueSnackbar('Student updated successfully!', { variant: 'success' });
+      //   router.push(paths.dashboard.students.root);
+      // } else {
+      //   // Server-side validation error?
+      //   const errors = response?.response?.data?.data;
+
+      //   if (errors && typeof errors === 'object') {
+      //     Object.entries(errors).forEach(([field, message]) => {
+      //       setError(field, {
+      //         message: Array.isArray(message) ? message[0] : message,
+      //         type: 'server',
+      //       });
+      //     });
+      //     enqueueSnackbar('Please correct the form errors', { variant: 'error' });
+      //   } else {
+      //     console.error('Update failed response:', response);
+      //     enqueueSnackbar(response?.error || 'Update failed', { variant: 'error' });
+      //   }
+      // }
       const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
-      console.log('UpdateStudent Response:', response);
+console.log('UpdateStudent Response:', response);
 
-      const success =
-        response?.success === true ||
-        response?.status === 200 ||
-        response?.data?.success === true ||
-        response?.data?.status === 'success';
+const success =
+  response?.success === true ||
+  response?.status === 'success' || 
+  response?.message?.toLowerCase()?.includes('updated'); // optional fallback
 
-      if (success) {
-        enqueueSnackbar('Student updated successfully!', { variant: 'success' });
-        router.push(paths.dashboard.students.root);
-      } else {
-        // Server-side validation error?
-        const errors = response?.response?.data?.data;
+if (success) {
+  enqueueSnackbar('Student updated successfully!', { variant: 'success' });
+  router.push(paths.dashboard.students.root);
+} else {
+  const errors = response?.response?.data?.data;
 
-        if (errors && typeof errors === 'object') {
-          Object.entries(errors).forEach(([field, message]) => {
-            setError(field, {
-              message: Array.isArray(message) ? message[0] : message,
-              type: 'server',
-            });
-          });
-          enqueueSnackbar('Please correct the form errors', { variant: 'error' });
-        } else {
-          console.error('Update failed response:', response);
-          enqueueSnackbar(response?.error || 'Update failed', { variant: 'error' });
-        }
-      }
+  if (errors && typeof errors === 'object') {
+    Object.entries(errors).forEach(([field, message]) => {
+      setError(field, {
+        message: Array.isArray(message) ? message[0] : message,
+        type: 'server',
+      });
+    });
+    enqueueSnackbar('Please correct the form errors', { variant: 'error' });
+  } else {
+    console.error('Update failed response:', response);
+    enqueueSnackbar(response?.error || 'Update failed', { variant: 'error' });
+  }
+}
+
     }
   } catch (error) {
     console.error('Submit Error:', error);
