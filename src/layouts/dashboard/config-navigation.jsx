@@ -204,6 +204,75 @@ export function useNavData() {
             ],
           },
 
+              {
+            title: 'calender',
+            path: paths.dashboard.calender.root,
+            icon: ICONS.contact,
+            
+          },
+
+              {
+            title: 'Offine Courses',
+            path: paths.dashboard.offlinecourse.root,
+            icon: ICONS.contact,
+            children: [
+              {
+                title: 'Offline Courses',
+                path: paths.dashboard.offlinecourse.root,
+                // children: [
+                //   { title: 'List', path: paths.dashboard.offlinecourse.root },
+                //   { title: 'Create', path: paths.dashboard.offlinecourse.new },
+                // ],
+              },
+              {
+                title: 'Host',
+                path: paths.dashboard.host.root,
+              // children: [
+                //   { title: 'List', path: paths.dashboard.host.root },
+                //   { title: 'Create', path: paths.dashboard.host.new },
+                // ],
+              },
+              {
+                title: 'Webinar',
+                path: paths.dashboard.webinar.root,
+                
+              },
+            ],
+          },
+
+            {
+            title: 'Online Courses',
+            path: paths.dashboard.onlinecourses.root,
+            icon: ICONS.contact,
+           
+          },
+
+                {
+            title: 'Vocabee',
+            path: paths.dashboard.word.root,
+            icon: ICONS.contact,
+            children: [
+              {
+                title: 'Word',
+                path: paths.dashboard.word.root,
+                // children: [
+                //   { title: 'List', path: paths.dashboard.word.root },
+                //   { title: 'Create', path: paths.dashboard.word.new },
+                  
+                // ],
+              },
+              {
+                title: 'Competition',
+                path: paths.dashboard.competition.root,
+                // children: [
+                //   { title: 'List', path: paths.dashboard.competition.root },
+                //   { title: 'Create', path: paths.dashboard.competition.new },
+                 
+                // ],
+              },
+            ],
+          },
+
 
 
 

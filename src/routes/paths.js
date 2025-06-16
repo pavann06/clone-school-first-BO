@@ -120,6 +120,92 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/categories/${id}/edit`,
     },
 
+       calender: {
+      root: `${ROOTS.DASHBOARD}/calender`,
+      new: `${ROOTS.DASHBOARD}/calender/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/calender/${id}/edit`,
+    },
+
+
+      offlinecourse: {
+      root: `${ROOTS.DASHBOARD}/offlinecourse`,
+      new: `${ROOTS.DASHBOARD}/offlinecourse/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/offlinecourse/${id}/edit`,
+    },
+
+    host: {
+      root: `${ROOTS.DASHBOARD}/host`,
+      new: `${ROOTS.DASHBOARD}/host/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/host/${id}/edit`,
+    },
+
+    webinar: {
+      root: `${ROOTS.DASHBOARD}/webinar`,
+      new: `${ROOTS.DASHBOARD}/webinar/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/webinar/${id}/edit`,
+    },
+
+    onlinecourses: {
+      root: `${ROOTS.DASHBOARD}/onlinecourses`,
+      new: `${ROOTS.DASHBOARD}/onlinecourses/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/onlinecourses/${id}/edit`,
+    },
+
+
+        word: {
+      root: `${ROOTS.DASHBOARD}/word`,
+      new: `${ROOTS.DASHBOARD}/word/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/word/${id}/edit`,
+    },
+
+    // competition: {
+    //   root: `${ROOTS.DASHBOARD}/competition`,
+    //   new: `${ROOTS.DASHBOARD}/competition/new`,
+    //   edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
+    // },
+
+    competition: {
+      root: `${ROOTS.DASHBOARD}/competition`,
+      new: `${ROOTS.DASHBOARD}/competition/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/competition/${id}/edit`,
+      view: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`,
+      competition_words: {
+        root: (id) => `${ROOTS.DASHBOARD}/competition/${id}/competition_words`,
+        // new: (id) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/new`,
+        // edit: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/edit`,
+        // view: (id, feedId) => `${ROOTS.DASHBOARD}/competition/${id}/feeds/${feedId}/view`,
+      },
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    
    
 

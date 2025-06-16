@@ -2,11 +2,11 @@ import { Helmet } from 'react-helmet-async';
 
 import { useParams } from 'src/routes/hooks';
 
-import { CompetitionEditView } from 'src/sections/competition/view';
+import { OfflineCourseEditView } from 'src/sections/offline-course/view';
 
 // ----------------------------------------------------------------------
 
-export default function EdutainmentEditPage() {
+export default function OfflineCourseEditPage() {
   const params = useParams();
 
   const { id } = params;
@@ -14,10 +14,10 @@ export default function EdutainmentEditPage() {
   return (
     <>
       <Helmet>
-        <title> Competition Edit</title>
+        <title> Courses Edit</title>
       </Helmet>
 
-      <CompetitionEditView id={`${id}`} />
+      <OfflineCourseEditView id={`${id}`} />
     </>
   );
 }

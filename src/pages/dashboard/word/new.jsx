@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { CompetitionListView } from 'src/sections/competition/view';
+import { WordCreateView } from 'src/sections/word/view';
 
 // ----------------------------------------------------------------------
 
-export default function CompetitionListPage() {
+export default function WordCreatePage() {
   return (
     <>
       <Helmet>
-        <title>Competition List</title>
+        <title> New Word </title>
       </Helmet>
 
-      <CompetitionListView />
+      <WordCreateView />
     </>
   );
 }

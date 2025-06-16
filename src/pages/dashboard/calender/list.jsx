@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { CompetitionListView } from 'src/sections/competition/view';
+import { CalenderListView } from 'src/sections/calenders/view';
 
 // ----------------------------------------------------------------------
 
-export default function CompetitionListPage() {
+export default function CalenderListPage() {
   return (
     <>
       <Helmet>
-        <title>Competition List</title>
+        <title>Calender List</title>
       </Helmet>
 
-      <CompetitionListView />
+      <CalenderListView />
     </>
   );
 }

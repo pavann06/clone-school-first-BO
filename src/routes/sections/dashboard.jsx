@@ -110,6 +110,30 @@ const EdutainmentListPage = lazy(() => import('src/pages/dashboard/edutainment/l
 const EdutainmentCreatePage = lazy(() => import('src/pages/dashboard/edutainment/new'));
 const EdutainmentEditPage = lazy(() => import('src/pages/dashboard/edutainment/edit'));
 
+const CalenderListPage = lazy(() => import('src/pages/dashboard/calender/list'));
+const CalenderCreatePage = lazy(() => import('src/pages/dashboard/calender/new'));
+const CalenderEditPage = lazy(() => import('src/pages/dashboard/calender/edit'));
+
+
+const OfflineCourseListPage = lazy(() => import('src/pages/dashboard/offline-course/list'));
+const OfflineCourseCreatePage = lazy(() => import('src/pages/dashboard/offline-course/new'));
+const OfflineCourseEditPage = lazy(() => import('src/pages/dashboard/offline-course/edit'));
+
+
+
+const OfflineCoursesListPage = lazy(() => import('src/pages/dashboard/offlinecourses/list'));
+const OfflineCoursesCreatePage = lazy(() => import('src/pages/dashboard/offlinecourses/new'));
+const OfflineCoursesEditPage = lazy(() => import('src/pages/dashboard/offlinecourses/edit'));
+
+const WordListPage = lazy(()=> import('src/pages/dashboard/word/list'));
+const WordCreatePage = lazy(() => import('src/pages/dashboard/word/new'));
+const WordEditPage = lazy(()=> import('src/pages/dashboard/word/edit'));
+
+const CompetitionListPage = lazy(()=> import('src/pages/dashboard/competition/list'));
+const CompetitionCreatePage = lazy(()=> import('src/pages/dashboard/competition/new'));
+const CompetitionEditPage = lazy(()=> import('src/pages/dashboard/competition/edit'));
+const CompetitionWordsViewPage = lazy(()=> import('src/pages/dashboard/competition/words'));
+
 
 
 
@@ -695,6 +719,172 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+       {
+        path: 'calender',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CalenderListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CalenderCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CalenderEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+
+       {
+        path: 'offlinecourse',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCourseListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCourseCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCourseEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+
+       {
+        path: 'onlinecourses',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCoursesListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCoursesCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <OfflineCoursesEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+        
+      {
+        path: 'word',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WordListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WordCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <WordEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: 'competition',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/competition_words',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <CompetitionWordsViewPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+
 
 
 

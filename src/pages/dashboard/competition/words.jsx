@@ -1,24 +1,24 @@
-// import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 
-// import { useParams } from 'src/routes/hooks';
+import { useParams } from 'src/routes/hooks';
 
-// import { CompetionWordsListView } from 'src/sections/competition/view';
+import { CompetionWordsListView } from 'src/sections/competition/view';
 
-// // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 
-// export default function CompetitionWordsViewPage() {
-//   const params = useParams();
+export default function CompetitionWordsViewPage() {
+  const params = useParams();
 
-//   const { id  } = params;
+  const { id  } = params;
 
-//   return (
-//     <>
-//       <Helmet>
-//         <title> Words List</title>
-//       </Helmet>
+  return (
+    <>
+      <Helmet>
+        <title> Words List</title>
+      </Helmet>
 
-//       <CompetionWordsListView competitionId={String(id)} />
-//     </>
-//   );
-// }
+      <CompetionWordsListView competitionId={String(id)} />
+    </>
+  );
+}
 
