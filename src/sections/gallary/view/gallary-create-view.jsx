@@ -5,34 +5,34 @@ import { paths } from 'src/routes/paths';
 import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import OfflineCourseNewEditForm from '../offline-course-new-edit-form';
+import GallaryNewEditForm from '../gallary-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function OfflineCourseCreateView() {
+export default function GallaryCreateView() {
   const settings = useSettingsContext();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Create a New Course"
+        heading="Create a New Gallary"
         links={[
           {
             name: 'Dashboard',
             href: paths.dashboard.root,
           },
           {
-            name: 'Offline Course',
-            href: paths.dashboard.offlinecourse.root,
+            name: 'Gallary',
+            href: paths.dashboard.gallary.root,
           },
-          { name: 'New Course' },
+          { name: 'New gallary' },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
 
-      <OfflineCourseNewEditForm />
+      <GallaryNewEditForm />
     </Container>
   );
 }

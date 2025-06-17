@@ -177,6 +177,24 @@ export const paths = {
       },
     },
 
+       gallary: {
+      root: `${ROOTS.DASHBOARD}/gallary`,
+      new: `${ROOTS.DASHBOARD}/gallary/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/gallary/${id}/edit`,
+    },
+       lessons: {
+      root: `${ROOTS.DASHBOARD}/lessons`,
+      new: `${ROOTS.DASHBOARD}/lessons/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/edit`,
+      video: (id) => `${ROOTS.DASHBOARD}/lessons/${id}/video`,
+    },
+
+      mcqs: {
+      root: `${ROOTS.DASHBOARD}/mcqs`,
+      new: `${ROOTS.DASHBOARD}/mcqs/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
+    },
+
 
 
 

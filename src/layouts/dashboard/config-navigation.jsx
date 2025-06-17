@@ -273,6 +273,28 @@ export function useNavData() {
             ],
           },
 
+             {
+            title: 'Gallary',
+            path: paths.dashboard.gallary.root,
+            icon: ICONS.contact,
+           
+          },
+
+          
+          {
+            title: 'Lessons',
+            path: paths.dashboard.lessons.root,
+            icon: ICONS.contact,
+           
+          },
+
+             {
+            title: 'MCQs',
+            path: paths.dashboard.mcqs.root,
+            icon: ICONS.contact,
+            
+          },
+
 
 
 

@@ -1,12 +1,103 @@
 
 
 
+// import React, { useEffect, useState, forwardRef } from 'react';
+// import PropTypes from 'prop-types';
+// import { useSnackbar } from 'notistack';
+// import Select from '@mui/material/Select';
+// import MenuItem from '@mui/material/MenuItem';
+// import Chip from '@mui/material/Chip';
+// import Box from '@mui/material/Box';
+// import request from 'src/api/request';
+
+// const SchoolsDropdown = forwardRef(({ value, onChange }, ref) => {
+//   const { enqueueSnackbar } = useSnackbar();
+//   const [schools, setSchools] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     const fetchSchools = async () => {
+//       try {
+//         const response = await request.get('backoffice/school');
+//         if (response?.success && Array.isArray(response.data)) {
+//           setSchools(response.data);
+//         } else {
+//           enqueueSnackbar('Failed to load schools', { variant: 'error' });
+//         }
+//       } catch (error) {
+//         enqueueSnackbar('Error fetching schools', { variant: 'error' });
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchSchools();
+//   }, [enqueueSnackbar]);
+
+//   const handleChange = (event) => {
+//     const selectedValues = event.target.value;
+//     if (selectedValues.includes('ALL')) {
+//       onChange(['ALL']);
+//     } else {
+//       onChange(selectedValues);
+//     }
+//   };
+
+//   let menuContent;
+//   if (loading) {
+//     menuContent = <MenuItem disabled>Loading...</MenuItem>;
+//   } else if (schools.length === 0) {
+//     menuContent = <MenuItem disabled>No schools available</MenuItem>;
+//   } else {
+//     menuContent = [
+//       <MenuItem key="ALL" value="ALL">ALL</MenuItem>,
+//       ...schools.map((school) => (
+//         <MenuItem key={school.id} value={school.id}>
+//           {school.name}
+//         </MenuItem>
+//       )),
+//     ];
+//   }
+
+//   return (
+//     <Select
+//       ref={ref}
+//       multiple
+//       value={value.includes('ALL') ? ['ALL'] : value}
+//       onChange={handleChange}
+//       fullWidth
+//       renderValue={(selected) => (
+//         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+//           {selected.includes('ALL') ? (
+//             <Chip key="ALL" label="ALL" />
+//           ) : (
+//             selected.map((schoolId) => {
+//               const selectedSchool = schools.find((s) => s.id === schoolId);
+//               return selectedSchool ? (
+//                 <Chip key={schoolId} label={selectedSchool.name} />
+//               ) : null;
+//             })
+//           )}
+//         </Box>
+//       )}
+//     >
+//       {menuContent}
+//     </Select>
+//   );
+// });
+
+// SchoolsDropdown.propTypes = {
+//   value: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+//   onChange: PropTypes.func.isRequired,
+// };
+
+// export default SchoolsDropdown;
+
 import React, { useEffect, useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import request from 'src/api/request';
 
@@ -35,59 +126,43 @@ const SchoolsDropdown = forwardRef(({ value, onChange }, ref) => {
   }, [enqueueSnackbar]);
 
   const handleChange = (event) => {
-    const selectedValues = event.target.value;
-    if (selectedValues.includes('ALL')) {
-      onChange(['ALL']);
-    } else {
-      onChange(selectedValues);
-    }
+    onChange(event.target.value);
   };
 
-  let menuContent;
-  if (loading) {
-    menuContent = <MenuItem disabled>Loading...</MenuItem>;
-  } else if (schools.length === 0) {
-    menuContent = <MenuItem disabled>No schools available</MenuItem>;
-  } else {
-    menuContent = [
-      <MenuItem key="ALL" value="ALL">ALL</MenuItem>,
-      ...schools.map((school) => (
-        <MenuItem key={school.id} value={school.id}>
-          {school.name}
-        </MenuItem>
-      )),
-    ];
-  }
+  const renderSchoolOptions = () => {
+    if (loading) {
+      return <MenuItem disabled>Loading...</MenuItem>;
+    }
+
+    if (schools.length === 0) {
+      return <MenuItem disabled>No schools available</MenuItem>;
+    }
+
+    return schools.map((school) => (
+      <MenuItem key={school.id} value={school.id}>
+        {school.name}
+      </MenuItem>
+    ));
+  };
 
   return (
     <Select
       ref={ref}
-      multiple
-      value={value.includes('ALL') ? ['ALL'] : value}
+      value={value}
       onChange={handleChange}
       fullWidth
-      renderValue={(selected) => (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          {selected.includes('ALL') ? (
-            <Chip key="ALL" label="ALL" />
-          ) : (
-            selected.map((schoolId) => {
-              const selectedSchool = schools.find((s) => s.id === schoolId);
-              return selectedSchool ? (
-                <Chip key={schoolId} label={selectedSchool.school_name} />
-              ) : null;
-            })
-          )}
-        </Box>
-      )}
+      displayEmpty
     >
-      {menuContent}
+      <MenuItem disabled value="">
+        Select a School
+      </MenuItem>
+      {renderSchoolOptions()}
     </Select>
   );
 });
 
 SchoolsDropdown.propTypes = {
-  value: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
 };
 
