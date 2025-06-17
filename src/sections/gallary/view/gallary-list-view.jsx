@@ -27,11 +27,13 @@ import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 import GallaryTableRow from '../gallary-table-row';
 
+
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
   { id: 'event_name', label: 'Event Nname' },
   { id: 'description', label: 'Description' },
   { id: 'event_date', label: 'Event date' },
+  { id: 'thumbnail_images', label: 'Thumbnail Images'},
 
   { id: 'number_of_pics', label: 'Number of Pics' },
   
