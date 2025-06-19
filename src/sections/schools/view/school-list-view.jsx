@@ -28,7 +28,7 @@ import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
-import EdutainmentTableRow from '../school-table-row';
+import SchoolTableRow from '../school-table-row';
 
 
 const TABLE_HEAD = [
@@ -142,7 +142,7 @@ export default function SchoolListView() {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <EdutainmentTableRow
+                      <SchoolTableRow
                         key={row.id}
                         row={{
                           ...row,

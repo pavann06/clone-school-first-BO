@@ -2,11 +2,11 @@ import request from 'src/api/request';
 
 // ----------------------------------------------------------------------
 
-export const CreateBannerr = async (form_data) => {
+export const CreateEvent = async (form_data) => {
   try {
     console.info('FEED-CREATE-FORM-DATA', form_data);
 
-    const resp = await request.post('backoffice/banner', form_data);
+    const resp = await request.post('backoffice/events', form_data);
 
     return resp;
   } catch (error) {
@@ -15,7 +15,7 @@ export const CreateBannerr = async (form_data) => {
   }
 };
 
-export const UpdateBannerr = async (form_data) => {
+export const UpdateEvent = async (form_data) => {
   try {
     console.info('FEED-CREATE-FORM-DATA', form_data);
 
@@ -26,7 +26,7 @@ export const UpdateBannerr = async (form_data) => {
       }
     });
 
-    const resp = await request.put(`backoffice/banner/${form_data.id}`, form_data);
+    const resp = await request.put(`backoffice/events/${form_data.id}`, form_data);
 
     return resp;
   } catch (error) {
@@ -34,3 +34,4 @@ export const UpdateBannerr = async (form_data) => {
   }
   return null;
 };
+

@@ -142,6 +142,20 @@ const McqsListPage = lazy(() => import('src/pages/dashboard/mcqs/list'));
 const McqsCreatePage =  lazy(() => import('src/pages/dashboard/mcqs/new'));
 const McqsEditPage = lazy(() => import('src/pages/dashboard/mcqs/edit'));
 
+const EventsListPage = lazy(() => import('src/pages/dashboard/events/list'));
+const EventsCreatePage = lazy(() => import('src/pages/dashboard/events/new'));
+const EventsEditPage = lazy(() => import('src/pages/dashboard/events/edit'));
+
+const SchoolInfoListPage = lazy(() => import('src/pages/dashboard/schoolinfo/list'));
+const SchoolInfoCreatePage = lazy(() => import('src/pages/dashboard/schoolinfo/new'));
+const SchoolInfoEditPage = lazy(() => import('src/pages/dashboard/schoolinfo/edit'));
+
+
+
+
+
+
+
 
 
 
@@ -950,6 +964,83 @@ export const dashboardRoutes = [
           },
         ],
       },
+
+
+      {
+        path: 'events',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EventsListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EventsCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <EventsEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+        {
+        path: 'school_info',
+        children: [
+          {
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SchoolInfoListPage />
+              </PermissionBasedGuard>
+            ),
+            index: true,
+          },
+          {
+            path: 'new',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SchoolInfoCreatePage />
+              </PermissionBasedGuard>
+            ),
+          },
+          {
+            path: ':id/edit',
+            element: (
+              <PermissionBasedGuard hasContent permissions={['is_superuser']}>
+                <SchoolInfoEditPage />
+              </PermissionBasedGuard>
+            ),
+          },
+        ],
+      },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

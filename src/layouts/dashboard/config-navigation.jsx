@@ -295,6 +295,27 @@ export function useNavData() {
             
           },
 
+             {
+            title: 'banner',
+            path: paths.dashboard.banner.root,
+            icon: ICONS.contact,
+           
+          },
+
+             {
+            title: 'Events',
+            path: paths.dashboard.events.root,
+            icon: ICONS.contact,
+           
+          },
+
+               {
+            title: 'School Info',
+            path: paths.dashboard.school_info.root,
+            icon: ICONS.contact,
+           
+          },
+
 
 
 

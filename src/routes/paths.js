@@ -195,6 +195,26 @@ export const paths = {
       edit: (id) => `${ROOTS.DASHBOARD}/mcqs/${id}/edit`,
     },
 
+    
+    banner: {
+      root: `${ROOTS.DASHBOARD}/banner`,
+      new: `${ROOTS.DASHBOARD}/banner/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/banner/${id}/edit`,
+    },
+
+    
+    events: {
+      root: `${ROOTS.DASHBOARD}/events`,
+      new: `${ROOTS.DASHBOARD}/events/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/events/${id}/edit`,
+    },
+
+      school_info: {
+      root: `${ROOTS.DASHBOARD}/school_info`,
+      new: `${ROOTS.DASHBOARD}/school_info/new`,
+      edit: (id) => `${ROOTS.DASHBOARD}/school_info/${id}/edit`,
+    },
+
 
 
 

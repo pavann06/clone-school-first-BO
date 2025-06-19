@@ -1,63 +1,58 @@
 
 
+
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useMemo, useState, useCallback } from 'react';
-
 import { useSnackbar } from 'notistack';
 
-// UI Components (Material-UI)
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import { MenuItem, Switch, FormControlLabel } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
+import {
+  Box,
+  Card,
+  Stack,
+  Grid,
+  Typography,
+  MenuItem,
+} from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-// Internal Utilities
-import { paths } from 'src/routes/paths';
+import FormProvider, {
+  RHFTextField,
+  RHFUpload,
+  RHFSelect,
+} from 'src/components/hook-form';
+
 import { useRouter } from 'src/routes/hooks';
-import { useResponsive } from 'src/hooks/use-responsive';
-
+import { paths } from 'src/routes/paths';
 import request from 'src/api/request';
-import { CreateBannerr, UpdateBannerr } from 'src/api/banner';
-
-// Form Components
-import FormProvider, { RHFUpload, RHFSelect, RHFTextField } from 'src/components/hook-form';
-
-// ----------------------------------------------------------------------
+import { CreateBannerr , UpdateBannerr } from 'src/api/banner';
 
 export default function BannerNewEditForm({ currentBanner }) {
   const router = useRouter();
-  const mdUp = useResponsive('up', 'md');
   const { enqueueSnackbar } = useSnackbar();
-
   const [isUploading, setIsUploading] = useState(false);
 
-  // Updated Validation Schema
-  const BannerSchema = Yup.object().shape({
-    banner_image: Yup.mixed(),
-    module: Yup.string().required('Module is required'),
-    is_active: Yup.boolean().required('Status is required'),
-    action_type: Yup.string().required('Action type is required'),
+  // ✅ Validation schema
+  const SchoolSchema = Yup.object().shape({
+    image: Yup.string().required('Image is required'),
+    screen: Yup.string()
+  .oneOf(['Home', 'Courses'], 'Invalid screen')
+  .required('Screen is required'),
+
+    status: Yup.string().oneOf(['Active', 'Inactive'], 'Invalid status').required('Status is required'),
   });
 
-  const defaultValues = useMemo(
-    () => ({
-      banner_image: currentBanner?.banner_image || '',
-      module: currentBanner?.module || '',
-      is_active: currentBanner?.is_active || true, // Default to 'true'
-      action_type: currentBanner?.action_type || 'None',
-    }),
-    [currentBanner]
-  );
+  // ✅ Default values
+  const defaultValues = useMemo(() => ({
+    image: currentBanner?.image || '',
+    screen: currentBanner?.screen || '',
+    status: currentBanner?.status || 'active',
+  }), [currentBanner]);
 
   const methods = useForm({
-    resolver: yupResolver(BannerSchema),
+    resolver: yupResolver(SchoolSchema),
     defaultValues,
   });
 
@@ -69,23 +64,14 @@ export default function BannerNewEditForm({ currentBanner }) {
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
-
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const payload = {
-        ...data,
-        banner_image: data.banner_image || null,
-      };
-
       const response = currentBanner
-        ? await UpdateBannerr({ ...payload, id: currentBanner.id })
-        : await CreateBannerr(payload);
+        ? await UpdateBannerr({ ...data, id: currentBanner.id })
+        : await CreateBannerr(data);
 
       if (response?.success) {
-        enqueueSnackbar(currentBanner ? 'Update success!' : 'Create success!', {
-          variant: 'success',
-        });
+        enqueueSnackbar(currentBanner ? 'Update success!' : 'Create success!', { variant: 'success' });
         router.push(paths.dashboard.banner.root);
         reset();
         return response;
@@ -94,148 +80,97 @@ export default function BannerNewEditForm({ currentBanner }) {
       const errors = response?.response?.data?.data;
       if (errors) {
         Object.entries(errors).forEach(([field, messages]) => {
-          if (methods.setError) {
-            methods.setError(field, {
-              type: 'server',
-              message: messages[0],
-            });
-          }
+          methods.setError(field, { type: 'server', message: messages[0] });
         });
         enqueueSnackbar('Please correct the errors in the form', { variant: 'error' });
         return null;
       }
 
-      enqueueSnackbar('Operation failed');
+      enqueueSnackbar(response?.error || 'Operation failed', { variant: 'error' });
       return response;
     } catch (error) {
-      console.error('Error:', error);
       enqueueSnackbar(error.message || 'Unexpected error occurred', { variant: 'error' });
       return null;
     }
   });
 
-  const handleUpload = useCallback(
-    async (file) => {
-      try {
-        setIsUploading(true);
-        const payload = { files: file };
-        const response = await request.UploadFiles(payload);
-
-        if (response.success) {
-          return response.data[0].file_url;
-        }
-        throw new Error('Upload failed');
-      } catch (error) {
-        enqueueSnackbar('File upload failed', { variant: 'error' });
-        return null;
-      } finally {
-        setIsUploading(false);
+  // ✅ File Upload
+  const handleUpload = useCallback(async (file) => {
+    try {
+      setIsUploading(true);
+      const response = await request.UploadFiles({ files: file });
+      if (response.success) {
+        enqueueSnackbar('Image uploaded successfully!', { variant: 'success' });
+        return response.data[0].file_url;
       }
-    },
-    [enqueueSnackbar]
-  );
+      throw new Error('Upload failed');
+    } catch {
+      enqueueSnackbar('Image upload failed!', { variant: 'error' });
+      return null;
+    } finally {
+      setIsUploading(false);
+    }
+  }, [enqueueSnackbar]);
 
-  const handleDrop = useCallback(
-    async (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        const fileWithPreview = Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        });
-        setValue('banner_image', fileWithPreview);
-        const uploadedUrl = await handleUpload(file);
-        if (uploadedUrl) {
-          setValue('banner_image', uploadedUrl);
-          enqueueSnackbar('Image uploaded successfully', { variant: 'success' });
-        }
+  const handleDrop = useCallback(async (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const uploadedUrl = await handleUpload(file);
+      if (uploadedUrl) {
+        setValue('image', uploadedUrl);
       }
-    },
-    [setValue, enqueueSnackbar, handleUpload]
-  );
-
-  const handleRemoveFile = useCallback(() => {
-    setValue('banner_image', null); // Remove the image
-  }, [setValue]);
-
-  const handleRemoveAllFiles = useCallback(() => {
-    setValue('banner_image', null); // Reset to no image
-  }, [setValue]);
+    }
+  }, [setValue, handleUpload]);
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
-      <Grid container spacing={3} justifyContent="center" alignItems="center">
+      <Grid container spacing={3} justifyContent="center">
         <Grid xs={12} md={8}>
-          <Card>
-            {!mdUp && <CardHeader title="Properties" />}
+          <Card sx={{ p: 4 }}>
+            <Stack spacing={3}>
 
-            <Stack spacing={3} sx={{ p: 3 }}>
-              <Box
-                columnGap={2}
-                rowGap={3}
-                display="grid"
-                gridTemplateColumns={{
-                  xs: 'repeat(1, 1fr)',
-                  md: 'repeat(2, 1fr)',
-                }}
-              >
-                {/* Module Dropdown */}
-                <Box
-                  columnGap={2}
-                  rowGap={3}
-                  display="grid"
-                  gridTemplateColumns={{
-                    xs: 'repeat(1, 1fr)',
-                    md: 'repeat(2, 1fr)',
-                  }}
-                >
-                  <RHFTextField name="module" label="Module" />
+              {/* Screen Field */}
+           <RHFSelect name="screen" label="Screen">
+  <MenuItem value="Home">Home</MenuItem>
+  <MenuItem value="Courses">Courses</MenuItem>
+</RHFSelect>
 
-                  <RHFTextField name="action_type" label="Action Type" />
-                </Box>
 
-                {/* Is Active Toggle */}
-                <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                  <Stack spacing={2}>
-                    <Typography variant="subtitle2">Is Active</Typography>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={values.is_active}
-                          onChange={(e) => setValue('is_active', e.target.checked)}
-                          name="is_active"
-                          color="primary"
-                        />
-                      }
-                      label={values.is_active ? 'Active' : 'Inactive'}
-                    />
-                  </Stack>
-                </Box>
+              {/* Status Select */}
+              <RHFSelect name="status" label="Status">
+                <MenuItem value="Active">Active</MenuItem>
+                <MenuItem value="Inactive">Inactive</MenuItem>
+              </RHFSelect>
 
-                {/* Banner Image Upload */}
-                <Box gridColumn={{ xs: 'span 1', md: 'span 2' }}>
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Banner Image</Typography>
-                    <RHFUpload
-                      thumbnail
-                      name="banner_image"
-                      // maxSize={3145728}
-                      onDrop={handleDrop}
-                      onRemove={handleRemoveFile}
-                      onRemoveAll={handleRemoveAllFiles}
-                      isLoading={isUploading}
-                    />
-                  </Stack>
-                </Box>
+              {/* Image Upload */}
+              <Box>
+                <Typography variant="subtitle2" gutterBottom>
+                  Upload Image
+                </Typography>
+                <RHFUpload
+                  name="image"
+                  onDrop={handleDrop}
+                  onRemove={() => setValue('image', '')}
+                  isLoading={isUploading}
+                />
               </Box>
 
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                size="large"
-                loading={isSubmitting || isUploading}
-                sx={{ alignSelf: 'flex-end' }}
-              >
-                {!currentBanner ? 'Create Banner' : 'Save Changes'}
+              {/* Preview */}
+              {watch('image') && typeof watch('image') === 'string' && (
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" gutterBottom>Preview</Typography>
+                  <Box
+                    component="img"
+                    src={watch('image')}
+                    alt="Preview"
+                    sx={{ height: 100, borderRadius: 1 }}
+                  />
+                </Box>
+              )}
+
+              {/* Submit */}
+              <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
+                {currentBanner ? 'Save Changes' : 'Create Entry'}
               </LoadingButton>
             </Stack>
           </Card>
@@ -246,5 +181,5 @@ export default function BannerNewEditForm({ currentBanner }) {
 }
 
 BannerNewEditForm.propTypes = {
-  currentBanner: PropTypes.any,
+  currentBanner: PropTypes.object,
 };

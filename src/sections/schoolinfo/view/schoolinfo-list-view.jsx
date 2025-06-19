@@ -28,19 +28,23 @@ import { useSnackbar } from 'src/components/snackbar';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableHeadCustom } from 'src/components/table';
 
-import EdutainmentTableRow from '../banner-table-row';
+import SchoolInfoTableRow from '../schoolinfo-table-row';
+
 
 
 const TABLE_HEAD = [
   { id: 'index', label: 'Serial No' },
-  { id: 'image', label: 'Image' },
-  { id: 'screen', label: 'Screen' },
-  { id: 'status', label: 'Status ' },
- 
+  { id: 'title', label: 'Title' },
+  { id: 'school', label: 'School' },
+  { id: 'short_description', label: 'Short Description ' },
+  { id: 'long_description', label: 'Long Description' },
+  { id: 'image', label: 'Image ' },
+  { id: 'status', label: 'Status' },
+  { id: 'priority', label: 'Priority'},
   { id: 'actions ', label: 'Actions' },
 ];
 
-export default function BannerListView() {
+export default function SchoolInfoListView() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -52,7 +56,7 @@ export default function BannerListView() {
     queryKey: ['edutainment', pagination.page, pagination.page_size],
     queryFn: () =>
       request.get(
-        `backoffice/banner?page=${pagination.page}&page_size=${pagination.page_size}`
+        `backoffice/info?page=${pagination.page}&page_size=${pagination.page_size}`
       ),
     keepPreviousData: true,
   });
@@ -82,15 +86,13 @@ export default function BannerListView() {
 
   const handleEditRow = useCallback(
     (id) => {
-      router.push(paths.dashboard.banner.edit(id));
+      router.push(paths.dashboard.school_info.edit(id));
     },
     [router]
   );
 
-
-
   const handleDeleteRow = async (id) => {
-    const response = await request.delete(`backoffice/banner/${id}`);
+    const response = await request.delete(`backoffice/info/${id}`);
 
     const { success } = response;
 
@@ -111,15 +113,15 @@ export default function BannerListView() {
           links={[
             { name: 'Dashboard', href: paths.dashboard.root },
             {
-              name: 'Banner',
-              href: paths.dashboard.banner.root,
+              name: 'Schools',
+              href: paths.dashboard.school_info.root,
             },
             { name: 'List' },
           ]}
         />
               <Button
           component={RouterLink}
-          href={paths.dashboard.banner.new}
+          href={paths.dashboard.school_info.new}
           variant="contained"
           startIcon={<Iconify icon="mingcute:add-line" />}
           sx={{
@@ -128,7 +130,7 @@ export default function BannerListView() {
             right: '5px',
           }}
         >
-          New Banner
+          New School Info
         </Button>
       </Box>
       <Card>
@@ -142,7 +144,7 @@ export default function BannerListView() {
                       <Skeleton key={index} variant="rectangular" height={40} />
                     ))
                   : tableData.map((row, index) => (
-                      <EdutainmentTableRow
+                      <SchoolInfoTableRow
                         key={row.id}
                         row={{
                           ...row,

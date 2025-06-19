@@ -11,16 +11,16 @@ import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import BannerNewEditForm from '../banner-new-edit-form';
+import EventsNewEditForm from '../events-new-edit-form';
 
 // ------------------------------------------------------------------------
 
-export default function BannerEditView({ id }) {
+export default function EventsEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['banners', id],
-    queryFn: () => request.get(`backoffice/banner/${id}`),
+    queryKey: ['edutainment', id],
+    queryFn: () => request.get(`backoffice/events/${id}`),
   });
 
   return (
@@ -30,20 +30,20 @@ export default function BannerEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Banner',
-            href: paths.dashboard.banner.root,
+            name: 'Events',
+            href: paths.dashboard.events.root,
           },
-          { name: data?.data?.heading },
+          { name: data?.data?.name },
         ]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <BannerNewEditForm currentBanner={data?.data} />}
+      {isLoading ? <LoadingScreen /> : <EventsNewEditForm currentNews={data?.data} />}
     </Container>
   );
 }
 
-BannerEditView.propTypes = {
+EventsEditView.propTypes = {
   id: PropTypes.string,
 };

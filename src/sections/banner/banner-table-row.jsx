@@ -7,10 +7,10 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 export default function BannerTableRow({ row, onEditRow, onDeleteRow }) {
   const {
     serial_no,
-    banner_image,
-    module,
-    is_active,
-    action_type,
+    image,
+    screen,
+    status,
+    
   } = row;
 
   const popover = usePopover();
@@ -23,10 +23,10 @@ export default function BannerTableRow({ row, onEditRow, onDeleteRow }) {
 
         {/* Banner Image */}
         <TableCell >
-          {banner_image ? (
+          {image ? (
             <img
-              src={banner_image}
-              alt={`Thumbnail for ${banner_image}`}
+              src={image}
+              alt={`Thumbnail for ${image}`}
               style={{ maxWidth: 100, maxHeight: 50 }}
             />
           ) : (
@@ -35,13 +35,12 @@ export default function BannerTableRow({ row, onEditRow, onDeleteRow }) {
         </TableCell>
 
         {/* Module */}
-        <TableCell>{module}</TableCell>
+        <TableCell>{screen}</TableCell>
 
         {/* Active Status */}
-        <TableCell>{is_active ? 'Active' : 'Inactive'}</TableCell>
+        <TableCell>{status}</TableCell>
 
-        {/* Action Type */}
-        <TableCell>{action_type}</TableCell>
+     
 
         {/* Actions */}
         <TableCell align="center">
