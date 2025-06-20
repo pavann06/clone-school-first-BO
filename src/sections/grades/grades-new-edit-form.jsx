@@ -242,17 +242,18 @@ export default function GradesNewEditForm({ currentBanner }) {
   });
 
   // ✅ Prefill form when editing
-  useEffect(() => {
-    if (currentBanner) {
-      reset({
-        name: currentBanner.name || '',
-        school_id: currentBanner.school_id || '',
-        sections: currentBanner.sections?.length
-          ? currentBanner.sections
-          : [{ section_name: '', teacher_name: '' }],
-      });
-    }
-  }, [currentBanner, reset]);
+useEffect(() => {
+  if (currentBanner && currentBanner.name && currentBanner.school_id) {
+    reset({
+      name: currentBanner.name || '',
+      school_id: currentBanner.school_id || '',
+      sections: currentBanner.sections?.length
+        ? currentBanner.sections
+        : [{ section_name: '', teacher_name: '' }],
+    });
+  }
+}, [currentBanner, reset]);
+
 
   const onSubmit = handleSubmit(async (data) => {
     let response = {};
