@@ -20,7 +20,7 @@ export default function GradesEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['banners', id],
-    queryFn: () => request.get('/banners', { id }),
+    queryFn: () => request.get('backoffice/grade', { id }),
     staleTime: 24 * 60 * 60 * 1000,
   });
 
@@ -32,7 +32,7 @@ export default function GradesEditView({ id }) {
           { name: 'Dashboard', href: paths.dashboard.root },
           {
             name: 'Banners',
-            href: paths.dashboard.banners.root,
+            href: paths.dashboard.grades.root,
           },
           { name: data?.info?.[0]?.Banner_name },
         ]}
