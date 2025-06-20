@@ -7,7 +7,7 @@ export const login = async (mobile, password) => {
       password,
     };
 
-    const response = await fetch(`${API_BASE_URL}user/login`, {
+    const response = await fetch(`${API_BASE_URL}user/authentication/login`, {
       method: 'POST',
 
       headers: {
