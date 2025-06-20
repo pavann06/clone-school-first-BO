@@ -38,7 +38,7 @@ const TABLE_HEAD = [
   { id: 'school', label: 'School' },
   { id: 'short_description', label: 'Short Description ' },
   { id: 'long_description', label: 'Long Description' },
-  { id: 'image', label: 'Image ' },
+  // { id: 'image', label: 'Image ' },
   { id: 'status', label: 'Status' },
   { id: 'priority', label: 'Priority'},
   { id: 'actions ', label: 'Actions' },
