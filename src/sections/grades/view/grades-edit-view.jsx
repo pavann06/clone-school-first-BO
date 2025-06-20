@@ -39,7 +39,7 @@ export default function GradesEditView({ id }) {
           mb: { xs: 3, md: 5 },
         }}
       />
-      {isLoading ? <LoadingScreen /> : <GradesNewEditForm currentBanner={data?.info?.[0]} />}
+      {isLoading ? <LoadingScreen /> : <GradesNewEditForm currentBanner={data?.data?.[0]} />}
     </Container>
   );
 }
