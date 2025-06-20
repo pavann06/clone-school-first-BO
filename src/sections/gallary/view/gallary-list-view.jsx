@@ -47,16 +47,17 @@ export default function GallaryListView() {
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, page_size: 10 });
-  const [selectedTab, setSelectedTab] = useState('Pending'); // Set default to Pending
 
-  const { data, isLoading , refetch } = useQuery({
-    queryKey: ['edutainment', pagination.page, pagination.page_size, selectedTab],
-    queryFn: () =>
-      request.get(
-        `backoffice/get/gallery?page=${pagination.page}&page_size=${pagination.page_size}`
-      ),
-    keepPreviousData: true,
-  });
+
+const { data, isLoading , refetch } = useQuery({
+  queryKey: ['gallary', pagination.page, pagination.page_size],
+  queryFn: () =>
+    request.get(
+      `backoffice/get/gallery?page=${pagination.page}&page_size=${pagination.page_size}`
+    ),
+  keepPreviousData: true,
+});
+
 
   useEffect(() => {
     if (data) {
@@ -99,10 +100,7 @@ export default function GallaryListView() {
     }
   };
 
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-    setPagination({ page: 1, page_size: 10 });
-  };
+
 
   return (
     <Container maxWidth="lg">

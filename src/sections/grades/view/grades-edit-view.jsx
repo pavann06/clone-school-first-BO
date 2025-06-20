@@ -20,7 +20,7 @@ export default function GradesEditView({ id }) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['grade', id],
-    queryFn: () => request.get(`backoffice/grade/${id}`),
+    queryFn: () => request.get(`backoffice/grade?id=${id}`),
   });
 
   return (
