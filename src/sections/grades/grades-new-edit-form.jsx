@@ -35,7 +35,7 @@ export default function GradesNewEditForm({ currentBanner }) {
 
   const NewBannerSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-      school_id: Yup.string().required('School is required'),
+    school_id: Yup.string().required('School is required'),
     sections: Yup.array()
       .of(
         Yup.object().shape({
@@ -49,7 +49,7 @@ export default function GradesNewEditForm({ currentBanner }) {
   const defaultValues = useMemo(
     () => ({
       name: currentBanner?.name || '',
-       school_id: currentBanner?.school_id || '',
+      school_id: currentBanner?.school_id || '',
       sections: currentBanner?.sections || [{ section_name: '', teacher_name: '' }],
     }),
     [currentBanner]
@@ -64,8 +64,8 @@ export default function GradesNewEditForm({ currentBanner }) {
     reset,
     control,
     handleSubmit,
-     watch, 
-     setValue,
+    watch,
+    setValue,
     formState: { isSubmitting },
   } = methods;
 
@@ -91,7 +91,7 @@ export default function GradesNewEditForm({ currentBanner }) {
     if (success) {
       enqueueSnackbar(currentBanner ? 'Update success!' : 'Create success!');
       queryClient.invalidateQueries(['banners']);
-      router.push(paths.dashboard.banners.root);
+      router.push(paths.dashboard.grades.root);
     } else {
       enqueueSnackbar(description);
       reset();
@@ -103,16 +103,16 @@ export default function GradesNewEditForm({ currentBanner }) {
       <Grid container spacing={3} justifyContent="center" alignItems="center">
         <Grid xs={12} md={8}>
           <Card>
-            {!mdUp && <CardHeader title="Banner Form" />}
+            {!mdUp && <CardHeader title="Grades Form" />}
             <Stack spacing={3} sx={{ p: 3 }}>
               <RHFTextField name="name" label="Name" />
 
-                <SchoolsDropdown
-    value={selectedSchoolId}
-    onChange={(val) => setValue('school_id', val)}
-    error={!!methods.formState.errors.school_id}
-    helperText={methods.formState.errors.school_id?.message}
-  />
+              <SchoolsDropdown
+                value={selectedSchoolId}
+                onChange={(val) => setValue('school_id', val)}
+                error={!!methods.formState.errors.school_id}
+                helperText={methods.formState.errors.school_id?.message}
+              />
 
               <Stack spacing={2}>
                 <Typography variant="subtitle2">Sections</Typography>

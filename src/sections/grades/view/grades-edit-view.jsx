@@ -30,7 +30,7 @@ export default function GradesEditView({ id }) {
         links={[
           { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Banners',
+            name: 'Grades',
             href: paths.dashboard.grades.root,
           },
           { name: data?.info?.[0]?.Banner_name },
