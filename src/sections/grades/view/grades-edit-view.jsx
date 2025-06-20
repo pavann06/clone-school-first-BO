@@ -19,9 +19,8 @@ export default function GradesEditView({ id }) {
   const settings = useSettingsContext();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['banners', id],
-    queryFn: () => request.get('backoffice/grade', { id }),
-    staleTime: 24 * 60 * 60 * 1000,
+    queryKey: ['grade', id],
+    queryFn: () => request.get(`backoffice/grade/${id}`),
   });
 
   return (
