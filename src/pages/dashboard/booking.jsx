@@ -21,32 +21,32 @@ export default function OverviewBookingPage() {
   const [startDate, setStartDate] = useState(getTodayDate());  
   const [endDate, setEndDate] = useState(getTodayDate());  
 
-  useEffect(() => {
-    const fetchCounts = async () => {
-      try {
+  // useEffect(() => {
+  //   const fetchCounts = async () => {
+  //     try {
         
-        const formattedStartDate = startDate; 
-        const formattedEndDate = endDate;  
+  //       const formattedStartDate = startDate; 
+  //       const formattedEndDate = endDate;  
 
        
-        const queryParams = new URLSearchParams({
-          start_date: formattedStartDate,
-          end_date: formattedEndDate,
-        });
+  //       const queryParams = new URLSearchParams({
+  //         start_date: formattedStartDate,
+  //         end_date: formattedEndDate,
+  //       });
 
       
-        const response = await request.get(`backoffice/stats?${queryParams.toString()}`);
+  //       const response = await request.get(`backoffice/stats?${queryParams.toString()}`);
 
-        setCounts(response.data);
-      } catch (error) {
-        console.error('Failed to fetch stats:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       setCounts(response.data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch stats:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchCounts();
-  }, [startDate, endDate]);  
+  //   fetchCounts();
+  // }, [startDate, endDate]);  
 
   
   function getTodayDate() {
