@@ -57,7 +57,7 @@ export default function OverviewBookingPage() {
   return (
     <>
       <Helmet>
-        <title>Dashboard | FamiliFirst</title>
+        <title>Dashboard | School First</title>
       </Helmet>
 
       <h3> Welcome to Dashboard</h3>
