@@ -419,6 +419,7 @@ export default function GallaryNewEditForm({ currentEdutainment }) {
   const {
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { isSubmitting },
   } = methods;
@@ -431,33 +432,96 @@ export default function GallaryNewEditForm({ currentEdutainment }) {
     thumbnail_images: parseArrayField(rawValues.thumbnail_images),
   };
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      const payload = {
-        event_name: data.event_name,
-        description: data.description,
-        event_date: data.event_date,
-        images: parseArrayField(data.images),
-        thumbnail_images: parseArrayField(data.thumbnail_images),
-      };
 
-      const response = currentEdutainment
-        ? await UpdateGallary({ ...payload, id: currentEdutainment.id })
-        : await CreateGallary(payload);
 
-      if (response?.success) {
-        enqueueSnackbar(currentEdutainment ? 'Event updated successfully!' : 'Event created successfully!', {
-          variant: 'success',
-        });
-        router.push(paths.dashboard.gallary.root);
-      } else {
-        enqueueSnackbar('Operation failed. Please try again.', { variant: 'error' });
-      }
-    } catch (error) {
-      console.error('Error while submitting:', error);
-      enqueueSnackbar('Something went wrong. Please check your inputs.', { variant: 'error' });
+// const onSubmit = handleSubmit(async (data) => {
+//   try {
+//     // ✅ Always use the latest 'images' state from watch()
+//     const images = parseArrayField(watch('images'));
+//     const thumbnail_images = parseArrayField(data.thumbnail_images);
+
+//     const invalidThumbnails = thumbnail_images.filter((thumb) => !images.includes(thumb));
+//     if (invalidThumbnails.length > 0) {
+//       enqueueSnackbar('Some selected thumbnail images are not in the uploaded images.', {
+//         variant: 'error',
+//       });
+//       return;
+//     }
+
+//     const payload = {
+//       event_name: data.event_name,
+//       description: data.description,
+//       event_date: data.event_date,
+//       images,
+//       thumbnail_images,
+//     };
+
+//     const response = currentEdutainment
+//       ? await UpdateGallary({ ...payload, id: currentEdutainment.id })
+//       : await CreateGallary(payload);
+
+//     if (response?.success) {
+//       enqueueSnackbar(
+//         currentEdutainment ? 'Event updated successfully!' : 'Event created successfully!',
+//         { variant: 'success' }
+//       );
+//       router.push(paths.dashboard.gallary.root);
+//     } else {
+//       enqueueSnackbar(response?.description || 'Operation failed. Please try again.', {
+//         variant: 'error',
+//       });
+//     }
+//   } catch (error) {
+//     console.error('Error while submitting:', error);
+//     enqueueSnackbar('Something went wrong. Please check your inputs.', { variant: 'error' });
+//   }
+// });
+
+const onSubmit = handleSubmit(async () => {
+  try {
+    const formValues = getValues();
+    const images = parseArrayField(formValues.images);
+    const thumbnail_images = parseArrayField(formValues.thumbnail_images);
+
+    const invalidThumbnails = thumbnail_images.filter((thumb) => !images.includes(thumb));
+    if (invalidThumbnails.length > 0) {
+      enqueueSnackbar('Some selected thumbnail images are not in the uploaded images.', {
+        variant: 'error',
+      });
+      return;
     }
-  });
+
+    const payload = {
+      event_name: formValues.event_name,
+      description: formValues.description,
+      event_date: formValues.event_date,
+      images,
+      thumbnail_images,
+    };
+
+    const response = currentEdutainment
+      ? await UpdateGallary({ ...payload, id: currentEdutainment.id })
+      : await CreateGallary(payload);
+
+    if (response?.success) {
+      enqueueSnackbar(
+        currentEdutainment ? 'Event updated successfully!' : 'Event created successfully!',
+        { variant: 'success' }
+      );
+      router.push(paths.dashboard.gallary.root);
+    } else {
+      enqueueSnackbar(response?.description || 'Operation failed. Please try again.', {
+        variant: 'error',
+      });
+    }
+  } catch (error) {
+    console.error('Error while submitting:', error);
+    enqueueSnackbar('Something went wrong. Please check your inputs.', { variant: 'error' });
+  }
+});
+
+
+
 
   const handleUpload = useCallback(
     async (file) => {
@@ -478,27 +542,51 @@ export default function GallaryNewEditForm({ currentEdutainment }) {
     [enqueueSnackbar]
   );
 
-  const handleDrop = useCallback(
-    async (acceptedFiles) => {
-      setIsUploading(true);
-      try {
-        const uploadPromises = acceptedFiles.map((file) => handleUpload(file));
-        const uploadedUrls = await Promise.all(uploadPromises);
-        const validUrls = uploadedUrls.filter(Boolean);
+  // const handleDrop = useCallback(
+  //   async (acceptedFiles) => {
+  //     setIsUploading(true);
+  //     try {
+  //       const uploadPromises = acceptedFiles.map((file) => handleUpload(file));
+  //       const uploadedUrls = await Promise.all(uploadPromises);
+  //       const validUrls = uploadedUrls.filter(Boolean);
 
-        if (validUrls.length > 0) {
-          setValue('images', [...(values.images || []), ...validUrls]);
-          enqueueSnackbar(`${validUrls.length} image(s) uploaded successfully`, { variant: 'success' });
-        }
-      } catch (error) {
-        console.error('Upload failed:', error);
-        enqueueSnackbar('Image upload failed', { variant: 'error' });
-      } finally {
-        setIsUploading(false);
+  //       if (validUrls.length > 0) {
+  //         setValue('images', [...(values.images || []), ...validUrls]);
+  //         enqueueSnackbar(`${validUrls.length} image(s) uploaded successfully`, { variant: 'success' });
+  //       }
+  //     } catch (error) {
+  //       console.error('Upload failed:', error);
+  //       enqueueSnackbar('Image upload failed', { variant: 'error' });
+  //     } finally {
+  //       setIsUploading(false);
+  //     }
+  //   },
+  //   [handleUpload, enqueueSnackbar, setValue, values.images]
+  // );
+
+  const handleDrop = useCallback(
+  async (acceptedFiles) => {
+    setIsUploading(true);
+    try {
+      const uploadPromises = acceptedFiles.map((file) => handleUpload(file));
+      const uploadedUrls = await Promise.all(uploadPromises);
+      const validUrls = uploadedUrls.filter(Boolean);
+
+      if (validUrls.length > 0) {
+        const existingImages = getValues('images') || [];
+        setValue('images', [...existingImages, ...validUrls], { shouldValidate: true });
+        enqueueSnackbar(`${validUrls.length} image(s) uploaded successfully`, { variant: 'success' });
       }
-    },
-    [handleUpload, enqueueSnackbar, setValue, values.images]
-  );
+    } catch (error) {
+      console.error('Upload failed:', error);
+      enqueueSnackbar('Image upload failed', { variant: 'error' });
+    } finally {
+      setIsUploading(false);
+    }
+  },
+  [handleUpload, enqueueSnackbar, setValue, getValues]
+);
+
 
   const fieldStyles = {
     '& .MuiOutlinedInput-root': {

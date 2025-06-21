@@ -26,7 +26,7 @@ export const UpdateGallary = async (form_data) => {
       }
     });
 
-    const resp = await request.put(`backoffice/thumbnail/${form_data.id}`, form_data);
+    const resp = await request.put(`backoffice/gallery/${form_data.id}`, form_data);
 
     return resp;
   } catch (error) {
