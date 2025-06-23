@@ -50,15 +50,9 @@ export default function StudentsTableRow({ row, onEditRow, onDeleteRow }) {
 <TableCell>{dob}</TableCell>
 
 <TableCell>
-  {Array.isArray(address) && address.length > 0 ? (
-    <>
-      {`${address[0].street}, ${address[0].city}`}<br />
-      {`${address[0].state} - ${address[0].pincode}`}
-    </>
-  ) : (
-    'No Address'
-  )}
+{address}
 </TableCell>
+
 
 
 

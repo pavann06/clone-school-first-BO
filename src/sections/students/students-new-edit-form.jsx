@@ -123,7 +123,7 @@ export default function StudentsNewEditForm({ currentStudent }) {
   const StudentSchema = Yup.object().shape(
     isEdit
       ? {
-          school_id: Yup.string().required(),
+          school: Yup.string().required(),
           student_id: Yup.string().required(),
           name: Yup.string().required(),
           image: Yup.string().url().nullable(),
@@ -133,14 +133,15 @@ export default function StudentsNewEditForm({ currentStudent }) {
           mobile: Yup.string().required(),
           grade: Yup.string().required(),
           status: Yup.string().required(),
-          address: Yup.object().shape({
-            city: Yup.string().required('City is required'),
-            state: Yup.string().required('State is required'),
-            street: Yup.string().required('Street is required'),
-            pincode: Yup.string()
-              .matches(/^\d{6}$/, 'Pincode must be 6 digits')
-              .required('Pincode is required'),
-          }),
+          address : Yup.string().required(),
+          // address: Yup.object().shape({
+          //   city: Yup.string().required('City is required'),
+          //   state: Yup.string().required('State is required'),
+          //   street: Yup.string().required('Street is required'),
+          //   pincode: Yup.string()
+          //     .matches(/^\d{6}$/, 'Pincode must be 6 digits')
+          //     .required('Pincode is required'),
+          // }),
         }
       : {} // No validation for Excel upload
   );
@@ -149,7 +150,7 @@ export default function StudentsNewEditForm({ currentStudent }) {
     () =>
       isEdit
         ? {
-            school_id: currentStudent?.school_id || '',
+            school: currentStudent?.school || '',
             student_id: currentStudent?.student_id || '',
             name: currentStudent?.name || '',
             image: currentStudent?.image || '',
@@ -159,12 +160,13 @@ export default function StudentsNewEditForm({ currentStudent }) {
             mobile: currentStudent?.mobile || '',
             grade: currentStudent?.grade || '',
             status: currentStudent?.status || '',
-            address: {
-              city: currentStudent?.address?.city || '',
-              state: currentStudent?.address?.state || '',
-              street: currentStudent?.address?.street || '',
-              pincode: currentStudent?.address?.pincode || '',
-            },
+            address: currentStudent?.address || '',
+            // address: {
+            //   city: currentStudent?.address?.city || '',
+            //   state: currentStudent?.address?.state || '',
+            //   street: currentStudent?.address?.street || '',
+            //   pincode: currentStudent?.address?.pincode || '',
+            // },
           }
         : {},
     [currentStudent, isEdit]
@@ -242,14 +244,14 @@ const onSubmit = handleSubmit(async (data) => {
     } else {
       const formattedData = {
         ...data,
-        address: [
-          {
-            city: data.address.city,
-            state: data.address.state,
-            street: data.address.street,
-            pincode: data.address.pincode,
-          },
-        ],
+        // address: [
+        //   {
+        //     city: data.address.city,
+        //     state: data.address.state,
+        //     street: data.address.street,
+        //     pincode: data.address.pincode,
+        //   },
+        // ],
       };
 
       // const response = await UpdateStudent({ ...formattedData, id: currentStudent.id });
@@ -397,7 +399,7 @@ if (success) {
                 </>
               ) : (
                 <>
-                  <RHFTextField name="school_id" label="School ID"  sx={fieldStyles}  />
+                  <RHFTextField name="school" label="School ID"  sx={fieldStyles}  />
                   <RHFTextField name="student_id" label="Student ID"  sx={fieldStyles}  />
                   <RHFTextField name="name" label="Name"  sx={fieldStyles}  />
 
@@ -425,10 +427,11 @@ if (success) {
                     type="date"
                     InputLabelProps={{ shrink: true }}
                   />
-                  <RHFTextField name="address.city" label="City"  sx={fieldStyles}  />
+                  {/* <RHFTextField name="address.city" label="City"  sx={fieldStyles}  />
                   <RHFTextField name="address.state" label="State"  sx={fieldStyles}  />
                   <RHFTextField name="address.street" label="Street"  sx={fieldStyles}  />
-                  <RHFTextField name="address.pincode" label="Pincode"  sx={fieldStyles}  />
+                  <RHFTextField name="address.pincode" label="Pincode"  sx={fieldStyles}  /> */}
+                  <RHFTextField name="address" label="Address" />
                   <RHFTextField name="mobile" label="Mobile"  sx={fieldStyles}  />
                   <RHFTextField name="grade" label="Grade"  sx={fieldStyles}  />
                   <FormControl fullWidth>
