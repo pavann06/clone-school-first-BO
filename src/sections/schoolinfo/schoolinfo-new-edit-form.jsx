@@ -38,7 +38,7 @@ export default function SchoolInfoNewEditForm({ currentSchool }) {
       image: currentSchool?.image || '',
       priority: currentSchool?.priority || '',
       status: currentSchool?.status || 'Active',
-      School: currentSchool?.school || '',
+      school: currentSchool?.school || '',
     }),
     [currentSchool]
   );

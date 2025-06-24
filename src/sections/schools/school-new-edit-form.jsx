@@ -10,10 +10,12 @@ import { useSnackbar } from 'notistack';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import { MenuItem } from '@mui/material';
+
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormProvider, { RHFTextField, RHFUpload } from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFUpload , RHFSelect } from 'src/components/hook-form';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import request from 'src/api/request';
@@ -32,7 +34,7 @@ export default function SchoolNewEditForm({ currentSchool }) {
     state: Yup.string().required('State is required'),
     poc_name: Yup.string().required('POC Name is required'),
     status: Yup.string().required('Status is required'),
-    expiry_date: Yup.date().required('Expiry Date is required'),
+   
     small_logo: Yup.mixed(),
     full_logo: Yup.mixed(),
   });
@@ -45,7 +47,7 @@ export default function SchoolNewEditForm({ currentSchool }) {
     state: currentSchool?.state || '',
     poc_name: currentSchool?.poc_name || '',
     status: currentSchool?.status || '',
-    expiry_date: currentSchool?.expiry_date || '',
+   
     small_logo: currentSchool?.small_logo || '',
     full_logo: currentSchool?.full_logo || '',
   }), [currentSchool]);
@@ -75,9 +77,7 @@ export default function SchoolNewEditForm({ currentSchool }) {
     try {
       const formattedData = {
         ...data,
-        expiry_date: data.expiry_date
-          ? new Date(data.expiry_date).toISOString().split('T')[0]
-          : null,
+       
       };
 
       const response = currentSchool
@@ -146,14 +146,11 @@ export default function SchoolNewEditForm({ currentSchool }) {
               <RHFTextField name="district" label="District" sx={fieldStyles} />
               <RHFTextField name="state" label="State" sx={fieldStyles} />
               <RHFTextField name="poc_name" label="POC Name" sx={fieldStyles} />
-              <RHFTextField name="status" label="Status" sx={fieldStyles} />
-              <RHFTextField
-                name="expiry_date"
-                label="Expiry Date"
-                type="date"
-                sx={fieldStyles}
-                InputLabelProps={{ shrink: true }}
-              />
+              <RHFSelect name="status" label="Status">
+                             <MenuItem value="Active">Active</MenuItem>
+                             <MenuItem value="Inactive">Inactive</MenuItem>
+                           </RHFSelect>
+            
 
               {/* Small Logo Upload */}
               <Box sx={{ border: '1px solid', borderColor: 'grey.300', borderRadius: 2, p: 2, backgroundColor: 'background.paper' }}>
