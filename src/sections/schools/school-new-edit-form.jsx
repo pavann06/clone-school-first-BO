@@ -157,6 +157,9 @@ export default function SchoolNewEditForm({ currentSchool }) {
 
               {/* Small Logo Upload */}
               <Box sx={{ border: '1px solid', borderColor: 'grey.300', borderRadius: 2, p: 2, backgroundColor: 'background.paper' }}>
+                 <Typography variant="subtitle2" gutterBottom>
+                    Small Logo <Typography component="span" variant="body2"> ( Size should be minimum 64 x 64 )</Typography>
+                  </Typography>
                 <RHFUpload
                   name="small_logo"
                   label="Upload Small Logo"
@@ -193,6 +196,9 @@ export default function SchoolNewEditForm({ currentSchool }) {
 
               {/* Full Logo Upload */}
               <Box sx={{ border: '1px solid', borderColor: 'grey.300', borderRadius: 2, p: 2, backgroundColor: 'background.paper' }}>
+                 <Typography variant="subtitle2" gutterBottom>
+                    Full Logo <Typography component="span" variant="body2">  ( Size should be minimum 164 x 44 )</Typography>
+                  </Typography>
                 <RHFUpload
                   name="full_logo"
                   label="Upload Full Logo"
