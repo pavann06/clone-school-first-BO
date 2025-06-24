@@ -87,7 +87,7 @@ export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
           <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             onDeleteRow();
             popover.onClose();
@@ -95,7 +95,7 @@ export default function SchoolTableRow({ row, onEditRow, onDeleteRow }) {
         >
           <Iconify icon="material-symbols:delete" />
           Delete
-        </MenuItem>
+        </MenuItem> */}
       </CustomPopover>
     </>
   );
