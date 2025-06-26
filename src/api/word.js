@@ -6,7 +6,7 @@ export const CreateWord = async (form_data) => {
   try {
     console.info('FEED-CREATE-FORM-DATA', form_data);
 
-    const resp = await request.post('backoffice/word', form_data);
+    const resp = await request.post('backoffice/upload/words', form_data);
 
     return resp;
   } catch (error) {

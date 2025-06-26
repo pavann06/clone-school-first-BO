@@ -87,7 +87,7 @@ export default function JwtLoginView() {
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5 }}>
-      <Typography variant="h4">Sign in to FamiliFirst</Typography>
+      <Typography variant="h4">Sign in to School First</Typography>
     </Stack>
   );
 
