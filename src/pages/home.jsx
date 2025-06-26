@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title> FamiliFirst: Backoffice</title>
+        <title> SchoolFirst : Backoffice</title>
       </Helmet>
 
       <HomeView />
