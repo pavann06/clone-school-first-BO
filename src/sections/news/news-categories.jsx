@@ -166,7 +166,7 @@ const CategoriesDropdown = ({ value, onChange }) => {
     const fetchCategories = async () => {
       setLoading(true);
       try {
-        const response = await request.get(`backoffice/search/newscategories?keyword=${encodeURIComponent(searchTerm)}`);
+        const response = await request.get(`backoffice/news/categories?keyword=${encodeURIComponent(searchTerm)}`);
 
         if (response?.success && Array.isArray(response.data)) {
           setCategories(response.data);
