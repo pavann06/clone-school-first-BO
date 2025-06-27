@@ -1,3 +1,6 @@
+
+
+
 // import React, { useEffect, useState, forwardRef } from 'react';
 // import PropTypes from 'prop-types';
 // import { useSnackbar } from 'notistack';
@@ -5,9 +8,11 @@
 // import MenuItem from '@mui/material/MenuItem';
 // import Chip from '@mui/material/Chip';
 // import Box from '@mui/material/Box';
+// import CircularProgress from '@mui/material/CircularProgress';
+
 // import request from 'src/api/request';
 
-// const GradesDropdown = forwardRef(({ value, onChange }, ref) => {
+// const GradesDropdown = forwardRef(({ value = [], onChange }, ref) => {
 //   const { enqueueSnackbar } = useSnackbar();
 //   const [grades, setGrades] = useState([]);
 //   const [loading, setLoading] = useState(true);
@@ -37,7 +42,14 @@
 
 //   const renderGradeOptions = () => {
 //     if (loading) {
-//       return <MenuItem disabled>Loading...</MenuItem>;
+//       return (
+//         <MenuItem disabled>
+//           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+//             <CircularProgress size={18} />
+//             Loading...
+//           </Box>
+//         </MenuItem>
+//       );
 //     }
 
 //     if (grades.length === 0) {
@@ -55,20 +67,24 @@
 //     <Select
 //       ref={ref}
 //       multiple
-//       value={value}
+//       value={value || []}
 //       onChange={handleChange}
 //       fullWidth
 //       displayEmpty
-//       renderValue={(selected) => (
-//         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-//           {selected.map((id) => {
-//             const selectedGrade = grades.find((g) => g.id === id);
-//             return selectedGrade ? (
-//               <Chip key={id} label={selectedGrade.name} />
-//             ) : null;
-//           })}
-//         </Box>
-//       )}
+//       renderValue={(selected = []) =>
+//         selected.length === 0 ? (
+//           <em>Select Grades</em>
+//         ) : (
+//           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+//             {selected.map((id) => {
+//               const selectedGrade = grades.find((g) => g.id === id);
+//               return selectedGrade ? (
+//                 <Chip key={id} label={selectedGrade.name} />
+//               ) : null;
+//             })}
+//           </Box>
+//         )
+//       }
 //     >
 //       <MenuItem disabled value="">
 //         Select Grades
@@ -78,22 +94,30 @@
 //   );
 // });
 
+// GradesDropdown.displayName = 'GradesDropdown';
+
 // GradesDropdown.propTypes = {
-//   value: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+//   value: PropTypes.arrayOf(
+//     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+//   ).isRequired,
 //   onChange: PropTypes.func.isRequired,
 // };
 
 // export default GradesDropdown;
 
 
+
 import React, { useEffect, useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Chip from '@mui/material/Chip';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import {
+  Select,
+  MenuItem,
+  Chip,
+  Box,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 
 import request from 'src/api/request';
 
@@ -121,51 +145,31 @@ const GradesDropdown = forwardRef(({ value = [], onChange }, ref) => {
     fetchGrades();
   }, [enqueueSnackbar]);
 
-  const handleChange = (event) => {
-    onChange(event.target.value);
-  };
-
-  const renderGradeOptions = () => {
-    if (loading) {
-      return (
-        <MenuItem disabled>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <CircularProgress size={18} />
-            Loading...
-          </Box>
-        </MenuItem>
-      );
-    }
-
-    if (grades.length === 0) {
-      return <MenuItem disabled>No grades available</MenuItem>;
-    }
-
-    return grades.map((grade) => (
-      <MenuItem key={grade.id} value={grade.id}>
-        {grade.name}
-      </MenuItem>
-    ));
-  };
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+        <CircularProgress size={20} />
+        <Typography variant="body2">Loading grades...</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Select
       ref={ref}
       multiple
-      value={value || []}
-      onChange={handleChange}
       fullWidth
       displayEmpty
+      value={value || []}
+      onChange={(e) => onChange(e.target.value)}
       renderValue={(selected = []) =>
         selected.length === 0 ? (
           <em>Select Grades</em>
         ) : (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {selected.map((id) => {
-              const selectedGrade = grades.find((g) => g.id === id);
-              return selectedGrade ? (
-                <Chip key={id} label={selectedGrade.name} />
-              ) : null;
+              const grade = grades.find((g) => g.id === id);
+              return grade ? <Chip key={id} label={grade.name} /> : null;
             })}
           </Box>
         )
@@ -174,7 +178,11 @@ const GradesDropdown = forwardRef(({ value = [], onChange }, ref) => {
       <MenuItem disabled value="">
         Select Grades
       </MenuItem>
-      {renderGradeOptions()}
+      {grades.map((grade) => (
+        <MenuItem key={grade.id} value={grade.id}>
+          {grade.name}
+        </MenuItem>
+      ))}
     </Select>
   );
 });
@@ -189,4 +197,3 @@ GradesDropdown.propTypes = {
 };
 
 export default GradesDropdown;
-

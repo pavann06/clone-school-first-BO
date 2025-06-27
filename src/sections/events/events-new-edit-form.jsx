@@ -46,7 +46,7 @@ export default function EventsNewEditForm({ currentNews }) {
     name: currentNews?.name || '',
     date: currentNews?.date || '',
     time: currentNews?.time || '',
-    colour_code: currentNews?.color_code || '',
+    colour_code: currentNews?.colour_code || '',
     description: currentNews?.description || '',
     school_id: currentNews?.school_id || '',
     grade_ids: currentNews?.grade_ids || [],
