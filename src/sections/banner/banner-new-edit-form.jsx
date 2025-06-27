@@ -28,6 +28,7 @@ import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import request from 'src/api/request';
 import { CreateBannerr , UpdateBannerr } from 'src/api/banner';
+import SchoolsDropdown from './schools-dropdown';
 
 export default function BannerNewEditForm({ currentBanner }) {
   const router = useRouter();
@@ -42,6 +43,7 @@ export default function BannerNewEditForm({ currentBanner }) {
   .required('Screen is required'),
 
     status: Yup.string().oneOf(['Active', 'Inactive'], 'Invalid status').required('Status is required'),
+    school_id: Yup.string().required('School is required'),
   });
 
   // ✅ Default values
@@ -49,6 +51,7 @@ export default function BannerNewEditForm({ currentBanner }) {
     image: currentBanner?.image || '',
     screen: currentBanner?.screen || '',
     status: currentBanner?.status || 'active',
+    school_id: currentBanner?.school_id || '',
   }), [currentBanner]);
 
   const methods = useForm({
@@ -63,6 +66,8 @@ export default function BannerNewEditForm({ currentBanner }) {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+   const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -141,6 +146,14 @@ export default function BannerNewEditForm({ currentBanner }) {
                 <MenuItem value="Active">Active</MenuItem>
                 <MenuItem value="Inactive">Inactive</MenuItem>
               </RHFSelect>
+
+                                  <Box>
+                         <Typography variant="subtitle2">Select School</Typography>
+                               <SchoolsDropdown
+                                 value={values.school_id}
+                                 onChange={(selected) => setValue('school_id', selected)}
+                               />
+                             </Box>
 
               {/* Image Upload */}
               <Box>
