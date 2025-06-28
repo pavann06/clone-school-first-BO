@@ -1,6 +1,3 @@
-
-
-
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
@@ -8,26 +5,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useMemo, useState, useCallback } from 'react';
 import { useSnackbar } from 'notistack';
 
-import {
-  Box,
-  Card,
-  Stack,
-  Grid,
-  Typography,
-  MenuItem,
-} from '@mui/material';
+import { Box, Card, Stack, Grid, Typography, MenuItem } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import FormProvider, {
-  RHFTextField,
-  RHFUpload,
-  RHFSelect,
-} from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFUpload, RHFSelect } from 'src/components/hook-form';
 
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import request from 'src/api/request';
-import { CreateBannerr , UpdateBannerr } from 'src/api/banner';
+import { CreateBannerr, UpdateBannerr } from 'src/api/banner';
 import SchoolsDropdown from './schools-dropdown';
 
 export default function BannerNewEditForm({ currentBanner }) {
@@ -39,20 +25,25 @@ export default function BannerNewEditForm({ currentBanner }) {
   const SchoolSchema = Yup.object().shape({
     image: Yup.string().required('Image is required'),
     screen: Yup.string()
-  .oneOf(['Home', 'Courses'], 'Invalid screen')
-  .required('Screen is required'),
+      .oneOf(['Home', 'Courses'], 'Invalid screen')
+      .required('Screen is required'),
 
-    status: Yup.string().oneOf(['Active', 'Inactive'], 'Invalid status').required('Status is required'),
+    status: Yup.string()
+      .oneOf(['Active', 'Inactive'], 'Invalid status')
+      .required('Status is required'),
     school_id: Yup.string().required('School is required'),
   });
 
   // ✅ Default values
-  const defaultValues = useMemo(() => ({
-    image: currentBanner?.image || '',
-    screen: currentBanner?.screen || '',
-    status: currentBanner?.status || 'active',
-    school_id: currentBanner?.school_id || '',
-  }), [currentBanner]);
+  const defaultValues = useMemo(
+    () => ({
+      image: currentBanner?.image || '',
+      screen: currentBanner?.screen || '',
+      status: currentBanner?.status || 'active',
+      school_id: currentBanner?.school_id || '',
+    }),
+    [currentBanner]
+  );
 
   const methods = useForm({
     resolver: yupResolver(SchoolSchema),
@@ -67,7 +58,7 @@ export default function BannerNewEditForm({ currentBanner }) {
     formState: { isSubmitting },
   } = methods;
 
-   const values = watch();
+  const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -76,7 +67,9 @@ export default function BannerNewEditForm({ currentBanner }) {
         : await CreateBannerr(data);
 
       if (response?.success) {
-        enqueueSnackbar(currentBanner ? 'Update success!' : 'Create success!', { variant: 'success' });
+        enqueueSnackbar(currentBanner ? 'Update success!' : 'Create success!', {
+          variant: 'success',
+        });
         router.push(paths.dashboard.banner.root);
         reset();
         return response;
@@ -100,32 +93,38 @@ export default function BannerNewEditForm({ currentBanner }) {
   });
 
   // ✅ File Upload
-  const handleUpload = useCallback(async (file) => {
-    try {
-      setIsUploading(true);
-      const response = await request.UploadFiles({ files: file });
-      if (response.success) {
-        enqueueSnackbar('Image uploaded successfully!', { variant: 'success' });
-        return response.data[0].file_url;
+  const handleUpload = useCallback(
+    async (file) => {
+      try {
+        setIsUploading(true);
+        const response = await request.UploadFiles({ files: file });
+        if (response.success) {
+          enqueueSnackbar('Image uploaded successfully!', { variant: 'success' });
+          return response.data[0].file_url;
+        }
+        throw new Error('Upload failed');
+      } catch {
+        enqueueSnackbar('Image upload failed!', { variant: 'error' });
+        return null;
+      } finally {
+        setIsUploading(false);
       }
-      throw new Error('Upload failed');
-    } catch {
-      enqueueSnackbar('Image upload failed!', { variant: 'error' });
-      return null;
-    } finally {
-      setIsUploading(false);
-    }
-  }, [enqueueSnackbar]);
+    },
+    [enqueueSnackbar]
+  );
 
-  const handleDrop = useCallback(async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      const uploadedUrl = await handleUpload(file);
-      if (uploadedUrl) {
-        setValue('image', uploadedUrl);
+  const handleDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const uploadedUrl = await handleUpload(file);
+        if (uploadedUrl) {
+          setValue('image', uploadedUrl);
+        }
       }
-    }
-  }, [setValue, handleUpload]);
+    },
+    [setValue, handleUpload]
+  );
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -133,13 +132,11 @@ export default function BannerNewEditForm({ currentBanner }) {
         <Grid xs={12} md={8}>
           <Card sx={{ p: 4 }}>
             <Stack spacing={3}>
-
               {/* Screen Field */}
-           <RHFSelect name="screen" label="Screen">
-  <MenuItem value="Home">Home</MenuItem>
-  <MenuItem value="Courses">Courses</MenuItem>
-</RHFSelect>
-
+              <RHFSelect name="screen" label="Screen">
+                <MenuItem value="Home">Home</MenuItem>
+                <MenuItem value="Courses">Courses</MenuItem>
+              </RHFSelect>
 
               {/* Status Select */}
               <RHFSelect name="status" label="Status">
@@ -147,13 +144,13 @@ export default function BannerNewEditForm({ currentBanner }) {
                 <MenuItem value="Inactive">Inactive</MenuItem>
               </RHFSelect>
 
-                                  <Box>
-                         <Typography variant="subtitle2">Select School</Typography>
-                               <SchoolsDropdown
-                                 value={values.school_id}
-                                 onChange={(selected) => setValue('school_id', selected)}
-                               />
-                             </Box>
+              <Box>
+                <Typography variant="subtitle2">Select School</Typography>
+                <SchoolsDropdown
+                  value={values.school_id}
+                  onChange={(selected) => setValue('school_id', selected)}
+                />
+              </Box>
 
               {/* Image Upload */}
               <Box>
@@ -171,7 +168,9 @@ export default function BannerNewEditForm({ currentBanner }) {
               {/* Preview */}
               {watch('image') && typeof watch('image') === 'string' && (
                 <Box sx={{ mt: 2 }}>
-                  <Typography variant="subtitle2" gutterBottom>Preview</Typography>
+                  <Typography variant="subtitle2" gutterBottom>
+                    Preview
+                  </Typography>
                   <Box
                     component="img"
                     src={watch('image')}
