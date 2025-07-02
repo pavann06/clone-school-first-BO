@@ -281,12 +281,12 @@ export function useNavData() {
           },
 
           
-          {
-            title: 'Lessons',
-            path: paths.dashboard.lessons.root,
-            icon: ICONS.contact,
+          // {
+          //   title: 'Lessons',
+          //   path: paths.dashboard.lessons.root,
+          //   icon: ICONS.contact,
            
-          },
+          // },
 
              {
             title: 'MCQs',
